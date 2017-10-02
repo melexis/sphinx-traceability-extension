@@ -136,6 +136,12 @@ class ItemDirective(Directive):
         # Store item info
         if targetid not in env.traceability_all_items:
             env.traceability_all_items[targetid] = {}
+        elif env.traceability_all_items[targetid]['placeholder'] is False:
+            if env.traceability_all_items[targetid]['docname'] != env.docname or env.traceability_all_items[targetid]['lineno'] != self.lineno:
+                # Duplicate items not allowed. Duplicate will even not be shown
+                messages = [self.state.document.reporter.error(
+                           'Traceability: duplicated item %s (or rebuilding with a change)' % targetid,
+                            line=self.lineno)]
         env.traceability_all_items[targetid]['id'] = targetid
         env.traceability_all_items[targetid]['placeholder'] = False
         env.traceability_all_items[targetid]['type'] = self.name
