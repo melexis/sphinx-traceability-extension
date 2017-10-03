@@ -167,6 +167,7 @@ class ItemDirective(Directive):
                         env.traceability_all_items[related_id] = {
                             'id': related_id,
                             'placeholder': True,
+                            'docname': None,
                         }
                         initialize_relationships(env, related_id)
                     # Also add the reverse relationship to the related item
