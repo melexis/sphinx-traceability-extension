@@ -167,7 +167,6 @@ class ItemDirective(Directive):
                         env.traceability_all_items[related_id] = {
                             'id': related_id,
                             'placeholder': True,
-                            'docname': None,
                         }
                         initialize_relationships(env, related_id)
                     # Also add the reverse relationship to the related item
@@ -576,8 +575,9 @@ def purge_items(app, env, docname):
     """
     if hasattr(env, 'traceability_all_items'):
         for itemid in env.traceability_all_items.keys():
-            if env.traceability_all_items[itemid]['docname'] == docname:
-                del env.traceability_all_items[itemid]
+            if 'docname' in env.traceability_all_items[itemid]:
+                if env.traceability_all_items[itemid]['docname'] == docname:
+                    del env.traceability_all_items[itemid]
 
 
 # -----------------------------------------------------------------------------
