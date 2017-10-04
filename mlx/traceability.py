@@ -120,7 +120,6 @@ class ItemDirective(Directive):
         env = self.state.document.settings.env
         app = env.app
         caption = ''
-        messages = []
 
         targetid = self.arguments[0]
         targetnode = nodes.target('', '', ids=[targetid])
@@ -136,6 +135,9 @@ class ItemDirective(Directive):
         # Store item info
         if targetid not in env.traceability_all_items:
             env.traceability_all_items[targetid] = {}
+        elif env.traceability_all_items[targetid]['placeholder'] is False:
+            # Duplicate items not allowed. Duplicate will even not be shown
+            report_warning(env, 'Traceability: duplicated item: %s' % targetid, env.docname, self.lineno)
         env.traceability_all_items[targetid]['id'] = targetid
         env.traceability_all_items[targetid]['placeholder'] = False
         env.traceability_all_items[targetid]['type'] = self.name
@@ -182,7 +184,7 @@ class ItemDirective(Directive):
             template.append('    ' + line)
         self.state_machine.insert_input(template, self.state_machine.document.attributes['source'])
 
-        return [targetnode, itemnode] + messages
+        return [targetnode, itemnode]
 
 
 class ItemListDirective(Directive):
@@ -566,6 +568,19 @@ def initialize_environment(app):
 \\makeatother'''
 
 
+def purge_items(app, env, docname):
+    """
+    Purge traceable items
+
+    This handler should be called upon env-purge-doc event: before each source file is read, the
+    extension needs to flush part of its database.
+    """
+    if hasattr(env, 'traceability_all_items'):
+        for itemid in env.traceability_all_items.keys():
+            if 'docname' in env.traceability_all_items[itemid]:
+                if env.traceability_all_items[itemid]['docname'] == docname:
+                    del env.traceability_all_items[itemid]
+
 
 # -----------------------------------------------------------------------------
 # Utility functions
@@ -783,6 +798,7 @@ def setup(app):
 
     app.connect('doctree-resolved', process_item_nodes)
     app.connect('builder-inited', initialize_environment)
+    app.connect('env-purge-doc', purge_items)
 
     app.add_role('item', XRefRole(nodeclass=PendingItemXref,
                                   innernodeclass=nodes.emphasis,
