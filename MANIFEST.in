@@ -16,3 +16,6 @@ recursive-include example Makefile
 recursive-include tests *.py
 recursive-include tests *.rst
 recursive-include tests *.txt
+
+# added by check_manifest.py
+include *.yml

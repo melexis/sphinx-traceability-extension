@@ -376,7 +376,7 @@ def process_item_nodes(app, doctree, fromdocname):
             if re.match(node['source'], source_id):
                 row = nodes.row()
                 left = nodes.entry()
-                left += make_internal_item_ref(app, node, fromdocname, source_id)
+                left += make_internal_item_ref(app, node, fromdocname, source_id, False)
                 right = nodes.entry()
                 for relationship in node['type']:
                     if REGEXP_EXTERNAL_RELATIONSHIP.search(relationship):
@@ -390,7 +390,7 @@ def process_item_nodes(app, doctree, fromdocname):
                     if (re.match(node['target'], target_id) and
                             are_related(
                                 env, source_id, target_id, node['type'])):
-                        right += make_internal_item_ref(app, node, fromdocname, target_id)
+                        right += make_internal_item_ref(app, node, fromdocname, target_id, False)
                 row += left
                 row += right
                 tbody += row
@@ -588,7 +588,7 @@ def generate_bullet_list_tree(app, env, node, fromdocname, itemid):
     p_node = nodes.paragraph()
     p_node.set_class('thumb')
     bullet_list_item.append(p_node)
-    bullet_list_item.append(make_internal_item_ref(app, node, fromdocname, itemid))
+    bullet_list_item.append(make_internal_item_ref(app, node, fromdocname, itemid, False))
     bullet_list_item.set_class('has-children')
     bullet_list_item.set_class('collapsed')
     childcontent = nodes.bullet_list()
