@@ -450,6 +450,16 @@ the nested bullet list. This action is repeated recursively.
     This would give endless repetition of the same nesting, and an endless recursion in python. The plugin
     checks the *item-tree* directives for this mistake!
 
+For the item-tree to be collapsable, some javascript is needed. Therefore in your `conf.py` add this to the
+the `html_static_path` variable.
+
+.. code-block:: python
+
+    import mlx.traceability
+    ...
+    html_static_path = [os.path.join(os.path.dirname(mlx.traceability.__file__), 'assets')]
+
+
 .. _traceability_process:
 
 -------
