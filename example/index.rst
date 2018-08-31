@@ -274,6 +274,16 @@ Another 2D matrix that should spawn a warning as the relation in *type* does not
     :miss: no
     :type: non_existing_relation
 
+Using attributes in 2D matrix
+-----------------------------
+
+.. item-2d-matrix:: 2D matrix showing target item attribute in the table
+    :target: r
+    :source: r
+    :hit: level
+    :miss:
+    :type: trace
+
 Item tree
 =========
 

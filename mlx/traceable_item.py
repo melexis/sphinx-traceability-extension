@@ -329,16 +329,17 @@ class TraceableItem(object):
                                         self.get_document())
         del self.attributes[attr]
 
-    def get_attribute(self, attr):
+    def get_attribute(self, attr, miss=''):
         '''
         Get the value of an attribute from the traceable item
 
         Args:
             attr (str): Name of the attribute
+            miss (str): Value to return when attribute does not exist
         Returns:
-            Value matching the given attribute key, or '' if attribute does not exist
+            Value matching the given attribute key, or miss if attribute does not exist
         '''
-        value = ''
+        value = miss
         if attr in self.attributes:
             value = self.attributes[attr]
         return value

@@ -602,7 +602,11 @@ is a space-separated list of relationships that should be matched in the matrix.
 Documentation items matching their ID to the given *source* regular expression end up as columns of the
 generated table. Documentation items matching their ID to the given *target* regular expression end up as
 rows of the generated table. Where source and target items have a matching relationship (see *type* argument)
-an 'x' will be placed in the cell at co-ordinates of source/target.
+an 'x' (see *hit* argument in above example) will be placed in the cell at co-ordinates of source/target. Where source
+and target items don't have a matching relationship, a '' (see *miss* argument in above example) will be
+place in the cell.
+The hit and miss arguments can also be attribute keys (`as configured <traceability_default_config>`_). In this case
+the 'x' and '' will be replaced by the attribute value of the target documentation item.
 
 Captions for items in the 2D table are never shown, as it would give a too heavy loaded table.
 

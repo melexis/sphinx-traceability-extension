@@ -806,6 +806,7 @@ def process_item_nodes(app, doctree, fromdocname):
         tgroup += nodes.thead('', hrow)
         tbody = nodes.tbody()
         for target_id in target_ids:
+            target_item = env.traceability_collection.get_item(target_id)
             row = nodes.row()
             tgt_cell = nodes.entry()
             tgt_cell += make_internal_item_ref(app, node, fromdocname, target_id, False)
@@ -817,6 +818,7 @@ def process_item_nodes(app, doctree, fromdocname):
                     txt = node['hit']
                 else:
                     txt = node['miss']
+                txt = target_item.get_attribute(txt, txt)
                 p_node += nodes.Text(txt)
                 cell += p_node
                 row += cell
@@ -985,6 +987,7 @@ def init_available_relationships(app):
     for attr in app.config.traceability_attributes.keys():
         ItemDirective.option_spec[attr] = directives.unchanged
         ItemListDirective.option_spec[attr] = directives.unchanged
+        Item2DMatrixDirective.option_spec[attr] = directives.unchanged
         TraceableItem.define_attribute(attr, app.config.traceability_attributes[attr])
 
     for rel in list(app.config.traceability_relationships.keys()):
