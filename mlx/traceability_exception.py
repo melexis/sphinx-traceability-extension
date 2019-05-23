@@ -32,6 +32,10 @@ class TraceabilityException(Exception):
         '''
         super(TraceabilityException, self).__init__(message)
         self.docname = docname
+        self.message = message
+
+    def __str__(self):
+        return str(self.message)
 
     def get_document(self):
         '''
