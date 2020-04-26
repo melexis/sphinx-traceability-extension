@@ -8,6 +8,7 @@ from natsort import natsorted
 
 from mlx.traceability_exception import MultipleTraceabilityExceptions, TraceabilityException
 from mlx.traceable_item import TraceableItem
+from mlx.reqif_export import *
 
 
 class TraceableCollection:
@@ -179,6 +180,18 @@ class TraceableCollection:
                 item = self.get_item(itemid)
                 data.append(item.to_dict())
             json.dump(data, outfile, indent=4, sort_keys=True)
+
+    def export_reqif(self, fname):
+        '''
+        Exports collection content. The target location of the json file gets created if it doesn't exist yet.
+
+        Args:
+            fname (str): Path to the json file to export
+        '''
+        Path(fname).parent.mkdir(parents=True, exist_ok=True)
+        reqif_doc = reqif_document_setup()
+        add_requirement(reqif_doc)
+        export_xml(reqif_doc, fname)
 
     def self_test(self, notification_item_id, docname=None):
         '''

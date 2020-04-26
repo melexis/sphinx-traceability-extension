@@ -196,6 +196,7 @@ def perform_consistency_check(app, doctree):
     if app.config.traceability_json_export_path:
         fname = app.config.traceability_json_export_path
         env.traceability_collection.export(fname)
+        env.traceability_collection.export_reqif(fname + ".reqif")
 
     if app.config.traceability_hyperlink_colors:
         app.add_stylesheet('hyperlink_colors.css')
