@@ -190,7 +190,9 @@ class TraceableCollection:
         '''
         Path(fname).parent.mkdir(parents=True, exist_ok=True)
         reqif_doc = reqif_document_setup()
-        add_requirement(reqif_doc)
+        for itemid in self.iter_items():
+            item = self.get_item(itemid)
+            add_requirement(reqif_doc, item)
         export_xml(reqif_doc, fname)
 
     def self_test(self, notification_item_id, docname=None):
