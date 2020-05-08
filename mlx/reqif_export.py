@@ -2,20 +2,10 @@ from reqif_pyxb.ReqIF import *
 import pyxb.binding.datatypes as datatypes
 import hashlib
 
-text_attribute = None
-caption_attribute = None
 requirement_object_type = None
-content_hash_attribute = None
-line_number_attribute = None
-document_name_attribute = None
 
 def reqif_document_setup():
-    global text_attribute
-    global caption_attribute
-    global content_hash_attribute
-    global line_number_attribute
     global requirement_object_type
-    global document_name_attribute
     # Construct the header
     reqif_doc = REQ_IF(
         THE_HEADER=pyxb.BIND(),
@@ -74,11 +64,11 @@ def add_requirement(reqif_doc, item):
 
     # The actual requirements
     requirement = SPEC_OBJECT(IDENTIFIER=item.id, LONG_NAME=item.get_name(), spectype=requirement_object_type)
-    requirement.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=text_attribute, value=item.content if item.content else '-'))
-    requirement.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=caption_attribute, value=item.caption if item.caption else '-'))
-    requirement.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=content_hash_attribute, value=content_hash))
-    requirement.VALUES.append(ATTRIBUTE_VALUE_INTEGER(definition=line_number_attribute, value=item.lineno if item.lineno else 0))
-    requirement.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=document_name_attribute, value=item.docname if item.docname else '-'))
+    requirement.set_value("Text", item.content if item.content else '-')
+    requirement.set_value("Caption", item.caption if item.caption else '-')
+    requirement.set_value("Content hash", content_hash)
+    requirement.set_value("Line number", item.lineno if item.lineno else 0)
+    requirement.set_value("Document", item.docname if item.docname else '-')
     content.add_specobject(requirement)
     specification.SPECIFICATION[0].add_spec_hierarchy(SPEC_HIERARCHY(spec_object=requirement))
 
