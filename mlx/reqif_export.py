@@ -33,11 +33,10 @@ def reqif_document_setup():
     requirement_object_type.add_attribute(document_name_attribute)
     requirement_object_type.add_attribute(line_number_attribute)
 
-    spec_relation_type = SPEC_RELATION_TYPE(LONG_NAME="selflink")
     specification_type = SPECIFICATION_TYPE(LONG_NAME="doc_type")
 
     # reqif_doc.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES = pyxb.BIND()
-    content.add_spectype(spec_relation_type)
+
     content.add_spectype(requirement_object_type)
     content.add_spectype(specification_type)
 
@@ -52,9 +51,13 @@ def reqif_document_setup():
     return reqif_doc
 
 
+def add_relation(reqif_doc, relation):
+    content = reqif_doc.CORE_CONTENT.REQ_IF_CONTENT
+    content.add_spectype(SPEC_RELATION_TYPE(LONG_NAME=relation))
+    print(relation)
+
 def add_requirement(reqif_doc, item):
     content = reqif_doc.CORE_CONTENT.REQ_IF_CONTENT
-
     specification = content.SPECIFICATIONS
 
     if item.content:
@@ -72,13 +75,10 @@ def add_requirement(reqif_doc, item):
     content.add_specobject(requirement)
     specification.SPECIFICATION[0].add_spec_hierarchy(SPEC_HIERARCHY(spec_object=requirement))
 
-    # spec_relation_type = content.SPEC_TYPES.SPEC_RELATION_TYPE[0]
-    # # Relationships between requirements
-    # content.add_spec_relation(
-    #     SPEC_RELATION(
-    #         source_spec_object=requirement_1,
-    #         target_spec_object=requirement_2,
-    #         link_type=spec_relation_type))
+    for relation in item.iter_relations():
+        tgts = item.iter_targets(relation)
+        for target in tgts:
+            content.add_spec_relation_by_ID(item.id, target, relation)
 
 def export_xml(reqif_doc, outfile):
     print(outfile)

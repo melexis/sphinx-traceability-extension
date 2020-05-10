@@ -190,6 +190,8 @@ class TraceableCollection:
         '''
         Path(fname).parent.mkdir(parents=True, exist_ok=True)
         reqif_doc = reqif_document_setup()
+        for relation in self.relations:
+            add_relation(reqif_doc, relation)
         for itemid in self.iter_items():
             item = self.get_item(itemid)
             add_requirement(reqif_doc, item)
