@@ -1,0 +1,832 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Software Requirements &mdash; Traceability 7.5.1.dev3+g41c4fd7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/extra.css" type="text/css" />
+  <link rel="stylesheet" href="_static/hyperlink_colors.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
+        <script src="_static/traceability.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Software Design" href="design.html" />
+    <link rel="prev" title="Example usage" href="example_usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Traceability
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                7.5.1.dev3+g41c4fd7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Sphinx Traceability plugin</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="example_usage.html">Example usage</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Software Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements-for-mlx-traceability">Requirements for mlx.traceability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#traceability-matrix">Traceability matrix</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tree-of-requirements">Tree of requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#design-coverage">Design coverage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#test-coverage">Test coverage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="design.html">Software Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation.html">Software Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_test.html">Unit Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration_test_report.html">Integration test report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html">Checklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meeting_notes.html">Meeting notes</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Traceability</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="example_usage.html">Example usage</a> &raquo;</li>
+        
+      <li>Software Requirements</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/requirements.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="software-requirements">
+<h1>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<p class="topic-title"><cite>Contents</cite></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#requirements-for-mlx-traceability" id="id1">Requirements for mlx.traceability</a></p></li>
+<li><p><a class="reference internal" href="#traceability-matrix" id="id2">Traceability matrix</a></p>
+<ul>
+<li><p><a class="reference internal" href="#tree-of-requirements" id="id3">Tree of requirements</a></p></li>
+<li><p><a class="reference internal" href="#design-coverage" id="id4">Design coverage</a></p></li>
+<li><p><a class="reference internal" href="#test-coverage" id="id5">Test coverage</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="requirements-for-mlx-traceability">
+<h2><a class="toc-backref" href="#id1">Requirements for mlx.traceability</a><a class="headerlink" href="#requirements-for-mlx-traceability" title="Permalink to this headline">¶</a></h2>
+<div class="collapsible_links docutils container" id="RQT-TRACEABILITY">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-TRACEABILITY"><em>RQT-TRACEABILITY : A plugin for sphinx documentation system, adding traceability</em></a></p>
+</div>
+<dl class="simple">
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em>DESIGN-TRACEABILITY : Top level design for mlx.traceability</em></a></p>
+</p>
+</dd>
+<dt>Impacts on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>System shall implement a plugin for the sphinx documentation system. It shall add tracebility within
+the documentation.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-ITEMIZE">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-TRACEABILITY"><em>RQT-TRACEABILITY : A plugin for sphinx documentation system, adding traceability</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em>DESIGN-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+<dt>Impacts on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-CAPTION"><em>RQT-CAPTION : Brief description of documentation part</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-CONTENT"><em>RQT-CONTENT : Content of documentation part</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-DOCUMENTATION_ID"><em>RQT-DOCUMENTATION_ID : Identification of documentation part</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-LIST"><em>RQT-LIST : Listing documentation parts</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>The plugin shall allow for splitting the documentation in parts.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-DOCUMENTATION_ID">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-DOCUMENTATION_ID"><em>RQT-DOCUMENTATION_ID : Identification of documentation part</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em>DESIGN-DOCUMENTATION_ID : Identification of documentation part</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>A documentation part shall have a unique identification.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-CAPTION">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-CAPTION"><em>RQT-CAPTION : Brief description of documentation part</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em>DESIGN-CAPTION : Brief description of documentation part</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em>ITEST-CAPTION : Tests caption</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION"><em>UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>A documentation part shall have a optional brief description.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-CONTENT">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-CONTENT"><em>RQT-CONTENT : Content of documentation part</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em>DESIGN-CONTENT : Content of documentation part</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>A documentation part shall have optional content. The content shall be parseable reStructuredText (RST), and passed
+through the configured sphinx parser/renderer.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-ATTRIBUTES">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em>DESIGN-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
+</p>
+</dd>
+<dt>Impacts on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTE_SORT"><em>RQT-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>It shall be possible to add attributes to the documentation parts.
+Attributes have a key and an optional value.
+The set of attributes and the validness of the attribute values shall be configurable.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-RELATIONS">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em>DESIGN-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+</p>
+</dd>
+<dt>Impacts on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-AUTO_REVERSE"><em>RQT-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-COVERAGE"><em>RQT-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-MATRIX"><em>RQT-MATRIX : Auto-generation of a traceability matrix</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-TREE"><em>RQT-TREE : Auto-generation of a traceability tree</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-RELATED"><em>UTEST_TRACEABLE_COLLECTION-RELATED</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>It shall be possible to link documentation parts to other documentation parts.
+The set of relations shall be configurable.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-AUTO_REVERSE">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-AUTO_REVERSE"><em>RQT-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em>DESIGN-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-AUTO_REVERSE"><em>ITEST-AUTO_REVERSE : Tests automatic creation of reverse relations</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>When a documentation part &lt;A&gt; is related to a documentation part &lt;B&gt; (forward relation), the reverse
+relation from documentation part &lt;B&gt; to documentation part &lt;A&gt; shall be automatically created.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-LIST">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-LIST"><em>RQT-LIST : Listing documentation parts</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-LIST"><em>DESIGN-LIST : Listing documentation parts</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-LIST"><em>ITEST-LIST : Tests listing of documentation parts</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>It shall be possible to generate a list of documentation parts matching a certain query.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-COVERAGE">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-COVERAGE"><em>RQT-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em>DESIGN-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-COVERAGE"><em>ITEST-COVERAGE : Tests calculation of coverage for relations between documentation parts.</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>It shall be possible to calculate the coverage for a certain type of relation between
+documentation parts.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-MATRIX">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-MATRIX"><em>RQT-MATRIX : Auto-generation of a traceability matrix</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em>DESIGN-MATRIX : Auto-generation of a traceability matrix</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-MATRIX"><em>ITEST-MATRIX : Tests auto-generation of traceability matrix.</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>It shall be possible to query the relations between documentation parts.
+It shall be possible to generate overview matrix of these relations.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-TREE">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-TREE"><em>RQT-TREE : Auto-generation of a traceability tree</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-TREE"><em>DESIGN-TREE : Auto-generation of a traceability tree</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE"><em>ITEST-TREE : Tests auto-generation of a traceability tree.</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE_SCOPE"><em>ITEST-TREE_SCOPE : Tests scope of a traceability tree.</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>It shall be possible to query the relations between documentation parts.
+It shall be possible to generate overview tree of these relations.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-ATTRIBUTES_MATRIX">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em>DESIGN-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em>ITEST-ATTRIBUTES_MATRIX : Tests overview of attributes on documentation parts</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>An overview table of the attribute values for documentation parts shall be generated.</p>
+</div></blockquote>
+<div class="collapsible_links docutils container" id="RQT-ATTRIBUTE_SORT">
+<div class="item admonition">
+<p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTE_SORT"><em>RQT-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p>
+</div>
+<dl class="simple">
+<dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
+</p>
+</dd>
+<dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em>DESIGN-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p>
+</p>
+</dd>
+<dt>Validated by</dt><dd><p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p>
+</p>
+</dd>
+</dl>
+</div>
+<blockquote>
+<div><p>The plugin shall be able to allow configurability of the order of items’ attributes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="traceability-matrix">
+<h2><a class="toc-backref" href="#id2">Traceability matrix</a><a class="headerlink" href="#traceability-matrix" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tree-of-requirements">
+<h3><a class="toc-backref" href="#id3">Tree of requirements</a><a class="headerlink" href="#tree-of-requirements" title="Permalink to this headline">¶</a></h3>
+<div class="docutils container">
+<div class="item admonition">
+<p class="admonition-title">Requirement tree</p>
+</div>
+<ul class="bonsai">
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-TRACEABILITY"><em>RQT-TRACEABILITY : A plugin for sphinx documentation system, adding traceability</em></a></p>
+<ul class="bonsai">
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+<ul class="bonsai">
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
+<ul class="bonsai">
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTE_SORT"><em>RQT-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-CAPTION"><em>RQT-CAPTION : Brief description of documentation part</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-CONTENT"><em>RQT-CONTENT : Content of documentation part</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-DOCUMENTATION_ID"><em>RQT-DOCUMENTATION_ID : Identification of documentation part</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-LIST"><em>RQT-LIST : Listing documentation parts</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
+<ul class="bonsai">
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-AUTO_REVERSE"><em>RQT-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-COVERAGE"><em>RQT-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-MATRIX"><em>RQT-MATRIX : Auto-generation of a traceability matrix</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="#RQT-TREE"><em>RQT-TREE : Auto-generation of a traceability tree</em></a></p>
+<ul class="bonsai simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="design-coverage">
+<h3><a class="toc-backref" href="#id4">Design coverage</a><a class="headerlink" href="#design-coverage" title="Permalink to this headline">¶</a></h3>
+<div class="docutils container">
+<div class="item admonition">
+<p class="admonition-title">Trace requirements to design</p>
+</div>
+<p>Statistics: 14 out of 14 covered: 100%</p>
+<table class="docutils">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Requirement</p></th>
+<th class="head"><p>Design</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em>DESIGN-ATTRIBUTES : Documentation parts can have attributes</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em>DESIGN-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTE_SORT"><em>RQT-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em>DESIGN-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-AUTO_REVERSE"><em>RQT-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em>DESIGN-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-CAPTION"><em>RQT-CAPTION : Brief description of documentation part</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em>DESIGN-CAPTION : Brief description of documentation part</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-CONTENT"><em>RQT-CONTENT : Content of documentation part</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em>DESIGN-CONTENT : Content of documentation part</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-COVERAGE"><em>RQT-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em>DESIGN-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-DOCUMENTATION_ID"><em>RQT-DOCUMENTATION_ID : Identification of documentation part</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em>DESIGN-DOCUMENTATION_ID : Identification of documentation part</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em>DESIGN-ITEMIZE : Allow splitting the documentation in parts</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-LIST"><em>RQT-LIST : Listing documentation parts</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-LIST"><em>DESIGN-LIST : Listing documentation parts</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-MATRIX"><em>RQT-MATRIX : Auto-generation of a traceability matrix</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em>DESIGN-MATRIX : Auto-generation of a traceability matrix</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em>DESIGN-RELATIONS : Documentation parts can be linked to each other</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-TRACEABILITY"><em>RQT-TRACEABILITY : A plugin for sphinx documentation system, adding traceability</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em>DESIGN-TRACEABILITY : Top level design for mlx.traceability</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-TREE"><em>RQT-TREE : Auto-generation of a traceability tree</em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-TREE"><em>DESIGN-TREE : Auto-generation of a traceability tree</em></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="docutils container">
+<div class="item admonition">
+<p class="admonition-title">Design coverage chart</p>
+</div>
+<p>Statistics: 14 out of 14 covered: 100%<img alt="_images/piechart-a71fc1f4e023fc65b85b777ed7c7e91478dce52484b39052f2b48c6181b64a4a.png" src="_images/piechart-a71fc1f4e023fc65b85b777ed7c7e91478dce52484b39052f2b48c6181b64a4a.png" /></p>
+</div>
+</div>
+<div class="section" id="test-coverage">
+<h3><a class="toc-backref" href="#id5">Test coverage</a><a class="headerlink" href="#test-coverage" title="Permalink to this headline">¶</a></h3>
+<div class="docutils container">
+<div class="item admonition">
+<p class="admonition-title">Trace requirements to test cases</p>
+</div>
+<p>Statistics: 12 out of 14 covered: 85%</p>
+<table class="docutils">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Requirement</p></th>
+<th class="head"><p>Test case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-AUTO_REVERSE"><em class="has_hidden_caption">ITEST-AUTO_REVERSE<span class="popup_caption">Tests automatic creation of reverse relations</span></em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em class="has_hidden_caption">ITEST-CAPTION<span class="popup_caption">Tests caption</span></em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION"><em>UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-COVERAGE"><em class="has_hidden_caption">ITEST-COVERAGE<span class="popup_caption">Tests calculation of coverage for relations between documentation parts.</span></em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-LIST"><em class="has_hidden_caption">ITEST-LIST<span class="popup_caption">Tests listing of documentation parts</span></em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-MATRIX"><em class="has_hidden_caption">ITEST-MATRIX<span class="popup_caption">Tests auto-generation of traceability matrix.</span></em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-RELATED"><em>UTEST_TRACEABLE_COLLECTION-RELATED</em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-TRACEABILITY"><em class="has_hidden_caption">RQT-TRACEABILITY<span class="popup_caption">A plugin for sphinx documentation system, adding traceability</span></em></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="docutils container">
+<div class="item admonition">
+<p class="admonition-title">Chart fetching third label from defaults</p>
+</div>
+<p>Statistics: 12 out of 14 covered: 85%<img alt="_images/piechart-40e07938ec7bfc2cb54f6b1d3768cf47bc785094e392a1d017c085c6f5aeef72.png" src="_images/piechart-40e07938ec7bfc2cb54f6b1d3768cf47bc785094e392a1d017c085c6f5aeef72.png" /></p>
+</div>
+<div class="docutils container">
+<div class="item admonition">
+<p class="admonition-title">Test coverage chart with test results</p>
+</div>
+<p>Statistics: 12 out of 14 covered: 85%<img alt="_images/piechart-b5132dd92bf1a8baccf674dc7980e27d2ecb460d1448cd2253273d340a30b722.png" src="_images/piechart-b5132dd92bf1a8baccf674dc7980e27d2ecb460d1448cd2253273d340a30b722.png" /></p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="design.html" class="btn btn-neutral float-right" title="Software Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="example_usage.html" class="btn btn-neutral float-left" title="Example usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2017, Stein Heselmans
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
