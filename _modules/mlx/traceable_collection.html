@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlx.traceable_collection &mdash; Traceability 7.6.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/hyperlink_colors.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
+        <script type="text/javascript" src="../../_static/traceability.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Traceability
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                7.6.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Sphinx Traceability plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_usage.html">Example usage</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Traceability</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mlx.traceable_collection</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mlx.traceable_collection</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Storage classes for collection of traceable items</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">natsort</span> <span class="kn">import</span> <span class="n">natsorted</span>
+
+<span class="kn">from</span> <span class="nn">mlx.traceability_exception</span> <span class="kn">import</span> <span class="n">MultipleTraceabilityExceptions</span><span class="p">,</span> <span class="n">TraceabilityException</span>
+<span class="kn">from</span> <span class="nn">mlx.traceable_item</span> <span class="kn">import</span> <span class="n">TraceableItem</span>
+
+
+<div class="viewcode-block" id="TraceableCollection"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection">[docs]</a><span class="k">class</span> <span class="nc">TraceableCollection</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Storage for a collection of TraceableItems</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">NO_RELATION_STR</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Initializer for container of traceable items&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relations_sorted</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="TraceableCollection.add_relation_pair"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.add_relation_pair">[docs]</a>    <span class="k">def</span> <span class="nf">add_relation_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forward</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">NO_RELATION_STR</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add a relation pair to the collection</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            forward (str): Keyword for the forward relation</span>
+<span class="sd">            reverse (str): Keyword for the reverse relation, or NO_RELATION_STR for external relations</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># Link forward to reverse relation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">[</span><span class="n">forward</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse</span>
+        <span class="c1"># Link reverse to forward relation</span>
+        <span class="k">if</span> <span class="n">reverse</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">NO_RELATION_STR</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">[</span><span class="n">reverse</span><span class="p">]</span> <span class="o">=</span> <span class="n">forward</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.get_reverse_relation"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.get_reverse_relation">[docs]</a>    <span class="k">def</span> <span class="nf">get_reverse_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forward</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Get the matching reverse relation</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            forward (str): Keyword for the forward relation</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Keyword for the matching reverse relation, or None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">forward</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">[</span><span class="n">forward</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.iter_relations"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.iter_relations">[docs]</a>    <span class="k">def</span> <span class="nf">iter_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Iterate over available relations: naturally sorted</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Naturally sorted list over available relations in the collection</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relations_sorted</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">relations_sorted</span> <span class="o">=</span> <span class="n">natsorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations_sorted</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.add_item"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add a TraceableItem to the list</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            item (TraceableItem): Traceable item to add</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">itemid</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+        <span class="c1"># If the item already exists ...</span>
+        <span class="k">if</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="n">olditem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span>
+            <span class="c1"># ... and it&#39;s not a placeholder, log an error</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">olditem</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;duplicating </span><span class="si">{itemid}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itemid</span><span class="o">=</span><span class="n">itemid</span><span class="p">),</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+            <span class="c1"># ... otherwise, update the item with new content</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">olditem</span><span class="p">)</span>
+        <span class="c1"># add it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">get_id</span><span class="p">()]</span> <span class="o">=</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.get_item"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.get_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemid</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Get a TraceableItem from the list</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            itemid (str): Identification of traceable item to get</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            TraceableItem: Object for traceable item</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.iter_items"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.iter_items">[docs]</a>    <span class="k">def</span> <span class="nf">iter_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Iterate over items: naturally sorted identification</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Sorted iterator over identification of the items in the collection</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">natsorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.has_item"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.has_item">[docs]</a>    <span class="k">def</span> <span class="nf">has_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemid</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Verify if a item with given id is in the collection</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            itemid (str): Identification of item to look for</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the given itemid is in the collection, false otherwise</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.add_relation"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.add_relation">[docs]</a>    <span class="k">def</span> <span class="nf">add_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add relation between two items</span>
+
+<span class="sd">        The function adds the forward and the automatic reverse relation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source_id (str): ID of the source item</span>
+<span class="sd">            relation (str): Relation between source and target item</span>
+<span class="sd">            target_id (str): ID of the target item</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># Add placeholder if source item is unknown</span>
+        <span class="k">if</span> <span class="n">source_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="n">TraceableItem</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span>
+        <span class="c1"># Error if relation is unknown</span>
+        <span class="k">if</span> <span class="n">relation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;Relation </span><span class="si">{name}</span><span class="s1"> not known&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">relation</span><span class="p">),</span> <span class="n">source</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+        <span class="c1"># Add forward relation</span>
+        <span class="n">source</span><span class="o">.</span><span class="n">add_target</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">target_id</span><span class="p">)</span>
+        <span class="c1"># When reverse relation exists, continue to create/adapt target-item</span>
+        <span class="n">reverse_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reverse_relation</span><span class="p">(</span><span class="n">relation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">reverse_relation</span><span class="p">:</span>
+            <span class="c1"># Add placeholder if target item is unknown</span>
+            <span class="k">if</span> <span class="n">target_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+                <span class="n">tgt</span> <span class="o">=</span> <span class="n">TraceableItem</span><span class="p">(</span><span class="n">target_id</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">tgt</span><span class="p">)</span>
+            <span class="c1"># Add reverse relation to target-item</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">target_id</span><span class="p">]</span><span class="o">.</span><span class="n">add_target</span><span class="p">(</span><span class="n">reverse_relation</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.add_attribute_sorting_rule"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.add_attribute_sorting_rule">[docs]</a>    <span class="k">def</span> <span class="nf">add_attribute_sorting_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_regex</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Configures how the attributes of matching items should be sorted.</span>
+
+<span class="sd">        The attributes that are missing from the given list will be sorted alphabetically underneath. The items that</span>
+<span class="sd">        already have their attributes sorted will be returned as a list; used to report a warning.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter_regex (str): Regular expression used to match items to apply the attribute sorting to.</span>
+<span class="sd">            attributes (list): List of attributes (str) in the order they should be sorted on.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Items that already have the order of their attributes configured.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ignored_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">item_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_items</span><span class="p">(</span><span class="n">filter_regex</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item_id</span> <span class="ow">in</span> <span class="n">item_ids</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">attribute_order</span><span class="p">:</span>
+                <span class="n">ignored_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">attribute_order</span> <span class="o">=</span> <span class="n">attributes</span>
+        <span class="k">return</span> <span class="n">ignored_items</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.export"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Exports collection content. The target location of the json file gets created if it doesn&#39;t exist yet.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fname (str): Path to the json file to export</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_items</span><span class="p">():</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.self_test"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.self_test">[docs]</a>    <span class="k">def</span> <span class="nf">self_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notification_item_id</span><span class="p">,</span> <span class="n">docname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Perform self test on collection content</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notification_item_id (str/None): ID of the configured notification item, None if not configured.</span>
+<span class="sd">            docname (str): Document on which to run the self test, None for all.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">notification_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">notification_item_id</span><span class="p">)</span>
+        <span class="c1"># Having no valid relations, is invalid</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;No relations configured&#39;</span><span class="p">,</span> <span class="s1">&#39;configuration&#39;</span><span class="p">)</span>
+        <span class="c1"># Validate each item</span>
+        <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
+            <span class="c1"># Only for relevant items, filtered on document name</span>
+            <span class="k">if</span> <span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()</span> <span class="o">!=</span> <span class="n">docname</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># Check if docname of notification item will be used</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">notification_item</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># On item level</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">self_test</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">TraceabilityException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="c1"># targetted items shall exist, with automatic reverse relation</span>
+            <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">:</span>
+                <span class="c1"># Exception: no reverse relation (external links)</span>
+                <span class="n">rev_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reverse_relation</span><span class="p">(</span><span class="n">relation</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">rev_relation</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NO_RELATION_STR</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">for</span> <span class="n">tgt</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">):</span>
+                    <span class="c1"># Target item exists?</span>
+                    <span class="k">if</span> <span class="n">tgt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+                        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TraceabilityException</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{source}</span><span class="s2"> </span><span class="si">{relation}</span><span class="s2"> </span><span class="si">{target}</span><span class="s2">, but </span><span class="si">{target}</span><span class="s2"> is not known&quot;</span>
+                                                            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">itemid</span><span class="p">,</span>
+                                                                    <span class="n">relation</span><span class="o">=</span><span class="n">relation</span><span class="p">,</span>
+                                                                    <span class="n">target</span><span class="o">=</span><span class="n">tgt</span><span class="p">),</span>
+                                                            <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()))</span>
+                        <span class="k">continue</span>
+                    <span class="c1"># Reverse relation exists?</span>
+                    <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">tgt</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">itemid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">rev_relation</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TraceabilityException</span><span class="p">(</span><span class="s2">&quot;No automatic reverse relation: </span><span class="si">{source}</span><span class="s2"> </span><span class="si">{relation}</span><span class="s2"> &quot;</span>
+                                                            <span class="s2">&quot;</span><span class="si">{target}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">tgt</span><span class="p">,</span>
+                                                                              <span class="n">relation</span><span class="o">=</span><span class="n">rev_relation</span><span class="p">,</span>
+                                                                              <span class="n">target</span><span class="o">=</span><span class="n">itemid</span><span class="p">),</span>
+                                                            <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MultipleTraceabilityExceptions</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Convert object to string</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="s1">&#39;Available relations:&#39;</span>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">:</span>
+            <span class="n">reverse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reverse_relation</span><span class="p">(</span><span class="n">relation</span><span class="p">)</span>
+            <span class="n">retval</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="si">{forward}</span><span class="s1">: </span><span class="si">{reverse}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">forward</span><span class="o">=</span><span class="n">relation</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">retval</span>
+
+<div class="viewcode-block" id="TraceableCollection.are_related"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.are_related">[docs]</a>    <span class="k">def</span> <span class="nf">are_related</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">target_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Check if 2 items are related using a list of relationships</span>
+
+<span class="sd">        Placeholders are excluded</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source_id (str): id of the source item</span>
+<span class="sd">            relations (list): list of relations, empty list for wildcard</span>
+<span class="sd">            target_id (str): id of the target item</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if both items are related through the given relationships, false otherwise</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">source_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">source</span> <span class="ow">or</span> <span class="n">source</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">target_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">target_id</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">target</span> <span class="ow">or</span> <span class="n">target</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">relations</span><span class="p">:</span>
+            <span class="n">relations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span><span class="o">.</span><span class="n">is_related</span><span class="p">(</span><span class="n">relations</span><span class="p">,</span> <span class="n">target_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.get_items"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.get_items">[docs]</a>    <span class="k">def</span> <span class="nf">get_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sortattributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Get all items that match a given regular expression</span>
+
+<span class="sd">        Placeholders are excluded</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            regex (str): Regex to match the items in this collection against</span>
+<span class="sd">            attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against</span>
+<span class="sd">            sortattributes (list): List of attributes on which to alphabetically sort the items</span>
+<span class="sd">            reverse (bool): True for reverse sorting</span>
+<span class="sd">            sort (bool): When sortattributes is falsy: True to enable natural sorting, False to disable sorting</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A sorted list of item-id&#39;s matching the given regex. Sorting is done naturally when sortattributes is</span>
+<span class="sd">            unused.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span><span class="o">.</span><span class="n">is_match</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="ow">and</span> \
+                    <span class="p">(</span><span class="ow">not</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span><span class="o">.</span><span class="n">attributes_match</span><span class="p">(</span><span class="n">attributes</span><span class="p">)):</span>
+                <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sortattributes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">itemid</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">sortattributes</span><span class="p">),</span>
+                          <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">sort</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">matches</span></div>
+
+<div class="viewcode-block" id="TraceableCollection.get_external_targets"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.get_external_targets">[docs]</a>    <span class="k">def</span> <span class="nf">get_external_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">relation</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Get all external targets for a given external relation with the IDs of their linked internal items</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            regex (str): Regex to match the external target</span>
+<span class="sd">            relation (str): External relation</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Dictionary mapping external targets to the IDs of their linked internal items</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">external_targets_to_item_ids</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">item_id</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">external_targets_to_item_ids</span><span class="p">:</span>
+                    <span class="n">external_targets_to_item_ids</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item_id</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">external_targets_to_item_ids</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">external_targets_to_item_ids</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2017, Stein Heselmans
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

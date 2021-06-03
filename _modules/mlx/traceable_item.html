@@ -1,0 +1,603 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mlx.traceable_item &mdash; Traceability 7.6.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/hyperlink_colors.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
+        <script type="text/javascript" src="../../_static/traceability.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Traceability
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                7.6.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Sphinx Traceability plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_usage.html">Example usage</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Traceability</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mlx.traceable_item</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mlx.traceable_item</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Storage classes for traceable item</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">natsort</span> <span class="kn">import</span> <span class="n">natsorted</span>
+<span class="kn">from</span> <span class="nn">mlx.traceable_base_class</span> <span class="kn">import</span> <span class="n">TraceableBaseClass</span>
+<span class="kn">from</span> <span class="nn">mlx.traceability_exception</span> <span class="kn">import</span> <span class="n">TraceabilityException</span>
+
+
+<div class="viewcode-block" id="TraceableItem"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem">[docs]</a><span class="k">class</span> <span class="nc">TraceableItem</span><span class="p">(</span><span class="n">TraceableBaseClass</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Storage for a traceable documentation item</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">STRING_TEMPLATE</span> <span class="o">=</span> <span class="s1">&#39;Item </span><span class="si">{identification}</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">defined_attributes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_id</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Initializes a new traceable item</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            item_id (str): Item identifier.</span>
+<span class="sd">            placeholder (bool): Internal use only.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TraceableItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attribute_order</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_placeholder</span> <span class="o">=</span> <span class="n">placeholder</span>
+
+<div class="viewcode-block" id="TraceableItem.update"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Updates item with other object. Stores the sum of both objects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (TraceableItem): Other TraceableItem which is the source for the update.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TraceableItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_relations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_relations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">)</span>
+        <span class="c1"># Remainder of fields: update if they improve the quality of the item</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">attributes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_attribute</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">attr</span><span class="p">],</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">other</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_placeholder</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_add_relations</span><span class="p">(</span><span class="n">relations_of_self</span><span class="p">,</span> <span class="n">relations_of_other</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds all relations from other item to own relations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            relations_of_self (dict): Dictionary used to add relations to.</span>
+<span class="sd">            relations_of_other (dict): Dictionary used to fetch relations from.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">relations_of_other</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">relation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">relations_of_self</span><span class="p">:</span>
+                <span class="n">relations_of_self</span><span class="p">[</span><span class="n">relation</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">relations_of_self</span><span class="p">[</span><span class="n">relation</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">relations_of_other</span><span class="p">[</span><span class="n">relation</span><span class="p">])</span>
+
+<div class="viewcode-block" id="TraceableItem.is_placeholder"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.is_placeholder">[docs]</a>    <span class="k">def</span> <span class="nf">is_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Gets whether the item is a placeholder or not.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the item is a placeholder, False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_placeholder</span></div>
+
+<div class="viewcode-block" id="TraceableItem.add_target"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.add_target">[docs]</a>    <span class="k">def</span> <span class="nf">add_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds a relation to another traceable item.</span>
+
+<span class="sd">        Note: using this API, the automatic reverse relation is not created. Adding the relation</span>
+<span class="sd">        through the TraceableItemCollection class performs the adding of automatic reverse</span>
+<span class="sd">        relations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            relation (str): Name of the relation.</span>
+<span class="sd">            target (str): Item identification of the targeted traceable item.</span>
+<span class="sd">            implicit (bool): If True, an explicitly expressed relation is added here. If false, an implicite</span>
+<span class="sd">                             (e.g. automatic reverse) relation is added here.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># When target is the item itself, it is an error: no circular relationships</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;circular relationship </span><span class="si">{src}</span><span class="s1"> </span><span class="si">{rel}</span><span class="s1"> </span><span class="si">{tgt}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span>
+                                                                                         <span class="n">rel</span><span class="o">=</span><span class="n">relation</span><span class="p">,</span>
+                                                                                         <span class="n">tgt</span><span class="o">=</span><span class="n">target</span><span class="p">),</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+        <span class="c1"># When relation is already explicit, we shouldn&#39;t add. It is an error.</span>
+        <span class="k">if</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span> <span class="ow">and</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;duplicating </span><span class="si">{src}</span><span class="s1"> </span><span class="si">{rel}</span><span class="s1"> </span><span class="si">{tgt}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span>
+                                                                               <span class="n">rel</span><span class="o">=</span><span class="n">relation</span><span class="p">,</span>
+                                                                               <span class="n">tgt</span><span class="o">=</span><span class="n">target</span><span class="p">),</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+        <span class="c1"># When relation is already implicit, we shouldn&#39;t add. When relation-to-add is explicit, it should move</span>
+        <span class="c1"># from implicit to explicit.</span>
+        <span class="k">elif</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span> <span class="ow">and</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">implicit</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_remove_target</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_target</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="c1"># Otherwise it is a new relation, and we add to the selected database</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span> <span class="k">if</span> <span class="n">implicit</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_target</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_add_target</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds a relation to another traceable item.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            database (dict): Dictionary to add the relation to.</span>
+<span class="sd">            relation (str): Name of the relation.</span>
+<span class="sd">            target (str): Item identification of the targeted traceable item.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">relation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">database</span><span class="p">:</span>
+            <span class="n">database</span><span class="p">[</span><span class="n">relation</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">database</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+            <span class="n">database</span><span class="p">[</span><span class="n">relation</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_remove_target</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Deletes a relation to another traceable item.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            relation (str): Name of the relation.</span>
+<span class="sd">            target (str): Item identification of the targeted traceable item.</span>
+<span class="sd">            database (dict): Dictionary to remove the relation from.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">database</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">database</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+                <span class="n">database</span><span class="p">[</span><span class="n">relation</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TraceableItem.remove_targets"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.remove_targets">[docs]</a>    <span class="k">def</span> <span class="nf">remove_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_id</span><span class="p">,</span> <span class="n">explicit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Removes any relation to given target item.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_id (str): Identification of the target items to remove.</span>
+<span class="sd">            explicit (bool): If True, explicitly expressed relations to given target are removed.</span>
+<span class="sd">            implicit (bool): If True, implicitly expressed relations to given target are removed.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">source_databases</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">explicit</span><span class="p">:</span>
+            <span class="n">source_databases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">implicit</span><span class="p">:</span>
+            <span class="n">source_databases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">database</span> <span class="ow">in</span> <span class="n">source_databases</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">database</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">target_id</span> <span class="ow">in</span> <span class="n">database</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+                    <span class="n">database</span><span class="p">[</span><span class="n">relation</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">target_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TraceableItem.iter_targets"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.iter_targets">[docs]</a>    <span class="k">def</span> <span class="nf">iter_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">explicit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Gets a list of targets to other traceable item(s), naturally sorted by default.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            relation (str): Name of the relation.</span>
+<span class="sd">            explicit (bool): If True, explicitly expressed relations are included in the returned list.</span>
+<span class="sd">            implicit (bool): If True, implicitly expressed relations are included in the returned list.</span>
+<span class="sd">            sort (bool): True if the relations should be sorted naturally, False if no sorting is needed</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of targets to other traceable item(s), naturally sorted by default</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">explicit</span> <span class="ow">and</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">:</span>
+            <span class="n">targets</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">implicit</span> <span class="ow">and</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">:</span>
+            <span class="n">targets</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">targets</span></div>
+
+<div class="viewcode-block" id="TraceableItem.iter_relations"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.iter_relations">[docs]</a>    <span class="k">def</span> <span class="nf">iter_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Iterates over available relations: naturally sorted by default.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sort (bool): True if the relations should be sorted naturally, False if no sorting is needed</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List containing available relations in the item, naturally sorted by default</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">relations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">relations</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">relations</span></div>
+
+<div class="viewcode-block" id="TraceableItem.define_attribute"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.define_attribute">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">define_attribute</span><span class="p">(</span><span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Defines an attribute that can be assigned to traceable items.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attr (TraceableAttribute): Attribute to be assigned.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">TraceableItem</span><span class="o">.</span><span class="n">defined_attributes</span><span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">get_id</span><span class="p">()]</span> <span class="o">=</span> <span class="n">attr</span></div>
+
+<div class="viewcode-block" id="TraceableItem.add_attribute"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.add_attribute">[docs]</a>    <span class="k">def</span> <span class="nf">add_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds an attribute key-value pair to the traceable item.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The given attribute value is compared against defined attribute possibilities. An exception is thrown when</span>
+<span class="sd">            the attribute value doesn&#39;t match the defined regex.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attr (str): Name of the attribute.</span>
+<span class="sd">            value (str): Value of the attribute.</span>
+<span class="sd">            overwrite (bool): Overwrite existing attribute value, if any.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">TraceableItem</span><span class="o">.</span><span class="n">defined_attributes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;item </span><span class="si">{item}</span><span class="s1"> has invalid attribute (</span><span class="si">{attr}</span><span class="s1">=</span><span class="si">{value}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span>
+                                                                                                    <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">,</span>
+                                                                                                    <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">),</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">TraceableItem</span><span class="o">.</span><span class="n">defined_attributes</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span><span class="o">.</span><span class="n">can_accept</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;item </span><span class="si">{item}</span><span class="s1"> attribute does not match defined attributes (</span><span class="si">{attr}</span><span class="s1">=</span><span class="si">{value}</span><span class="s1">)&#39;</span>
+                                        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span> <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">),</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">or</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="TraceableItem.remove_attribute"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.remove_attribute">[docs]</a>    <span class="k">def</span> <span class="nf">remove_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Removes an attribute key-value pair from the traceable item.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attr (str): Name of the attribute.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;item </span><span class="si">{item}</span><span class="s1">: cannot remove invalid attribute </span><span class="si">{attr}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span>
+                                                                                                     <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">),</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TraceableItem.get_attribute"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.get_attribute">[docs]</a>    <span class="k">def</span> <span class="nf">get_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Gets the value of an attribute from the traceable item.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attr (str): Name of the attribute.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Value matching the given attribute key, or &#39;&#39; if attribute does not exist.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TraceableItem.get_attributes"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.get_attributes">[docs]</a>    <span class="k">def</span> <span class="nf">get_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Gets the values of a list of attributes from the traceable item.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attr (list): List of names of the attribute</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of values of the given attributes, &#39;&#39; is used as value for each attribute that does not exist</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TraceableItem.iter_attributes"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.iter_attributes">[docs]</a>    <span class="k">def</span> <span class="nf">iter_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Iterates over available attributes.</span>
+
+<span class="sd">        Sorted as configured by an attribute-sort directive, with the remaining attributes naturally sorted.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Sorted list containing available attributes in the item.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">sorted_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">attr</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribute_order</span> <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">]</span>
+        <span class="n">sorted_attributes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">natsorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attribute_order</span><span class="p">))))</span>
+        <span class="k">return</span> <span class="n">sorted_attributes</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">explicit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Converts object to string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            explicit (bool)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: String representation of the item.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="n">TraceableItem</span><span class="o">.</span><span class="n">STRING_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">identification</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span>
+        <span class="n">retval</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Placeholder: </span><span class="si">{placeholder}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Attribute </span><span class="si">{attribute}</span><span class="s1"> = </span><span class="si">{value}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="o">=</span><span class="n">attribute</span><span class="p">,</span>
+                                                                   <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">attribute</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">explicit</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_relations_to_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">,</span> <span class="s1">&#39;Explicit&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">implicit</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_relations_to_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">,</span> <span class="s1">&#39;Implicit&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">retval</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_relations_to_str</span><span class="p">(</span><span class="n">relations</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns the string represtentation of the given relations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            relations (dict): Dictionary of relations.</span>
+<span class="sd">            description (str): Description of the kind of relations.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">relations</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="si">{text}</span><span class="s1"> </span><span class="si">{relation}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="n">relation</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">tgtid</span> <span class="ow">in</span> <span class="n">relations</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+                <span class="n">retval</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t\t</span><span class="si">{target}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">tgtid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">retval</span>
+
+<div class="viewcode-block" id="TraceableItem.is_match"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.is_match">[docs]</a>    <span class="k">def</span> <span class="nf">is_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Checks if the item matches a given regular expression.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            regex (str): Regex to match the given item against.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the given regex matches the item identification.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="TraceableItem.attributes_match"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.attributes_match">[docs]</a>    <span class="k">def</span> <span class="nf">attributes_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Checks if item matches a given set of attributes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attributes (dict): Dictionary with attribute-regex pairs to match the given item against.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the given attributes match the item attributes.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">attributes</span><span class="p">[</span><span class="n">attr</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="n">attr</span><span class="p">)):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TraceableItem.is_related"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.is_related">[docs]</a>    <span class="k">def</span> <span class="nf">is_related</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">target_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Checks if a given item is related using a list of relationships.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            relations (list): List of relations.</span>
+<span class="sd">            target_id (str): Identifier of the target item.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if given item is related through the given relationships, False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">relations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">explicit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TraceableItem.has_relations"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.has_relations">[docs]</a>    <span class="k">def</span> <span class="nf">has_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relations</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Checks if the item has every relationship in given list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            relations (list): List of relations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the item has every relationship in given list of list is empty, False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">own_relations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_relations</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">relations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">relation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">own_relations</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TraceableItem.to_dict"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Exports item to a dictionary.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Dictionary representation of the object.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TraceableItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;targets&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_relations</span><span class="p">():</span>
+                <span class="n">tgts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tgts</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;targets&#39;</span><span class="p">][</span><span class="n">relation</span><span class="p">]</span> <span class="o">=</span> <span class="n">tgts</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="TraceableItem.self_test"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_item.TraceableItem.self_test">[docs]</a>    <span class="k">def</span> <span class="nf">self_test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Performs self-test on collection content.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TraceabilityException: Item is not defined.</span>
+<span class="sd">            TraceabilityException: Item has an invalid attribute value.</span>
+<span class="sd">            TraceabilityException: Duplicate target found for item.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TraceableItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">self_test</span><span class="p">()</span>
+        <span class="c1"># Item should not be a placeholder</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;item </span><span class="si">{item}</span><span class="s1"> is not defined&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+        <span class="c1"># Item&#39;s attributes should be valid, empty string is allowed</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_attributes</span><span class="p">():</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">TraceableItem</span><span class="o">.</span><span class="n">defined_attributes</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span><span class="o">.</span><span class="n">can_accept</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;item </span><span class="si">{item}</span><span class="s1"> has invalid attribute value for </span><span class="si">{attribute}</span><span class="s1">&#39;</span>
+                                            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span> <span class="n">attribute</span><span class="o">=</span><span class="n">attribute</span><span class="p">))</span>
+        <span class="c1"># Targets should have no duplicates</span>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_relations</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">tgts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">cnt_duplicate</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tgts</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">tgts</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">cnt_duplicate</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{cnt}</span><span class="s1"> duplicate target(s) found for </span><span class="si">{item}</span><span class="s1"> </span><span class="si">{relation}</span><span class="s1">)&#39;</span>
+                                            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cnt</span><span class="o">=</span><span class="n">cnt_duplicate</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span> <span class="n">relation</span><span class="o">=</span><span class="n">relation</span><span class="p">),</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2017, Stein Heselmans
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
