@@ -1,5 +1,7 @@
 from docutils import nodes
 from docutils.parsers.rst import directives
+from docutils.statemachine import ViewList
+from sphinx.util.nodes import nested_parse_with_titles
 
 from mlx.traceability_exception import report_warning, TraceabilityException
 from mlx.traceable_base_directive import TraceableBaseDirective
@@ -150,23 +152,23 @@ class ItemDirective(TraceableBaseDirective):
         if app.config.traceability_collapse_links:
             item_node['classes'].append('collapse')
 
-        target_node = self._store_item_info(target_id, env)
+        template = ViewList()
+        for line in self.content:
+            template.append(line, env.docname, self.lineno)
+        p_node = nodes.paragraph()
+        nested_parse_with_titles(self.state, template, p_node)
+
+        target_node = self._store_item_info(target_id, env, p_node)
 
         # Custom callback for modifying items
         if app.config.traceability_callback_per_item:
             app.config.traceability_callback_per_item(target_id, env.traceability_collection)
 
-        # Output content of item to document
-        template = []
-        for line in self.content:
-            template.append('    ' + line)
-        self.state_machine.insert_input(template, self.state_machine.document.attributes['source'])
-
         self.check_caption_flags(item_node, app.config.traceability_item_no_captions)
 
-        return [target_node, item_node]
+        return [target_node, item_node, p_node]
 
-    def _store_item_info(self, target_id, env):
+    def _store_item_info(self, target_id, env, content_node):
         """ Stores item info and adds TraceableItem to the collection.
 
         Args:
@@ -174,7 +176,7 @@ class ItemDirective(TraceableBaseDirective):
             env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
 
         Returns:
-            (nodes.target) Node object which is bound to the traceable item.
+            nodes.target: Node object that is bound to the traceable item.
         """
         target_node = nodes.target('', '', ids=[target_id])
         item = TraceableItem(target_id)
@@ -182,6 +184,7 @@ class ItemDirective(TraceableBaseDirective):
         item.bind_node(target_node)
         item.set_caption(self.get_caption())
         item.set_content('\n'.join(self.content))
+        item.content_node = content_node
         try:
             env.traceability_collection.add_item(item)
         except TraceabilityException as err:

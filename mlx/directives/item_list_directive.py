@@ -19,15 +19,11 @@ class ItemList(TraceableBaseNode):
         top_node = self.create_top_node(self['title'])
         if item_ids:
             ul_node = nodes.bullet_list()
-            for i in item_ids:
+            for id_ in item_ids:
                 bullet_list_item = nodes.list_item()
-                bullet_list_item.append(self.make_internal_item_ref(app, i))
+                bullet_list_item.append(self.make_internal_item_ref(app, id_))
                 if self['showcontents']:
-                    contents = collection.get_item(i).get_content()
-                    if contents:
-                        p_node = nodes.paragraph(text=contents)
-                        p_node['classes'].append('item-contents')
-                        bullet_list_item.append(p_node)
+                    bullet_list_item.append(collection.get_item(id_).content_node)
                 ul_node.append(bullet_list_item)
             top_node += ul_node
         self.replace_self(top_node)
