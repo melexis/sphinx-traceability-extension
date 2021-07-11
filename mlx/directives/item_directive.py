@@ -157,7 +157,6 @@ class ItemDirective(TraceableBaseDirective):
             template.append(line, env.docname, self.lineno)
         content_node = nodes.block_quote()
         nested_parse_with_titles(self.state, template, content_node)
-
         target_node = self._store_item_info(target_id, content_node, env)
 
         # Custom callback for modifying items
@@ -173,7 +172,7 @@ class ItemDirective(TraceableBaseDirective):
 
         Args:
             target_id (str): Item identifier.
-            content_node (nodes.paragraph):
+            content_node (nodes.blockquote): Blockquote element that contains the item body
             env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
 
         Returns:
