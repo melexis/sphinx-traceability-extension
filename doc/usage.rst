@@ -44,7 +44,7 @@ Documentation items can be defined using the *item* directive, specifying:
 - caption or short description of the documentation item
 - attributes for the documentation item
 - internal/external relationships to other documentation items (details in next paragraph)
-- content of documentation item including any rst content including text, images, formulas, code-blocks, etc.
+- content of documentation item including any RST content, e.g. text, titles, images, formulas, code-blocks
 
 .. code-block:: rest
 
