@@ -155,10 +155,10 @@ class ItemDirective(TraceableBaseDirective):
         template = ViewList()
         for line in self.content:
             template.append(line, env.docname, self.lineno)
-        p_node = nodes.paragraph()
-        nested_parse_with_titles(self.state, template, p_node)
+        content_node = nodes.block_quote()
+        nested_parse_with_titles(self.state, template, content_node)
 
-        target_node = self._store_item_info(target_id, env, p_node)
+        target_node = self._store_item_info(target_id, content_node, env)
 
         # Custom callback for modifying items
         if app.config.traceability_callback_per_item:
@@ -166,13 +166,14 @@ class ItemDirective(TraceableBaseDirective):
 
         self.check_caption_flags(item_node, app.config.traceability_item_no_captions)
 
-        return [target_node, item_node, p_node]
+        return [target_node, item_node, content_node]
 
-    def _store_item_info(self, target_id, env, content_node):
+    def _store_item_info(self, target_id, content_node, env):
         """ Stores item info and adds TraceableItem to the collection.
 
         Args:
             target_id (str): Item identifier.
+            content_node (nodes.paragraph):
             env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
 
         Returns:
