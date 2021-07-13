@@ -288,11 +288,30 @@ The callback is executed while parsing the documentation item from your rst-file
 available at the time this callback executes, the *collection* parameter is a growing collection of documentation
 objects.
 
+.. _traceability_no_callback:
+
 Example of no callback per item:
+================================
 
 .. code-block:: python
 
     traceability_callback_per_item = None
+
+.. _traceability_optional_mandatory:
+
+Example of setting optional attributes mandatory on an item:
+============================================================
+
+The combination of 2 attribute `non_functional` and `functional` can be made mandatory in the example below:
+
+.. code-block:: python
+
+    def traceability_adapt_item(name, collection):
+        item = collection.get_item(name)
+        # When the item is not marked as either functional or non-functional, report a warning
+        if not (('functional' in item.attributes) ^ ('non_functional' in item.attributes)):
+            report_warning("Requirement item {!r} must have either the 'functional' or 'non_functional' attribute"
+                           .format(name), docname=item.docname, lineno=item.lineno)
 
 .. _traceability_config_link_colors:
 
@@ -303,7 +322,7 @@ Custom colors for linked items
 The plugin allows customization of the colors of traceable items in order to easily recognize the type of item which is
 linked to. A dictionary in the configuration file defines the regexp, which is used to match item IDs, as key and a
 tuple of 1-3 color defining strings as value. The first color is used for the default hyperlink state, the second color
-is used for the hover and active states, and the third color is used to override the default color of the visted state.
+is used for the hover and active states, and the third color is used to override the default color of the visited state.
 Leaving a color empty results in the use of the default html style. The top regexp has the highest priority. To support
 Python versions lower than 3.7, we use an :code:`OrderedDict` to have a deterministic order for prioritizing regexes.
 
@@ -332,25 +351,6 @@ In the example below the special item has ID *DOC-NOTIFICATION*.
         'undefined-reference': 'DOC-NOTIFICATION',
     }
 
-
-.. _traceability_optional_mandatory:
-
--------------------------------------------------
-Item callbacks, set optional attributes mandatory
--------------------------------------------------
-
-When using the traceability plugin callback functionality on each item, a combination of 2 attributes
-`non_functional` and `functional` in an item can be made mandatory in the example below.
-
-.. code-block:: python
-
-    item = collection.get_item(name)
-    # When the item is not marked as either functional or non-functional, report a warning
-    if not (('functional' in item.attributes) ^ ('non_functional' in item.attributes)):
-        report_warning("Requirement item {!r} must have either the 'functional' or 'non_functional' attribute"
-                       .format(name), docname=item.docname, lineno=item.lineno)
-
-This example gives a glimpse of what can be achieved in callbacks on items.
 
 .. _traceability_default_config:
 
