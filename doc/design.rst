@@ -315,7 +315,7 @@ Design for mlx.traceability
 
 .. item:: DESIGN-ATTRIBUTES Documentation parts can have attributes
     :depends_on: DESIGN-ITEMIZE
-    :fulfills: RQT-ATTRIBUTES
+    :fulfills: RQT-ATTRIBUTES RQT-ATTRIBUTES_MATRIX
 
     Attributes can be added to the documentation parts.
     Attributes have a key and an optional value.

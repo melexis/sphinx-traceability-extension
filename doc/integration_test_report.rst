@@ -381,6 +381,19 @@ Traceability via intermediate items
     :nocaptions:
     :stats:
 
+.. item-matrix:: Design to test via shown requirements that are split up
+    :source: DESIGN-
+    :intermediate: RQT-
+    :target: UTEST ITEST
+    :sourcetitle: design items
+    :intermediatetitle: requirements
+    :targettitle: unit tests, integration tests
+    :type: fulfills | validated_by
+    :group: bottom
+    :nocaptions:
+    :stats:
+    :splitintermediates:
+
 .. item-matrix:: Fully covered design items
     :source: DESIGN-
     :intermediate: RQT-

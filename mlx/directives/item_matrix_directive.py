@@ -1,5 +1,6 @@
 import re
 from collections import namedtuple, OrderedDict
+from copy import copy, deepcopy
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -17,7 +18,6 @@ def group_choice(argument):
 
 class ItemMatrix(TraceableBaseNode):
     '''Matrix for cross referencing documentation items'''
-    LinkedItems = namedtuple("LinkedItems", "intermediates targets")
 
     def perform_replacement(self, app, collection):
         """
@@ -68,6 +68,7 @@ class ItemMatrix(TraceableBaseNode):
                 mapping_via_intermediate = self.linking_via_intermediate(source_ids, targets_with_ids, collection)
 
         count_covered = 0
+        duplicate_source_count = 0
         rows = Rows([], [], [])
         for source_id in source_ids:
             source_item = collection.get_item(source_id)
@@ -80,15 +81,16 @@ class ItemMatrix(TraceableBaseNode):
             if mapping_via_intermediate:
                 covered = source_id in mapping_via_intermediate
                 if covered:
-                    self.add_all_targets(rights, mapping_via_intermediate[source_id], app,
-                                         show_intermediate=show_intermediate)
+                    args = [rows, left, rights, show_intermediate, app]
+                    duplicate_source_count += self._store_source_via_intermediate(mapping_via_intermediate[source_id],
+                                                                                  *args)
             else:
                 has_external_target = self.add_external_targets(rights, source_item, external_relationships, app)
                 has_internal_target = self.add_internal_targets(rights, source_id, targets_with_ids, relationships,
                                                                 collection, app)
                 covered = has_external_target or has_internal_target
-
-            self._store_row(rows, left, rights, covered, self['onlycovered'])
+            if not (covered and mapping_via_intermediate):
+                self._store_row(rows, left, rights, covered, self['onlycovered'])
 
         if not source_ids:
             # try to use external targets as source
@@ -105,8 +107,8 @@ class ItemMatrix(TraceableBaseNode):
 
         tgroup += self._build_table_body(rows, self['group'])
 
-        count_total = len(rows.covered) + len(rows.uncovered)
-        count_covered = len(rows.covered)
+        count_total = len(rows.covered) + len(rows.uncovered) - duplicate_source_count
+        count_covered = len(rows.covered) - duplicate_source_count
         try:
             percentage = int(100 * count_covered / count_total)
         except ZeroDivisionError:
@@ -152,16 +154,23 @@ class ItemMatrix(TraceableBaseNode):
 
             rights (list): List of empty cells (node.entry) to replace with target links and, when enabled, links to
                 intermediates first
-            linked_items (LinkedItems): Namedtuple that contains all IDs of intermediate and target items
+            linked_items (dict): Mapping of intermediate IDs to the list of sets of target IDs per target
             app (sphinx.application.Sphinx): Sphinx application object
             show_intermediate (bool): True to add a column for intermediate item(s) per source item
         """
         if show_intermediate:
-            for intermediate_id in linked_items.intermediates:
+            for intermediate_id in linked_items:
                 rights[0] += self.make_internal_item_ref(app, intermediate_id)
-        for idx, target_ids in enumerate(linked_items.targets, start=int(show_intermediate)):
-            for target_id in target_ids:
-                rights[idx] += self.make_internal_item_ref(app, target_id)
+
+        # avoid duplicate target IDs in the same cell due to multiple intermediates with the same target item
+        added_ids_per_column = {}
+        for targets in linked_items.values():
+            for idx, target_ids in enumerate(targets):
+                if idx not in added_ids_per_column:
+                    added_ids_per_column[idx] = set()
+                for target_id in target_ids.difference(added_ids_per_column[idx]):
+                    rights[idx + int(show_intermediate)] += self.make_internal_item_ref(app, target_id)
+                    added_ids_per_column[idx].add(target_id)
 
     def add_external_targets(self, rights, source_item, external_relationships, app):
         """ Adds links to external targets for given source to the list of target cells
@@ -213,12 +222,12 @@ class ItemMatrix(TraceableBaseNode):
 
         Args:
             source_ids (list): List of item IDs of source items
-            targets_with_ids (list): List of lists per target, listing target IDs to take into consideration
+            targets_with_ids (list): List of lists, which contain target IDs to take into consideration, per target
             collection (TraceableCollection): Collection of TraceableItems
 
         Returns:
-            dict: Mapping of source IDs as key with as value a namedtuple that contains intermediate
-                and target item IDs (set)
+            dict: Mapping of source IDs as key with as value a mapping of intermediate IDs to
+                the list of sets of target IDs per target
         """
         links_with_relationships = []
         for relationships_str in self['type'].split(' | '):
@@ -269,11 +278,13 @@ class ItemMatrix(TraceableBaseNode):
             source_to_links_map.pop(source_id, None)
         return source_to_links_map
 
-    def _store_targets(self, source_to_links_map, source_ids, targets_with_ids, intermediate_id):
+    @staticmethod
+    def _store_targets(source_to_links_map, source_ids, targets_with_ids, intermediate_id):
         """ Extends given mapping with target IDs per target as value for each source ID as key
 
         Args:
-            source_to_links_map (dict): Mapping of source IDs as key with as value a namedtuple that contains
+            source_to_links_map (dict): Mapping of source IDs as key with as value a mapping of intermediate IDs to
+                the list of sets of target IDs per target
                 intermediate and target item IDs (set)
             source_ids (set): Source IDs to store targets for
             targets_with_ids (list): List of linked target item IDs (set) per target
@@ -281,11 +292,41 @@ class ItemMatrix(TraceableBaseNode):
         """
         for source_id in source_ids:
             if source_id not in source_to_links_map:
-                source_to_links_map[source_id] = self.LinkedItems([intermediate_id], targets_with_ids)
-            else:
-                source_to_links_map[source_id].intermediates.append(intermediate_id)
-                for idx, target_ids in enumerate(targets_with_ids):
-                    source_to_links_map[source_id].targets[idx].update(target_ids)
+                source_to_links_map[source_id] = {}
+            source_to_links_map[source_id][intermediate_id] = targets_with_ids
+
+    def _store_source_via_intermediate(self, linked_items, *args):
+        """ Stores row(s) for a source, linking targets via intermediates
+
+        Args:
+            linked_items (dict): Mapping of all intermediate IDs to the list of sets of target IDs per target
+
+        Returns:
+            int: Number of rows that have been added with a duplicate source ID
+        """
+        duplicate_source_count = 0
+        if self['splitintermediates']:
+            for intermediate, targets in linked_items.items():
+                self._store_row_with_intermediate({intermediate: targets}, *args)
+            duplicate_source_count += len(linked_items) - 1
+        else:
+            self._store_row_with_intermediate(linked_items, *args)
+        return duplicate_source_count
+
+    def _store_row_with_intermediate(self, linked_items, rows, left, empty_rights, show_intermediate, app):
+        """ Stores a row for a source, linking targets via one or all intermediates
+
+        Args:
+            linked_items (dict): Mapping of one or all intermediate IDs to the list of sets of target IDs per target
+            rows (Rows): Rows namedtuple object to extend
+            left (nodes.entry): Leftmost cell with link to the source item
+            empty_rights (list[nodes.entry]): List of cells to fill with links to intermediate and target items
+            show_intermediate (bool): True to add a column for intermediate item(s) per source item
+            app (sphinx.application.Sphinx): Sphinx application object
+        """
+        rights = deepcopy(empty_rights)
+        self.add_all_targets(rights, linked_items, app, show_intermediate=show_intermediate)
+        self._store_row(rows, copy(left), rights, True, self['onlycovered'])
 
     @staticmethod
     def _store_row(rows, left, rights, covered, onlycovered):
@@ -343,11 +384,14 @@ class ItemMatrixDirective(TraceableBaseDirective):
       .. item-matrix:: title
          :target: regexp
          :source: regexp
+         :intermediate: regexp
          :<<attribute>>: regexp
-         :targettitle: Target column header
+         :targettitle: Target column header(s)
          :sourcetitle: Source column header
+         :intermediatetitle: Intermediate column header
          :type: <<relationship>> ...
          :sourcetype: <<relationship>> ...
+         :splitintermediates:
          :group: top | bottom
          :onlycovered:
          :stats:
@@ -365,8 +409,9 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'targettitle': directives.unchanged,
         'sourcetitle': directives.unchanged,
         'intermediatetitle': directives.unchanged,
-        'type': directives.unchanged,  # a string with relationship types separated by space
-        'sourcetype': directives.unchanged,  # a string with relationship types separated by space
+        'type': directives.unchanged,  # relationship types separated by space
+        'sourcetype': directives.unchanged,  # relationship types separated by space
+        'splitintermediates': directives.flag,
         'group': group_choice,
         'onlycovered': directives.flag,
         'coveredintermediates': directives.flag,
@@ -430,6 +475,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.check_option_presence(item_matrix_node, 'onlycovered')
         self.check_option_presence(item_matrix_node, 'coveredintermediates')
         self.check_option_presence(item_matrix_node, 'stats')
+        self.check_option_presence(item_matrix_node, 'splitintermediates')
 
         self.check_caption_flags(item_matrix_node, app.config.traceability_matrix_no_captions)
 
