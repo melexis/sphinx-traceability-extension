@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Integration test report &mdash; Traceability 7.8.1 documentation</title>
+  <title>Integration test report &mdash; Traceability 7.9.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                7.8.1
+                7.9.0
               </div>
             
           
@@ -363,8 +363,10 @@
 </div>
 <blockquote>
 <div><p>This is one item</p>
+<div class="section" id="title">
+<h3>Title<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p>More content</p></li>
+<li><p>More contentt</p></li>
 <li><p>More again</p>
 <blockquote>
 <div><ul class="simple">
@@ -378,6 +380,7 @@
 <p class="admonition-title">Note</p>
 <p>a note</p>
 <p>Yes, a note</p>
+</div>
 </div>
 </div></blockquote>
 <div class="collapsible_links docutils container" id="r002">
@@ -962,37 +965,59 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <ul>
 <li><p><a class="h7f00ff_hb369ff reference external" href="#r001"><em>r001 : First requirement</em></a></p>
-<p class="item-contents">This is one item
-
-- More content
-- More again
-
-    - And nested content
-    - *other* with **emphasis** and
-
-.. note:: a note
-
-    Yes, a note</p>
+<blockquote>
+<div><p>This is one item</p>
+<div class="section" id="title">
+<h4>Title<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>More contentt</p></li>
+<li><p>More again</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>And nested content</p></li>
+<li><p><em>other</em> with <strong>emphasis</strong> and</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>a note</p>
+<p>Yes, a note</p>
+</div>
+</div>
+</div></blockquote>
 </li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="#r002"><em>r002</em></a></p>
-<p class="item-contents">We have to extend this section</p>
+<blockquote>
+<div><p>We have to extend this section</p>
+</div></blockquote>
 </li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="#r003"><em>r003 : The great</em></a></p>
-<p class="item-contents">Clean up all this.</p>
+<blockquote>
+<div><p>Clean up all this.</p>
+</div></blockquote>
 </li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="#r005"><em>r005 : Another (does not show captions on the related items)</em></a></p>
-<p class="item-contents">Clean up all this again</p>
+<blockquote>
+<div><p>Clean up all this again</p>
+</div></blockquote>
 </li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="#r006"><em>r006 : Depends on all</em></a></p>
-<p class="item-contents">To demonstrate that bug #2 is solved</p>
+<blockquote>
+<div><p>To demonstrate that bug #2 is solved</p>
+</div></blockquote>
 </li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="#r007"><em>r007 : Depends on all with stereotypes</em></a></p>
-<p class="item-contents">To demonstrate stereotype usage in relationships.
-
-To demonstrate invalid attribute, X is not valid attribute for ASIL level (should not appear in e.g. item-list).</p>
+<blockquote>
+<div><p>To demonstrate stereotype usage in relationships.</p>
+<p>To demonstrate invalid attribute, X is not valid attribute for ASIL level (should not appear in e.g. item-list).</p>
+</div></blockquote>
 </li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="#r008"><em>r008 : Requirement with invalid reference to other one</em></a></p>
-<p class="item-contents">Ai caramba, this should report a broken link to a non-existing requirement.</p>
+<blockquote>
+<div><p>Ai caramba, this should report a broken link to a non-existing requirement.</p>
+</div></blockquote>
 </li>
 </ul>
 </div>
@@ -1848,9 +1873,9 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
-<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p>
@@ -1901,8 +1926,8 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p>
-<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p>
 </td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
@@ -1938,9 +1963,9 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
-<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p>
 <p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p>
@@ -2002,8 +2027,8 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p>
-<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p>
 </td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
@@ -2094,8 +2119,8 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p>
-<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p>
+<p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p>
 </td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
@@ -2592,17 +2617,18 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -2615,6 +2641,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <th class="head"><p>Assignee</p></th>
 <th class="head"><p>Effort estimation</p></th>
 <th class="head"><p>Non-functional</p></th>
+<th class="head"><p>Functional</p></th>
 <th class="head"><p>Answer</p></th>
 </tr>
 </thead>
@@ -2624,6 +2651,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p>C</p></td>
 <td><p>1</p></td>
 <td><p>Draft</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2642,6 +2670,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r003"><em class="has_hidden_caption">r003<span class="popup_caption">The great</span></em></a></p></td>
 <td><p></p></td>
@@ -2654,11 +2683,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p></td>
 <td><p></p></td>
 <td><p>C</p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2678,11 +2709,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2702,10 +2735,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r100"><em class="has_hidden_caption">r100<span class="popup_caption">A requirement using the ``requirement`` type</span></em></a></p></td>
 <td><p></p></td>
 <td><p>QM</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2727,17 +2762,18 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -2750,6 +2786,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <th class="head"><p>Assignee</p></th>
 <th class="head"><p>Effort estimation</p></th>
 <th class="head"><p>Non-functional</p></th>
+<th class="head"><p>Functional</p></th>
 <th class="head"><p>Answer</p></th>
 </tr>
 </thead>
@@ -2764,11 +2801,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>no</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
 <td><p></p></td>
 <td><p>A</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2789,8 +2828,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em>DESIGN-ATTRIBUTES : Documentation parts can have attributes</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2813,8 +2854,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em>DESIGN-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2837,8 +2880,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em>DESIGN-CAPTION : Brief description of documentation part</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2861,8 +2906,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em>DESIGN-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2885,8 +2932,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em>DESIGN-ITEMIZE : Allow splitting the documentation in parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2909,8 +2958,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em>DESIGN-MATRIX : Auto-generation of a traceability matrix</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2933,8 +2984,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em>DESIGN-TRACEABILITY : Top level design for mlx.traceability</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2957,8 +3010,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABILITY_EXCEPTION"><em>IMPL-TRACEABILITY_EXCEPTION</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -2981,8 +3036,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3005,8 +3062,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-ATTRIBUTES_MATRIX"><em>ITEST-ATTRIBUTES_MATRIX : Tests overview of attributes on documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3029,8 +3088,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-CAPTION"><em>ITEST-CAPTION : Tests caption</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3053,8 +3114,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-LIST"><em>ITEST-LIST : Tests listing of documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3077,8 +3140,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em>ITEST-TREE : Tests auto-generation of a traceability tree.</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3101,8 +3166,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#ITEST-r100"><em>ITEST-r100 : Test a requirement using the ``requirement`` type</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3125,6 +3192,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-AUTO_REVERSE"><em>ITEST_REP-AUTO_REVERSE</em></a></p></td>
 <td><p></p></td>
@@ -3137,8 +3205,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-CAPTION"><em>ITEST_REP-CAPTION : Report with attribute missing from priority list</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3161,6 +3231,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-MATRIX"><em>ITEST_REP-MATRIX</em></a></p></td>
 <td><p></p></td>
@@ -3168,6 +3239,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p>pass</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3185,6 +3257,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-TREE_SCOPE"><em>ITEST_REP-TREE_SCOPE</em></a></p></td>
 <td><p></p></td>
@@ -3197,8 +3270,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#ITEST_REP-r100"><em>ITEST_REP-r100</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3221,8 +3296,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="meeting_notes.html#MOM_ACTION-81340_20200622_1_ACTION_1"><em>MOM_ACTION-81340_20200622_1_ACTION_1 : Caption of action item</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3244,9 +3321,11 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>yes</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#QUE-PACKAGE_TEST"><em>QUE-PACKAGE_TEST : Tested the package</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3268,6 +3347,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>no</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em>QUE-UNIT_TESTS : Added unit tests</em></a></p></td>
@@ -3280,9 +3360,11 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>yes</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE_MEETING-HW_EXECUTION"><em>QUE_MEETING-HW_EXECUTION : Did the test cases execute on actual hardware?</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3305,8 +3387,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE_MEETING-UNIQUE_NAME"><em>QUE_MEETING-UNIQUE_NAME : Does every test case have a unique name?</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3329,8 +3413,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3353,8 +3439,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em>RQT-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3377,8 +3465,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em>RQT-CONTENT : Content of documentation part</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3401,8 +3491,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em>RQT-DOCUMENTATION_ID : Identification of documentation part</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3425,8 +3517,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3449,8 +3543,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em>RQT-MATRIX : Auto-generation of a traceability matrix</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3473,8 +3569,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3497,8 +3595,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em>RQT-TREE : Auto-generation of a traceability tree</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3521,8 +3621,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0002"><em>SRS_0002 : Software saying goodbye</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3545,8 +3647,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0002"><em>SYS_0002 : Saying goodbye</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3569,8 +3673,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION"><em>UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3593,8 +3699,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3617,8 +3725,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-RELATED"><em>UTEST_TRACEABLE_COLLECTION-RELATED</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3641,8 +3751,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3665,8 +3777,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3689,6 +3803,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
 <td><p></p></td>
@@ -3701,8 +3816,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3725,8 +3842,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="#late001"><em>late001</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3749,12 +3868,14 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r002"><em>r002</em></a></p></td>
 <td><p>1</p></td>
 <td><p>C</p></td>
 <td><p></p></td>
 <td><p>Reviewed</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3773,11 +3894,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r005"><em>r005 : Another (does not show captions on the related items)</em></a></p></td>
 <td><p></p></td>
 <td><p>C</p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3797,11 +3920,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r007"><em>r007 : Depends on all with stereotypes</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3821,10 +3946,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r100"><em>r100 : A requirement using the ``requirement`` type</em></a></p></td>
 <td><p></p></td>
 <td><p>QM</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3846,17 +3973,18 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -3869,11 +3997,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <th class="head"><p>Assignee</p></th>
 <th class="head"><p>Effort estimation</p></th>
 <th class="head"><p>Non-functional</p></th>
+<th class="head"><p>Functional</p></th>
 <th class="head"><p>Answer</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-PROCESS"><em class="has_hidden_caption">QUE-PROCESS<span class="popup_caption">Followed the process</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3895,9 +4025,11 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>yes</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-DOCUMENTATION"><em class="has_hidden_caption">QUE-DOCUMENTATION<span class="popup_caption">Added documentation</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3919,9 +4051,11 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>yes</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE_MEETING-HW_EXECUTION"><em class="has_hidden_caption">QUE_MEETING-HW_EXECUTION<span class="popup_caption">Did the test cases execute on actual hardware?</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3944,8 +4078,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#ITEM_MISSING_FROM_CHECKLIST"><em class="has_hidden_caption">ITEM_MISSING_FROM_CHECKLIST<span class="popup_caption">Does not trigger a warning</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3968,8 +4104,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TRACEABILITY"><em class="has_hidden_caption">RQT-TRACEABILITY<span class="popup_caption">A plugin for sphinx documentation system, adding traceability</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -3992,8 +4130,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4016,8 +4156,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4040,8 +4182,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4064,8 +4208,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4088,8 +4234,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4112,8 +4260,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4136,8 +4286,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4160,8 +4312,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4184,8 +4338,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4208,8 +4364,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4232,8 +4390,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4256,8 +4416,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4280,8 +4442,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4304,8 +4468,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABILITY_EXCEPTION"><em>IMPL-TRACEABILITY_EXCEPTION</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4328,8 +4494,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-CAPTION"><em class="has_hidden_caption">ITEST-CAPTION<span class="popup_caption">Tests caption</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4352,8 +4520,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-COVERAGE"><em class="has_hidden_caption">ITEST-COVERAGE<span class="popup_caption">Tests calculation of coverage for relations between documentation parts.</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4376,8 +4546,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4400,8 +4572,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4424,8 +4598,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#ITEST-r100"><em class="has_hidden_caption">ITEST-r100<span class="popup_caption">Test a requirement using the ``requirement`` type</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4448,6 +4624,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-AUTO_REVERSE"><em>ITEST_REP-AUTO_REVERSE</em></a></p></td>
 <td><p></p></td>
@@ -4455,6 +4632,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p>FAIL</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4472,6 +4650,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-MATRIX"><em>ITEST_REP-MATRIX</em></a></p></td>
 <td><p></p></td>
@@ -4479,6 +4658,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p>pass</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4496,6 +4676,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-TREE_SCOPE"><em>ITEST_REP-TREE_SCOPE</em></a></p></td>
 <td><p></p></td>
@@ -4508,8 +4689,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-ATTRIBUTES_MATRIX"><em>ITEST_REP-ATTRIBUTES_MATRIX</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4532,8 +4715,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="#late001"><em>late001</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4556,8 +4741,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="meeting_notes.html#MOM_ACTION-81340_20200622_1_ACTION_1"><em class="has_hidden_caption">MOM_ACTION-81340_20200622_1_ACTION_1<span class="popup_caption">Caption of action item</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4580,8 +4767,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-PERFORMANCE"><em class="has_hidden_caption">RQT-PERFORMANCE<span class="popup_caption">The plugin shall be performant</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4604,8 +4793,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0001"><em class="has_hidden_caption">SRS_0001<span class="popup_caption">Software saying hello</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4628,8 +4819,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0002"><em class="has_hidden_caption">SRS_0002<span class="popup_caption">Software saying goodbye</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4652,8 +4845,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0003"><em class="has_hidden_caption">SYS_0003<span class="popup_caption">Say nothing</span></em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4676,8 +4871,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4700,8 +4897,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4724,8 +4923,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4748,8 +4949,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4772,8 +4975,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4796,8 +5001,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4820,10 +5027,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p></td>
 <td><p></p></td>
 <td><p>A</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4836,6 +5045,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
 <td><p></p></td>
 <td><p>A</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4856,6 +5066,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r003"><em class="has_hidden_caption">r003<span class="popup_caption">The great</span></em></a></p></td>
 <td><p></p></td>
@@ -4868,10 +5079,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em class="has_hidden_caption">QUE-UNIT_TESTS<span class="popup_caption">Added unit tests</span></em></a></p></td>
 <td><p></p></td>
 <td><p>B</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4892,6 +5105,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r002"><em>r002</em></a></p></td>
 <td><p>1</p></td>
@@ -4904,11 +5118,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p></td>
 <td><p></p></td>
 <td><p>C</p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4928,6 +5144,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r008"><em class="has_hidden_caption">r008<span class="popup_caption">Requirement with invalid reference to other one</span></em></a></p></td>
 <td><p></p></td>
@@ -4940,10 +5157,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r100"><em class="has_hidden_caption">r100<span class="popup_caption">A requirement using the ``requirement`` type</span></em></a></p></td>
 <td><p></p></td>
 <td><p>QM</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5020,17 +5239,18 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -5043,6 +5263,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <th class="head"><p>Assignee</p></th>
 <th class="head"><p>Effort estimation</p></th>
 <th class="head"><p>Non-functional</p></th>
+<th class="head"><p>Functional</p></th>
 <th class="head"><p>Answer</p></th>
 </tr>
 </thead>
@@ -5057,11 +5278,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>yes</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
 <td><p></p></td>
 <td><p>A</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5082,6 +5305,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r003"><em>r003 : The great</em></a></p></td>
 <td><p></p></td>
@@ -5094,10 +5318,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em>QUE-UNIT_TESTS : Added unit tests</em></a></p></td>
 <td><p></p></td>
 <td><p>B</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5118,6 +5344,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r002"><em>r002</em></a></p></td>
 <td><p>1</p></td>
@@ -5130,11 +5357,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r005"><em>r005 : Another (does not show captions on the related items)</em></a></p></td>
 <td><p></p></td>
 <td><p>C</p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5154,10 +5383,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r008"><em>r008 : Requirement with invalid reference to other one</em></a></p></td>
 <td><p></p></td>
 <td><p>D</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5178,6 +5409,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -5188,17 +5420,18 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -5211,6 +5444,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <th class="head"><p>Assignee</p></th>
 <th class="head"><p>Effort estimation</p></th>
 <th class="head"><p>Non-functional</p></th>
+<th class="head"><p>Functional</p></th>
 <th class="head"><p>Answer</p></th>
 </tr>
 </thead>
@@ -5219,6 +5453,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p>C</p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5238,12 +5473,14 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
 <td><p>5</p></td>
 <td><p>C</p></td>
 <td><p>1</p></td>
 <td><p>Draft</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5318,7 +5555,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>Answer</p></td>
+<tr class="row-odd"><td><p>Functional</p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Answer</p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5335,17 +5577,18 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -5358,6 +5601,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <th class="head"><p>Assignee</p></th>
 <th class="head"><p>Effort estimation</p></th>
 <th class="head"><p>Non-functional</p></th>
+<th class="head"><p>Functional</p></th>
 <th class="head"><p>Answer</p></th>
 </tr>
 </thead>
@@ -5665,17 +5909,18 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 </div>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
-<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -5688,11 +5933,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <th class="head"><p>Assignee</p></th>
 <th class="head"><p>Effort estimation</p></th>
 <th class="head"><p>Non-functional</p></th>
+<th class="head"><p>Functional</p></th>
 <th class="head"><p>Answer</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-PROCESS"><em>QUE-PROCESS : Followed the process</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5714,9 +5961,11 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>yes</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-DOCUMENTATION"><em>QUE-DOCUMENTATION : Added documentation</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5738,9 +5987,11 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 <td><p>yes</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE_MEETING-HW_EXECUTION"><em>QUE_MEETING-HW_EXECUTION : Did the test cases execute on actual hardware?</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5763,8 +6014,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#ITEM_MISSING_FROM_CHECKLIST"><em>ITEM_MISSING_FROM_CHECKLIST : Does not trigger a warning</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5787,8 +6040,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TRACEABILITY"><em>RQT-TRACEABILITY : A plugin for sphinx documentation system, adding traceability</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5811,8 +6066,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5835,8 +6092,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em>RQT-DOCUMENTATION_ID : Identification of documentation part</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5859,8 +6118,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em>RQT-CAPTION : Brief description of documentation part</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5883,8 +6144,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em>RQT-CONTENT : Content of documentation part</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5907,8 +6170,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5931,8 +6196,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5955,8 +6222,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em>RQT-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -5979,8 +6248,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em>RQT-LIST : Listing documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6003,8 +6274,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em>RQT-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6027,8 +6300,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em>RQT-MATRIX : Auto-generation of a traceability matrix</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6051,8 +6326,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em>RQT-TREE : Auto-generation of a traceability tree</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6075,8 +6352,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6099,8 +6378,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6123,8 +6404,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABILITY_EXCEPTION"><em>IMPL-TRACEABILITY_EXCEPTION</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6147,8 +6430,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-CAPTION"><em>ITEST-CAPTION : Tests caption</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6171,8 +6456,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-COVERAGE"><em>ITEST-COVERAGE : Tests calculation of coverage for relations between documentation parts.</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6195,8 +6482,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-TREE"><em>ITEST-TREE : Tests auto-generation of a traceability tree.</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6219,8 +6508,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="#ITEST-ATTRIBUTES_MATRIX"><em>ITEST-ATTRIBUTES_MATRIX : Tests overview of attributes on documentation parts</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6243,8 +6534,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#ITEST-r100"><em>ITEST-r100 : Test a requirement using the ``requirement`` type</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6267,6 +6560,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-AUTO_REVERSE"><em>ITEST_REP-AUTO_REVERSE</em></a></p></td>
 <td><p></p></td>
@@ -6274,6 +6568,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p>FAIL</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6291,6 +6586,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-MATRIX"><em>ITEST_REP-MATRIX</em></a></p></td>
 <td><p></p></td>
@@ -6298,6 +6594,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p>pass</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6315,6 +6612,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-TREE_SCOPE"><em>ITEST_REP-TREE_SCOPE</em></a></p></td>
 <td><p></p></td>
@@ -6327,8 +6625,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="#ITEST_REP-ATTRIBUTES_MATRIX"><em>ITEST_REP-ATTRIBUTES_MATRIX</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6351,8 +6651,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="#late001"><em>late001</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6375,8 +6677,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="meeting_notes.html#MOM_ACTION-81340_20200622_1_ACTION_1"><em>MOM_ACTION-81340_20200622_1_ACTION_1 : Caption of action item</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6399,8 +6703,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-PERFORMANCE"><em>RQT-PERFORMANCE : The plugin shall be performant</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6423,8 +6729,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0001"><em>SRS_0001 : Software saying hello</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6447,8 +6755,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0002"><em>SRS_0002 : Software saying goodbye</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6471,8 +6781,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0003"><em>SYS_0003 : Say nothing</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6495,8 +6807,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6519,8 +6833,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6543,8 +6859,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6567,8 +6885,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6591,8 +6911,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6615,8 +6937,10 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6639,10 +6963,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
 <td><p></p></td>
 <td><p>A</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6655,6 +6981,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
 <td><p></p></td>
 <td><p>A</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6675,6 +7002,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r003"><em>r003 : The great</em></a></p></td>
 <td><p></p></td>
@@ -6687,10 +7015,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em>QUE-UNIT_TESTS : Added unit tests</em></a></p></td>
 <td><p></p></td>
 <td><p>B</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6711,6 +7041,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r002"><em>r002</em></a></p></td>
 <td><p>1</p></td>
@@ -6723,11 +7054,13 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r005"><em>r005 : Another (does not show captions on the related items)</em></a></p></td>
 <td><p></p></td>
 <td><p>C</p></td>
 <td><p>2</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6747,6 +7080,7 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="#r008"><em>r008 : Requirement with invalid reference to other one</em></a></p></td>
 <td><p></p></td>
@@ -6759,10 +7093,12 @@ To demonstrate invalid attribute, X is not valid attribute for ASIL level (shoul
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="#r100"><em>r100 : A requirement using the ``requirement`` type</em></a></p></td>
 <td><p></p></td>
 <td><p>QM</p></td>
+<td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>

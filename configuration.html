@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Configuration &mdash; Traceability 7.8.1 documentation</title>
+  <title>Configuration &mdash; Traceability 7.9.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                7.8.1
+                7.9.0
               </div>
             
           
@@ -122,7 +122,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#export-to-json">Export to JSON</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#callback-per-item-advanced">Callback per item (advanced)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#callback-per-item-advanced">Callback per item (advanced)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-of-no-callback-per-item">Example of no callback per item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-of-requiring-certain-attributes-on-an-item">Example of requiring certain attributes on an item</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-colors-for-linked-items">Custom colors for linked items</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mapping-of-undefined-references">Mapping of undefined references</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#default-config">Default config</a></li>
@@ -402,7 +406,7 @@ can be enabled by setting the configuration to your JSON-file to export to. Note
 <span id="traceability-config-callback"></span><h2>Callback per item (advanced)<a class="headerlink" href="#callback-per-item-advanced" title="Permalink to this headline">¶</a></h2>
 <p>The plugin allows parsing and modifying documentation objects <em>behind the scenes</em> using a callback. The callback
 has this prototype:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">traceability_my_callback_per_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">traceability_callback_per_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Custom callback on items</span>
 
 <span class="sd">    Args:</span>
@@ -415,9 +419,26 @@ has this prototype:</p>
 <p>The callback is executed while parsing the documentation item from your rst-file. Note that not all items are
 available at the time this callback executes, the <em>collection</em> parameter is a growing collection of documentation
 objects.</p>
-<p>Example of no callback per item:</p>
+<div class="section" id="example-of-no-callback-per-item">
+<span id="traceability-no-callback"></span><h3>Example of no callback per item<a class="headerlink" href="#example-of-no-callback-per-item" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_callback_per_item</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="example-of-requiring-certain-attributes-on-an-item">
+<span id="traceability-optional-mandatory"></span><h3>Example of requiring certain attributes on an item<a class="headerlink" href="#example-of-requiring-certain-attributes-on-an-item" title="Permalink to this headline">¶</a></h3>
+<p>The callback function can modify traceable items, e.g. add attributes. In this example it reports a warning
+when the item doesn’t have either the <cite>functional</cite> or <cite>non-functional</cite> attribute:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlx.traceability</span> <span class="kn">import</span> <span class="n">report_warning</span>
+
+<span class="k">def</span> <span class="nf">traceability_callback_per_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="s1">&#39;functional&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="s1">&#39;non_functional&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="p">)):</span>
+        <span class="n">report_warning</span><span class="p">(</span><span class="s2">&quot;Requirement item </span><span class="si">{!r}</span><span class="s2"> must have either the &#39;functional&#39; or &#39;non_functional&#39; attribute; &quot;</span>
+                       <span class="s2">&quot;adding &#39;functional&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">docname</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">docname</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">lineno</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">add_attribute</span><span class="p">(</span><span class="s1">&#39;functional&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="custom-colors-for-linked-items">
@@ -425,7 +446,7 @@ objects.</p>
 <p>The plugin allows customization of the colors of traceable items in order to easily recognize the type of item which is
 linked to. A dictionary in the configuration file defines the regexp, which is used to match item IDs, as key and a
 tuple of 1-3 color defining strings as value. The first color is used for the default hyperlink state, the second color
-is used for the hover and active states, and the third color is used to override the default color of the visted state.
+is used for the hover and active states, and the third color is used to override the default color of the visited state.
 Leaving a color empty results in the use of the default html style. The top regexp has the highest priority. To support
 Python versions lower than 3.7, we use an <code class="code docutils literal notranslate"><span class="pre">OrderedDict</span></code> to have a deterministic order for prioritizing regexes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_hyperlink_colors</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([</span>
