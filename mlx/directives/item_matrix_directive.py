@@ -285,7 +285,8 @@ class ItemMatrix(TraceableBaseNode):
             source_to_links_map.pop(source_id, None)
         return source_to_links_map
 
-    def _store_targets(self, source_to_links_map, source_ids, targets_with_ids, intermediate_id):
+    @staticmethod
+    def _store_targets(source_to_links_map, source_ids, targets_with_ids, intermediate_id):
         """ Extends given mapping with target IDs per target as value for each source ID as key
 
         Args:
