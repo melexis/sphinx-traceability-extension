@@ -486,6 +486,7 @@ def setup(app):
             'assignee': '^.*$',
             'effort': r'^([\d\.]+(mo|[wdhm]) ?)+$',
             'non_functional': '^.{0}$',
+            'functional': '^.{0}$',
         },
         'env',
     )
@@ -503,6 +504,7 @@ def setup(app):
             'assignee': 'Assignee',
             'effort': 'Effort estimation',
             'non_functional': 'Non-functional',
+            'functional': 'Functional',
         },
         'env',
     )
