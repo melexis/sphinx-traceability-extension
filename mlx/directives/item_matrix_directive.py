@@ -176,10 +176,9 @@ class ItemMatrix(TraceableBaseNode):
             for idx, target_ids in enumerate(targets):
                 if idx not in added_ids_per_column:
                     added_ids_per_column[idx] = set()
-                for target_id in target_ids:
-                    if target_id not in added_ids_per_column[idx]:
-                        rights[idx + int(show_intermediate)] += self.make_internal_item_ref(app, target_id)
-                        added_ids_per_column[idx].add(target_id)
+                for target_id in target_ids.difference(added_ids_per_column[idx]):
+                    rights[idx + int(show_intermediate)] += self.make_internal_item_ref(app, target_id)
+                    added_ids_per_column[idx].add(target_id)
 
     def add_external_targets(self, rights, source_item, external_relationships, app):
         """ Adds links to external targets for given source to the list of target cells
