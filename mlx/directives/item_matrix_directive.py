@@ -314,10 +314,10 @@ class ItemMatrix(TraceableBaseNode):
         return duplicate_source_count
 
     def _store_row_with_intermediate(self, linked_items, rows, left, empty_rights, show_intermediate, app):
-        """ Stores a row for a source, linking targets via one or more intermediates
+        """ Stores a row for a source, linking targets via one or all intermediates
 
         Args:
-            linked_items (dict): Mapping of one or more intermediate IDs to the list of sets of target IDs per target
+            linked_items (dict): Mapping of one or all intermediate IDs to the list of sets of target IDs per target
             rows (Rows): Rows namedtuple object to extend
             left (nodes.entry): Leftmost cell with link to the source item
             empty_rights (list[nodes.entry]): List of cells to fill with links to intermediate and target items
