@@ -1,6 +1,6 @@
 import re
 from collections import namedtuple, OrderedDict
-from copy import copy
+from copy import copy, deepcopy
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -81,22 +81,15 @@ class ItemMatrix(TraceableBaseNode):
             if mapping_via_intermediate:
                 covered = source_id in mapping_via_intermediate
                 if covered:
-                    if self['splitintermediates']:
-                        duplicate_source_count += len(mapping_via_intermediate[source_id]) - 1
-                        for intermediate, targets in mapping_via_intermediate[source_id].items():
-                            self.add_all_targets(rights, {intermediate: targets}, app,
-                                                 show_intermediate=show_intermediate)
-                            self._store_row(rows, copy(left), rights, covered, self['onlycovered'])
-                            rights = [nodes.entry('') for _ in range(number_of_columns - 1)]
-                    else:
-                        self.add_all_targets(rights, mapping_via_intermediate[source_id], app,
-                                             show_intermediate=show_intermediate)
+                    args = [rows, left, rights, show_intermediate, app]
+                    duplicate_source_count += self._store_source_via_intermediate(mapping_via_intermediate[source_id],
+                                                                                  *args)
             else:
                 has_external_target = self.add_external_targets(rights, source_item, external_relationships, app)
                 has_internal_target = self.add_internal_targets(rights, source_id, targets_with_ids, relationships,
                                                                 collection, app)
                 covered = has_external_target or has_internal_target
-            if not (covered and mapping_via_intermediate and self['splitintermediates']):
+            if not (covered and mapping_via_intermediate):
                 self._store_row(rows, left, rights, covered, self['onlycovered'])
 
         if not source_ids:
@@ -301,6 +294,39 @@ class ItemMatrix(TraceableBaseNode):
             if source_id not in source_to_links_map:
                 source_to_links_map[source_id] = {}
             source_to_links_map[source_id][intermediate_id] = targets_with_ids
+
+    def _store_source_via_intermediate(self, linked_items, *args):
+        """ Stores row(s) for a source, linking targets via intermediates
+
+        Args:
+            linked_items (dict): Mapping of all intermediate IDs to the list of sets of target IDs per target
+
+        Returns:
+            int: Number of rows that have been added with a duplicate source ID
+        """
+        duplicate_source_count = 0
+        if self['splitintermediates']:
+            for intermediate, targets in linked_items.items():
+                self._store_row_with_intermediate({intermediate: targets}, *args)
+            duplicate_source_count += len(linked_items) - 1
+        else:
+            self._store_row_with_intermediate(linked_items, *args)
+        return duplicate_source_count
+
+    def _store_row_with_intermediate(self, linked_items, rows, left, empty_rights, show_intermediate, app):
+        """ Stores a row for a source, linking targets via one or more intermediates
+
+        Args:
+            linked_items (dict): Mapping of one or more intermediate IDs to the list of sets of target IDs per target
+            rows (Rows): Rows namedtuple object to extend
+            left (nodes.entry): Leftmost cell with link to the source item
+            empty_rights (list[nodes.entry]): List of cells to fill with links to intermediate and target items
+            show_intermediate (bool): True to add a column for intermediate item(s) per source item
+            app (sphinx.application.Sphinx): Sphinx application object
+        """
+        rights = deepcopy(empty_rights)
+        self.add_all_targets(rights, linked_items, app, show_intermediate=show_intermediate)
+        self._store_row(rows, copy(left), rights, True, self['onlycovered'])
 
     @staticmethod
     def _store_row(rows, left, rights, covered, onlycovered):
