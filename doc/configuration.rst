@@ -275,7 +275,7 @@ has this prototype:
 
 .. code-block:: python
 
-    def traceability_my_callback_per_item(name, collection):
+    def traceability_callback_per_item(name, collection):
         ''' Custom callback on items
 
         Args:
@@ -290,8 +290,8 @@ objects.
 
 .. _traceability_no_callback:
 
-Example of no callback per item:
-================================
+Example of no callback per item
+===============================
 
 .. code-block:: python
 
@@ -299,19 +299,22 @@ Example of no callback per item:
 
 .. _traceability_optional_mandatory:
 
-Example of setting optional attributes mandatory on an item:
-============================================================
+Example of requiring certain attributes on an item
+==================================================
 
-The combination of 2 attribute `non_functional` and `functional` can be made mandatory in the example below:
+The callback function can modify traceable items, e.g. add attributes. In this example it reports a warning
+when the item doesn't have either the `functional` or `non-functional` attribute:
 
 .. code-block:: python
 
-    def traceability_adapt_item(name, collection):
+    from mlx.traceability import report_warning
+
+    def traceability_callback_per_item(name, collection):
         item = collection.get_item(name)
-        # When the item is not marked as either functional or non-functional, report a warning
         if not (('functional' in item.attributes) ^ ('non_functional' in item.attributes)):
-            report_warning("Requirement item {!r} must have either the 'functional' or 'non_functional' attribute"
-                           .format(name), docname=item.docname, lineno=item.lineno)
+            report_warning("Requirement item {!r} must have either the 'functional' or 'non_functional' attribute; "
+                           "adding 'functional'".format(name), docname=item.docname, lineno=item.lineno)
+            item.add_attribute('functional', '')
 
 .. _traceability_config_link_colors:
 
