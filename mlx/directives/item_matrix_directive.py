@@ -18,7 +18,6 @@ def group_choice(argument):
 
 class ItemMatrix(TraceableBaseNode):
     '''Matrix for cross referencing documentation items'''
-    LinkedItems = namedtuple("LinkedItems", "intermediates targets")
 
     def perform_replacement(self, app, collection):
         """
