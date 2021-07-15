@@ -155,21 +155,11 @@ class ItemAttributesMatrixDirective(TraceableBaseDirective):
 
         # Process ``attributes`` option, given as a string with attributes
         # separated by space. It is converted to a list.
-        if 'attributes' in self.options and self.options['attributes']:
-            self._warn_if_comma_separated('attributes', env.docname)
-            node['attributes'] = self.options['attributes'].split()
-        else:
-            node['attributes'] = list(app.config.traceability_attributes)
-        self.remove_unknown_attributes(node['attributes'], 'attribute', env.docname)
+        self.add_attributes(node, 'attributes', 'attribute', list(app.config.traceability_attributes))
 
         # Process ``sort`` option, given as a string with attributes
         # separated by space. It is converted to a list.
-        if 'sort' in self.options and self.options['sort']:
-            self._warn_if_comma_separated('sort', env.docname)
-            node['sort'] = self.options['sort'].split()
-            self.remove_unknown_attributes(node['sort'], 'sorting attribute', env.docname)
-        else:
-            node['sort'] = []
+        self.add_attributes(node, 'sort', 'sorting attribute', [])
 
         self.check_option_presence(node, 'reverse')
         self.check_option_presence(node, 'transpose')

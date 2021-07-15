@@ -51,6 +51,14 @@ class TraceableBaseDirective(Directive, ABC):
         for attr in set(TraceableItem.defined_attributes) & set(self.options) - self.conflicting_options:
             node['filter-attributes'][attr] = self.options[attr]
 
+    def add_attributes(self, node, option, description, default):
+        if option in self.options and self.options[option]:
+            self._warn_if_comma_separated(option, node['document'])
+            node[option] = self.options[option].split()
+            self.remove_unknown_attributes(node[option], description, node['document'])
+        else:
+            node[option] = default
+
     def remove_unknown_attributes(self, attributes, description, docname):
         """ Removes any unknown attributes from the given list while reporting a warning.
 
