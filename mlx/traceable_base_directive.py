@@ -51,6 +51,25 @@ class TraceableBaseDirective(Directive, ABC):
         for attr in set(TraceableItem.defined_attributes) & set(self.options) - self.conflicting_options:
             node['filter-attributes'][attr] = self.options[attr]
 
+    def add_attributes(self, node, option, default, description='attribute'):
+        """ Adds all valid attribute keys in the option's value to the node
+
+        A warning is reported for every unknown attribute and in case of comma- instead of space-separation.
+        If the option is not used or its value is empty, the ``default`` value is used.
+
+        Args:
+            node (TraceableBaseNode): Node object for which to add the attributes to, using ``option`` as key.
+            option (str): Name of the option to look for
+            default (list): Default attributes to use
+            description (str): Describes what kind of attribute it is, to use in warning message
+        """
+        if option in self.options and self.options[option]:
+            self._warn_if_comma_separated(option, node['document'])
+            node[option] = self.options[option].split()
+        else:
+            node[option] = default
+        self.remove_unknown_attributes(node[option], description, node['document'])
+
     def remove_unknown_attributes(self, attributes, description, docname):
         """ Removes any unknown attributes from the given list while reporting a warning.
 
