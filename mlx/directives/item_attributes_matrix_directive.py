@@ -155,11 +155,11 @@ class ItemAttributesMatrixDirective(TraceableBaseDirective):
 
         # Process ``attributes`` option, given as a string with attributes
         # separated by space. It is converted to a list.
-        self.add_attributes(node, 'attributes', 'attribute', list(app.config.traceability_attributes))
+        self.add_attributes(node, 'attributes', list(app.config.traceability_attributes))
 
         # Process ``sort`` option, given as a string with attributes
         # separated by space. It is converted to a list.
-        self.add_attributes(node, 'sort', 'sorting attribute', [])
+        self.add_attributes(node, 'sort', [], description='sorting attribute')
 
         self.check_option_presence(node, 'reverse')
         self.check_option_presence(node, 'transpose')
