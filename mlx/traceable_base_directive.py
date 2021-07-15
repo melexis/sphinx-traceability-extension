@@ -66,9 +66,9 @@ class TraceableBaseDirective(Directive, ABC):
         if option in self.options and self.options[option]:
             self._warn_if_comma_separated(option, node['document'])
             node[option] = self.options[option].split()
-            self.remove_unknown_attributes(node[option], description, node['document'])
         else:
             node[option] = default
+        self.remove_unknown_attributes(node[option], description, node['document'])
 
     def remove_unknown_attributes(self, attributes, description, docname):
         """ Removes any unknown attributes from the given list while reporting a warning.
