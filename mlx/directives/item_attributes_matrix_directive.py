@@ -3,6 +3,7 @@ from docutils.parsers.rst import directives
 
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
+from mlx.traceable_item import TraceableItem
 
 
 class ItemAttributesMatrix(TraceableBaseNode):
@@ -155,7 +156,7 @@ class ItemAttributesMatrixDirective(TraceableBaseDirective):
 
         # Process ``attributes`` option, given as a string with attributes
         # separated by space. It is converted to a list.
-        self.add_attributes(node, 'attributes', list(app.config.traceability_attributes))
+        self.add_attributes(node, 'attributes', list(TraceableItem.defined_attributes))
 
         # Process ``sort`` option, given as a string with attributes
         # separated by space. It is converted to a list.
