@@ -54,8 +54,8 @@ class TraceableBaseDirective(Directive, ABC):
     def add_attributes(self, node, option, default, description='attribute'):
         """ Adds all valid attribute keys in the option's value to the node
 
-        A warning is reported for every unknown attribute. If the option is not used or its value is empty, the
-        ``default`` value is used.
+        A warning is reported for every unknown attribute and in case of comma- instead of space-separation.
+        If the option is not used or its value is empty, the ``default`` value is used.
 
         Args:
             node (TraceableBaseNode): Node object for which to add the attributes to, using ``option`` as key.
