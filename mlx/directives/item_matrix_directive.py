@@ -410,7 +410,13 @@ class ItemMatrix(TraceableBaseNode):
         for attr in attributes:
             cell = nodes.entry('')
             for item in items:
-                cell += nodes.paragraph('', item.get_attribute(attr))
+                if isinstance(item, nodes.paragraph):
+                    attribute_value = '-'
+                else:
+                    attribute_value = item.get_attribute(attr)
+                if not attribute_value:
+                    attribute_value = '-'
+                cell += nodes.paragraph('', attribute_value)
             cells.append(cell)
         return cells
 
