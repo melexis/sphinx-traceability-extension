@@ -351,12 +351,14 @@ class ItemMatrix(TraceableBaseNode):
             source_cell += self.make_internal_item_ref(app, source.get_id())
             source_attribute_cells = self._create_cells_for_attributes([source], self['sourceattributes'])
         if not self['hidesource']:
+            add_source_cell = True
             if self['splitintermediates'] and isinstance(source, TraceableItem) and rows.sorted:
                 previous_row = rows.sorted[0]
                 previous_source_cell = previous_row[0]
                 if source.get_id() in str(previous_source_cell):
                     previous_source_cell['morerows'] = 1 + previous_source_cell.get('morerows', 0)
-            else:
+                    add_source_cell = False
+            if add_source_cell:
                 row += source_cell
         for cell in source_attribute_cells:
             row += cell
