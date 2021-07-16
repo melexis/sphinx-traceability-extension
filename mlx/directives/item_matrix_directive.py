@@ -9,6 +9,7 @@ from natsort import natsorted
 from mlx.traceability_exception import report_warning, TraceabilityException
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
+from mlx.traceable_item import TraceableItem
 
 
 def group_choice(argument):
@@ -350,7 +351,13 @@ class ItemMatrix(TraceableBaseNode):
             source_cell += self.make_internal_item_ref(app, source.get_id())
             source_attribute_cells = self._create_cells_for_attributes([source], self['sourceattributes'])
         if not self['hidesource']:
-            row += source_cell
+            if self['splitintermediates'] and isinstance(source, TraceableItem) and rows.sorted:
+                previous_row = rows.sorted[0]
+                previous_source_cell = previous_row[0]
+                if source.get_id() in str(previous_source_cell):
+                    previous_source_cell['morerows'] = 1 + previous_source_cell.get('morerows', 0)
+            else:
+                row += source_cell
         for cell in source_attribute_cells:
             row += cell
 
