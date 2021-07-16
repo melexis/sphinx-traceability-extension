@@ -526,11 +526,12 @@ class ItemMatrixDirective(TraceableBaseDirective):
 
         number_of_targets = len(item_matrix_node['target'])
         number_of_targettitles = len(item_matrix_node['targettitle'])
-        if number_of_targets > 1 and number_of_targets != number_of_targettitles:
-            report_warning("Item-matrix directive should have the same number of 'target' attributes as 'target-title' "
-                           "attributes. Got target: {targets} and targettitle: {titles}"
-                           .format(targets=item_matrix_node['target'], titles=item_matrix_node['targettitle']),
-                           env.docname, self.lineno)
+        if number_of_targets != number_of_targettitles:
+            raise TraceabilityException(
+                "Item-matrix directive should have the same number of values for the options 'target' and "
+                "'targettitle'. Got target: {targets} and targettitle: {titles}"
+                .format(targets=item_matrix_node['target'], titles=item_matrix_node['targettitle']),
+                docname=env.docname)
 
         if item_matrix_node['type']:
             self.check_relationships(item_matrix_node['type'].replace(' | ', ' ').split(' '), env)
