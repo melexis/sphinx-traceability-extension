@@ -10,3 +10,8 @@
 .wy-nav-content {
     max-width: 1250px;
 }
+
+
+.rst-content table.docutils td:first-child  {
+    border-left-width: 1px;
+}
