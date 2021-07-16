@@ -378,7 +378,7 @@ class ItemMatrix(TraceableBaseNode):
                     items = [nodes.paragraph('')]
                     if number_of_rows == 1 and target_items:
                         items = target_items
-                    elif len(target_items) > row_idx:
+                    elif row_idx < len(target_items):
                         items = [target_items[row_idx]]
                     row += self._create_cell_for_items(items, app)
             # target attributes
