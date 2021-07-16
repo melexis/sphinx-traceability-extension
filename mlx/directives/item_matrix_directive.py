@@ -29,7 +29,7 @@ class ItemMatrix(TraceableBaseNode):
             app: Sphinx application object to use.
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
-        Rows = namedtuple('Rows', "sorted covered uncovered")
+        Rows = namedtuple('Rows', "sorted covered uncovered counters")
         source_ids = collection.get_items(self['source'], attributes=self['filter-attributes'])
         targets_with_ids = []
         for target_regex in self['target']:
@@ -74,9 +74,8 @@ class ItemMatrix(TraceableBaseNode):
             if ' | ' in self['type']:
                 mapping_via_intermediate = self.linking_via_intermediate(source_ids, targets_with_ids, collection)
 
-        count_covered = 0
         duplicate_source_count = 0
-        rows = Rows([], [], [])
+        rows = Rows([], [], [], [0, 0])
         for source_id in source_ids:
             source_item = collection.get_item(source_id)
             if self['sourcetype'] and not source_item.has_relations(self['sourcetype']):
@@ -104,16 +103,16 @@ class ItemMatrix(TraceableBaseNode):
                 # natural sorting on source
                 for ext_source, target_ids in OrderedDict(natsorted(external_targets.items())).items():
                     covered = False
-                    left = nodes.entry()
-                    left += self.make_external_item_ref(app, ext_source, ext_rel)
-                    rights = [nodes.entry('') for _ in range(number_of_columns - 1)]
-                    covered = self._fill_target_cells(app, rights, target_ids)
-                    self._create_and_store_row(rows, left, rights, covered, app)
+                    source_link = self.make_external_item_ref(app, ext_source, ext_rel)
+                    rights = [[] for _ in range(len(self['target']))]
+                    target_items = [collection.get_item(id_) for id_ in target_ids]
+                    covered = self._fill_target_cells(rights, target_items)
+                    self._create_and_store_row(rows, source_link, rights, covered, app)
 
         tgroup += self._build_table_body(rows, self['group'])
 
-        count_total = len(rows.covered) + len(rows.uncovered) - duplicate_source_count
-        count_covered = len(rows.covered) - duplicate_source_count
+        count_total = rows.counters[0] + rows.counters[1] - duplicate_source_count
+        count_covered = rows.counters[0] - duplicate_source_count
         try:
             percentage = int(100 * count_covered / count_total)
         except ZeroDivisionError:
@@ -335,55 +334,91 @@ class ItemMatrix(TraceableBaseNode):
 
         Args:
             rows (Rows): Rows namedtuple object to extend
-            source (TraceableItem|nodes.entry): Traceable source item or cell for source
+            source (TraceableItem|nodes.paragraph): Traceable source item or paragraph with link to it
             right_cells (list): List of lists with intermediate or target items or paragraphs with a link to them
             covered (bool): True if the row shall be stored in the covered attribute, False for uncovered attribute
             app (sphinx.application.Sphinx): Sphinx application object
         """
-        row = nodes.row()
+        source_attribute_cells = self._create_cells_for_attributes(source, self['sourceattributes'])
+        show_source_flag = int(not bool(self['hidesource']))
+        show_intermediate = bool(self['intermediate']) and bool(self['intermediatetitle'])
+        intermediate_items = []
+        if show_intermediate:
+            intermediate_items = right_cells[0]
+        targets_per_target = right_cells[int(bool(self['intermediate'])):]
 
-        # source
-        if isinstance(source, nodes.entry):
-            source_cell = source
-            source_attribute_cells = [nodes.entry() for _ in range(len(self['sourceattributes']))]
-        else:
-            source_cell = nodes.entry()
-            source_cell += self.make_internal_item_ref(app, source.get_id())
-            source_attribute_cells = self._create_cells_for_attributes([source], self['sourceattributes'])
-        if not self['hidesource']:
-            add_source_cell = True
-            if self['splitintermediates'] and isinstance(source, TraceableItem) and rows.sorted:
-                previous_row = rows.sorted[0]
-                previous_source_cell = previous_row[0]
-                if source.get_id() in str(previous_source_cell):
-                    previous_source_cell['morerows'] = 1 + previous_source_cell.get('morerows', 0)
-                    add_source_cell = False
-            if add_source_cell:
-                row += source_cell
-        for cell in source_attribute_cells:
-            row += cell
+        new_rows = []
+        number_of_rows = 1
+        if self['splittargets'] or self['targetattributes']:
+            number_of_rows = max([1] + [len(targets) for targets in targets_per_target])
+        for row_idx in range(number_of_rows):
+            row = nodes.row()
 
-        # intermediate and/or target(s)
-        target_attribute_cells = self._create_cells_for_attributes(right_cells[-1], self['targetattributes'])
-        if self['intermediate'] and not self['intermediatetitle']:
-            right_cells.pop(0)
-        if self['hidetarget']:
-            right_cells.pop(-1)
-        for cell_data in right_cells:
-            row += self._create_cell_for_items(cell_data, app)
-        for cell in target_attribute_cells:
-            row += cell
+            # source
+            new_cell = self._create_cell_for_items([source], app)
+            if not self['hidesource']:
+                if not self._entry_exists(source, rows.sorted + new_rows, 0, app):
+                    row += new_cell
+            # source attributes
+            for col_idx, cell in enumerate(source_attribute_cells, start=show_source_flag):
+                if not self._entry_exists(cell, new_rows, col_idx, app):
+                    row += cell
+            # intermediate
+            if show_intermediate:
+                if intermediate_items:
+                    new_cell = self._create_cell_for_items(intermediate_items, app)
+                    column_index = show_source_flag + len(source_attribute_cells)
+                    if not self._entry_exists(new_cell, new_rows, column_index, app):
+                        row += new_cell
+                else:
+                    row += nodes.entry('')
+            # targets
+            if not self['hidetarget']:
+                for target_items in targets_per_target:
+                    items = [nodes.paragraph('')]
+                    if number_of_rows == 1 and target_items:
+                        items = target_items
+                    elif len(target_items) > row_idx:
+                        items = [target_items[row_idx]]
+                    row += self._create_cell_for_items(items, app)
+            # target attributes
+            target_attribute_cells = []
+            if self['targetattributes']:
+                if right_cells[-1]:
+                    target_item = right_cells[-1][row_idx]
+                else:
+                    target_item = nodes.paragraph('')
+                target_attribute_cells = self._create_cells_for_attributes(target_item, self['targetattributes'])
+            for cell in target_attribute_cells:
+                row += cell
 
-        # store row
+            new_rows.append(row)
+
         if covered:
-            rows.covered.append(row)
-            rows.sorted.append(row)
+            rows.counters[0] += 1
+            rows.covered.extend(new_rows)
+            rows.sorted.extend(new_rows)
         else:
-            rows.uncovered.append(row)
+            rows.counters[1] += 1
+            rows.uncovered.extend(new_rows)
             if not self['onlycovered']:
-                rows.sorted.append(row)
+                rows.sorted.extend(new_rows)
 
-    def _fill_target_cells(self, app, target_cells, item_ids):
+    def _entry_exists(self, entry, rows, col_idx, app):
+        number_of_columns = max([1] + [len(row) for row in rows])
+        if isinstance(entry, TraceableItem):
+            entry = self.make_internal_item_ref(app, entry.get_id())
+        for previous_row in reversed(rows):
+            try:
+                previous_cell = previous_row[col_idx]
+            except IndexError:
+                continue
+            if len(previous_row) == number_of_columns and str(entry) in str(previous_cell):
+                previous_cell['morerows'] = 1 + previous_cell.get('morerows', 0)  # TODO test with group option
+                return True
+        return False
+
+    def _fill_target_cells(self, target_cells, target_items):
         """ Fills target cells with linked items, filtered by target option.
 
         Returns whether the source has been covered or not.
@@ -391,43 +426,41 @@ class ItemMatrix(TraceableBaseNode):
         Args:
             app: Sphinx application object to use
             target_cells (list): List of empty cells
-            item_ids (list): List of item IDs
+            target_items (list): List of target items
 
         Returns:
             bool: True if a target cell contains an item, False otherwise
         """
         covered = False
         for idx, target_regex in enumerate(self['target']):
-            for target_id in item_ids:
-                if re.match(target_regex, target_id):
-                    target_cells[idx].append(self.make_internal_item_ref(app, target_id))
+            for target in target_items:
+                if re.match(target_regex, target.get_id()):
+                    target_cells[idx].append(target)
                     covered = True
         return covered
 
     def _create_cell_for_items(self, cell_data, app):
         cell = nodes.entry('')
         for entry in cell_data:
-            if isinstance(entry, nodes.paragraph):
+            if isinstance(entry, nodes.Node):
                 cell += entry
             else:
                 cell += self.make_internal_item_ref(app, entry.get_id())
         return cell
 
-    @staticmethod
-    def _create_cells_for_attributes(items, attributes):
+    def _create_cells_for_attributes(self, item, attributes):
         cells = []
         for attr in attributes:
-            cell = nodes.entry('')
-            for item in items:
-                if isinstance(item, nodes.paragraph):
-                    attribute_value = '-'
-                else:
-                    attribute_value = item.get_attribute(attr)
-                if not attribute_value:
-                    attribute_value = '-'
-                cell += nodes.paragraph('', attribute_value)
-            cells.append(cell)
+            cells.append(self._create_cell_for_attribute(item, attr))
         return cells
+
+    @staticmethod
+    def _create_cell_for_attribute(item, attribute):
+        cell = nodes.entry('')
+        if not isinstance(item, nodes.paragraph):
+            attribute_value = item.get_attribute(attribute)
+            cell += nodes.paragraph('', attribute_value)
+        return cell
 
 
 class ItemMatrixDirective(TraceableBaseDirective):
@@ -452,6 +485,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
          :hidesource:
          :hidetarget:
          :splitintermediates:
+         :splittargets:
          :group: top | bottom
          :onlycovered:
          :stats:
@@ -476,6 +510,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'hidesource': directives.flag,
         'hidetarget': directives.flag,
         'splitintermediates': directives.flag,
+        'splittargets': directives.flag,
         'group': group_choice,
         'onlycovered': directives.flag,
         'coveredintermediates': directives.flag,
@@ -547,6 +582,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.check_option_presence(item_matrix_node, 'hidesource')
         self.check_option_presence(item_matrix_node, 'hidetarget')
         self.check_option_presence(item_matrix_node, 'splitintermediates')
+        self.check_option_presence(item_matrix_node, 'splittargets')
         self.check_option_presence(item_matrix_node, 'onlycovered')
         self.check_option_presence(item_matrix_node, 'coveredintermediates')
         self.check_option_presence(item_matrix_node, 'stats')
