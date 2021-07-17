@@ -106,7 +106,7 @@ class ItemMatrix(TraceableBaseNode):
                     source_link = self.make_external_item_ref(app, ext_source, ext_rel)
                     rights = [[] for _ in range(len(self['target']))]
                     target_items = [collection.get_item(id_) for id_ in target_ids]
-                    covered = self._fill_target_cells(rights, target_items)
+                    covered = self._add_target_items(rights, target_items)
                     self._create_and_store_row(rows, source_link, rights, covered, app)
 
         tgroup += self._build_table_body(rows, self['group'])
@@ -417,15 +417,14 @@ class ItemMatrix(TraceableBaseNode):
                 return True
         return False
 
-    def _fill_target_cells(self, target_cells, target_items):
-        """ Fills target cells with linked items, filtered by target option.
+    def _add_target_items(self, target_cells, target_items):
+        """ Stores target items after filtering by target option.
 
         Returns whether the source has been covered or not.
 
         Args:
-            app: Sphinx application object to use
-            target_cells (list): List of empty cells
-            target_items (list): List of target items
+            target_cells (list): List of empty lists to fill
+            target_items (list): List of potential target items
 
         Returns:
             bool: True if a target cell contains an item, False otherwise
