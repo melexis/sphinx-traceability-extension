@@ -1,6 +1,6 @@
 import re
 from collections import namedtuple, OrderedDict
-from copy import deepcopy
+from copy import copy, deepcopy
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -9,7 +9,6 @@ from natsort import natsorted
 from mlx.traceability_exception import report_warning, TraceabilityException
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
-from mlx.traceable_item import TraceableItem
 
 
 def group_choice(argument):
@@ -131,8 +130,7 @@ class ItemMatrix(TraceableBaseNode):
         top_node += table
         self.replace_self(top_node)
 
-    @staticmethod
-    def _build_table_body(rows, group):
+    def _build_table_body(self, rows, group):
         """ Creates the table body and fills it with rows, grouping when desired
 
         Args:
@@ -151,13 +149,73 @@ class ItemMatrix(TraceableBaseNode):
         elif group == 'bottom':
             tbody += rows.covered
             tbody += rows.uncovered
+
+        intermediate_idx = 1 + len(self['sourceattributes']) if self['intermediate'] else None
+        target_idxes = []
+        for idx in reversed(range(len(self['target']))):
+            target_idxes.append(-1 * (idx + 1) * (1 + len(self['targetattributes'])))
+
+        cells_to_remove = self._merge_duplicates(tbody, intermediate_idx)
+
+        for row_idx, row in enumerate(tbody):
+            # order of if-statements below is important
+            if self['intermediate'] and (not self['intermediatetitle'] or intermediate_idx in cells_to_remove[row_idx]):
+                row.pop(intermediate_idx)
+            if self['hidesource'] or 0 in cells_to_remove[row_idx]:
+                row.pop(0)
+            if self['hidetarget']:
+                for idx in target_idxes:
+                    row.pop(idx)
         return tbody
 
-    def add_all_targets(self, right_cells, linked_items):
+    @staticmethod
+    def _merge_duplicates(tbody, idx):
+        original_source_cell = None
+        original_intermediate_cell = None
+        prev_row = None
+        duplicate_source_count = 0
+        duplicate_intermediate_count = 0
+        cells_to_remove = {}
+        for row_idx, row in enumerate(tbody):
+            cells_to_remove[row_idx] = []
+            if prev_row is None:
+                prev_row = row
+                continue
+
+            if str(row[0]) in str(prev_row[0]) + str(original_source_cell):
+                if original_source_cell is None:
+                    original_source_cell = prev_row[0]
+                duplicate_source_count += 1
+                cells_to_remove[row_idx].append(0)
+
+                if idx and str(row[idx]) in str(prev_row[idx]) + str(original_intermediate_cell):
+                    if original_intermediate_cell is None:
+                        original_intermediate_cell = prev_row[idx]
+                    duplicate_intermediate_count += 1
+                    cells_to_remove[row_idx].append(idx)
+                else:
+                    if original_intermediate_cell:
+                        original_intermediate_cell['morerows'] = duplicate_intermediate_count
+                    original_intermediate_cell = None
+                    duplicate_intermediate_count = 0
+            else:
+                if original_source_cell:
+                    original_source_cell['morerows'] = duplicate_source_count
+                if original_intermediate_cell:
+                    original_intermediate_cell['morerows'] = duplicate_intermediate_count
+                original_source_cell = None
+                original_intermediate_cell = None
+                duplicate_source_count = 0
+                duplicate_intermediate_count = 0
+            prev_row = row
+        return cells_to_remove
+
+    @staticmethod
+    def add_all_targets(right_cells, linked_items):
         """ Adds intermediate items followed by internal target items
 
-            right_cells (list): List of empty lists to fill with target items and, when enabled,
-                intermediates items first
+        Args:
+            right_cells (list): List of empty lists to fill with intermediates items followed by target items
             linked_items (dict): Mapping of intermediate items to the list of sets of target items per target
         """
         for intermediate_item in linked_items:
@@ -331,6 +389,8 @@ class ItemMatrix(TraceableBaseNode):
     def _create_and_store_row(self, rows, source, right_cells, covered, app):
         """ Stores the leftmost cell and righthand cells in a row in the given Rows object.
 
+        Note that merging and removing cells happens in a later stage.
+
         Args:
             rows (Rows): Rows namedtuple object to extend
             source (TraceableItem|nodes.paragraph): Traceable source item or paragraph with link to it
@@ -339,12 +399,11 @@ class ItemMatrix(TraceableBaseNode):
             app (sphinx.application.Sphinx): Sphinx application object
         """
         source_attribute_cells = self._create_cells_for_attributes(source, self['sourceattributes'])
-        show_source_flag = int(not bool(self['hidesource']))
-        show_intermediate = bool(self['intermediate']) and bool(self['intermediatetitle'])
+        has_intermediate = bool(self['intermediate'])
         intermediate_items = []
-        if show_intermediate:
-            intermediate_items = right_cells[0]
-        targets_per_target = right_cells[int(bool(self['intermediate'])):]
+        if has_intermediate:
+            intermediate_items = right_cells.pop(0)
+        targets_per_target = right_cells
 
         new_rows = []
         number_of_rows = 1
@@ -354,42 +413,33 @@ class ItemMatrix(TraceableBaseNode):
             row = nodes.row()
 
             # source
-            new_cell = self._create_cell_for_items([source], app)
-            if not self['hidesource']:
-                if not self._entry_exists(source, rows.sorted + new_rows, 0, app):
-                    row += new_cell
+            row += self._create_cell_for_items([source], app)
             # source attributes
-            for col_idx, cell in enumerate(source_attribute_cells, start=show_source_flag):
-                if not self._entry_exists(cell, new_rows, col_idx, app):
-                    row += cell
+            for cell in source_attribute_cells:
+                row += copy(cell)
             # intermediate
-            if show_intermediate:
+            if has_intermediate:
                 if intermediate_items:
-                    new_cell = self._create_cell_for_items(intermediate_items, app)
-                    column_index = show_source_flag + len(source_attribute_cells)
-                    if not self._entry_exists(new_cell, new_rows, column_index, app):
-                        row += new_cell
+                    row += self._create_cell_for_items(intermediate_items, app)
                 else:
                     row += nodes.entry('')
             # targets
-            if not self['hidetarget']:
-                for target_items in targets_per_target:
-                    items = [nodes.paragraph('')]
-                    if number_of_rows == 1 and target_items:
-                        items = target_items
-                    elif row_idx < len(target_items):
-                        items = [target_items[row_idx]]
-                    row += self._create_cell_for_items(items, app)
+            for target_items in targets_per_target:
+                items = [nodes.paragraph('')]
+                if number_of_rows == 1 and target_items:
+                    items = target_items
+                elif row_idx < len(target_items):
+                    items = [target_items[row_idx]]
+                row += self._create_cell_for_items(items, app)
             # target attributes
             target_attribute_cells = []
             if self['targetattributes']:
-                if right_cells[-1]:
-                    target_item = right_cells[-1][row_idx]
+                if targets_per_target[-1]:
+                    target_item = targets_per_target[-1][row_idx]
                 else:
                     target_item = nodes.paragraph('')
                 target_attribute_cells = self._create_cells_for_attributes(target_item, self['targetattributes'])
-            for cell in target_attribute_cells:
-                row += cell
+            row += target_attribute_cells
 
             new_rows.append(row)
 
@@ -402,20 +452,6 @@ class ItemMatrix(TraceableBaseNode):
             rows.uncovered.extend(new_rows)
             if not self['onlycovered']:
                 rows.sorted.extend(new_rows)
-
-    def _entry_exists(self, entry, rows, col_idx, app):
-        number_of_columns = max([1] + [len(row) for row in rows])
-        if isinstance(entry, TraceableItem):
-            entry = self.make_internal_item_ref(app, entry.get_id())
-        for previous_row in reversed(rows):
-            try:
-                previous_cell = previous_row[col_idx]
-            except IndexError:
-                continue
-            if len(previous_row) == number_of_columns and str(entry) in str(previous_cell):
-                previous_cell['morerows'] = 1 + previous_cell.get('morerows', 0)  # TODO test with group option
-                return True
-        return False
 
     def _add_target_items(self, target_cells, target_items):
         """ Stores target items after filtering by target option.
