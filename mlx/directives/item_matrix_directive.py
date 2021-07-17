@@ -252,7 +252,8 @@ class ItemMatrix(TraceableBaseNode):
                 has_external_target = True
         return has_external_target
 
-    def add_internal_targets(self, right_cells, source_id, targets_with_ids, relationships, collection):
+    @staticmethod
+    def add_internal_targets(right_cells, source_id, targets_with_ids, relationships, collection):
         """ Adds internal target items for given source to the list of data per column
 
         Args:
