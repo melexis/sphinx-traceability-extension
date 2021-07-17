@@ -599,8 +599,10 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.add_attributes(node, 'targetattributes', [])
         if node['targetattributes'] and len(node['target']) > 1:
             node['targetattributes'] = []
-            report_warning("Item-matrix directive cannot combine 'targetattributes' with more than one 'target'; "
-                           "ignoring 'targetattributes' option", docname=env.docname, lineno=self.lineno)
+            raise TraceabilityException(
+                "Item-matrix directive cannot combine 'targetattributes' with more than one 'target'; "
+                "ignoring 'targetattributes' option",
+                docname=env.docname)
 
         self.check_option_presence(node, 'hidesource')
         self.check_option_presence(node, 'hidetarget')
