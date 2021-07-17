@@ -93,7 +93,7 @@ class ItemMatrix(TraceableBaseNode):
                                                                 collection)
                 covered = has_external_target or has_internal_target
             if not (covered and mapping_via_intermediate):
-                self._create_and_store_row(rows, source_item, rights, covered, app)
+                self._store_data(rows, source_item, rights, covered, app)
 
         if not source_ids:
             # try to use external targets as source
@@ -106,7 +106,7 @@ class ItemMatrix(TraceableBaseNode):
                     rights = [[] for _ in range(len(self['target']))]
                     target_items = [collection.get_item(id_) for id_ in target_ids]
                     covered = self._add_target_items(rights, target_items)
-                    self._create_and_store_row(rows, source_link, rights, covered, app)
+                    self._store_data(rows, source_link, rights, covered, app)
 
         tgroup += self._build_table_body(rows, self['group'])
 
@@ -384,10 +384,10 @@ class ItemMatrix(TraceableBaseNode):
         """
         right_cells = deepcopy(empty_right_cells)
         self.add_all_targets(right_cells, linked_items)
-        self._create_and_store_row(rows, source, right_cells, True, app)
+        self._store_data(rows, source, right_cells, True, app)
 
-    def _create_and_store_row(self, rows, source, right_cells, covered, app):
-        """ Stores the leftmost cell and righthand cells in a row in the given Rows object.
+    def _store_data(self, rows, source, right_cells, covered, app):
+        """ Stores the data in one or more rows in the given Rows object.
 
         Note that merging and removing cells happens in a later stage.
 
