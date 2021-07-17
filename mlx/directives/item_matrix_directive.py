@@ -170,8 +170,7 @@ class ItemMatrix(TraceableBaseNode):
                 if idx not in added_items_per_column:
                     added_items_per_column[idx] = set()
                 for target_item in target_items.difference(added_items_per_column[idx]):
-                    if not self['hidetarget']:
-                        right_cells[idx + 1].append(target_item)
+                    right_cells[idx + 1].append(target_item)
                     added_items_per_column[idx].add(target_item)
 
     def add_external_targets(self, right_cells, source_item, external_relationships, app):
