@@ -173,8 +173,6 @@ class ItemMatrix(TraceableBaseNode):
         original_source_cell = None
         original_intermediate_cell = None
         prev_row = None
-        duplicate_source_count = 0
-        duplicate_intermediate_count = 0
         cells_to_remove = {}
         for row_idx, row in enumerate(tbody):
             cells_to_remove[row_idx] = []
@@ -185,28 +183,19 @@ class ItemMatrix(TraceableBaseNode):
             if str(row[0]) in str(prev_row[0]) + str(original_source_cell):
                 if original_source_cell is None:
                     original_source_cell = prev_row[0]
-                duplicate_source_count += 1
+                original_source_cell['morerows'] = 1 + original_source_cell.get('morerows', 0)
                 cells_to_remove[row_idx].append(0)
 
                 if idx and str(row[idx]) in str(prev_row[idx]) + str(original_intermediate_cell):
                     if original_intermediate_cell is None:
                         original_intermediate_cell = prev_row[idx]
-                    duplicate_intermediate_count += 1
+                    original_intermediate_cell['morerows'] = 1 + original_intermediate_cell.get('morerows', 0)
                     cells_to_remove[row_idx].append(idx)
                 else:
-                    if original_intermediate_cell:
-                        original_intermediate_cell['morerows'] = duplicate_intermediate_count
                     original_intermediate_cell = None
-                    duplicate_intermediate_count = 0
             else:
-                if original_source_cell:
-                    original_source_cell['morerows'] = duplicate_source_count
-                if original_intermediate_cell:
-                    original_intermediate_cell['morerows'] = duplicate_intermediate_count
                 original_source_cell = None
                 original_intermediate_cell = None
-                duplicate_source_count = 0
-                duplicate_intermediate_count = 0
             prev_row = row
         return cells_to_remove
 
