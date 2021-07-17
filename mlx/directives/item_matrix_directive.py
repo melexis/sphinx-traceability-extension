@@ -525,19 +525,19 @@ class ItemMatrixDirective(TraceableBaseDirective):
         env = self.state.document.settings.env
         app = env.app
 
-        item_matrix_node = ItemMatrix('')
-        item_matrix_node['document'] = env.docname
-        item_matrix_node['line'] = self.lineno
+        node = ItemMatrix('')
+        node['document'] = env.docname
+        node['line'] = self.lineno
 
         if self.options.get('class'):
-            item_matrix_node.get('classes').extend(self.options.get('class'))
+            node.get('classes').extend(self.options.get('class'))
 
-        self.process_title(item_matrix_node, 'Traceability matrix of items')
+        self.process_title(node, 'Traceability matrix of items')
 
-        self.add_found_attributes(item_matrix_node)
+        self.add_found_attributes(node)
 
         self.process_options(
-            item_matrix_node,
+            node,
             {
                 'target':            {'default': ['']},
                 'intermediate':      {'default': ''},
@@ -550,43 +550,45 @@ class ItemMatrixDirective(TraceableBaseDirective):
             },
         )
 
-        if item_matrix_node['intermediate'] and ' | ' not in item_matrix_node['type']:
+        if node['intermediate'] and ' | ' not in node['type']:
             raise TraceabilityException("The :intermediate: option is used, expected at least two relationships "
-                                        "separated by ' | ' in the :type: option; got {!r}"
-                                        .format(item_matrix_node['type']),
+                                        "separated by ' | ' in the :type: option; got {!r}".format(node['type']),
                                         docname=env.docname)
 
         # Process ``group`` option, given as a string that is either top or bottom or empty ().
-        item_matrix_node['group'] = self.options.get('group', '')
+        node['group'] = self.options.get('group', '')
 
-        number_of_targets = len(item_matrix_node['target'])
-        number_of_targettitles = len(item_matrix_node['targettitle'])
+        number_of_targets = len(node['target'])
+        number_of_targettitles = len(node['targettitle'])
         if number_of_targets != number_of_targettitles:
             raise TraceabilityException(
                 "Item-matrix directive should have the same number of values for the options 'target' and "
                 "'targettitle'. Got target: {targets} and targettitle: {titles}"
-                .format(targets=item_matrix_node['target'], titles=item_matrix_node['targettitle']),
+                .format(targets=node['target'], titles=node['targettitle']),
                 docname=env.docname)
 
-        if item_matrix_node['type']:
-            self.check_relationships(item_matrix_node['type'].replace(' | ', ' ').split(' '), env)
-        self.check_relationships(item_matrix_node['sourcetype'], env)
+        if node['type']:
+            self.check_relationships(node['type'].replace(' | ', ' ').split(' '), env)
+        self.check_relationships(node['sourcetype'], env)
 
-        self.add_attributes(item_matrix_node, 'sourceattributes', [])
-        self.add_attributes(item_matrix_node, 'targetattributes', [])
-        if item_matrix_node['targetattributes'] and len(item_matrix_node['target']) > 1:
-            item_matrix_node['targetattributes'] = []
+        self.add_attributes(node, 'sourceattributes', [])
+        self.add_attributes(node, 'targetattributes', [])
+        if node['targetattributes'] and len(node['target']) > 1:
+            node['targetattributes'] = []
             report_warning("Item-matrix directive cannot combine 'targetattributes' with more than one 'target'; "
                            "ignoring 'targetattributes' option", docname=env.docname, lineno=self.lineno)
 
-        self.check_option_presence(item_matrix_node, 'hidesource')
-        self.check_option_presence(item_matrix_node, 'hidetarget')
-        self.check_option_presence(item_matrix_node, 'splitintermediates')
-        self.check_option_presence(item_matrix_node, 'splittargets')
-        self.check_option_presence(item_matrix_node, 'onlycovered')
-        self.check_option_presence(item_matrix_node, 'coveredintermediates')
-        self.check_option_presence(item_matrix_node, 'stats')
+        self.check_option_presence(node, 'hidesource')
+        self.check_option_presence(node, 'hidetarget')
+        self.check_option_presence(node, 'splitintermediates')
+        self.check_option_presence(node, 'splittargets')
+        self.check_option_presence(node, 'onlycovered')
+        self.check_option_presence(node, 'coveredintermediates')
+        self.check_option_presence(node, 'stats')
 
-        self.check_caption_flags(item_matrix_node, app.config.traceability_matrix_no_captions)
+        if node['intermediate'] and (node['targetattributes'] or node['splittargets']):
+            node['splitintermediates'] = True
 
-        return [item_matrix_node]
+        self.check_caption_flags(node, app.config.traceability_matrix_no_captions)
+
+        return [node]
