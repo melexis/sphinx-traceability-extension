@@ -183,7 +183,7 @@ class ItemMatrix(TraceableBaseNode):
                 continue
 
             for col_idx, cell in original_cells.items():
-                if str(row[col_idx]) in str(prev_row[col_idx]) + str(cell):
+                if str(row[col_idx]) == str(prev_row[col_idx]):
                     if cell is None:
                         original_cells[col_idx] = prev_row[col_idx]  # do not set `cell`
                     original_cells[col_idx]['morerows'] = 1 + original_cells[col_idx].get('morerows', 0)
