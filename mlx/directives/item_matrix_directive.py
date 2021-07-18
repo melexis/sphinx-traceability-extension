@@ -150,6 +150,16 @@ class ItemMatrix(TraceableBaseNode):
             tbody += rows.covered
             tbody += rows.uncovered
 
+        self._postprocess_tbody(tbody)
+
+        return tbody
+
+    def _postprocess_tbody(self, tbody):
+        """ Merges cells where appropriate to avoid duplication and removes certain columns depending on configuration
+
+        Args:
+            tbody (nodes.tbody): Table body to modify
+        """
         indexes_to_merge = range(1 + len(self['sourceattributes']) + int(bool(self['intermediate'])))
         cells_to_remove = self._set_rowspan(tbody, indexes_to_merge)
 
@@ -169,7 +179,6 @@ class ItemMatrix(TraceableBaseNode):
             if self['hidetarget']:
                 for idx in target_idxes:
                     row.pop(idx)
-        return tbody
 
     @staticmethod
     def _set_rowspan(tbody, indexes):
