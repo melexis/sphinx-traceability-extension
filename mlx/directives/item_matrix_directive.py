@@ -151,7 +151,7 @@ class ItemMatrix(TraceableBaseNode):
             tbody += rows.uncovered
 
         indexes_to_merge = range(1 + len(self['sourceattributes']) + int(bool(self['intermediate'])))
-        cells_to_remove = self._merge_duplicates(tbody, indexes_to_merge)
+        cells_to_remove = self._set_rowspan(tbody, indexes_to_merge)
 
         intermediate_idx = indexes_to_merge[-1] if self['intermediate'] else None
         target_idxes = []
@@ -172,7 +172,16 @@ class ItemMatrix(TraceableBaseNode):
         return tbody
 
     @staticmethod
-    def _merge_duplicates(tbody, indexes):
+    def _set_rowspan(tbody, indexes):
+        """ Sets the 'rowspan' attribute of cells that should span multiple rows to avoid duplication
+
+        Args:
+            tbody (nodes.tbody): Table body
+            indexes (iterable): Range object with indexes of columns to take into account
+
+        Returns:
+            dict: Mapping of row indices to list of column indices, of cells that shall be removed from the table body
+        """
         prev_row = None
         cells_to_remove = {}
         original_cells = {idx: None for idx in indexes}
@@ -331,10 +340,10 @@ class ItemMatrix(TraceableBaseNode):
         Args:
             source_to_links_map (dict): Mapping of source IDs as key with as value a mapping of intermediate items to
                 the list of sets of target IDs per target
-                intermediate and target item IDs (set)
             source_ids (set): Source IDs to store targets for
             targets (list): List of linked target items (set) per target
-            intermediate_item (TraceableItem): Intermediate item that links the given source items to the given target items
+            intermediate_item (TraceableItem): Intermediate item that links the given source items to the given target
+                items
         """
         for source_id in source_ids:
             if source_id not in source_to_links_map:
@@ -366,8 +375,7 @@ class ItemMatrix(TraceableBaseNode):
             linked_items (dict): Mapping of one or all intermediate IDs to the list of sets of target items per target
             rows (Rows): Rows namedtuple object to extend
             source (TraceableItem): Source item
-            empty_right_cells (list): List of empty lists to fill with target items and, when enabled,
-                intermediates items first
+            empty_right_cells (list): List of empty lists to fill with intermediates items, followed by target items
             app (sphinx.application.Sphinx): Sphinx application object
         """
         right_cells = deepcopy(empty_right_cells)
@@ -451,7 +459,7 @@ class ItemMatrix(TraceableBaseNode):
             target_items (list): List of potential target items
 
         Returns:
-            bool: True if a target cell contains an item, False otherwise
+            bool: True if a target item has been stored, False otherwise
         """
         covered = False
         for idx, target_regex in enumerate(self['target']):
@@ -462,6 +470,15 @@ class ItemMatrix(TraceableBaseNode):
         return covered
 
     def _create_cell_for_items(self, cell_data, app):
+        """ Creates a cell with one or more links, creating the link first in case a traceable item is given.
+
+        Args:
+            cell_data (list): List of nodes and/or TraceableItems to add as links to the cell
+            app (sphinx.application.Sphinx): Sphinx application object
+
+        Returns:
+            nodes.entry: Cell filled with one or more links to items
+        """
         cell = nodes.entry('')
         for entry in cell_data:
             if isinstance(entry, nodes.Node):
@@ -471,6 +488,15 @@ class ItemMatrix(TraceableBaseNode):
         return cell
 
     def _create_cells_for_attributes(self, item, attributes):
+        """ Creates a cell with the item's attribute value for each attribute in the given list.
+
+        Args:
+            item (TraceableItem): TraceableItem instance
+            attributes (list): List of attributes (str)
+
+        Returns:
+            list[nodes.entry]: Cells filled with attribute values for the given item
+        """
         cells = []
         for attr in attributes:
             cells.append(self._create_cell_for_attribute(item, attr))
@@ -478,6 +504,15 @@ class ItemMatrix(TraceableBaseNode):
 
     @staticmethod
     def _create_cell_for_attribute(item, attribute):
+        """ Creates a cell with the item's attribute value the given attribute.
+
+        Args:
+            item (TraceableItem): TraceableItem instance
+            attribute (str): Attribute for which to get the value from the given item
+
+        Returns:
+            nodes.entry: Cell filled with attribute value for the given item
+        """
         cell = nodes.entry('')
         if not isinstance(item, nodes.paragraph):
             attribute_value = item.get_attribute(attribute)
