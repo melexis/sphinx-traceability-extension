@@ -150,17 +150,20 @@ class ItemMatrix(TraceableBaseNode):
             tbody += rows.covered
             tbody += rows.uncovered
 
-        intermediate_idx = 1 + len(self['sourceattributes']) if self['intermediate'] else None
+        indexes_to_merge = range(1 + len(self['sourceattributes']) + int(bool(self['intermediate'])))
+        cells_to_remove = self._merge_duplicates(tbody, indexes_to_merge)
+
+        intermediate_idx = indexes_to_merge[-1] if self['intermediate'] else None
         target_idxes = []
         for idx in reversed(range(len(self['target']))):
             target_idxes.append(-1 * (idx + 1) * (1 + len(self['targetattributes'])))
-
-        cells_to_remove = self._merge_duplicates(tbody, intermediate_idx)
-
         for row_idx, row in enumerate(tbody):
             # order of if-statements below is important
             if self['intermediate'] and (not self['intermediatetitle'] or intermediate_idx in cells_to_remove[row_idx]):
                 row.pop(intermediate_idx)
+            for idx in reversed(range(1, 1 + len(self['sourceattributes']))):
+                if idx in cells_to_remove[row_idx]:
+                    row.pop(idx)
             if self['hidesource'] or 0 in cells_to_remove[row_idx]:
                 row.pop(0)
             if self['hidetarget']:
@@ -169,33 +172,28 @@ class ItemMatrix(TraceableBaseNode):
         return tbody
 
     @staticmethod
-    def _merge_duplicates(tbody, idx):
-        original_source_cell = None
-        original_intermediate_cell = None
+    def _merge_duplicates(tbody, indexes):
         prev_row = None
         cells_to_remove = {}
+        original_cells = {idx: None for idx in indexes}
         for row_idx, row in enumerate(tbody):
             cells_to_remove[row_idx] = []
             if prev_row is None:
                 prev_row = row
                 continue
 
-            if str(row[0]) in str(prev_row[0]) + str(original_source_cell):
-                if original_source_cell is None:
-                    original_source_cell = prev_row[0]
-                original_source_cell['morerows'] = 1 + original_source_cell.get('morerows', 0)
-                cells_to_remove[row_idx].append(0)
-
-                if idx and str(row[idx]) in str(prev_row[idx]) + str(original_intermediate_cell):
-                    if original_intermediate_cell is None:
-                        original_intermediate_cell = prev_row[idx]
-                    original_intermediate_cell['morerows'] = 1 + original_intermediate_cell.get('morerows', 0)
-                    cells_to_remove[row_idx].append(idx)
+            for col_idx, cell in original_cells.items():
+                if str(row[col_idx]) in str(prev_row[col_idx]) + str(cell):
+                    if cell is None:
+                        original_cells[col_idx] = prev_row[col_idx]  # do not set `cell`
+                    original_cells[col_idx]['morerows'] = 1 + original_cells[col_idx].get('morerows', 0)
+                    cells_to_remove[row_idx].append(col_idx)
+                elif col_idx == 0:  # new source so reset and move on to next row
+                    original_cells = {idx: None for idx in indexes}
+                    break
                 else:
-                    original_intermediate_cell = None
-            else:
-                original_source_cell = None
-                original_intermediate_cell = None
+                    original_cells[col_idx] = None
+
             prev_row = row
         return cells_to_remove
 
