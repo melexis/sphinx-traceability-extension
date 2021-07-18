@@ -266,9 +266,7 @@ A traceability matrix of documentation items can be generated using:
         :targetattributes: result
         :hidetarget:
         :group: bottom
-        :onlycovered:
         :nocaptions:
-        :onlycaptions:
         :stats:
 
 Documentation items matching their ID to the given *source* regular expression end up in the leftmost column of the
