@@ -610,9 +610,6 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.check_option_presence(node, 'coveredintermediates')
         self.check_option_presence(node, 'stats')
 
-        if node['intermediate'] and (node['targetattributes'] or node['splittargets']):
-            node['splitintermediates'] = True
-
         self.check_caption_flags(node, app.config.traceability_matrix_no_captions)
 
         return [node]
