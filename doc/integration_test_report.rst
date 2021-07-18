@@ -315,6 +315,7 @@ Traceability from SSS to SRS
     :sourcetitle: system requirement
     :type: fulfilled_by
     :stats:
+    :group: top
     :onlycovered:
 
 Another matrix that should spawn a warning as the relation in *type* does not exist
