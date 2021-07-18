@@ -6,7 +6,7 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from natsort import natsorted
 
-from mlx.traceability_exception import report_warning, TraceabilityException
+from mlx.traceability_exception import TraceabilityException
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
 
