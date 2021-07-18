@@ -168,7 +168,7 @@ class ItemMatrix(TraceableBaseNode):
         for idx in reversed(range(len(self['target']))):
             target_idxes.append(-1 * (idx + 1) * (1 + len(self['targetattributes'])))
         for row_idx, row in enumerate(tbody):
-            # order of if-statements below is important
+            # order of if-statements below is important: remove cells from right to left
             if self['intermediate'] and (not self['intermediatetitle'] or intermediate_idx in cells_to_remove[row_idx]):
                 row.pop(intermediate_idx)
             for idx in reversed(range(1, 1 + len(self['sourceattributes']))):
