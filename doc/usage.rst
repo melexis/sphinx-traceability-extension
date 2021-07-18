@@ -262,6 +262,9 @@ A traceability matrix of documentation items can be generated using:
         :type: validated_by
         :sourcetype: fulfilled_by
         :status: Appr
+        :sourceattributes: asil status
+        :targetattributes: result
+        :hidetarget:
         :group: bottom
         :onlycovered:
         :nocaptions:
@@ -319,6 +322,30 @@ limitations in doing so:
     Python-style regular expression used to filter the source items (left column) based on their attributes.
     The attribute value is **not** used as a filter on the *target* part.
     When omitted, no filtering is done on the source item attributes
+
+:sourceattributes: *optional*, *multiple arguments (space-separated)*
+
+    A list of attributes. For each attribute, the value for each source item gets added to the matrix in a new column,
+    after the column that contains the source items.
+
+:targetattributes: *optional*, *multiple arguments (space-separated)*
+
+    A list of attributes. For each attribute, the value for each target item gets added to the matrix in a new column,
+    after the column that contains the target items. This option cannot be enabled when the ``:target:`` contains
+    more than one regex. Note that this option implies ``:splittargets:``.
+
+:splittargets: *optional*, *flag*
+
+    Split up every target item in a separate cell. By default, they are listed in a single cell per source
+    (and per ``:target:`` regex).
+
+:hidesource: *optional*, *flag*
+
+    When enabled, the column with the source items is hidden.
+
+:hidetarget: *optional*, *flag*
+
+    When enabled, all columns with target items are hidden.
 
 :group: *optional*, *choice: top/bottom*
 
