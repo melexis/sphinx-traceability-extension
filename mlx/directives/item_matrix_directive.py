@@ -395,7 +395,7 @@ class ItemMatrix(TraceableBaseNode):
 
         new_rows = []
         number_of_rows = 1
-        if self['splittargets'] or self['targetattributes']:
+        if self['splittargets']:
             number_of_rows = max([1] + [len(targets) for targets in targets_per_target])
         for row_idx in range(number_of_rows):
             row = nodes.row()
@@ -609,6 +609,9 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.check_option_presence(node, 'onlycovered')
         self.check_option_presence(node, 'coveredintermediates')
         self.check_option_presence(node, 'stats')
+
+        if node['targetattributes']:
+            node['splittargets'] = True
 
         self.check_caption_flags(node, app.config.traceability_matrix_no_captions)
 
