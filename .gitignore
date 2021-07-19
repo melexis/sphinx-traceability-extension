@@ -10,6 +10,7 @@ _build/
 doc/_build
 tests/docs/basic/_build
 tests/docs/autodoc/docs/_build
+.vscode
 .tox/
 .cache
 .pytest_cache

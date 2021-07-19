@@ -51,6 +51,7 @@ Other requirements
         Yes, a note
 
 .. item:: r002
+    :ext_toolname: namespace:group:another
     :class: critical
     :status: Reviewed
     :asil: C
@@ -284,6 +285,15 @@ All relationships with items having ASIL-C/D attribute
 
 .. item-matrix:: All ASIL-C/D (with captions)
     :asil: [CD]
+    :splittargets:
+    :group: bottom
+    :stats:
+
+.. item-matrix:: All targets of sources with ASIL-C/D (with captions)
+    :asil: [CD]
+    :hidesource:
+    :splittargets:
+    :group: bottom
     :stats:
 
 Traceability from SRS to SSS
@@ -336,7 +346,19 @@ Traceability from external sources
     :sourcetitle: external items
     :targettitle: internal items
     :type: ext_toolname
+    :targetattributes: asil aspice
     :onlycaptions:
+    :stats:
+
+.. item-matrix:: Some attributes of items with external links
+    :source: namespace
+    :sourcetitle: external items
+    :targettitle: internal items
+    :type: ext_toolname
+    :targetattributes: asil aspice
+    :onlycaptions:
+    :stats:
+    :hidesource:
 
 Traceability from integration tests to requirements
 ---------------------------------------------------
@@ -395,6 +417,33 @@ Traceability via intermediate items
     :stats:
     :splitintermediates:
 
+.. item-matrix:: Design to test via shown requirements with targets split up
+    :source: DESIGN-
+    :intermediate: RQT-
+    :target: UTEST ITEST
+    :sourcetitle: design items
+    :intermediatetitle: requirements
+    :targettitle: unit tests, integration tests
+    :type: fulfills | validated_by
+    :group: top
+    :nocaptions:
+    :stats:
+    :splittargets:
+
+.. item-matrix:: Design to test via shown requirements, all split up
+    :source: DESIGN-
+    :intermediate: RQT-
+    :target: UTEST ITEST
+    :sourcetitle: design items
+    :intermediatetitle: requirements
+    :targettitle: unit tests, integration tests
+    :type: fulfills | validated_by
+    :group: top
+    :nocaptions:
+    :stats:
+    :splitintermediates:
+    :splittargets:
+
 .. item-matrix:: Fully covered design items
     :source: DESIGN-
     :intermediate: RQT-
@@ -403,10 +452,37 @@ Traceability via intermediate items
     :intermediatetitle: requirements
     :targettitle: unit tests, integration tests
     :type: fulfills | validated_by
-    :group: bottom
+    :group: top
     :nocaptions:
     :stats:
     :coveredintermediates:
+
+Source and target attributes
+----------------------------
+
+.. item-matrix:: Basic item matrix with attributes of source and target
+    :sourcetitle: requirements
+    :type: trace ext_toolname
+    :sourceattributes: asil aspice
+    :targetattributes: status asil aspice
+    :onlycovered:
+    :nocaptions:
+    :stats:
+
+.. item-matrix:: Integration test results for requirements
+    :source: RQT-
+    :intermediate: ITEST-
+    :target: ITEST_REP-
+    :hidetarget:
+    :type: validated_by | impacts_on
+    :sourcetitle: requirements
+    :intermediatetitle: integration tests
+    :targettitle: integration tests results
+    :nocaptions:
+    :stats:
+    :targetattributes: result
+    :splitintermediates:
+    :onlycovered:
 
 Item attribute matrix
 =====================
