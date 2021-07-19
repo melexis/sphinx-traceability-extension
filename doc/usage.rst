@@ -353,7 +353,7 @@ limitations in doing so:
 :onlycovered: *optional*, *flag*
 
     By default, all source items are included. By providing the *onlycovered* flag, only covered items are shown in the
-    output.
+    output. This option takes precedence over the ``:group:`` option.
 
 :nocaptions: *optional*, *flag*
 

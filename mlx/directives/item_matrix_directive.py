@@ -108,7 +108,7 @@ class ItemMatrix(TraceableBaseNode):
                     covered = self._add_target_items(rights, target_items)
                     self._store_data(rows, source_link, rights, covered, app)
 
-        tgroup += self._build_table_body(rows, self['group'])
+        tgroup += self._build_table_body(rows, self['group'], self['onlycovered'])
 
         count_total = rows.counters[0] + rows.counters[1] - duplicate_source_count
         count_covered = rows.counters[0] - duplicate_source_count
@@ -130,18 +130,21 @@ class ItemMatrix(TraceableBaseNode):
         top_node += table
         self.replace_self(top_node)
 
-    def _build_table_body(self, rows, group):
-        """ Creates the table body and fills it with rows, grouping when desired
+    def _build_table_body(self, rows, group, onlycovered):
+        """ Creates the table body and fills it with rows, grouping and excluding uncovered source items when desired
 
         Args:
             rows (Rows): Rows namedtuple object
             group (str): Group option, falsy to disable grouping, 'top' or 'bottom' otherwise
+            onlycovered (bool): True to only include source items that are covered; False to include all
 
         Returns:
             nodes.tbody: Filled table body
         """
         tbody = nodes.tbody()
-        if not group:
+        if onlycovered:
+            tbody += rows.covered
+        elif not group:
             tbody += rows.sorted
         elif group == 'top':
             tbody += rows.uncovered
