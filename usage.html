@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 7.9.0 documentation</title>
+  <title>Usage &mdash; Traceability 8.0.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                7.9.0
+                8.0.0
               </div>
             
           
@@ -435,10 +435,11 @@ span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, y
     <span class="nc">:type:</span> validated_by
     <span class="nc">:sourcetype:</span> fulfilled_by
     <span class="nc">:status:</span> Appr
+    <span class="nc">:sourceattributes:</span> asil status
+    <span class="nc">:targetattributes:</span> result
+    <span class="nc">:hidetarget:</span>
     <span class="nc">:group:</span> bottom
-    <span class="nc">:onlycovered:</span>
     <span class="nc">:nocaptions:</span>
-    <span class="nc">:onlycaptions:</span>
     <span class="nc">:stats:</span>
 </pre></div>
 </div>
@@ -496,34 +497,58 @@ and is solely used to filter source items - in addition to the <em>source</em> f
 The attribute value is <strong>not</strong> used as a filter on the <em>target</em> part.
 When omitted, no filtering is done on the source item attributes</p>
 </dd>
-<dt class="field-even">group</dt>
-<dd class="field-even"><p><em>optional</em>, <em>choice: top/bottom</em></p>
+<dt class="field-even">sourceattributes</dt>
+<dd class="field-even"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
+<p>A list of attributes. For each attribute, the value for each source item gets added to the matrix in a new column,
+after the column that contains the source items.</p>
+</dd>
+<dt class="field-odd">targetattributes</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
+<p>A list of attributes. For each attribute, the value for each target item gets added to the matrix in a new column,
+after the column that contains the target items. This option cannot be enabled when the <code class="docutils literal notranslate"><span class="pre">:target:</span></code> contains
+more than one regex. Note that this option implies <code class="docutils literal notranslate"><span class="pre">:splittargets:</span></code>.</p>
+</dd>
+<dt class="field-even">splittargets</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>Split up every target item in a separate cell. By default, they are listed in a single cell per source
+(and per <code class="docutils literal notranslate"><span class="pre">:target:</span></code> regex).</p>
+</dd>
+<dt class="field-odd">hidesource</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<p>When enabled, the column with the source items is hidden.</p>
+</dd>
+<dt class="field-even">hidetarget</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>When enabled, all columns with target items are hidden.</p>
+</dd>
+<dt class="field-odd">group</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>choice: top/bottom</em></p>
 <p>The <em>group</em> argument can be used to group source items that don’t have any target items. You can explicitly specify
 to have them grouped at the <em>top</em> or <em>bottom</em> of the matrix.</p>
 </dd>
-<dt class="field-odd">onlycovered</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
-<p>By default, all source items are included. By providing the <em>onlycovered</em> flag, only covered items are shown in the
-output.</p>
-</dd>
-<dt class="field-even">nocaptions</dt>
+<dt class="field-even">onlycovered</dt>
 <dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>By default, all source items are included. By providing the <em>onlycovered</em> flag, only covered items are shown in the
+output. This option takes precedence over the <code class="docutils literal notranslate"><span class="pre">:group:</span></code> option.</p>
+</dd>
+<dt class="field-odd">nocaptions</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>By default, the caption for every item in the table is shown. By providing the <em>nocaptions</em> flag, the
 caption can be omitted. This gives a smaller table, but also less details.</p>
 </dd>
-<dt class="field-odd">onlycaptions</dt>
-<dd class="field-odd"><p>If you only care about the captions and want to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
+<dt class="field-even">onlycaptions</dt>
+<dd class="field-even"><p>If you only care about the captions and want to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
 </dd>
-<dt class="field-even">stats</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-odd">stats</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>By providing the <em>stats</em> flag, some statistics (coverage percentage) are calculated and displayed above the
 matrix. The plugin counts the number of items having a target item in the target-column(s) (=covered or allocated),
 and the number of items having no target in the target-column(s) (=not covered or allocated). And calculates a
 coverage/allocation percentage from these counts.
 When omitted this percentage is not displayed.</p>
 </dd>
-<dt class="field-odd">class</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>single argument</em></p>
+<dt class="field-even">class</dt>
+<dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
 <p>The <em>class</em> attribute can be specified to customize table output, especially useful when rendering to LaTeX.
 Normally the <em>longtable</em> class is used when the number of rows is greater than 30 which allows long tables to
 span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, you can force the use of this environment.</p>
@@ -547,6 +572,7 @@ RQT -&gt; TEST : validated_by
     <span class="nc">:type:</span> fulfills | validated_by
     <span class="nc">:intermediatetitle:</span> Intermediate
     <span class="nc">:coveredintermediates:</span>
+    <span class="nc">:splitintermediates:</span>
 </pre></div>
 </div>
 <dl class="field-list">
@@ -572,6 +598,12 @@ that list sources and the linked targets. The argument will be used as title for
 When enabled, all sources that have one or more intermediates that are uncovered will be treated as uncovered even
 when the source has another intermediate that <em>is</em> covered, i.e. <strong>all</strong>
 intermediates must be covered for the linked source to be covered.</p>
+</dd>
+<dt class="field-odd">splitintermediates</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em>
+When enabled, a row will be created for every intermediate item instead of grouping them together in the same
+row for the source item. This can be useful if you want to group target items per intermediate item <em>instead of
+per source item</em>.</p>
 </dd>
 </dl>
 </div>

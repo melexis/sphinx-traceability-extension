@@ -262,10 +262,11 @@ A traceability matrix of documentation items can be generated using:
         :type: validated_by
         :sourcetype: fulfilled_by
         :status: Appr
+        :sourceattributes: asil status
+        :targetattributes: result
+        :hidetarget:
         :group: bottom
-        :onlycovered:
         :nocaptions:
-        :onlycaptions:
         :stats:
 
 Documentation items matching their ID to the given *source* regular expression end up in the leftmost column of the
@@ -320,6 +321,30 @@ limitations in doing so:
     The attribute value is **not** used as a filter on the *target* part.
     When omitted, no filtering is done on the source item attributes
 
+:sourceattributes: *optional*, *multiple arguments (space-separated)*
+
+    A list of attributes. For each attribute, the value for each source item gets added to the matrix in a new column,
+    after the column that contains the source items.
+
+:targetattributes: *optional*, *multiple arguments (space-separated)*
+
+    A list of attributes. For each attribute, the value for each target item gets added to the matrix in a new column,
+    after the column that contains the target items. This option cannot be enabled when the ``:target:`` contains
+    more than one regex. Note that this option implies ``:splittargets:``.
+
+:splittargets: *optional*, *flag*
+
+    Split up every target item in a separate cell. By default, they are listed in a single cell per source
+    (and per ``:target:`` regex).
+
+:hidesource: *optional*, *flag*
+
+    When enabled, the column with the source items is hidden.
+
+:hidetarget: *optional*, *flag*
+
+    When enabled, all columns with target items are hidden.
+
 :group: *optional*, *choice: top/bottom*
 
     The *group* argument can be used to group source items that don't have any target items. You can explicitly specify
@@ -328,7 +353,7 @@ limitations in doing so:
 :onlycovered: *optional*, *flag*
 
     By default, all source items are included. By providing the *onlycovered* flag, only covered items are shown in the
-    output.
+    output. This option takes precedence over the ``:group:`` option.
 
 :nocaptions: *optional*, *flag*
 
@@ -376,6 +401,7 @@ linked via the ``:intermediate:`` RQT-items:
         :type: fulfills | validated_by
         :intermediatetitle: Intermediate
         :coveredintermediates:
+        :splitintermediates:
 
 :type: *required*, *multiple arguments (space-separated)*
 
@@ -398,6 +424,11 @@ linked via the ``:intermediate:`` RQT-items:
     When enabled, all sources that have one or more intermediates that are uncovered will be treated as uncovered even
     when the source has another intermediate that *is* covered, i.e. **all**
     intermediates must be covered for the linked source to be covered.
+
+:splitintermediates: *optional*, *flag*
+    When enabled, a row will be created for every intermediate item instead of grouping them together in the same
+    row for the source item. This can be useful if you want to group target items per intermediate item *instead of
+    per source item*.
 
 .. _traceability_usage_2d_matrix:
 
