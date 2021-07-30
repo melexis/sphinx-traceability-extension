@@ -17,14 +17,14 @@ class TraceableItem(TraceableBaseClass):
 
     defined_attributes = {}
 
-    def __init__(self, item_id, placeholder=False):
+    def __init__(self, item_id, placeholder=False, **kwargs):
         ''' Initializes a new traceable item
 
         Args:
             item_id (str): Item identifier.
             placeholder (bool): Internal use only.
         '''
-        super(TraceableItem, self).__init__(item_id)
+        super().__init__(item_id, **kwargs)
         self.explicit_relations = {}
         self.implicit_relations = {}
         self.attributes = {}
