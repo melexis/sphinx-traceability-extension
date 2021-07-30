@@ -3,6 +3,11 @@ Base class for traceable stuff
 '''
 
 import hashlib
+
+from docutils import nodes
+from docutils.statemachine import ViewList
+from sphinx.util.nodes import nested_parse_with_titles
+
 from mlx.traceability_exception import TraceabilityException
 
 
@@ -11,12 +16,13 @@ class TraceableBaseClass:
     Storage for a traceable base class
     '''
 
-    def __init__(self, name):
+    def __init__(self, name, state=None):
         '''
         Initialize a new base class
 
         Args:
             name (str): Base class object identification
+            state: The state of the state machine which controls the parsing
         '''
         self.id = self.to_id(name)
         self.name = name
@@ -25,6 +31,8 @@ class TraceableBaseClass:
         self.lineno = None
         self.node = None
         self.content = None
+        self.content_node = nodes.block_quote()
+        self._state = state
 
     @staticmethod
     def to_id(id):
@@ -141,6 +149,12 @@ class TraceableBaseClass:
             content (str): Content of the item
         '''
         self.content = content
+        if self._state:
+            template = ViewList(source=self.docname, parent_offset=self.lineno)
+            for idx, line in enumerate(content.split('\n')):
+                template.append(line, self.docname, idx)
+            self.content_node = nodes.block_quote()  # reset
+            nested_parse_with_titles(self._state, template, self.content_node)
 
     def get_content(self):
         '''
@@ -168,6 +182,12 @@ class TraceableBaseClass:
             node: Docutils node object
         '''
         return self.node
+
+    def clear_state(self):
+        '''
+        Clear value of state attribute, which should not be used after directives have been processed
+        '''
+        self._state = None
 
     def to_dict(self):
         '''

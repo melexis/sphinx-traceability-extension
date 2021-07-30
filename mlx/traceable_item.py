@@ -17,19 +17,21 @@ class TraceableItem(TraceableBaseClass):
 
     defined_attributes = {}
 
-    def __init__(self, item_id, placeholder=False):
+    def __init__(self, item_id, placeholder=False, state=None):
         ''' Initializes a new traceable item
 
         Args:
             item_id (str): Item identifier.
             placeholder (bool): Internal use only.
+            state: The state of the state machine which controls the parsing
         '''
-        super(TraceableItem, self).__init__(item_id)
+        super().__init__(item_id, state=state)
         self.explicit_relations = {}
         self.implicit_relations = {}
         self.attributes = {}
         self.attribute_order = []
         self._placeholder = placeholder
+        self._state = state
 
     def update(self, other):
         ''' Updates item with other object. Stores the sum of both objects.
