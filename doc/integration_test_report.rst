@@ -40,7 +40,7 @@ Other requirements
     Title
     ~~~~~
 
-    - More contentt
+    - More content
     - More again
 
         - And nested content
