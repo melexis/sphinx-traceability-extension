@@ -584,7 +584,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
          :group: top | bottom
          :onlycovered:
          :stats:
-         :coverage: Evaluation, e.g. >=2/3
+         :coverage: Evaluation, e.g. >=95
          :nocaptions:
          :onlycaptions:
     """
