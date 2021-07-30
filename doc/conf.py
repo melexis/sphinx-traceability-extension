@@ -346,6 +346,15 @@ traceability_external_relationship_to_url = {
 
 traceability_json_export_path = '_build/exported_items.json'
 
+def traceability_callback_per_item(name, collection):
+    if name == 'r001':
+        item = collection.get_item(name)
+        content_str = item.get_content()
+        content_str += '\n\nThis line was added by ``traceability_callback_per_item`` and is parsed as |RST| syntax.'
+        item.set_content(content_str)
+
+rst_epilog = ".. |RST|   replace:: :abbr:`RST (reStructuredText)`"
+
 # OrderedDict([('regex', (default, :hover+:active, :visited)), ...])
 # OrderedDict generates a dict with a deterministic order, used to prioritize the regexes, top to bottom
 traceability_hyperlink_colors = OrderedDict([
