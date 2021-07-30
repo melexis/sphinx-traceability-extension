@@ -22,7 +22,7 @@ class TraceableBaseClass:
 
         Args:
             name (str): Base class object identification
-            state: The state of the state machine which controls the parsing
+            state: The state of the state machine, which controls the parsing
         '''
         self.id = self.to_id(name)
         self.name = name
