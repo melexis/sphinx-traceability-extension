@@ -542,7 +542,7 @@ class ItemMatrix(TraceableBaseNode):
             percentage (float): Coverage percentage
         """
         if self['coverage']:
-            pattern = r'[><=!]{1,2}\s*[\d\./]+'
+            pattern = r'([><]=?|==|!=)\s*[\d\./]+'
             if re.fullmatch(pattern, self['coverage']):
                 expression = '{} {}'.format(percentage, self['coverage'])
                 if not eval(expression):  # pylint: disable=eval-used
