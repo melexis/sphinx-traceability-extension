@@ -23,6 +23,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         Args:
             title (str): Title or item ID of the top node
             app (sphinx.application.Sphinx): Optional application object, needed when item ID is given to create link
+            hide_title (bool): True to add the title in an admonition node; False to return an empty container node
 
         Returns:
             nodes.container: Top level replacement node to which other nodes can be appended
