@@ -268,6 +268,7 @@ A traceability matrix of documentation items can be generated using:
         :group: bottom
         :nocaptions:
         :stats:
+        :hidetitle:
         :coverage: >= 99.5
 
 Documentation items matching their ID to the given *source* regular expression end up in the leftmost column of the
@@ -372,6 +373,10 @@ limitations in doing so:
     and the number of items having no target in the target-column(s) (=not covered or allocated). And calculates a
     coverage/allocation percentage from these counts.
     When omitted this percentage is not displayed.
+
+:hidetitle: *optional*, *flag*
+
+    By providing the *hidetitle* flag, the title will be hidden.
 
 :coverage: *optional*, *single argument*
 

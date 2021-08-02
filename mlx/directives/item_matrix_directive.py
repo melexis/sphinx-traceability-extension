@@ -33,7 +33,7 @@ class ItemMatrix(TraceableBaseNode):
         targets_with_ids = []
         for target_regex in self['target']:
             targets_with_ids.append(collection.get_items(target_regex))
-        top_node = self.create_top_node(self['title'])
+        top_node = self.create_top_node(self['title'], hide_title=self['hidetitle'])
         table = nodes.table()
         if self.get('classes'):
             table.get('classes').extend(self.get('classes'))
@@ -586,6 +586,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
          :coverage: Evaluation, e.g. >=95
          :nocaptions:
          :onlycaptions:
+         :hidetitle:
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -613,6 +614,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'coverage': directives.unchanged,
         'nocaptions': directives.flag,
         'onlycaptions': directives.flag,
+        'hidetitle': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -684,6 +686,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.check_option_presence(node, 'onlycovered')
         self.check_option_presence(node, 'coveredintermediates')
         self.check_option_presence(node, 'stats')
+        self.check_option_presence(node, 'hidetitle')
 
         if node['targetattributes']:
             node['splittargets'] = True

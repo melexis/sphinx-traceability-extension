@@ -15,26 +15,30 @@ EXTERNAL_LINK_FIELDNAME = 'field'
 class TraceableBaseNode(nodes.General, nodes.Element, ABC):
     """ Base class for all Traceability node classes. """
 
-    def create_top_node(self, title, app=None):
-        ''' Creates the top node for the Element node. An admonition object with given title is created and returns.
+    def create_top_node(self, title, app=None, hide_title=False):
+        ''' Creates the top node for the Element node.
+
+        When the title should be shown, an admonition object with given title is added.
 
         Args:
             title (str): Title or item ID of the top node
             app (sphinx.application.Sphinx): Optional application object, needed when item ID is given to create link
+            hide_title (bool): True to add the title in an admonition node; False to return an empty container node
 
         Returns:
-            Top level replacement node to which other nodes can be appended
+            nodes.container: Top level replacement node to which other nodes can be appended
         '''
         top_node = nodes.container()
-        admon_node = nodes.admonition()
-        admon_node['classes'].append('item')
-        title_node = nodes.title()
-        if app:
-            title_node += self.make_internal_item_ref(app, title).children[0]
-        else:
-            title_node += nodes.Text(title)
-        admon_node += title_node
-        top_node += admon_node
+        if not hide_title:
+            admon_node = nodes.admonition()
+            admon_node['classes'].append('item')
+            title_node = nodes.title()
+            if app:
+                title_node += self.make_internal_item_ref(app, title).children[0]
+            else:
+                title_node += nodes.Text(title)
+            admon_node += title_node
+            top_node += admon_node
         return top_node
 
     @abstractmethod
