@@ -375,7 +375,7 @@ limitations in doing so:
 
 :hidetitle: *optional*, *flag*
 
-    By providing the *stats* flag, the title will be hidden.
+    By providing the *hidetitle* flag, the title will be hidden.
 
 :class: *optional*, *single argument*
 
