@@ -6,7 +6,7 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from natsort import natsorted
 
-from mlx.traceability_exception import TraceabilityException
+from mlx.traceability_exception import report_warning, TraceabilityException
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
 
@@ -113,13 +113,15 @@ class ItemMatrix(TraceableBaseNode):
         count_total = rows.counters[0] + rows.counters[1] - duplicate_source_count
         count_covered = rows.counters[0] - duplicate_source_count
         try:
-            percentage = int(100 * count_covered / count_total)
+            percentage = 100 * count_covered / count_total
         except ZeroDivisionError:
             percentage = 0
-        disp = 'Statistics: {cover} out of {total} covered: {pct}%'.format(cover=count_covered,
-                                                                           total=count_total,
-                                                                           pct=percentage)
+        self._check_coverage(percentage)
+
         if self['stats']:
+            disp = 'Statistics: {cover} out of {total} covered: {pct}%'.format(cover=count_covered,
+                                                                               total=count_total,
+                                                                               pct=int(percentage))
             if self['onlycovered']:
                 disp += ' (uncovered items are hidden)'
             p_node = nodes.paragraph()
@@ -531,6 +533,29 @@ class ItemMatrix(TraceableBaseNode):
             cell += nodes.paragraph('', attribute_value)
         return cell
 
+    def _check_coverage(self, percentage):
+        """ Checks the coverage percentage using the configured expression
+
+        A warning is reported when the configured expression is invalid or if the evaluation returns False.
+
+        Args:
+            percentage (float): Coverage percentage
+        """
+        if self['coverage']:
+            pattern = r'([><]=?|==|!=)\s*[\d\./]+'
+            if re.fullmatch(pattern, self['coverage']):
+                expression = '{} {}'.format(percentage, self['coverage'])
+                if not eval(expression):  # pylint: disable=eval-used
+                    report_warning('Item-matrix with title {!r} has bad coverage: {} evaluates to False'
+                                   .format(self['title'], expression),
+                                   docname=self['document'],
+                                   lineno=self['line'])
+            else:
+                report_warning('Expected value for coverage option to fully match regex {}; got {!r}'
+                               .format(pattern, self['coverage']),
+                               docname=self['document'],
+                               lineno=self['line'])
+
 
 class ItemMatrixDirective(TraceableBaseDirective):
     """
@@ -558,6 +583,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
          :group: top | bottom
          :onlycovered:
          :stats:
+         :coverage: Evaluation, e.g. >=95
          :nocaptions:
          :onlycaptions:
     """
@@ -584,6 +610,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'onlycovered': directives.flag,
         'coveredintermediates': directives.flag,
         'stats': directives.flag,
+        'coverage': directives.unchanged,
         'nocaptions': directives.flag,
         'onlycaptions': directives.flag,
     }
@@ -616,6 +643,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
                 'intermediatetitle': {'default': ''},
                 'type':              {'default': ''},
                 'sourcetype':        {'default': []},
+                'coverage':          {'default': ''},
             },
         )
 
