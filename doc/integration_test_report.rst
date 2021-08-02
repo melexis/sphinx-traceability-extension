@@ -271,6 +271,7 @@ No relationships
     :targettitle: nothing
     :sourcetitle: more of nothing
     :stats:
+    :hidetitle:
 
 All relationships
 -----------------
