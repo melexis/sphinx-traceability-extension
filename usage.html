@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 8.0.0 documentation</title>
+  <title>Usage &mdash; Traceability 8.1.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                8.0.0
+                8.1.0
               </div>
             
           
@@ -441,6 +441,8 @@ span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, y
     <span class="nc">:group:</span> bottom
     <span class="nc">:nocaptions:</span>
     <span class="nc">:stats:</span>
+    <span class="nc">:hidetitle:</span>
+    <span class="nc">:coverage:</span> &gt;= 99.5
 </pre></div>
 </div>
 <p>Documentation items matching their ID to the given <em>source</em> regular expression end up in the leftmost column of the
@@ -546,6 +548,16 @@ matrix. The plugin counts the number of items having a target item in the target
 and the number of items having no target in the target-column(s) (=not covered or allocated). And calculates a
 coverage/allocation percentage from these counts.
 When omitted this percentage is not displayed.</p>
+</dd>
+<dt class="field-even">hidetitle</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>By providing the <em>hidetitle</em> flag, the title will be hidden.</p>
+</dd>
+<dt class="field-odd">coverage</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>single argument</em></p>
+<p>The <em>coverage</em> option can be used to evaluate the coverage statistics. It expects an operator followed by
+a percentage value, e.g. ‘&gt;= 95’, used as the righthand side of the expression.
+The coverage (as a percentage) will be prepended. If the evaluation is false or invalid, a warning will be reported.</p>
 </dd>
 <dt class="field-even">class</dt>
 <dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
