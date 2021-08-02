@@ -269,6 +269,7 @@ A traceability matrix of documentation items can be generated using:
         :nocaptions:
         :stats:
         :hidetitle:
+        :coverage: >= 99.5
 
 Documentation items matching their ID to the given *source* regular expression end up in the leftmost column of the
 generated table. Documentation items matching their ID to the given *target* regular expression(s) with a matching
@@ -376,6 +377,12 @@ limitations in doing so:
 :hidetitle: *optional*, *flag*
 
     By providing the *hidetitle* flag, the title will be hidden.
+
+:coverage: *optional*, *single argument*
+
+    The *coverage* option can be used to evaluate the coverage statistics. It expects an operator followed by
+    a percentage value, e.g. '>= 95', used as the righthand side of the expression.
+    The coverage (as a percentage) will be prepended. If the evaluation is false or invalid, a warning will be reported.
 
 :class: *optional*, *single argument*
 

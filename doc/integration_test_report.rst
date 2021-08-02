@@ -272,6 +272,7 @@ No relationships
     :sourcetitle: more of nothing
     :stats:
     :hidetitle:
+    :coverage: == 0
 
 All relationships
 -----------------
@@ -280,6 +281,7 @@ All relationships
     :nocaptions:
     :stats:
     :group: bottom
+    :coverage: < 100
 
 All relationships with items having ASIL-C/D attribute
 ------------------------------------------------------
@@ -289,6 +291,7 @@ All relationships with items having ASIL-C/D attribute
     :splittargets:
     :group: bottom
     :stats:
+    :coverage: >= 80
 
 .. item-matrix:: All targets of sources with ASIL-C/D (with captions)
     :asil: [CD]
@@ -318,6 +321,9 @@ Traceability from SSS to SRS
     :sourcetitle: system requirement
     :type: fulfilled_by
     :stats:
+    :coverage: > 66.5
+
+.. the coverage option below should trigger a warning as the coverage is 2/3
 
 .. item-matrix:: System requirements fulfilled by software requirements - only show covered
     :target: SRS
@@ -328,6 +334,7 @@ Traceability from SSS to SRS
     :stats:
     :group: top
     :onlycovered:
+    :coverage: > 66.7
 
 Another matrix that should spawn a warning as the relation in *type* does not exist
 -----------------------------------------------------------------------------------
