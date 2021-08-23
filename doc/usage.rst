@@ -422,7 +422,7 @@ linked via the ``:intermediate:`` RQT-items:
     the righthand side are used to link the *intermediate* items to the *target* items.
     External relationships are not compatible with this feature (yet).
 
-:intermediate: *optional*, *single argument*
+:intermediate: *required*, *single argument*
 
     Python-style regular expression used to select intermediate items, meaning items that have to be linked to both
     the source and target items.
