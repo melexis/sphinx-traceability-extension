@@ -653,6 +653,10 @@ class ItemMatrixDirective(TraceableBaseDirective):
             raise TraceabilityException("The :intermediate: option is used, expected at least two relationships "
                                         "separated by ' | ' in the :type: option; got {!r}".format(node['type']),
                                         docname=env.docname)
+        if ' | ' in node['type'] and not node['intermediate']:
+            raise TraceabilityException("The value of the :type: option contains the '|' character,  but the option "
+                                        ":intermediate: is missing for item-matrix {!r}".format(node['title']),
+                                        docname=env.docname)
 
         # Process ``group`` option, given as a string that is either top or bottom or empty ().
         node['group'] = self.options.get('group', '')
