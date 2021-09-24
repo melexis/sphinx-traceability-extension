@@ -611,9 +611,9 @@ def setup(app):
     app.add_directive('attribute-link', AttributeLinkDirective)
     app.add_directive('attribute-sort', AttributeSortDirective)
 
-    app.connect('doctree-resolved', process_item_nodes)
-    app.connect('env-check-consistency', perform_consistency_check)
     app.connect('builder-inited', initialize_environment)
+    app.connect('env-check-consistency', perform_consistency_check)
+    app.connect('doctree-resolved', process_item_nodes)
 
     app.add_role('item', XRefRole(nodeclass=PendingItemXref,
                                   innernodeclass=nodes.emphasis,

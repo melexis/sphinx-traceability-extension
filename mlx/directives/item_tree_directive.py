@@ -2,7 +2,7 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.builders.latex import LaTeXBuilder
 
-from mlx.traceability import report_warning
+from mlx.traceability import report_warning, TraceabilityException
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
 
@@ -56,7 +56,12 @@ class ItemTree(TraceableBaseNode):
             for target in tgts:
                 # print('%s has child %s for relation %s' % (item_id, target, relation))
                 if collection.get_item(target).attributes_match(self['filter-attributes']):
-                    childcontent.append(self._generate_bullet_list_tree(app, collection, target))
+                    try:
+                        childcontent.append(self._generate_bullet_list_tree(app, collection, target))
+                    except RecursionError as err:
+                        msg = ("Could not process item-tree {!r} because of a circular relationship: {} {} {}"
+                               .format(self['title'], item_id, relation, target))
+                        raise TraceabilityException(msg) from err
         bullet_list_item.append(childcontent)
         return bullet_list_item
 

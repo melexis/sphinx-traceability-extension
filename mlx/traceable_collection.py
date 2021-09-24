@@ -234,6 +234,13 @@ class TraceableCollection:
                                                                               relation=rev_relation,
                                                                               target=itemid),
                                                             item.get_document()))
+                    # Circular relation exists?
+                    for target_of_target in target.iter_targets(relation, sort=False):
+                        if target_of_target in item.iter_targets(rev_relation, sort=False):
+                            errors.append(TraceabilityException(
+                                "Circular relationship found: {} {} {} {} {} {} {}"
+                                .format(itemid, relation, tgt, relation, target_of_target, relation, itemid),
+                                item.get_document()))
         if errors:
             raise MultipleTraceabilityExceptions(errors)
 
