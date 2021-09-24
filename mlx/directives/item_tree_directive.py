@@ -60,7 +60,7 @@ class ItemTree(TraceableBaseNode):
                         childcontent.append(self._generate_bullet_list_tree(app, collection, target))
                     except RecursionError as err:
                         msg = ("Could not process item-tree {!r} because of a circular relationship: {} -{}-> {}"
-                            .format(self['title'], item_id, relation, target))
+                               .format(self['title'], item_id, relation, target))
                         raise TraceabilityException(msg) from err
         bullet_list_item.append(childcontent)
         return bullet_list_item
