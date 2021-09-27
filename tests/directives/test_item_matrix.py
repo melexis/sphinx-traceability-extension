@@ -11,14 +11,11 @@ class TestItemMatrix(TestCase):
     Rows = namedtuple('Rows', "sorted covered uncovered counters")
 
     @parameterized.expand([
-        (True, False, True, [0, 0], [1, 1, 0]),
-        (False, False, True, [0, 0], [1, 0, 1]),
-        (True, True, True, [0, 0], [1, 1, 0]),
-        (False, True, True, [0, 0], [0, 0, 1]),
+        (True, True, [0, 0], [1, 1, 0]),
+        (False, True, [0, 0], [1, 0, 1]),
     ])
-    def test_store_data(self, covered, onlycovered, splittargets, attributes, expected_lengths):
+    def test_store_data(self, covered, splittargets, attributes, expected_lengths):
         dut = ItemMatrix()
-        dut['onlycovered'] = onlycovered
         dut['intermediate'] = ''
         dut['sourceattributes'] = ['attr'] * attributes[0]
         dut['targetattributes'] = ['attr'] * attributes[1]
