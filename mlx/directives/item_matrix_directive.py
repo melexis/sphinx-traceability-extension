@@ -108,7 +108,7 @@ class ItemMatrix(TraceableBaseNode):
                     covered = self._add_target_items(rights, target_items)
                     self._store_data(rows, source_link, rights, covered, app)
 
-        tgroup += self._build_table_body(rows, self['group'], self['onlycovered'])
+        tgroup += self._build_table_body(rows, self['group'], self['onlycovered'], self['onlyuncovered'])
 
         count_total = rows.counters[0] + rows.counters[1] - duplicate_source_count
         count_covered = rows.counters[0] - duplicate_source_count
@@ -124,6 +124,8 @@ class ItemMatrix(TraceableBaseNode):
                                                                                pct=int(percentage))
             if self['onlycovered']:
                 disp += ' (uncovered items are hidden)'
+            elif self['onlyuncovered']:
+                disp += ' (covered items are hidden)'
             p_node = nodes.paragraph()
             txt = nodes.Text(disp)
             p_node += txt
@@ -132,13 +134,14 @@ class ItemMatrix(TraceableBaseNode):
         top_node += table
         self.replace_self(top_node)
 
-    def _build_table_body(self, rows, group, onlycovered):
+    def _build_table_body(self, rows, group, onlycovered, onlyuncovered):
         """ Creates the table body and fills it with rows, grouping and excluding uncovered source items when desired
 
         Args:
             rows (Rows): Rows namedtuple object
             group (str): Group option, falsy to disable grouping, 'top' or 'bottom' otherwise
-            onlycovered (bool): True to only include source items that are covered; False to include all
+            onlycovered (bool): True to only include source items that are covered; False otherwise
+            onlyuncovered (bool): True to only include source items that are uncovered; False otherwise
 
         Returns:
             nodes.tbody: Filled table body
@@ -146,6 +149,8 @@ class ItemMatrix(TraceableBaseNode):
         tbody = nodes.tbody()
         if onlycovered:
             tbody += rows.covered
+        elif onlyuncovered:
+            tbody += rows.uncovered
         elif not group:
             tbody += rows.sorted
         elif group == 'top':
@@ -460,8 +465,7 @@ class ItemMatrix(TraceableBaseNode):
         else:
             rows.counters[1] += 1
             rows.uncovered.extend(new_rows)
-            if not self['onlycovered']:
-                rows.sorted.extend(new_rows)
+            rows.sorted.extend(new_rows)
 
     def _add_target_items(self, target_cells, target_items):
         """ Stores target items after filtering by target option.
@@ -582,6 +586,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
          :splittargets:
          :group: top | bottom
          :onlycovered:
+         :onlyuncovered:
          :stats:
          :coverage: Evaluation, e.g. >=95
          :nocaptions:
@@ -609,6 +614,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'splittargets': directives.flag,
         'group': group_choice,
         'onlycovered': directives.flag,
+        'onlyuncovered': directives.flag,
         'coveredintermediates': directives.flag,
         'stats': directives.flag,
         'coverage': directives.unchanged,
@@ -688,9 +694,15 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.check_option_presence(node, 'splitintermediates')
         self.check_option_presence(node, 'splittargets')
         self.check_option_presence(node, 'onlycovered')
+        self.check_option_presence(node, 'onlyuncovered')
         self.check_option_presence(node, 'coveredintermediates')
         self.check_option_presence(node, 'stats')
         self.check_option_presence(node, 'hidetitle')
+
+        if node['onlycovered'] and node['onlyuncovered']:
+            raise TraceabilityException(
+                "Item-matrix directive cannot combine 'onlycovered' with 'onlyuncovered' flag",
+                docname=env.docname)
 
         if node['targetattributes']:
             node['splittargets'] = True
