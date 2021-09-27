@@ -52,14 +52,13 @@ class ItemPieChart(TraceableBaseNode):
         self._set_priorities()
         self._set_attribute_id()
 
-        for source_id in self.collection.get_items(''):
+        for source_id in self.collection.get_items(self['id_set'][0]):
             source_item = self.collection.get_item(source_id)
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder():
                 continue
-            if re.match(self['id_set'][0], source_id):
-                self.linked_attributes[source_id] = self['label_set'][0].lower()  # default is "uncovered"
-                self.loop_relationships(source_id, source_item, self['id_set'][1], self._match_covered)
+            self.linked_attributes[source_id] = self['label_set'][0].lower()  # default is "uncovered"
+            self.loop_relationships(source_id, source_item, self['id_set'][1], self._match_covered)
 
         chart_labels, statistics = self._prepare_labels_and_values(list(self.priorities),
                                                                    list(self.linked_attributes.values()))
