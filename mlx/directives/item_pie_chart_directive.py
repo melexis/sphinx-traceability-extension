@@ -29,11 +29,14 @@ def pct_wrapper(sizes):
 
 class ItemPieChart(TraceableBaseNode):
     '''Pie chart on documentation items'''
-    collection = None
-    relationships = []
-    priorities = {}  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
-    attribute_id = ''
-    linked_attributes = {}  # source_id (str): attr_value (str)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.collection = None
+        self.relationships = []
+        self.priorities = {}  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
+        self.attribute_id = ''
+        self.linked_attributes = {}  # source_id (str): attr_value (str)
 
     def perform_replacement(self, app, collection):
         """
