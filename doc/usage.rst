@@ -357,6 +357,11 @@ limitations in doing so:
     By default, all source items are included. By providing the *onlycovered* flag, only covered items are shown in the
     output. This option takes precedence over the ``:group:`` option.
 
+:onlyuncovered: *optional*, *flag*
+
+    By default, all source items are included. By providing the *onlyuncovered* flag, only uncovered items are shown in
+    the output. This option takes precedence over the ``:group:`` option.
+
 :nocaptions: *optional*, *flag*
 
     By default, the caption for every item in the table is shown. By providing the *nocaptions* flag, the

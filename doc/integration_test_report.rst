@@ -336,6 +336,16 @@ Traceability from SSS to SRS
     :onlycovered:
     :coverage: > 66.7
 
+.. item-matrix:: System requirements fulfilled by software requirements - only show uncovered
+    :target: SRS
+    :source: SYS
+    :targettitle: software requirement
+    :sourcetitle: system requirement
+    :type: fulfilled_by
+    :stats:
+    :group: top
+    :onlyuncovered:
+
 Another matrix that should spawn a warning as the relation in *type* does not exist
 -----------------------------------------------------------------------------------
 
