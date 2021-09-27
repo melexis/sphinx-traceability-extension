@@ -144,3 +144,7 @@ Test coverage
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: uncovered, covered, ran test
     :result: ERROR, fail, pass
+
+.. item-piechart:: All uncovered as there is no direct relationship
+    :id_set: [IU]TEST_REP RQT
+    :label_set: uncovered, covered

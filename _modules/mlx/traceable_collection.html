@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mlx.traceable_collection &mdash; Traceability 8.1.0 documentation</title>
+  <title>mlx.traceable_collection &mdash; Traceability 8.1.1 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                8.1.0
+                8.1.1
               </div>
             
           
@@ -398,6 +398,13 @@
                                                                               <span class="n">relation</span><span class="o">=</span><span class="n">rev_relation</span><span class="p">,</span>
                                                                               <span class="n">target</span><span class="o">=</span><span class="n">itemid</span><span class="p">),</span>
                                                             <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()))</span>
+                    <span class="c1"># Circular relation exists?</span>
+                    <span class="k">for</span> <span class="n">target_of_target</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">target_of_target</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">rev_relation</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TraceabilityException</span><span class="p">(</span>
+                                <span class="s2">&quot;Circular relationship found: </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span>
+                                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itemid</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target_of_target</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">itemid</span><span class="p">),</span>
+                                <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()))</span>
         <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MultipleTraceabilityExceptions</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span></div>
 
