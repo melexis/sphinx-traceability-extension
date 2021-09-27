@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 8.1.1 documentation</title>
+  <title>Usage &mdash; Traceability 8.2.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                8.1.1
+                8.2.0
               </div>
             
           
@@ -533,34 +533,39 @@ to have them grouped at the <em>top</em> or <em>bottom</em> of the matrix.</p>
 <p>By default, all source items are included. By providing the <em>onlycovered</em> flag, only covered items are shown in the
 output. This option takes precedence over the <code class="docutils literal notranslate"><span class="pre">:group:</span></code> option.</p>
 </dd>
-<dt class="field-odd">nocaptions</dt>
+<dt class="field-odd">onlyuncovered</dt>
 <dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<p>By default, all source items are included. By providing the <em>onlyuncovered</em> flag, only uncovered items are shown in
+the output. This option takes precedence over the <code class="docutils literal notranslate"><span class="pre">:group:</span></code> option.</p>
+</dd>
+<dt class="field-even">nocaptions</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
 <p>By default, the caption for every item in the table is shown. By providing the <em>nocaptions</em> flag, the
 caption can be omitted. This gives a smaller table, but also less details.</p>
 </dd>
-<dt class="field-even">onlycaptions</dt>
-<dd class="field-even"><p>If you only care about the captions and want to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
+<dt class="field-odd">onlycaptions</dt>
+<dd class="field-odd"><p>If you only care about the captions and want to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
 </dd>
-<dt class="field-odd">stats</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-even">stats</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
 <p>By providing the <em>stats</em> flag, some statistics (coverage percentage) are calculated and displayed above the
 matrix. The plugin counts the number of items having a target item in the target-column(s) (=covered or allocated),
 and the number of items having no target in the target-column(s) (=not covered or allocated). And calculates a
 coverage/allocation percentage from these counts.
 When omitted this percentage is not displayed.</p>
 </dd>
-<dt class="field-even">hidetitle</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-odd">hidetitle</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>By providing the <em>hidetitle</em> flag, the title will be hidden.</p>
 </dd>
-<dt class="field-odd">coverage</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>single argument</em></p>
+<dt class="field-even">coverage</dt>
+<dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
 <p>The <em>coverage</em> option can be used to evaluate the coverage statistics. It expects an operator followed by
 a percentage value, e.g. ‘&gt;= 95’, used as the righthand side of the expression.
 The coverage (as a percentage) will be prepended. If the evaluation is false or invalid, a warning will be reported.</p>
 </dd>
-<dt class="field-even">class</dt>
-<dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
+<dt class="field-odd">class</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>single argument</em></p>
 <p>The <em>class</em> attribute can be specified to customize table output, especially useful when rendering to LaTeX.
 Normally the <em>longtable</em> class is used when the number of rows is greater than 30 which allows long tables to
 span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, you can force the use of this environment.</p>
