@@ -1,14 +1,15 @@
 import re
-from collections import namedtuple, OrderedDict
+from collections import OrderedDict, namedtuple
 from copy import copy, deepcopy
 
 from docutils import nodes
 from docutils.parsers.rst import directives
 from natsort import natsorted
 
-from mlx.traceability_exception import report_warning, TraceabilityException
+from mlx.traceability_exception import TraceabilityException, report_warning
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
+from mlx.traceable_item import TraceableItem
 
 
 def group_choice(argument):
@@ -43,13 +44,19 @@ class ItemMatrix(TraceableBaseNode):
 
         if self['hidetarget']:
             titles = titles[0]
-        for attr in reversed(self['sourceattributes']):
-            titles.insert(1, self.make_attribute_ref(app, attr))
-        for attr in self['targetattributes']:
-            titles.append(self.make_attribute_ref(app, attr))
+        for value in reversed(self['sourcecolumns']):
+            if value in TraceableItem.defined_attributes:
+                titles.insert(1, self.make_attribute_ref(app, value))
+            else:
+                titles.insert(1, nodes.Text(value))
+        for value in self['targetcolumns']:
+            if value in TraceableItem.defined_attributes:
+                titles.append(self.make_attribute_ref(app, value))
+            else:
+                titles.append(nodes.Text(app.config.traceability_relationship_to_string[value]))
         show_intermediate = bool(self['intermediatetitle']) and bool(self['intermediate'])
         if show_intermediate:
-            titles.insert(1 + len(self['sourceattributes']), nodes.paragraph('', self['intermediatetitle']))
+            titles.insert(1 + len(self['sourcecolumns']), nodes.paragraph('', self['intermediatetitle']))
         if self['hidesource']:
             titles.pop(0)
         headings = [nodes.entry('', title) for title in titles]
@@ -170,18 +177,18 @@ class ItemMatrix(TraceableBaseNode):
         Args:
             tbody (nodes.tbody): Table body to modify
         """
-        indexes_to_merge = range(1 + len(self['sourceattributes']) + int(bool(self['intermediate'])))
+        indexes_to_merge = range(1 + len(self['sourcecolumns']) + int(bool(self['intermediate'])))
         cells_to_remove = self._set_rowspan(tbody, indexes_to_merge)
 
         intermediate_idx = indexes_to_merge[-1] if self['intermediate'] else None
         target_idxes = []
         for idx in reversed(range(len(self['target']))):
-            target_idxes.append(-1 * (idx + 1) * (1 + len(self['targetattributes'])))
+            target_idxes.append(-1 * (idx + 1) * (1 + len(self['targetcolumns'])))
         for row_idx, row in enumerate(tbody):
             # order of if-statements below is important: remove cells from right to left
             if self['intermediate'] and (not self['intermediatetitle'] or intermediate_idx in cells_to_remove[row_idx]):
                 row.pop(intermediate_idx)
-            for idx in reversed(range(1, 1 + len(self['sourceattributes']))):
+            for idx in reversed(range(1, 1 + len(self['sourcecolumns']))):
                 if idx in cells_to_remove[row_idx]:
                     row.pop(idx)
             if self['hidesource'] or 0 in cells_to_remove[row_idx]:
@@ -413,7 +420,7 @@ class ItemMatrix(TraceableBaseNode):
             covered (bool): True if the row shall be stored in the covered attribute, False for uncovered attribute
             app (sphinx.application.Sphinx): Sphinx application object
         """
-        source_attribute_cells = self._create_cells_for_attributes(source, self['sourceattributes'])
+        source_attribute_cells = self._create_cells_for_info_cols(source, self['sourcecolumns'], app)
         has_intermediate = bool(self['intermediate'])
         intermediate_items = []
         if has_intermediate:
@@ -429,7 +436,7 @@ class ItemMatrix(TraceableBaseNode):
 
             # source
             row += self._create_cell_for_items([source], app)
-            # source attributes
+            # source columns: attributes and extra relations
             for cell in source_attribute_cells:
                 row += copy(cell)
             # intermediate
@@ -446,14 +453,14 @@ class ItemMatrix(TraceableBaseNode):
                 elif row_idx < len(target_items):
                     items = [target_items[row_idx]]
                 row += self._create_cell_for_items(items, app)
-            # target attributes
+            # target columns: attributes and extra relations
             target_attribute_cells = []
-            if self['targetattributes']:
+            if self['targetcolumns']:
                 if targets_per_target[-1]:
                     target_item = targets_per_target[-1][row_idx]
                 else:
                     target_item = nodes.paragraph('')
-                target_attribute_cells = self._create_cells_for_attributes(target_item, self['targetattributes'])
+                target_attribute_cells = self._create_cells_for_info_cols(target_item, self['targetcolumns'], app)
             row += target_attribute_cells
 
             new_rows.append(row)
@@ -505,19 +512,23 @@ class ItemMatrix(TraceableBaseNode):
                 cell += self.make_internal_item_ref(app, entry.get_id())
         return cell
 
-    def _create_cells_for_attributes(self, item, attributes):
+    def _create_cells_for_info_cols(self, item, values, app):
         """ Creates a cell with the item's attribute value for each attribute in the given list.
 
         Args:
             item (TraceableItem): TraceableItem instance
-            attributes (list): List of attributes (str)
+            values (list): List of attributes and/or relationships (str)
+            app: Sphinx' application object to use.
 
         Returns:
             list[nodes.entry]: Cells filled with attribute values for the given item
         """
         cells = []
-        for attr in attributes:
-            cells.append(self._create_cell_for_attribute(item, attr))
+        for value in values:
+            if value in TraceableItem.defined_attributes:
+                cells.append(self._create_cell_for_attribute(item, value))
+            else:
+                cells.append(self._create_cell_for_relation(item, value, app))
         return cells
 
     @staticmethod
@@ -535,6 +546,26 @@ class ItemMatrix(TraceableBaseNode):
         if not isinstance(item, nodes.paragraph):
             attribute_value = item.get_attribute(attribute)
             cell += nodes.paragraph('', attribute_value)
+        return cell
+
+    def _create_cell_for_relation(self, item, relation, app):
+        """ Creates a cell with linked items via the given relation.
+
+        Args:
+            item (TraceableItem): TraceableItem instance
+            relation (str): Relation for which to get the linked items
+            app: Sphinx' application object to use.
+
+        Returns:
+            nodes.entry: Cell filled with attribute value for the given item
+        """
+        cell = nodes.entry('')
+        if not isinstance(item, nodes.paragraph):
+            for linked_item in item.iter_targets(relation):
+                if self.is_relation_external(relation):
+                    cell += self.make_external_item_ref(app, linked_item, relation)
+                else:
+                    cell += self.make_internal_item_ref(app, linked_item)
         return cell
 
     def _check_coverage(self, percentage):
@@ -578,8 +609,8 @@ class ItemMatrixDirective(TraceableBaseDirective):
          :intermediatetitle: Intermediate column header
          :type: <<relationship>> ...
          :sourcetype: <<relationship>> ...
-         :sourceattributes: <<attribute>> ...
-         :targetattributes: <<attribute>> ...
+         :sourcecolumns: <<attribute>> ...
+         :targetcolumns: <<attribute>> ...
          :hidesource:
          :hidetarget:
          :splitintermediates:
@@ -606,8 +637,10 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'intermediatetitle': directives.unchanged,
         'type': directives.unchanged,  # relationship types separated by space
         'sourcetype': directives.unchanged,  # relationship types separated by space
-        'sourceattributes': directives.unchanged,  # attributes separated by space
-        'targetattributes': directives.unchanged,  # attributes separated by space
+        'sourcecolumns': directives.unchanged,  # attributes separated by space
+        'sourceattributes': directives.unchanged,  # deprecated in 9.x
+        'targetcolumns': directives.unchanged,  # attributes separated by space
+        'targetattributes': directives.unchanged,  # deprecated in 9.x
         'hidesource': directives.flag,
         'hidetarget': directives.flag,
         'splitintermediates': directives.flag,
@@ -680,13 +713,21 @@ class ItemMatrixDirective(TraceableBaseDirective):
             self.check_relationships(node['type'].replace(' | ', ' ').split(' '), env)
         self.check_relationships(node['sourcetype'], env)
 
-        self.add_attributes(node, 'sourceattributes', [])
-        self.add_attributes(node, 'targetattributes', [])
-        if node['targetattributes'] and len(node['target']) > 1:
-            node['targetattributes'] = []
+        if 'sourceattributes' in self.options:
+            report_warning("Option 'sourceattributes' will be deprecated in version 9.x in favor of 'sourcecolumns'",
+                           docname=env.docname, lineno=self.lineno)
+            self.options['sourcecolumns'] = self.options['sourceattributes']
+        if 'targetattributes' in self.options:
+            report_warning("Option 'targetattributes' will be deprecated in version 9.x in favor of 'targetcolumns'",
+                           docname=env.docname, lineno=self.lineno)
+            self.options['targetcolumns'] = self.options['targetattributes']
+        self.add_attributes_and_relations(node, 'sourcecolumns', app.env.traceability_collection.relations)
+        self.add_attributes_and_relations(node, 'targetcolumns', app.env.traceability_collection.relations)
+        if number_of_targets > 1 and node['targetcolumns']:
+            node['targetcolumns'] = []
             raise TraceabilityException(
-                "Item-matrix directive cannot combine 'targetattributes' with more than one 'target'; "
-                "ignoring 'targetattributes' option",
+                "Item-matrix {!r} cannot combine 'targetcolumns' with more than one 'target'; "
+                "ignoring 'targetcolumns' option".format(node['title']),
                 docname=env.docname)
 
         self.check_option_presence(node, 'hidesource')
@@ -704,7 +745,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
                 "Item-matrix directive cannot combine 'onlycovered' with 'onlyuncovered' flag",
                 docname=env.docname)
 
-        if node['targetattributes']:
+        if node['targetcolumns']:
             node['splittargets'] = True
 
         self.check_caption_flags(node, app.config.traceability_matrix_no_captions)
