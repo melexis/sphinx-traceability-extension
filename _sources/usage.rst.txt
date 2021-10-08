@@ -262,8 +262,8 @@ A traceability matrix of documentation items can be generated using:
         :type: validated_by
         :sourcetype: fulfilled_by
         :status: Appr
-        :sourceattributes: asil status
-        :targetattributes: result
+        :sourcecolumns: asil status
+        :targetcolumns: result
         :hidetarget:
         :group: bottom
         :nocaptions:
@@ -323,16 +323,21 @@ limitations in doing so:
     The attribute value is **not** used as a filter on the *target* part.
     When omitted, no filtering is done on the source item attributes
 
-:sourceattributes: *optional*, *multiple arguments (space-separated)*
+:sourcecolumns: *optional*, *multiple arguments (space-separated)*
 
-    A list of attributes. For each attribute, the value for each source item gets added to the matrix in a new column,
-    after the column that contains the source items.
+    A list of attributes and/or relationships. For each attribute, the value for each source item gets added to the
+    matrix in a new column, after the column that contains the source items. For each relationship, a column with
+    the items linked to the source items via the relationship gets added and its representation will be used in the
+    header. The order of the arguments will be used for the order of the columns.
 
-:targetattributes: *optional*, *multiple arguments (space-separated)*
+:targetcolumns: *optional*, *multiple arguments (space-separated)*
 
     A list of attributes. For each attribute, the value for each target item gets added to the matrix in a new column,
-    after the column that contains the target items. This option cannot be enabled when the ``:target:`` contains
-    more than one regex. Note that this option implies ``:splittargets:``.
+    after the column that contains the target items. For each relationship, a column with the items linked to
+    the target items via the relationship gets added and its representation will be used in the header.
+    The order of the arguments will be used for the order of the columns.
+    This option cannot be enabled when the ``:target:`` contains more than one regex.
+    Note that this option implies ``:splittargets:``.
 
 :splittargets: *optional*, *flag*
 

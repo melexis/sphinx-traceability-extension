@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 8.2.0 documentation</title>
+  <title>Usage &mdash; Traceability 8.3.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                8.2.0
+                8.3.0
               </div>
             
           
@@ -435,8 +435,8 @@ span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, y
     <span class="nc">:type:</span> validated_by
     <span class="nc">:sourcetype:</span> fulfilled_by
     <span class="nc">:status:</span> Appr
-    <span class="nc">:sourceattributes:</span> asil status
-    <span class="nc">:targetattributes:</span> result
+    <span class="nc">:sourcecolumns:</span> asil status
+    <span class="nc">:targetcolumns:</span> result
     <span class="nc">:hidetarget:</span>
     <span class="nc">:group:</span> bottom
     <span class="nc">:nocaptions:</span>
@@ -499,16 +499,21 @@ and is solely used to filter source items - in addition to the <em>source</em> f
 The attribute value is <strong>not</strong> used as a filter on the <em>target</em> part.
 When omitted, no filtering is done on the source item attributes</p>
 </dd>
-<dt class="field-even">sourceattributes</dt>
+<dt class="field-even">sourcecolumns</dt>
 <dd class="field-even"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
-<p>A list of attributes. For each attribute, the value for each source item gets added to the matrix in a new column,
-after the column that contains the source items.</p>
+<p>A list of attributes and/or relationships. For each attribute, the value for each source item gets added to the
+matrix in a new column, after the column that contains the source items. For each relationship, a column with
+the items linked to the source items via the relationship gets added and its representation will be used in the
+header. The order of the arguments will be used for the order of the columns.</p>
 </dd>
-<dt class="field-odd">targetattributes</dt>
+<dt class="field-odd">targetcolumns</dt>
 <dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
 <p>A list of attributes. For each attribute, the value for each target item gets added to the matrix in a new column,
-after the column that contains the target items. This option cannot be enabled when the <code class="docutils literal notranslate"><span class="pre">:target:</span></code> contains
-more than one regex. Note that this option implies <code class="docutils literal notranslate"><span class="pre">:splittargets:</span></code>.</p>
+after the column that contains the target items. For each relationship, a column with the items linked to
+the target items via the relationship gets added and its representation will be used in the header.
+The order of the arguments will be used for the order of the columns.
+This option cannot be enabled when the <code class="docutils literal notranslate"><span class="pre">:target:</span></code> contains more than one regex.
+Note that this option implies <code class="docutils literal notranslate"><span class="pre">:splittargets:</span></code>.</p>
 </dd>
 <dt class="field-even">splittargets</dt>
 <dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
