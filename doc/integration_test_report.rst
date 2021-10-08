@@ -373,7 +373,7 @@ Traceability from external sources
     :sourcetitle: external items
     :targettitle: internal items
     :type: ext_toolname
-    :targetattributes: asil aspice
+    :targetcolumns: asil aspice
     :onlycaptions:
     :stats:
     :hidesource:
@@ -475,14 +475,14 @@ Traceability via intermediate items
     :stats:
     :coveredintermediates:
 
-Source and target attributes
-----------------------------
+Source and target columns
+-------------------------
 
 .. item-matrix:: Basic item matrix with attributes of source and target
     :sourcetitle: requirements
     :type: trace ext_toolname
-    :sourceattributes: asil aspice
-    :targetattributes: status asil aspice
+    :sourcecolumns: asil aspice
+    :targetcolumns: nonexistent status ext_toolname asil aspice traced_by
     :onlycovered:
     :nocaptions:
     :stats:
@@ -498,7 +498,7 @@ Source and target attributes
     :targettitle: integration tests results
     :nocaptions:
     :stats:
-    :targetattributes: result
+    :targetcolumns: result
     :splitintermediates:
     :onlycovered:
 

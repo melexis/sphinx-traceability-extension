@@ -79,9 +79,27 @@ class TraceableBaseDirective(Directive, ABC):
             docname (str): Document name.
         """
         for attr in set(attributes) - set(TraceableItem.defined_attributes):
-            report_warning('Traceability: unknown %s for item-attributes-matrix: %s' % (description, attr),
+            report_warning('Traceability: unknown %s for item-(attributes-)matrix: %s' % (description, attr),
                            docname, self.lineno)
             attributes.remove(attr)
+
+    def add_attributes_and_relations(self, node, option, defined_relations):
+        """ Adds all valid attribute keys in the option's value to the node along with valid relationships
+
+        Args:
+            node (TraceableBaseNode): Node object for which to add valid values to, using ``option`` as key.
+            option (str): Name of the option to look for
+            defined_relations (dict): All defined relationships
+        """
+        node[option] = []
+        if option in self.options:
+            values = self.options[option].split()
+            self._warn_if_comma_separated(option, node['document'])
+            for value in values:
+                if value in defined_relations or value in TraceableItem.defined_attributes:
+                    node[option].append(value)
+            leftover_values = set(values).difference(node[option])
+            self.remove_unknown_attributes(leftover_values, 'attribute/relationship', node['document'])
 
     def check_relationships(self, relationships, env):
         """  Checks if given relationships are in configuration.

@@ -17,8 +17,8 @@ class TestItemMatrix(TestCase):
     def test_store_data(self, covered, splittargets, attributes, expected_lengths):
         dut = ItemMatrix()
         dut['intermediate'] = ''
-        dut['sourceattributes'] = ['attr'] * attributes[0]
-        dut['targetattributes'] = ['attr'] * attributes[1]
+        dut['sourcecolumns'] = ['attr'] * attributes[0]
+        dut['targetcolumns'] = ['attr'] * attributes[1]
         dut['splittargets'] = splittargets
         rows = self.Rows([], [], [], [0, 0])
         left = nodes.entry('left')
