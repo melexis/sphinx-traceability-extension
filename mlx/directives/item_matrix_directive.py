@@ -48,12 +48,12 @@ class ItemMatrix(TraceableBaseNode):
             if value in TraceableItem.defined_attributes:
                 titles.insert(1, self.make_attribute_ref(app, value))
             else:
-                titles.insert(1, nodes.Text(value))
+                titles.insert(1, nodes.paragraph('', value))
         for value in self['targetcolumns']:
             if value in TraceableItem.defined_attributes:
                 titles.append(self.make_attribute_ref(app, value))
             else:
-                titles.append(nodes.Text(app.config.traceability_relationship_to_string[value]))
+                titles.append(nodes.paragraph('', app.config.traceability_relationship_to_string[value]))
         show_intermediate = bool(self['intermediatetitle']) and bool(self['intermediate'])
         if show_intermediate:
             titles.insert(1 + len(self['sourcecolumns']), nodes.paragraph('', self['intermediatetitle']))
