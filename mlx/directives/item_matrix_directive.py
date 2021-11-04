@@ -533,7 +533,7 @@ class ItemMatrix(TraceableBaseNode):
 
     @staticmethod
     def _create_cell_for_attribute(item, attribute):
-        """ Creates a cell with the item's attribute value the given attribute.
+        """ Creates a cell with the item's attribute value for the given attribute.
 
         Args:
             item (TraceableItem): TraceableItem instance
