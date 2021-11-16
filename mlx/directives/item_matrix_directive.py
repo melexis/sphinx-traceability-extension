@@ -138,7 +138,8 @@ class ItemMatrix(TraceableBaseNode):
             p_node += txt
             top_node += p_node
 
-        top_node += table
+        if number_of_columns:
+            top_node += table
         self.replace_self(top_node)
 
     def _build_table_body(self, rows, group, onlycovered, onlyuncovered):

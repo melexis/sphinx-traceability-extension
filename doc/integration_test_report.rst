@@ -300,6 +300,13 @@ All relationships with items having ASIL-C/D attribute
     :group: bottom
     :stats:
 
+.. item-matrix:: Only statistics (hidden table)
+    :asil: [CD]
+    :hidesource:
+    :hidetarget:
+    :group: bottom
+    :stats:
+
 Traceability from SRS to SSS
 ----------------------------
 
