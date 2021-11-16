@@ -138,7 +138,8 @@ class ItemMatrix(TraceableBaseNode):
             p_node += txt
             top_node += p_node
 
-        top_node += table
+        if number_of_columns:
+            top_node += table
         self.replace_self(top_node)
 
     def _build_table_body(self, rows, group, onlycovered, onlyuncovered):
@@ -533,7 +534,7 @@ class ItemMatrix(TraceableBaseNode):
 
     @staticmethod
     def _create_cell_for_attribute(item, attribute):
-        """ Creates a cell with the item's attribute value the given attribute.
+        """ Creates a cell with the item's attribute value for the given attribute.
 
         Args:
             item (TraceableItem): TraceableItem instance
