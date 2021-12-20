@@ -1,3 +1,4 @@
+"""Module for the item-relink directive"""
 from docutils.parsers.rst import directives
 
 from mlx.traceability import report_warning
@@ -6,7 +7,7 @@ from mlx.traceable_base_node import TraceableBaseNode
 
 
 class ItemRelink(TraceableBaseNode):
-    '''Relinking of documentation items'''
+    """Relinking of documentation items"""
 
     def perform_replacement(self, app, collection):
         """ Processes the item-link items. The ItemRelink node has no final representation, so is removed from the tree.
