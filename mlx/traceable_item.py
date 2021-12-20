@@ -130,13 +130,14 @@ class TraceableItem(TraceableBaseClass):
             if target in database[relation]:
                 database[relation].remove(target)
 
-    def remove_targets(self, target_id, explicit=False, implicit=True):
+    def remove_targets(self, target_id, explicit=False, implicit=True, relations=set()):
         ''' Removes any relation to given target item.
 
         Args:
             target_id (str): Identification of the target items to remove.
             explicit (bool): If True, explicitly expressed relations to given target are removed.
             implicit (bool): If True, implicitly expressed relations to given target are removed.
+            relations (set): Set of relations to remove; empty to take all into account.
         '''
         source_databases = []
         if explicit:
@@ -145,7 +146,7 @@ class TraceableItem(TraceableBaseClass):
             source_databases.append(self.implicit_relations)
         for database in source_databases:
             for relation in database:
-                if target_id in database[relation]:
+                if target_id in database[relation] and (not relations or relation in relations):
                     database[relation].remove(target_id)
 
     def iter_targets(self, relation, explicit=True, implicit=True, sort=True):
