@@ -72,12 +72,12 @@ class ItemRelinkDirective(TraceableBaseDirective):
         else:
             for item_id in source.iter_targets(reverse_type, sort=False):
                 self.affected_items.add(item_id)
-
         for item_id in self.affected_items:
             item = collection.get_item(item_id)
             item.remove_targets(source_id, explicit=True, implicit=True, relations={forward_type})
             source.remove_targets(item_id, explicit=True, implicit=True, relations={reverse_type})
-            collection.add_relation(item_id, forward_type, target_id)
+            if target_id:
+                collection.add_relation(item_id, forward_type, target_id)
 
         # Remove source from collection if it is not defined as an item
         if source.is_placeholder():
