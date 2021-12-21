@@ -96,6 +96,42 @@ This directive has no representation in the documentation build output. It will
 just add an additional relationship to the items mentioned in ``sources`` and
 ``targets``.
 
+------------------------------------------
+Changing targets or removing relationships
+------------------------------------------
+
+In some cases, it's useful to change the target for a specific relationship, e.g. when the target is not defined
+as an item.
+All items that are linked to this target via the specified relationship will be linked to the new target instead.
+It's also possible to remove all relationships to a given target by providing an empty value for the ``target`` option.
+Example usage of the ``item-relink`` directive:
+
+.. code-block:: rest
+
+    .. item-relink::
+        :source: RQT-OLD_PROJECT
+        :target: RQT-NEW_PROJECT
+        :type: validates
+
+:source: *required*, *single argument*
+
+    The original target of the source-target pair(s) to overwrite. If it is not defined as an item, it will be removed
+    as a placeholder item from the collection of traceable items, thus, preventing any warning that it's undefined.
+
+:target: *required*, *single argument*
+
+    The new target for the source-target pair(s) to overwrite.
+    Leave it empty to remove the relationships instead of altering their target.
+
+:type:
+
+    Relationship type, for which the values for the ``source`` and ``target`` options are the target.
+    The value must not be empty.
+
+This directive has no representation in the documentation build output. It will
+just add an additional relationship to the items mentioned in ``sources`` and
+``targets``.
+
 -------------------------------------------------
 Adding attributes outside of the item definitions
 -------------------------------------------------
