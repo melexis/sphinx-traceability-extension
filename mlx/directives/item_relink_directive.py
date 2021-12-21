@@ -29,7 +29,6 @@ class ItemRelinkDirective(TraceableBaseDirective):
          :target: item
          :type: relationship_type
     """
-    affected_items = set()
     # Options
     option_spec = {
         'source': directives.unchanged,
@@ -66,13 +65,14 @@ class ItemRelinkDirective(TraceableBaseDirective):
         target_id = node['target']
         forward_type = node['type']
         reverse_type = collection.get_reverse_relation(forward_type)
+        affected_items = set()
         if source is None:
             report_warning("Could not find source item {!r} specified in item-relink directive".format(source_id))
             return []
         else:
             for item_id in source.iter_targets(reverse_type, sort=False):
-                self.affected_items.add(item_id)
-        for item_id in self.affected_items:
+                affected_items.add(item_id)
+        for item_id in affected_items:
             item = collection.get_item(item_id)
             item.remove_targets(source_id, explicit=True, implicit=True, relations={forward_type})
             source.remove_targets(item_id, explicit=True, implicit=True, relations={reverse_type})
