@@ -68,6 +68,7 @@ class ItemRelinkDirective(TraceableBaseDirective):
         reverse_type = collection.get_reverse_relation(forward_type)
         if source is None:
             report_warning("Could not find source item {!r} specified in item-relink directive".format(source_id))
+            return []
         else:
             for item_id in source.iter_targets(reverse_type, sort=False):
                 self.affected_items.add(item_id)
