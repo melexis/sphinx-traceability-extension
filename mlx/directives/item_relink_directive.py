@@ -65,13 +65,18 @@ class ItemRelinkDirective(TraceableBaseDirective):
         target_id = node['target']
         forward_type = node['type']
         reverse_type = collection.get_reverse_relation(forward_type)
-        affected_items = set()
+
         if source is None:
             report_warning("Could not find source item {!r} specified in item-relink directive".format(source_id))
             return []
-        else:
-            for item_id in source.iter_targets(reverse_type, sort=False):
-                affected_items.add(item_id)
+        if not reverse_type:
+            report_warning("Could not find reverse relationship type for type {!r} specified in item-relink directive"
+                           .format(forward_type))
+            return []
+
+        affected_items = set()
+        for item_id in source.iter_targets(reverse_type, sort=False):
+            affected_items.add(item_id)
         for item_id in affected_items:
             item = collection.get_item(item_id)
             item.remove_targets(source_id, explicit=True, implicit=True, relations={forward_type})
