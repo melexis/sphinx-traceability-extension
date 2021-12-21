@@ -36,6 +36,7 @@ from mlx.directives.item_link_directive import ItemLink, ItemLinkDirective
 from mlx.directives.item_list_directive import ItemList, ItemListDirective
 from mlx.directives.item_matrix_directive import ItemMatrix, ItemMatrixDirective
 from mlx.directives.item_pie_chart_directive import ItemPieChart, ItemPieChartDirective
+from mlx.directives.item_relink_directive import ItemRelink, ItemRelinkDirective
 from mlx.directives.item_tree_directive import ItemTree, ItemTreeDirective
 
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
@@ -234,7 +235,9 @@ def process_item_nodes(app, doctree, fromdocname):
     node_classes = (
         AttributeLink,
         AttributeSort,
-        ItemLink, ItemMatrix,
+        ItemLink,
+        ItemRelink,
+        ItemMatrix,
         ItemPieChart,
         ItemAttributesMatrix,
         Item2DMatrix,
@@ -608,6 +611,7 @@ def setup(app):
     app.add_directive('item-2d-matrix', Item2DMatrixDirective)
     app.add_directive('item-tree', ItemTreeDirective)
     app.add_directive('item-link', ItemLinkDirective)
+    app.add_directive('item-relink', ItemRelinkDirective)
     app.add_directive('attribute-link', AttributeLinkDirective)
     app.add_directive('attribute-sort', AttributeSortDirective)
 
