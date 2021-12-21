@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Software Implementation &mdash; Traceability 8.3.2 documentation</title>
+  <title>Software Implementation &mdash; Traceability 8.4.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                8.3.2
+                8.4.0
               </div>
             
           
@@ -459,7 +459,7 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.remove_targets">
-<span class="sig-name descname"><span class="pre">remove_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.remove_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.remove_targets" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.remove_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.remove_targets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes any relation to given target item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -467,6 +467,7 @@ relations.</p>
 <li><p><strong>target_id</strong> (<em>str</em>) – Identification of the target items to remove.</p></li>
 <li><p><strong>explicit</strong> (<em>bool</em>) – If True, explicitly expressed relations to given target are removed.</p></li>
 <li><p><strong>implicit</strong> (<em>bool</em>) – If True, implicitly expressed relations to given target are removed.</p></li>
+<li><p><strong>relations</strong> (<em>set</em>) – Set of relations to remove; empty to take all into account.</p></li>
 </ul>
 </dd>
 </dl>
