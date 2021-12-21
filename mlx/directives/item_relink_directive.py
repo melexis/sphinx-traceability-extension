@@ -20,18 +20,18 @@ class ItemRelink(TraceableBaseNode):
 
 
 class ItemRelinkDirective(TraceableBaseDirective):
-    """Directive to link a source to a different target or remove a relationship.
+    """Directive to link items to a different target or remove a relationship.
 
     Syntax::
 
       .. item-link::
-         :source: item
+         :remap: item
          :target: item
          :type: relationship_type
     """
     # Options
     option_spec = {
-        'source': directives.unchanged,
+        'remap': directives.unchanged,
         'target': directives.unchanged,
         'type': directives.unchanged,
     }
@@ -49,7 +49,7 @@ class ItemRelinkDirective(TraceableBaseDirective):
         process_options_success = self.process_options(
             node,
             {
-                'source': {'default': ''},
+                'remap': {'default': ''},
                 'target': {'default': ''},
                 'type':   {'default': ''},
             },
@@ -60,14 +60,14 @@ class ItemRelinkDirective(TraceableBaseDirective):
 
         # Processing of the item-relink items. Should be done before converting anything to docutils.
         collection = env.traceability_collection
-        source_id = node['source']
+        source_id = node['remap']
         source = collection.get_item(source_id)
         target_id = node['target']
         forward_type = node['type']
         reverse_type = collection.get_reverse_relation(forward_type)
 
         if source is None:
-            report_warning("Could not find source item {!r} specified in item-relink directive".format(source_id))
+            report_warning("Could not find item {!r} specified in item-relink directive".format(source_id))
             return []
         if not reverse_type:
             report_warning("Could not find reverse relationship type for type {!r} specified in item-relink directive"

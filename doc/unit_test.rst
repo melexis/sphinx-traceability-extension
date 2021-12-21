@@ -55,6 +55,6 @@ Unit Tests for mlx.traceability
     :type: validated_by
 
 .. item-relink::
-    :source: RQT-ATTRIBUTES_FAKE
+    :remap: RQT-ATTRIBUTES_FAKE
     :target: RQT-ATTRIBUTES
     :type: validates

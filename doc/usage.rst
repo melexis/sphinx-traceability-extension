@@ -109,13 +109,13 @@ Example usage of the ``item-relink`` directive:
 .. code-block:: rest
 
     .. item-relink::
-        :source: RQT-OLD_PROJECT
+        :remap: RQT-OLD_PROJECT
         :target: RQT-NEW_PROJECT
         :type: validates
 
-:source: *required*, *single argument*
+:remap: *required*, *single argument*
 
-    The original target of the source-target pair(s) to overwrite. If it is not defined as an item, it will be removed
+    The original target of the source-target pair(s) to be remapped. If it is not defined as an item, it will be removed
     as a placeholder item from the collection of traceable items, thus, preventing any warning that it's undefined.
 
 :target: *required*, *single argument*
@@ -123,14 +123,12 @@ Example usage of the ``item-relink`` directive:
     The new target for the source-target pair(s) to overwrite.
     Leave it empty to remove the relationships instead of altering their target.
 
-:type:
+:type: *required*, *single argument*
 
-    Relationship type, for which the values for the ``source`` and ``target`` options are the target.
+    Relationship type, for which the values for the ``remap`` and ``target`` options are the target.
     The value must not be empty.
 
-This directive has no representation in the documentation build output. It will
-just add an additional relationship to the items mentioned in ``sources`` and
-``targets``.
+This directive has no representation in the documentation build output.
 
 -------------------------------------------------
 Adding attributes outside of the item definitions
