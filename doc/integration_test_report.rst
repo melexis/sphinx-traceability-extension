@@ -61,15 +61,6 @@ Other requirements
 
 This text is not part of any item
 
-.. item:: r003 The great
-    :class: secondary
-    :trace: r002
-    :ext_toolname: namespace:group:document
-    :asil: A
-    :status: Approved
-
-    Clean up all this.
-
 .. item:: r005 Another (does not show captions on the related items)
     :aspice: 2
     :asil: C
@@ -95,6 +86,15 @@ This text is not part of any item
         r005
 
     To demonstrate that bug #2 is solved
+
+.. item:: r003 Item defined after r006 and before r007
+    :class: secondary
+    :trace: r002
+    :ext_toolname: namespace:group:document
+    :asil: A
+    :status: Approved
+
+    Clean up all this.
 
 .. item:: r007 Depends on all with stereotypes
     :asil: X
