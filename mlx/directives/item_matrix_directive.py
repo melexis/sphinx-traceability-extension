@@ -453,6 +453,7 @@ class ItemMatrix(TraceableBaseNode):
                     items = target_items
                 elif row_idx < len(target_items):
                     items = [target_items[row_idx]]
+                items = natsorted(items, key=lambda item: getattr(item, 'id', ''))
                 row += self._create_cell_for_items(items, app)
             # target columns: attributes and extra relations
             target_attribute_cells = []
