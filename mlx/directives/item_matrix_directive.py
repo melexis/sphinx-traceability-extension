@@ -16,6 +16,7 @@ def group_choice(argument):
     """Conversion function for the "group" option."""
     return directives.choice(argument, ('top', 'bottom'))
 
+
 def sort_entries(container):
     """Returns the TraceableItem entries in the given container in natural order"""
     return natsorted(container, key=lambda item: getattr(item, 'id', ''))
