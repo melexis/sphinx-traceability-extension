@@ -17,6 +17,11 @@ def group_choice(argument):
     return directives.choice(argument, ('top', 'bottom'))
 
 
+def sort_entries(container):
+    """Returns the TraceableItem entries in the given container in natural order"""
+    return natsorted(container, key=lambda item: getattr(item, 'id', ''))
+
+
 class ItemMatrix(TraceableBaseNode):
     '''Matrix for cross referencing documentation items'''
 
@@ -241,18 +246,18 @@ class ItemMatrix(TraceableBaseNode):
             right_cells (list): List of empty lists to fill with intermediates items followed by target items
             linked_items (dict): Mapping of intermediate items to the list of sets of target items per target
         """
-        for intermediate_item in linked_items:
-            right_cells[0].append(intermediate_item)
-
         # avoid duplicate target IDs in the same cell due to multiple intermediates with the same target item
         added_items_per_column = {}
-        for targets in linked_items.values():
-            for idx, target_items in enumerate(targets):
+        for intermediate_item, targets in linked_items.items():
+            right_cells[0].append(intermediate_item)
+            for idx, target_items in enumerate(targets, start=1):
                 if idx not in added_items_per_column:
                     added_items_per_column[idx] = set()
                 for target_item in target_items.difference(added_items_per_column[idx]):
-                    right_cells[idx + 1].append(target_item)
+                    right_cells[idx].append(target_item)
                     added_items_per_column[idx].add(target_item)
+                right_cells[idx] = sort_entries(right_cells[idx])
+        right_cells[0] = sort_entries(right_cells[0])
 
     def add_external_targets(self, right_cells, source_item, external_relationships, app):
         """ Adds links to external targets for given source to the list of data per column
@@ -453,8 +458,7 @@ class ItemMatrix(TraceableBaseNode):
                     items = target_items
                 elif row_idx < len(target_items):
                     items = [target_items[row_idx]]
-                items = natsorted(items, key=lambda item: getattr(item, 'id', ''))
-                row += self._create_cell_for_items(items, app)
+                row += self._create_cell_for_items(sort_entries(items), app)
             # target columns: attributes and extra relations
             target_attribute_cells = []
             if self['targetcolumns']:
