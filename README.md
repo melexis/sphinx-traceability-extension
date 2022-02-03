@@ -1,6 +1,6 @@
 [![GPL3 License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![PyPI packaged release](https://badge.fury.io/py/mlx.traceability.svg)](https://badge.fury.io/py/mlx.traceability)
-[![Build status](https://travis-ci.org/melexis/sphinx-traceability-extension.svg?branch=master)](https://travis-ci.org/melexis/sphinx-traceability-extension)
+[![Build status](https://github.com/melexis/sphinx-traceability-extension/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/melexis/sphinx-traceability-extension/actions/workflows/python-package.yml)
 [![Documentation](https://img.shields.io/badge/Documentation-published-brightgreen.svg)](https://melexis.github.io/sphinx-traceability-extension/)
 [![Code Coverage](https://codecov.io/gh/melexis/sphinx-traceability-extension/coverage.svg)](https://codecov.io/gh/melexis/sphinx-traceability-extension)
 [![Code Climate Status](https://codeclimate.com/github/melexis/sphinx-traceability-extension/badges/gpa.svg)](https://codeclimate.com/github/melexis/sphinx-traceability-extension)
