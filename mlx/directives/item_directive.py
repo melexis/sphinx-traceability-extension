@@ -149,6 +149,8 @@ class ItemDirective(TraceableBaseDirective):
         item_node['classes'].append('collapsible_links')  # traceability.js adds the arrowhead button
         if app.config.traceability_collapse_links:
             item_node['classes'].append('collapse')
+        if 'class' in self.options:
+            item_node['classes'].extend(self.options.get('class'))
         item = self._store_item_info(target_id, env)
 
         # Custom callback for modifying items
