@@ -367,9 +367,10 @@ def traceability_callback_per_item(name, collection):
 def traceability_inspect_item(name, collection):
     """Callback function called when an item-directive is being rendered.
 
-    Note: the item should not be modified, only inspected. At this stage of the documentation build, all directives,
-    e.g. attribute-link and item-link, have been processed and any gaps in your documentation can be exposed by
-    reporting a warning.
+    Warning: the item cannot not be modified, only inspected.
+
+    Note: At this stage of the documentation build, all directives, e.g. attribute-link and item-link,
+    have been processed and any gaps in your documentation can be exposed by reporting a warning.
 
     Args:
         name (str): Name (id) of the item currently being parsed

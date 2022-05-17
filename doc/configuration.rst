@@ -302,7 +302,7 @@ Callback to inspect item
 To overcome the limitation of ``traceability_callback_per_item`` (see note above), a secondary callback function can be
 defined. This function will be called when *rendering* each ``item``-directive. At that moment, all other directive
 types, e.g. ``attribute-link`` and ``item-link``, will have been processed. You can use this callback function to detect
-and warn about any gaps in your documentation but you shouldn't use it to make any modifications.
+and warn about any gaps in your documentation but you cannot use it to make any modifications.
 The callback has this prototype:
 
 .. code-block:: python
@@ -310,15 +310,21 @@ The callback has this prototype:
     def traceability_inspect_item(name, collection):
         """Callback function called when an item-directive is being rendered.
 
-        Note: the item should not be modified, only inspected. At this stage of the documentation build, all directives,
-        e.g. attribute-link and item-link, have been processed and any gaps in your documentation can be exposed by
-        reporting a warning.
+        Warning: the item cannot not be modified, only inspected.
+
+        Note: At this stage of the documentation build, all directives, e.g. attribute-link and item-link,
+        have been processed and any gaps in your documentation can be exposed by reporting a warning.
 
         Args:
             name (str): Name (id) of the item currently being parsed
             collection (TraceableCollection): Collection of all items that have been parsed so far
         """
         pass
+
+.. warning::
+
+    The collection should not be modified, only inspected. Modifying the collection in this step can corrupt it without
+    triggering any warnings.
 
 .. _traceability_optional_mandatory:
 
