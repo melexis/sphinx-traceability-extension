@@ -378,7 +378,8 @@ def traceability_inspect_item(name, collection):
     if name.startswith('CL-'):
         item = collection.get_item(name)
         if 'checked' not in item.attributes:
-            report_warning(f"traceability_inspect_item: Checklist item {name!r} is missing the 'checked' attribute.")
+            report_warning("traceability_inspect_item: Checklist item {!r} is missing the 'checked' attribute."
+                           .format(name))
 
 
 rst_epilog = ".. |RST|   replace:: :abbr:`RST (reStructuredText)`"
