@@ -18,6 +18,7 @@ import sys
 from collections import OrderedDict
 
 import mlx.traceability
+from mlx.traceability import report_warning
 from pkg_resources import get_distribution
 
 pkg_version = get_distribution('mlx.traceability').version
@@ -347,11 +348,40 @@ traceability_external_relationship_to_url = {
 traceability_json_export_path = '_build/exported_items.json'
 
 def traceability_callback_per_item(name, collection):
+    """Callback function called when an item-directive is being processed.
+
+    Note: attributes, relationships and content (body) of the item can be modified. Sphinx processes each directive
+    in turn, so attributes and relationships added or modified by other directives may not have been processed yet.
+
+    Args:
+        name (str): Name (id) of the item currently being parsed
+        collection (TraceableCollection): Collection of all items that have been parsed so far
+    """
     if name == 'r001':
         item = collection.get_item(name)
         content_str = item.get_content()
         content_str += '\n\nThis line was added by ``traceability_callback_per_item`` and is parsed as |RST| syntax.'
         item.set_content(content_str)
+
+
+def traceability_inspect_item(name, collection):
+    """Callback function called when an item-directive is being rendered.
+
+    Warning: the item cannot not be modified, only inspected.
+
+    Note: At this stage of the documentation build, all directives, e.g. attribute-link and item-link,
+    have been processed and any gaps in your documentation can be exposed by reporting a warning.
+
+    Args:
+        name (str): Name (id) of the item currently being parsed
+        collection (TraceableCollection): Collection of all items that have been parsed so far
+    """
+    if name.startswith('CL-'):
+        item = collection.get_item(name)
+        if 'checked' not in item.attributes:
+            report_warning("traceability_inspect_item: Checklist item {!r} is missing the 'checked' attribute."
+                           .format(name))
+
 
 rst_epilog = ".. |RST|   replace:: :abbr:`RST (reStructuredText)`"
 

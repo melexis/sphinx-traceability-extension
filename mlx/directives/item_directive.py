@@ -30,6 +30,8 @@ class Item(TraceableBaseNode):
             top_node.append(dl_node)
         # Note: content should be displayed during read of RST file, as it contains other RST objects
         self.replace_self(top_node)
+        if app.config.traceability_inspect_item:
+            app.config.traceability_inspect_item(item_id, collection)
 
     def _process_attributes(self, dl_node, app):
         """ Processes all attributes for the given item and adds the list of attributes to the given definition list.

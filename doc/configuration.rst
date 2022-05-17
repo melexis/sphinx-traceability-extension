@@ -270,32 +270,61 @@ The actual content (RST content with images, formulas, etc) of the item is curre
 Callback per item (advanced)
 ----------------------------
 
+Callback to modify item
+=======================
+
 The plugin allows parsing and modifying documentation objects *behind the scenes* using a callback. The callback
 has this prototype:
 
 .. code-block:: python
 
     def traceability_callback_per_item(name, collection):
-        ''' Custom callback on items
+        """Callback function called when an item-directive is being processed.
+
+        Note: attributes, relationships and content (body) of the item can be modified. Sphinx processes each directive
+        in turn, so attributes and relationships added or modified by other directives may not have been processed yet.
 
         Args:
             name (str): Name (id) of the item currently being parsed
             collection (TraceableCollection): Collection of all items that have been parsed so far
-        '''
+        """
         pass
 
-The callback is executed while parsing the documentation item from your rst-file. Note that not all items are
-available at the time this callback executes, the *collection* parameter is a growing collection of documentation
-objects.
+.. note::
 
-.. _traceability_no_callback:
+    The callback is executed while parsing the documentation item from your RST file. Note that not all items are
+    available at the time this callback executes, the *collection* parameter is a growing collection of documentation
+    objects.
 
-Example of no callback per item
-===============================
+Callback to inspect item
+========================
+
+To overcome the limitation of ``traceability_callback_per_item`` (see note above), a secondary callback function can be
+defined. This function will be called when *rendering* each ``item``-directive. At that moment, all other directive
+types, e.g. ``attribute-link`` and ``item-link``, will have been processed. You can use this callback function to detect
+and warn about any gaps in your documentation but you cannot use it to make any modifications.
+The callback has this prototype:
 
 .. code-block:: python
 
-    traceability_callback_per_item = None
+    def traceability_inspect_item(name, collection):
+        """Callback function called when an item-directive is being rendered.
+
+        Warning: the item cannot not be modified, only inspected.
+
+        Note: At this stage of the documentation build, all directives, e.g. attribute-link and item-link,
+        have been processed and any gaps in your documentation can be exposed by reporting a warning.
+
+        Args:
+            name (str): Name (id) of the item currently being parsed
+            collection (TraceableCollection): Collection of all items that have been parsed so far
+        """
+        pass
+
+.. warning::
+
+    The collection should not be modified, only inspected. Modifying the collection in this step can corrupt it without
+    triggering any warnings.
 
 .. _traceability_optional_mandatory:
 
@@ -303,7 +332,8 @@ Example of requiring certain attributes on an item
 ==================================================
 
 The callback function can modify traceable items, e.g. add attributes. In this example it reports a warning
-when the item doesn't have either the `functional` or `non-functional` attribute:
+when the item doesn't have either the `functional` or `non-functional` attribute defined *at the time its
+``item``-directive is being processed*:
 
 .. code-block:: python
 
@@ -315,6 +345,7 @@ when the item doesn't have either the `functional` or `non-functional` attribute
             report_warning("Requirement item {!r} must have either the 'functional' or 'non_functional' attribute; "
                            "adding 'functional'".format(name), docname=item.docname, lineno=item.lineno)
             item.add_attribute('functional', '')
+
 
 .. _traceability_config_link_colors:
 

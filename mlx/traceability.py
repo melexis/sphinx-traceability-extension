@@ -473,8 +473,11 @@ def setup(app):
     # Configuration for exporting collection to json
     app.add_config_value('traceability_json_export_path', None, 'env')
 
-    # Configuration for adapting items through a callback
+    # Configuration for adapting items through a callback while processing the ``item`` directives
     app.add_config_value('traceability_callback_per_item', None, 'env')
+
+    # Configuration for inspecting items through a callback after all directives have been processed
+    app.add_config_value('traceability_inspect_item', None, 'env')
 
     # Create default attributes dictionary. Can be customized in conf.py
     app.add_config_value(
