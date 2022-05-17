@@ -348,13 +348,14 @@ traceability_external_relationship_to_url = {
 traceability_json_export_path = '_build/exported_items.json'
 
 def traceability_callback_per_item(name, collection):
-    """Callback function called when an item-directive is being processed
+    """Callback function called when an item-directive is being processed.
 
-    Note: attributes, relationships and content (body) of the item can be modified.
+    Note: attributes, relationships and content (body) of the item can be modified. Sphinx processes each directive
+    in turn, so attributes and relationships added or modified by other directives may not have been processed yet.
 
     Args:
-        name (str): Item ID
-        collection (TraceableCollection): Storage class for collection of traceable items
+        name (str): Name (id) of the item currently being parsed
+        collection (TraceableCollection): Collection of all items that have been parsed so far
     """
     if name == 'r001':
         item = collection.get_item(name)
@@ -364,15 +365,15 @@ def traceability_callback_per_item(name, collection):
 
 
 def traceability_inspect_item(name, collection):
-    """Callback function called when all directives have been processed
+    """Callback function called when an item-directive is being rendered.
 
-    Note: the item cannot be modified, only inspected. At this stage of the documentation build, all directives, e.g.
-    attribute-link and item-link, have been processed and any gaps in your documentation can be exposed by reporting
-    a warning.
+    Note: the item should not be modified, only inspected. At this stage of the documentation build, all directives,
+    e.g. attribute-link and item-link, have been processed and any gaps in your documentation can be exposed by
+    reporting a warning.
 
     Args:
-        name (str): Item ID
-        collection (TraceableCollection): Storage class for collection of traceable items
+        name (str): Name (id) of the item currently being parsed
+        collection (TraceableCollection): Collection of all items that have been parsed so far
     """
     if name.startswith('CL-'):
         item = collection.get_item(name)
