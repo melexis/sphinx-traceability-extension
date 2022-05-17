@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Configuration &mdash; Traceability 8.4.3 documentation</title>
+  <title>Configuration &mdash; Traceability 8.5.0 documentation</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                8.4.3
+                8.5.0
               </div>
             
           
@@ -123,7 +123,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#callback-per-item-advanced">Callback per item (advanced)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#example-of-no-callback-per-item">Example of no callback per item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#callback-to-modify-item">Callback to modify item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#callback-to-inspect-item">Callback to inspect item</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example-of-requiring-certain-attributes-on-an-item">Example of requiring certain attributes on an item</a></li>
 </ul>
 </li>
@@ -404,31 +405,63 @@ can be enabled by setting the configuration to your JSON-file to export to. Note
 </div>
 <div class="section" id="callback-per-item-advanced">
 <span id="traceability-config-callback"></span><h2>Callback per item (advanced)<a class="headerlink" href="#callback-per-item-advanced" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="callback-to-modify-item">
+<h3>Callback to modify item<a class="headerlink" href="#callback-to-modify-item" title="Permalink to this headline">¶</a></h3>
 <p>The plugin allows parsing and modifying documentation objects <em>behind the scenes</em> using a callback. The callback
 has this prototype:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">traceability_callback_per_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; Custom callback on items</span>
+    <span class="sd">&quot;&quot;&quot;Callback function called when an item-directive is being processed.</span>
+
+<span class="sd">    Note: attributes, relationships and content (body) of the item can be modified. Sphinx processes each directive</span>
+<span class="sd">    in turn, so attributes and relationships added or modified by other directives may not have been processed yet.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        name (str): Name (id) of the item currently being parsed</span>
 <span class="sd">        collection (TraceableCollection): Collection of all items that have been parsed so far</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
-<p>The callback is executed while parsing the documentation item from your rst-file. Note that not all items are
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The callback is executed while parsing the documentation item from your RST file. Note that not all items are
 available at the time this callback executes, the <em>collection</em> parameter is a growing collection of documentation
 objects.</p>
-<div class="section" id="example-of-no-callback-per-item">
-<span id="traceability-no-callback"></span><h3>Example of no callback per item<a class="headerlink" href="#example-of-no-callback-per-item" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_callback_per_item</span> <span class="o">=</span> <span class="kc">None</span>
+</div>
+</div>
+<div class="section" id="callback-to-inspect-item">
+<h3>Callback to inspect item<a class="headerlink" href="#callback-to-inspect-item" title="Permalink to this headline">¶</a></h3>
+<p>To overcome the limitation of <code class="docutils literal notranslate"><span class="pre">traceability_callback_per_item</span></code> (see note above), a secondary callback function can be
+defined. This function will be called when <em>rendering</em> each <code class="docutils literal notranslate"><span class="pre">item</span></code>-directive. At that moment, all other directive
+types, e.g. <code class="docutils literal notranslate"><span class="pre">attribute-link</span></code> and <code class="docutils literal notranslate"><span class="pre">item-link</span></code>, will have been processed. You can use this callback function to detect
+and warn about any gaps in your documentation but you cannot use it to make any modifications.
+The callback has this prototype:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">traceability_inspect_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Callback function called when an item-directive is being rendered.</span>
+
+<span class="sd">    Warning: the item cannot not be modified, only inspected.</span>
+
+<span class="sd">    Note: At this stage of the documentation build, all directives, e.g. attribute-link and item-link,</span>
+<span class="sd">    have been processed and any gaps in your documentation can be exposed by reporting a warning.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Name (id) of the item currently being parsed</span>
+<span class="sd">        collection (TraceableCollection): Collection of all items that have been parsed so far</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The collection should not be modified, only inspected. Modifying the collection in this step can corrupt it without
+triggering any warnings.</p>
 </div>
 </div>
 <div class="section" id="example-of-requiring-certain-attributes-on-an-item">
 <span id="traceability-optional-mandatory"></span><h3>Example of requiring certain attributes on an item<a class="headerlink" href="#example-of-requiring-certain-attributes-on-an-item" title="Permalink to this headline">¶</a></h3>
 <p>The callback function can modify traceable items, e.g. add attributes. In this example it reports a warning
-when the item doesn’t have either the <cite>functional</cite> or <cite>non-functional</cite> attribute:</p>
+when the item doesn’t have either the <cite>functional</cite> or <cite>non-functional</cite> attribute defined <em>at the time its
+``item``-directive is being processed</em>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlx.traceability</span> <span class="kn">import</span> <span class="n">report_warning</span>
 
 <span class="k">def</span> <span class="nf">traceability_callback_per_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>

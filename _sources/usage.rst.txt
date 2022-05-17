@@ -413,8 +413,8 @@ limitations in doing so:
 :stats: *optional*, *flag*
 
     By providing the *stats* flag, some statistics (coverage percentage) are calculated and displayed above the
-    matrix. The plugin counts the number of items having a target item in the target-column(s) (=covered or allocated),
-    and the number of items having no target in the target-column(s) (=not covered or allocated). And calculates a
+    matrix. The plugin counts the number of items having at least one target item in (any of) the target-column(s) (=covered or allocated),
+    and the number of items having no target in every target-column (=not covered or allocated). And calculates a
     coverage/allocation percentage from these counts.
     When omitted this percentage is not displayed.
 
@@ -424,8 +424,8 @@ limitations in doing so:
 
 :coverage: *optional*, *single argument*
 
-    The *coverage* option can be used to evaluate the coverage statistics. It expects an operator followed by
-    a percentage value, e.g. '>= 95', used as the righthand side of the expression.
+    The *coverage* option can be used to evaluate the coverage statistics (see description of ``:stats:`` option).
+    It expects an operator followed by a percentage value, e.g. '>= 95', used as the righthand side of the expression.
     The coverage (as a percentage) will be prepended. If the evaluation is false or invalid, a warning will be reported.
 
 :class: *optional*, *single argument*
