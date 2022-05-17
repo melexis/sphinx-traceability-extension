@@ -20,6 +20,8 @@ class Item(TraceableBaseNode):
         """
         self._item = collection.get_item(self['id'])
         item_id = self._item.get_id()
+        if app.config.traceability_inspect_item:
+            app.config.traceability_inspect_item(item_id, collection)
         top_node = self.create_top_node(item_id, app=app)
         dl_node = nodes.definition_list()
         if app.config.traceability_render_attributes_per_item:
