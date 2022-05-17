@@ -18,6 +18,7 @@ import sys
 from collections import OrderedDict
 
 import mlx.traceability
+from mlx.traceability import report_warning
 from pkg_resources import get_distribution
 
 pkg_version = get_distribution('mlx.traceability').version
@@ -347,11 +348,37 @@ traceability_external_relationship_to_url = {
 traceability_json_export_path = '_build/exported_items.json'
 
 def traceability_callback_per_item(name, collection):
+    """Callback function called when an item-directive is being processed
+
+    Note: attributes, relationships and content (body) of the item can be modified.
+
+    Args:
+        name (str): Item ID
+        collection (TraceableCollection): Storage class for collection of traceable items
+    """
     if name == 'r001':
         item = collection.get_item(name)
         content_str = item.get_content()
         content_str += '\n\nThis line was added by ``traceability_callback_per_item`` and is parsed as |RST| syntax.'
         item.set_content(content_str)
+
+
+def traceability_inspect_item(name, collection):
+    """Callback function called when all directives have been processed
+
+    Note: the item cannot be modified, only inspected. At this stage of the documentation build, all directives, e.g.
+    attribute-link and item-link, have been processed and any gaps in your documentation can be exposed by reporting
+    a warning.
+
+    Args:
+        name (str): Item ID
+        collection (TraceableCollection): Storage class for collection of traceable items
+    """
+    if name.startswith('CL-'):
+        item = collection.get_item(name)
+        if 'checked' not in item.attributes:
+            report_warning(f"traceability_inspect_item: Checklist item {name!r} is missing the 'checked' attribute.")
+
 
 rst_epilog = ".. |RST|   replace:: :abbr:`RST (reStructuredText)`"
 
