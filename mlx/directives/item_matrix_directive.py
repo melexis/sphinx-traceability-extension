@@ -127,7 +127,7 @@ class ItemMatrix(TraceableBaseNode):
         try:
             percentage = 100 * count_covered / count_total
         except ZeroDivisionError:
-            percentage = 0
+            percentage = 100
         self._check_coverage(percentage)
 
         if self['stats']:
