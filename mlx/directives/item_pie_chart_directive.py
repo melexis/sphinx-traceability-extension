@@ -191,7 +191,7 @@ class ItemPieChart(TraceableBaseNode):
         try:
             percentage = int(100 * count_covered / count_total)
         except ZeroDivisionError:
-            percentage = 0
+            percentage = 100
         return 'Statistics: {cover} out of {total} covered: {pct}%'.format(cover=count_covered,
                                                                            total=count_total,
                                                                            pct=percentage,)
