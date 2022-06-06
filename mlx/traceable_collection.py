@@ -307,7 +307,7 @@ class TraceableCollection:
             if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
         if sortattributes:
-            return sorted(matches, key=lambda itemid: item.get_attributes(sortattributes),
+            return sorted(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
                           reverse=reverse)
         elif sort:
             return natsorted(matches, reverse=reverse)
