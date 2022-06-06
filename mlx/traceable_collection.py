@@ -301,11 +301,10 @@ class TraceableCollection:
             unused.
         '''
         matches = []
-        for itemid in self.items:
-            if self.items[itemid].is_placeholder():
+        for itemid, item in self.items.items():
+            if item.is_placeholder():
                 continue
-            if self.items[itemid].is_match(regex) and \
-                    (not attributes or self.items[itemid].attributes_match(attributes)):
+            if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
         if sortattributes:
             return sorted(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
