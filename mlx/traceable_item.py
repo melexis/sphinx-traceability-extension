@@ -316,10 +316,10 @@ class TraceableItem(TraceableBaseClass):
         Returns:
             bool: True if the given attributes match the item attributes.
         '''
-        for attr in attributes:
+        for attr, regex in attributes.items():
             if attr not in self.attributes:
                 return False
-            if not re.match(attributes[attr], self.get_attribute(attr)):
+            if not re.match(regex, self.get_attribute(attr)):
                 return False
         return True
 
