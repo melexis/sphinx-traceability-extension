@@ -55,7 +55,7 @@ class ItemPieChart(TraceableBaseNode):
         self._set_priorities()
         self._set_attribute_id()
 
-        for source_id in self.collection.get_items(self['id_set'][0]):
+        for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
             source_item = self.collection.get_item(source_id)
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder():
@@ -262,6 +262,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :id_set: source_regexp target_regexp (nested_target_regexp)
          :label_set: uncovered, covered(, executed)
          :<<attribute>>: error, fail, pass ...
+         :<<attribute>>: regexp
 
     """
     # Optional argument: title (whitespace allowed)
@@ -290,6 +291,8 @@ class ItemPieChartDirective(TraceableBaseDirective):
         self._process_label_set(item_chart_node)
 
         self._process_attribute(item_chart_node)
+
+        self.add_found_attributes(item_chart_node)
 
         return [item_chart_node]
 
@@ -324,9 +327,12 @@ class ItemPieChartDirective(TraceableBaseDirective):
         node['attribute'] = ''
         node['priorities'] = []
         for attr in set(TraceableItem.defined_attributes) & set(self.options):
+            if ',' not in self.options[attr]:
+                continue  # this :<<attribute>>: is meant for filtering
             if len(node['id_set']) == 3:
                 node['attribute'] = attr
                 node['priorities'] = [x.strip(' ') for x in self.options[attr].split(',')]
+                del self.options[attr]
             else:
                 report_warning('Traceability: The <<attribute>> option is only viable with an id_set with 3 '
                                'arguments.',
