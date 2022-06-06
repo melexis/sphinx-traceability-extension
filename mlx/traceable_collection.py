@@ -89,11 +89,9 @@ class TraceableCollection:
         Args:
             itemid (str): Identification of traceable item to get
         Returns:
-            TraceableItem: Object for traceable item
+            TraceableItem/None: Object for traceable item; None if the item was not found
         '''
-        if self.has_item(itemid):
-            return self.items[itemid]
-        return None
+        return self.items.get(itemid)
 
     def iter_items(self):
         '''
