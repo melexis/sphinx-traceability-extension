@@ -10,6 +10,22 @@ Software Design
 Design for mlx.traceability
 ---------------------------
 
+.. admonition:: TEST_CSV
+
+    .. csv-table:: Table Title
+        :file: _static/test.csv
+        :header-rows: 1
+
+Some text in between
+
+.. item:: TEST_CSV
+
+    .. csv-table:: Table Title
+        :file: _static/test.csv
+        :header-rows: 1
+
+
+
 .. item:: DESIGN-TRACEABILITY Top level design for mlx.traceability
     :fulfills: RQT-TRACEABILITY
 
