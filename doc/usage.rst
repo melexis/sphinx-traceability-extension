@@ -599,8 +599,8 @@ are comma-separated lists.
 
     Defines the string labels for the pie chart. For source items without a relationship to a target
     item, the first label is used. For those with a relationship, but without a relationship between the second and third
-    ID, the second label is used. The third label is used for items with both relationships covered. This attribute is
-    optional. The labels in the example are the default values.
+    ID, the second label is used. The third label (optional) is used for items with both relationships covered.
+    The labels in the example are the default values.
 
 :<<attribute>>: *optional*, *multiple arguments (comma-separated)*
 
