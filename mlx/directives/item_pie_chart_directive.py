@@ -177,6 +177,10 @@ class ItemPieChart(TraceableBaseNode):
             if priority.lower() in chart_labels:
                 value = chart_labels.pop(priority.lower())
                 chart_labels[priority] = value
+        if self['colors'] and len(self['colors']) < len(chart_labels):
+            report_warning("item-piechart contains {} slices but you've only specified {} color(s)"
+                           .format(len(chart_labels), len(self['colors'])),
+                           self['document'], self['line'])
         return chart_labels, statistics
 
     @staticmethod
