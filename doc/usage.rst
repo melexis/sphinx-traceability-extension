@@ -585,6 +585,7 @@ A pie chart of documentation items can be generated using:
         :label_set: uncovered, covered, executed
         :result: error, fail, pass
         :functional: .*
+        :colors: orange c b darkred #FF0000 g
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
@@ -614,6 +615,15 @@ are comma-separated lists.
     Python-style regular expression used to filter the source items based on their attributes.
     The attribute value is **not** used to filter target items.
     When omitted, no filtering is done on the source item attributes.
+
+:colors: *optional*, *multiple arguments (space-separated)*
+
+    By default, matplotlib will choose the colors. This option allows you to define custom colors. You should specify
+    a color for each label in *label_set*, followed by as many colors as possible attribute values that you've listed
+    in the *:<<attribute>>:* option (*:result:* in the example). Matplotlib supports many formats, explained in their
+    demo_.
+
+.. _demo: https://matplotlib.org/stable/gallery/color/color_demo.html#color-demo
 
 .. _traceability_checklist:
 
