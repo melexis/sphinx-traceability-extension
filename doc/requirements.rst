@@ -121,9 +121,10 @@ Design coverage
     :targettitle: Design
     :stats:
 
-.. item-piechart:: Design coverage chart
+.. item-piechart:: Design coverage chart of functional requirements
     :id_set: RQT DESIGN
     :label_set: uncovered, covered
+    :functional: .*
 
 Test coverage
 =============
