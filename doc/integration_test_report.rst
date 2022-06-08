@@ -165,7 +165,7 @@ Integration test reports
 
 .. item:: ITEST_REP-AUTO_REVERSE
     :depends_on: ITEST-AUTO_REVERSE
-    :result: FAIL
+    :result: pass
 
 .. item:: ITEST_REP-COVERAGE
     :depends_on: ITEST-COVERAGE
