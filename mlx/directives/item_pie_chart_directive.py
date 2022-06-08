@@ -1,5 +1,6 @@
 import re
 from hashlib import sha256
+from collections import OrderedDict
 from os import environ, mkdir, path
 
 from docutils import nodes
@@ -160,7 +161,7 @@ class ItemPieChart(TraceableBaseNode):
             (str) Coverage statistics.
         """
         # initialize dictionary for each possible value, and count label occurences
-        chart_labels = {}
+        chart_labels = OrderedDict()
         for label in lower_labels:
             chart_labels[label] = 0
         for attribute in attributes:
@@ -168,6 +169,8 @@ class ItemPieChart(TraceableBaseNode):
 
         # get statistics before removing any labels with value 0
         statistics = self._get_statistics(chart_labels[self['label_set'][0]], len(attributes))
+        # remove colors that won't be used
+        self['colors'] = [color for idx, color in enumerate(self['colors']) if idx < len(chart_labels) and list(chart_labels.values())[idx]]
         # removes labels with count value equal to 0
         chart_labels = {k: v for k, v in chart_labels.items() if v}
         for priority in self['priorities']:
@@ -212,7 +215,8 @@ class ItemPieChart(TraceableBaseNode):
         explode = self._get_explode_values(labels, self['label_set'])
 
         fig, axes = plt.subplots()
-        axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes), startangle=90)
+        colors = self['colors'] if self['colors'] else None
+        axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes), startangle=90, colors=colors)
         axes.axis('equal')
         folder_name = path.join(env.app.srcdir, '_images')
         if not path.exists(folder_name):
@@ -263,6 +267,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :label_set: uncovered, covered(, executed)
          :<<attribute>>: error, fail, pass ...
          :<<attribute>>: regexp
+         :colors: <<color>> ...
 
     """
     # Optional argument: title (whitespace allowed)
@@ -272,6 +277,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'class': directives.class_option,
         'id_set': directives.unchanged,
         'label_set': directives.unchanged,
+        'colors': directives.unchanged,
     }
     # Content disallowed
     has_content = False
@@ -293,6 +299,8 @@ class ItemPieChartDirective(TraceableBaseDirective):
         self._process_attribute(item_chart_node)
 
         self.add_found_attributes(item_chart_node)
+
+        self.process_options(item_chart_node, {'colors': {'default': []}})
 
         return [item_chart_node]
 
