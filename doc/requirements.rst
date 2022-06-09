@@ -160,3 +160,8 @@ Test coverage
     :id_set: [IU]TEST_REP RQT
     :label_set: uncovered, covered
     :colors: orange c
+
+.. item-piechart:: Chart with only one color configured to trigger warning
+    :id_set: RQT [IU]TEST [IU]TEST_REP
+    :label_set: not covered, covered
+    :colors: slategrey
