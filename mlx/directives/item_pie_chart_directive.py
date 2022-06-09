@@ -185,7 +185,7 @@ class ItemPieChart(TraceableBaseNode):
             if priority.lower() in chart_labels:
                 value = chart_labels.pop(priority.lower())
                 chart_labels[priority] = value
-         return chart_labels, statistics
+        return chart_labels, statistics
 
     @staticmethod
     def _get_statistics(count_uncovered, count_total):
