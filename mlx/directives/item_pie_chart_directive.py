@@ -169,11 +169,14 @@ class ItemPieChart(TraceableBaseNode):
 
         # get statistics before removing any labels with value 0
         statistics = self._get_statistics(chart_labels[self['label_set'][0]], len(attributes))
-        # remove colors that won't be used
-        self['colors'] = [color for idx, color in enumerate(self['colors'])
-                          if idx < len(chart_labels) and list(chart_labels.values())[idx]]
-        # removes labels with count value equal to 0
-        chart_labels = {k: v for k, v in chart_labels.items() if v}
+        # removes labels with count value equal to 0 and the corresponding configured color
+        indices_to_remove = set()
+        for idx, label in enumerate(list(chart_labels)):
+            if chart_labels[label] == 0:
+                del chart_labels[label]
+                indices_to_remove.add(idx)
+        self['colors'] = [color for idx, color in enumerate(self['colors']) if idx not in indices_to_remove]
+
         for priority in self['priorities']:
             if priority.lower() in chart_labels:
                 value = chart_labels.pop(priority.lower())
