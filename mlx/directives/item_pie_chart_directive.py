@@ -66,6 +66,10 @@ class ItemPieChart(TraceableBaseNode):
 
         chart_labels, statistics = self._prepare_labels_and_values(list(self.priorities),
                                                                    list(self.linked_attributes.values()))
+        if self['colors'] and len(self['colors']) < len(chart_labels):
+            report_warning("item-piechart contains {} slices but you've only specified {} color(s)"
+                           .format(len(chart_labels), len(self['colors'])),
+                           self['document'], self['line'])
         p_node = nodes.paragraph()
         p_node += nodes.Text(statistics)
         top_node += self.build_pie_chart(chart_labels, env)
@@ -181,11 +185,7 @@ class ItemPieChart(TraceableBaseNode):
             if priority.lower() in chart_labels:
                 value = chart_labels.pop(priority.lower())
                 chart_labels[priority] = value
-        if self['colors'] and len(self['colors']) < len(chart_labels):
-            report_warning("item-piechart contains {} slices but you've only specified {} color(s)"
-                           .format(len(chart_labels), len(self['colors'])),
-                           self['document'], self['line'])
-        return chart_labels, statistics
+         return chart_labels, statistics
 
     @staticmethod
     def _get_statistics(count_uncovered, count_total):
