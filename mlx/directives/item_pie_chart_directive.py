@@ -226,7 +226,7 @@ class ItemPieChart(TraceableBaseNode):
         folder_name = path.join(env.app.srcdir, '_images')
         if not path.exists(folder_name):
             mkdir(folder_name)
-        hash_string = ''
+        hash_string = str(self['colors'])
         for pie_slice in axes.__dict__['texts']:
             hash_string += str(pie_slice)
         hash_value = sha256(hash_string.encode()).hexdigest()  # create hash value based on chart parameters
