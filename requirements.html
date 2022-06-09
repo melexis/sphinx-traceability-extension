@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Software Requirements &mdash; Traceability 8.5.0 documentation</title>
+  <title>Software Requirements &mdash; Traceability 8.6.0 documentation</title>
   
 
   
@@ -38,6 +38,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
         <script src="_static/traceability.js"></script>
@@ -72,7 +73,7 @@
             
             
               <div class="version">
-                8.5.0
+                8.6.0
               </div>
             
           
@@ -188,7 +189,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="software-requirements">
-<h1>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this headline">¶</a></h1>
+<h1>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this heading">¶</a></h1>
 <div class="contents local topic" id="contents">
 <p class="topic-title"><cite>Contents</cite></p>
 <ul class="simple">
@@ -203,12 +204,15 @@
 </ul>
 </div>
 <div class="section" id="requirements-for-mlx-traceability">
-<h2><a class="toc-backref" href="#id1">Requirements for mlx.traceability</a><a class="headerlink" href="#requirements-for-mlx-traceability" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1">Requirements for mlx.traceability</a><a class="headerlink" href="#requirements-for-mlx-traceability" title="Permalink to this heading">¶</a></h2>
 <div class="collapsible_links docutils container" id="RQT-TRACEABILITY">
 <div class="item admonition">
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-TRACEABILITY"><em>RQT-TRACEABILITY : A plugin for sphinx documentation system, adding traceability</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em>DESIGN-TRACEABILITY : Top level design for mlx.traceability</em></a></p>
 </p>
 </dd>
@@ -229,6 +233,9 @@ the documentation.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-TRACEABILITY"><em>RQT-TRACEABILITY : A plugin for sphinx documentation system, adding traceability</em></a></p>
 </p>
 </dd>
@@ -263,6 +270,9 @@ the documentation.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-DOCUMENTATION_ID"><em>RQT-DOCUMENTATION_ID : Identification of documentation part</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </p>
 </dd>
@@ -282,6 +292,9 @@ the documentation.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-CAPTION"><em>RQT-CAPTION : Brief description of documentation part</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </p>
 </dd>
@@ -307,6 +320,9 @@ the documentation.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-CONTENT"><em>RQT-CONTENT : Content of documentation part</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </p>
 </dd>
@@ -327,6 +343,9 @@ through the configured sphinx parser/renderer.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </p>
 </dd>
@@ -369,6 +388,9 @@ The set of attributes and the validness of the attribute values shall be configu
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </p>
 </dd>
@@ -401,6 +423,9 @@ The set of relations shall be configurable.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-AUTO_REVERSE"><em>RQT-AUTO_REVERSE : Automatic creation of reverse relations</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
 </p>
 </dd>
@@ -421,6 +446,9 @@ relation from documentation part &lt;B&gt; to documentation part &lt;A&gt; shall
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-LIST"><em>RQT-LIST : Listing documentation parts</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </p>
 </dd>
@@ -440,6 +468,9 @@ relation from documentation part &lt;B&gt; to documentation part &lt;A&gt; shall
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-COVERAGE"><em>RQT-COVERAGE : Calculation of coverage for relations between documentation parts</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
 </p>
 </dd>
@@ -460,6 +491,9 @@ documentation parts.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-MATRIX"><em>RQT-MATRIX : Auto-generation of a traceability matrix</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
 </p>
 </dd>
@@ -483,6 +517,9 @@ It shall be possible to generate overview matrix of these relations.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-TREE"><em>RQT-TREE : Auto-generation of a traceability tree</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-RELATIONS"><em>RQT-RELATIONS : Documentation parts can be linked to each other</em></a></p>
 </p>
 </dd>
@@ -506,6 +543,9 @@ It shall be possible to generate overview tree of these relations.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
 </p>
 </dd>
@@ -534,6 +574,9 @@ It shall be possible to generate overview tree of these relations.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTE_SORT"><em>RQT-ATTRIBUTE_SORT : Custom sorting of items' attributes</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Depends on</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
 </p>
 </dd>
@@ -570,6 +613,9 @@ For example, unneeded sorting should be avoided.</p>
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="#RQT-DUMMY"><em>RQT-DUMMY : Dummy requirement that is not covered by a test</em></a></p>
 </div>
 <dl class="simple">
+<dt>Attributes</dt><dd><p><p>Functional</p>
+</p>
+</dd>
 <dt>Fulfilled by</dt><dd><p><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em>DESIGN-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
 </p>
 </dd>
@@ -580,9 +626,9 @@ For example, unneeded sorting should be avoided.</p>
 </div>
 </div>
 <div class="section" id="traceability-matrix">
-<h2><a class="toc-backref" href="#id2">Traceability matrix</a><a class="headerlink" href="#traceability-matrix" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2">Traceability matrix</a><a class="headerlink" href="#traceability-matrix" title="Permalink to this heading">¶</a></h2>
 <div class="section" id="tree-of-requirements">
-<h3><a class="toc-backref" href="#id3">Tree of requirements</a><a class="headerlink" href="#tree-of-requirements" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id3">Tree of requirements</a><a class="headerlink" href="#tree-of-requirements" title="Permalink to this heading">¶</a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Requirement tree</p>
@@ -672,7 +718,7 @@ For example, unneeded sorting should be avoided.</p>
 </div>
 </div>
 <div class="section" id="design-coverage">
-<h3><a class="toc-backref" href="#id4">Design coverage</a><a class="headerlink" href="#design-coverage" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id4">Design coverage</a><a class="headerlink" href="#design-coverage" title="Permalink to this heading">¶</a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Trace requirements to design</p>
@@ -746,14 +792,14 @@ For example, unneeded sorting should be avoided.</p>
 </div>
 <div class="docutils container">
 <div class="item admonition">
-<p class="admonition-title">Design coverage chart</p>
+<p class="admonition-title">Design coverage chart of functional requirements</p>
 </div>
-<img alt="_images/piechart-bbc2fd0adf21fae644f7a37bd9399e87c214264fa7da5e971bd9ad5705dd142f.png" src="_images/piechart-bbc2fd0adf21fae644f7a37bd9399e87c214264fa7da5e971bd9ad5705dd142f.png" />
-<p>Statistics: 15 out of 16 covered: 93%</p>
+<img alt="_images/piechart-f4c7339b3ba581cef8c096c38b1c8cb937962198d1a0489126eac30079b1e687.png" src="_images/piechart-f4c7339b3ba581cef8c096c38b1c8cb937962198d1a0489126eac30079b1e687.png" />
+<p>Statistics: 15 out of 15 covered: 100%</p>
 </div>
 </div>
 <div class="section" id="test-coverage">
-<h3><a class="toc-backref" href="#id5">Test coverage</a><a class="headerlink" href="#test-coverage" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5">Test coverage</a><a class="headerlink" href="#test-coverage" title="Permalink to this heading">¶</a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Trace requirements to test cases</p>
@@ -841,22 +887,29 @@ For example, unneeded sorting should be avoided.</p>
 <div class="item admonition">
 <p class="admonition-title">Chart fetching third label from defaults</p>
 </div>
-<img alt="_images/piechart-51880c0b02c80c3008d08978ff18abb1d02c0d5c949da06c43e8c73b24d237b3.png" src="_images/piechart-51880c0b02c80c3008d08978ff18abb1d02c0d5c949da06c43e8c73b24d237b3.png" />
+<img alt="_images/piechart-b2225e04dd5510ab5588b7d5aa0d4941e0a4f27bf5252931ca5ef98820229794.png" src="_images/piechart-b2225e04dd5510ab5588b7d5aa0d4941e0a4f27bf5252931ca5ef98820229794.png" />
 <p>Statistics: 12 out of 16 covered: 75%</p>
 </div>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Test coverage chart with test results</p>
 </div>
-<img alt="_images/piechart-9efdeedf571c61c522af65fe478fec0e40522e90b5f483eddc81300e9bd4c234.png" src="_images/piechart-9efdeedf571c61c522af65fe478fec0e40522e90b5f483eddc81300e9bd4c234.png" />
+<img alt="_images/piechart-9e40112f516b200b897418c7e29fe5931449f9544918378b74589f4f55da3188.png" src="_images/piechart-9e40112f516b200b897418c7e29fe5931449f9544918378b74589f4f55da3188.png" />
 <p>Statistics: 12 out of 16 covered: 75%</p>
 </div>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All uncovered as there is no direct relationship</p>
 </div>
-<img alt="_images/piechart-a1932cc5bb5d8a6c8cacedebae96ffeedcc7beb609687eef82ab16053cdec399.png" src="_images/piechart-a1932cc5bb5d8a6c8cacedebae96ffeedcc7beb609687eef82ab16053cdec399.png" />
+<img alt="_images/piechart-88ec4941f55651822bf5568dcb16e61478014ca9ebaff873f5def921d5ac935d.png" src="_images/piechart-88ec4941f55651822bf5568dcb16e61478014ca9ebaff873f5def921d5ac935d.png" />
 <p>Statistics: 0 out of 8 covered: 0%</p>
+</div>
+<div class="docutils container">
+<div class="item admonition">
+<p class="admonition-title">Chart with only one color configured to trigger warning</p>
+</div>
+<img alt="_images/piechart-de804970786669d1482166217f58082b146667b835ba32241a670ab2f2292f9a.png" src="_images/piechart-de804970786669d1482166217f58082b146667b835ba32241a670ab2f2292f9a.png" />
+<p>Statistics: 12 out of 16 covered: 75%</p>
 </div>
 </div>
 </div>

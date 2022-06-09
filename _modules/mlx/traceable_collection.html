@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mlx.traceable_collection &mdash; Traceability 8.5.0 documentation</title>
+  <title>mlx.traceable_collection &mdash; Traceability 8.6.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                8.5.0
+                8.6.0
               </div>
             
           
@@ -253,11 +253,9 @@
 <span class="sd">        Args:</span>
 <span class="sd">            itemid (str): Identification of traceable item to get</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            TraceableItem: Object for traceable item</span>
+<span class="sd">            TraceableItem/None: Object for traceable item; None if the item was not found</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TraceableCollection.iter_items"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.iter_items">[docs]</a>    <span class="k">def</span> <span class="nf">iter_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -465,11 +463,10 @@
 <span class="sd">            unused.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">itemid</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span><span class="o">.</span><span class="n">is_match</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="ow">and</span> \
-                    <span class="p">(</span><span class="ow">not</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span><span class="o">.</span><span class="n">attributes_match</span><span class="p">(</span><span class="n">attributes</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_match</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes_match</span><span class="p">(</span><span class="n">attributes</span><span class="p">)):</span>
                 <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">sortattributes</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">itemid</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">sortattributes</span><span class="p">),</span>
