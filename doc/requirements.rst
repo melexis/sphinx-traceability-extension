@@ -121,9 +121,10 @@ Design coverage
     :targettitle: Design
     :stats:
 
-.. item-piechart:: Design coverage chart
+.. item-piechart:: Design coverage chart of functional requirements
     :id_set: RQT DESIGN
     :label_set: uncovered, covered
+    :functional: .*
 
 Test coverage
 =============
@@ -139,12 +140,28 @@ Test coverage
 .. item-piechart:: Chart fetching third label from defaults
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: not covered, covered
+    :colors: orange c b
 
 .. item-piechart:: Test coverage chart with test results
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: uncovered, covered, ran test
     :result: ERROR, fail, pass
+    :colors: orange c b darkred #FF0000 g pink
+
+..
+    uncovered: orange (orange)
+    covered: c (cyan)
+    ran test: b (blue)
+    ERROR: darkred (dark red)
+    fail: #FF0000 (red)
+    pass: g (green)
 
 .. item-piechart:: All uncovered as there is no direct relationship
     :id_set: [IU]TEST_REP RQT
     :label_set: uncovered, covered
+    :colors: orange c
+
+.. item-piechart:: Chart with only one color configured to trigger warning
+    :id_set: RQT [IU]TEST [IU]TEST_REP
+    :label_set: not covered, covered
+    :colors: slategrey

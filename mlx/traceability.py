@@ -626,4 +626,8 @@ def setup(app):
                                   innernodeclass=nodes.emphasis,
                                   warn_dangling=True))
 
-    return {'version': version}
+    return {
+        'version': version,
+        'parallel_read_safe': False,
+        'parallel_write_safe': True,
+    }

@@ -89,11 +89,9 @@ class TraceableCollection:
         Args:
             itemid (str): Identification of traceable item to get
         Returns:
-            TraceableItem: Object for traceable item
+            TraceableItem/None: Object for traceable item; None if the item was not found
         '''
-        if self.has_item(itemid):
-            return self.items[itemid]
-        return None
+        return self.items.get(itemid)
 
     def iter_items(self):
         '''
@@ -301,11 +299,10 @@ class TraceableCollection:
             unused.
         '''
         matches = []
-        for itemid in self.items:
-            if self.items[itemid].is_placeholder():
+        for itemid, item in self.items.items():
+            if item.is_placeholder():
                 continue
-            if self.items[itemid].is_match(regex) and \
-                    (not attributes or self.items[itemid].attributes_match(attributes)):
+            if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
         if sortattributes:
             return sorted(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
