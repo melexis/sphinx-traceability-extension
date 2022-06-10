@@ -1,5 +1,6 @@
 import re
 from hashlib import sha256
+from collections import OrderedDict
 from os import environ, mkdir, path
 
 from docutils import nodes
@@ -55,7 +56,7 @@ class ItemPieChart(TraceableBaseNode):
         self._set_priorities()
         self._set_attribute_id()
 
-        for source_id in self.collection.get_items(self['id_set'][0]):
+        for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
             source_item = self.collection.get_item(source_id)
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder():
@@ -65,6 +66,10 @@ class ItemPieChart(TraceableBaseNode):
 
         chart_labels, statistics = self._prepare_labels_and_values(list(self.priorities),
                                                                    list(self.linked_attributes.values()))
+        if self['colors'] and len(self['colors']) < len(chart_labels):
+            report_warning("item-piechart contains {} slices but you've only specified {} color(s)"
+                           .format(len(chart_labels), len(self['colors'])),
+                           self['document'], self['line'])
         p_node = nodes.paragraph()
         p_node += nodes.Text(statistics)
         top_node += self.build_pie_chart(chart_labels, env)
@@ -160,7 +165,7 @@ class ItemPieChart(TraceableBaseNode):
             (str) Coverage statistics.
         """
         # initialize dictionary for each possible value, and count label occurences
-        chart_labels = {}
+        chart_labels = OrderedDict()
         for label in lower_labels:
             chart_labels[label] = 0
         for attribute in attributes:
@@ -168,8 +173,14 @@ class ItemPieChart(TraceableBaseNode):
 
         # get statistics before removing any labels with value 0
         statistics = self._get_statistics(chart_labels[self['label_set'][0]], len(attributes))
-        # removes labels with count value equal to 0
-        chart_labels = {k: v for k, v in chart_labels.items() if v}
+        # removes labels with count value equal to 0 and the corresponding configured color
+        indices_to_remove = set()
+        for idx, label in enumerate(list(chart_labels)):
+            if chart_labels[label] == 0:
+                del chart_labels[label]
+                indices_to_remove.add(idx)
+        self['colors'] = [color for idx, color in enumerate(self['colors']) if idx not in indices_to_remove]
+
         for priority in self['priorities']:
             if priority.lower() in chart_labels:
                 value = chart_labels.pop(priority.lower())
@@ -212,12 +223,13 @@ class ItemPieChart(TraceableBaseNode):
         explode = self._get_explode_values(labels, self['label_set'])
 
         fig, axes = plt.subplots()
-        axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes), startangle=90)
+        colors = self['colors'] if self['colors'] else None
+        axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes), startangle=90, colors=colors)
         axes.axis('equal')
         folder_name = path.join(env.app.srcdir, '_images')
         if not path.exists(folder_name):
             mkdir(folder_name)
-        hash_string = ''
+        hash_string = str(self['colors'])
         for pie_slice in axes.__dict__['texts']:
             hash_string += str(pie_slice)
         hash_value = sha256(hash_string.encode()).hexdigest()  # create hash value based on chart parameters
@@ -262,6 +274,8 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :id_set: source_regexp target_regexp (nested_target_regexp)
          :label_set: uncovered, covered(, executed)
          :<<attribute>>: error, fail, pass ...
+         :<<attribute>>: regexp
+         :colors: <<color>> ...
 
     """
     # Optional argument: title (whitespace allowed)
@@ -271,6 +285,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'class': directives.class_option,
         'id_set': directives.unchanged,
         'label_set': directives.unchanged,
+        'colors': directives.unchanged,
     }
     # Content disallowed
     has_content = False
@@ -290,6 +305,10 @@ class ItemPieChartDirective(TraceableBaseDirective):
         self._process_label_set(item_chart_node)
 
         self._process_attribute(item_chart_node)
+
+        self.add_found_attributes(item_chart_node)
+
+        self.process_options(item_chart_node, {'colors': {'default': []}})
 
         return [item_chart_node]
 
@@ -324,9 +343,12 @@ class ItemPieChartDirective(TraceableBaseDirective):
         node['attribute'] = ''
         node['priorities'] = []
         for attr in set(TraceableItem.defined_attributes) & set(self.options):
+            if ',' not in self.options[attr]:
+                continue  # this :<<attribute>>: is meant for filtering
             if len(node['id_set']) == 3:
                 node['attribute'] = attr
                 node['priorities'] = [x.strip(' ') for x in self.options[attr].split(',')]
+                del self.options[attr]
             else:
                 report_warning('Traceability: The <<attribute>> option is only viable with an id_set with 3 '
                                'arguments.',

@@ -351,11 +351,11 @@ limitations in doing so:
     The list of relationships that all source items should have. This option is unrelated to the *target* option
     and is solely used to filter source items - in addition to the *source* filter.
 
-:<<attribute>>: *optional*, *multiple arguments (space-separated)*
+:<<attribute>>: *optional*, *single argument*
 
     Python-style regular expression used to filter the source items (left column) based on their attributes.
-    The attribute value is **not** used as a filter on the *target* part.
-    When omitted, no filtering is done on the source item attributes
+    The attribute value is **not** used to filter target items.
+    When omitted, no filtering is done on the source item attributes.
 
 :sourcecolumns: *optional*, *multiple arguments (space-separated)*
 
@@ -584,23 +584,46 @@ A pie chart of documentation items can be generated using:
         :id_set: RQT TEST TEST_REP
         :label_set: uncovered, covered, executed
         :result: error, fail, pass
+        :functional: .*
+        :colors: orange c b darkred #FF0000 g
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
 
-The *id_set* is a list of item IDs with at least two and at most three item IDs. The first item ID is the source, the
-second item ID is the target, and the optional third item ID is the target of the second. Adding a third item ID splits
-up the items with an existing relationship between the first and second ID.
+:id_set: *multiple arguments (space-separated)*
 
-The optional *label_set* holds the string labels for the pie chart. For source items without a relationship to a target
-item, the first label is used. For those with a relationship, but without a relationship between the second and third
-ID, the second label is used. The third label is used for items with both relationships covered. This attribute is
-optional. The labels in the example are the default values.
+    A list of item IDs with at least two and at most three item IDs. The first item ID is the source, the
+    second item ID is the target, and the optional third item ID is the target of the second. Adding a third item ID splits
+    up the items with an existing relationship between the first and second ID.
 
-The optional *result* can be replaced by any configured attribute of the third item ID. Its arguments are possible
-values of this attribute, ordered in priority from high to low. Using this option splits up the slice with the third
-label. In this example an RQT item with multiple TEST items, one with a *fail* and others a *pass* as *result* value in
-the TEST_REP item, will be added to the *fail* slice of the pie chart.
+:label_set: *optional*, *multiple arguments (comma-separated)*
+
+    Defines the string labels for the pie chart. For source items without a relationship to a target
+    item, the first label is used. For those with a relationship, but without a relationship between the second and third
+    ID, the second label is used. The third label (optional) is used for items with both relationships covered.
+    The labels in the example are the default values.
+
+:<<attribute>>: *optional*, *multiple arguments (comma-separated)*
+
+    The optional *result* can be replaced by any configured attribute of the third item ID. Its arguments are possible
+    values of this attribute, ordered in priority from high to low. Using this option splits up the slice with the third
+    label. In this example an RQT item with multiple TEST items, one with a *fail* and others a *pass* as *result* value
+    in the TEST_REP item, will be added to the *fail* slice of the pie chart.
+
+:<<attribute>>: *optional*, *single argument*
+
+    Python-style regular expression used to filter the source items based on their attributes.
+    The attribute value is **not** used to filter target items.
+    When omitted, no filtering is done on the source item attributes.
+
+:colors: *optional*, *multiple arguments (space-separated)*
+
+    By default, matplotlib will choose the colors. This option allows you to define custom colors. You should specify
+    a color for each label in *label_set*, followed by as many colors as possible attribute values that you've listed
+    in the *:<<attribute>>:* option (*:result:* in the example). Matplotlib supports many formats, explained in their
+    demo_.
+
+.. _demo: https://matplotlib.org/stable/gallery/color/color_demo.html#color-demo
 
 .. _traceability_checklist:
 
