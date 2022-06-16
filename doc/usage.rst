@@ -700,8 +700,8 @@ with the *checklist-item* directive.
 
 Configuration via .env file
 ---------------------------
-In our *conf.py* the variables are looked for in the environment first, e.g. in a ``.env`` file (by using the Python
-*decouple* module).
+In our *conf.py* the variables are looked for in the environment first, e.g. in a ``.env`` file (by using the
+`python-decouple <https://pypi.org/project/python-decouple/>`_ package).
 
 .. code-block:: bash
 
