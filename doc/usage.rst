@@ -686,12 +686,12 @@ for querying GitLab/GitHub.
 
     traceability_checklist = {
         'attribute_name': 'your_attribute_name',
-        'attribute_to_str': 'your_attribute_to_string'),
+        'attribute_to_str': 'your_attribute_to_string',
         'attribute_values': 'your_attribute_values',  # two values, comma-separated
         'private_token': 'your_private_token',  # optional, depending on accessibility
         'api_host_name': 'https://api.github.com' or 'https://gitlab.example.com/api/v4',
         'project_id': 'the_owner/your_repo' or 'your_project_id',
-        'merge_request_id': 'your_merge_request_id(s)'),  # comma-separated if more than one
+        'merge_request_id': 'your_merge_request_id(s)',  # comma-separated if more than one
         'checklist_item_regex': 'your_item_id_regex',  # optional, the default is r"\S+"
     }
 
