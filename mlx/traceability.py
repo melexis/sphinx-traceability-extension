@@ -412,6 +412,11 @@ def query_checklist(settings, attr_values):
         base_url = "{}/projects/{}/merge_requests/".format(settings['api_host_name'].rstrip('/'),
                                                            settings['project_id'],)
         key = 'description'
+    elif 'git' in settings['api_host_name']:
+        headers['PRIVATE-TOKEN'] = settings['private_token']
+        base_url = "{}/projects/{}/merge_requests/".format(settings['api_host_name'].rstrip('/'),
+                                                           settings['project_id'],)
+        key = 'description'
     else:
         return {}
 
