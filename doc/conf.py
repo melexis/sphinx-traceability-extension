@@ -64,7 +64,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Traceability'
-copyright = u'2017, Stein Heselmans'
+copyright = u'2017, Melexis'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -207,7 +207,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index', 'traceability.tex', u'Traceability sphinx plugin documentation',
-     u'Stein Heselmans', 'manual'),
+     u'Melexis', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -237,7 +237,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'traceability', u'Traceability for sphinx documentation',
-     [u'Stein Heselmans'], 1)
+     [u'Melexis'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -251,7 +251,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'traceability', u'Traceability for sphinx documentation',
-     u'Stein Heselmans', 'traceability', 'One line description of project.',
+     u'Melexis', 'traceability', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -269,9 +269,9 @@ texinfo_documents = [
 
 # Bibliographic Dublin Core info.
 epub_title = u'Traceability'
-epub_author = u'Stein Heselmans'
-epub_publisher = u'Stein Heselmans'
-epub_copyright = u'2017, Stein Heselmans'
+epub_author = u'Melexis'
+epub_publisher = u'Melexis'
+epub_copyright = u'2017, Melexis'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
