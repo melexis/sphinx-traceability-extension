@@ -412,6 +412,7 @@ from decouple import config
 traceability_checklist = {
     'private_token': config('PRIVATE_TOKEN', ''),
     'api_host_name': config('API_HOST_NAME', 'https://api.github.com'),
+    'git_platform': config('GIT_PLATFORM', 'github'),
     'project_id': config('PROJECT_ID', 'melexis/sphinx-traceability-extension'),
     'merge_request_id': config('MERGE_REQUEST_ID', '121,138'),
     'checklist_item_regex': r"[A-Z\d_\-]+",
