@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 8.6.0 documentation</title>
+  <title>Usage &mdash; Traceability 8.7.0 documentation</title>
   
 
   
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                8.6.0
+                8.7.0
               </div>
             
           
@@ -821,12 +821,13 @@ Example of a valid checklist in Markdown:</p>
 for querying GitLab/GitHub.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_checklist</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;attribute_name&#39;</span><span class="p">:</span> <span class="s1">&#39;your_attribute_name&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;attribute_to_str&#39;</span><span class="p">:</span> <span class="s1">&#39;your_attribute_to_string&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;attribute_to_str&#39;</span><span class="p">:</span> <span class="s1">&#39;your_attribute_to_string&#39;</span><span class="p">,</span>
     <span class="s1">&#39;attribute_values&#39;</span><span class="p">:</span> <span class="s1">&#39;your_attribute_values&#39;</span><span class="p">,</span>  <span class="c1"># two values, comma-separated</span>
     <span class="s1">&#39;private_token&#39;</span><span class="p">:</span> <span class="s1">&#39;your_private_token&#39;</span><span class="p">,</span>  <span class="c1"># optional, depending on accessibility</span>
     <span class="s1">&#39;api_host_name&#39;</span><span class="p">:</span> <span class="s1">&#39;https://api.github.com&#39;</span> <span class="ow">or</span> <span class="s1">&#39;https://gitlab.example.com/api/v4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;git_platform&#39;</span><span class="p">:</span> <span class="s1">&#39;github&#39;</span> <span class="ow">or</span> <span class="s1">&#39;gitlab&#39;</span><span class="p">,</span>
     <span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="s1">&#39;the_owner/your_repo&#39;</span> <span class="ow">or</span> <span class="s1">&#39;your_project_id&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;merge_request_id&#39;</span><span class="p">:</span> <span class="s1">&#39;your_merge_request_id(s)&#39;</span><span class="p">),</span>  <span class="c1"># comma-separated if more than one</span>
+    <span class="s1">&#39;merge_request_id&#39;</span><span class="p">:</span> <span class="s1">&#39;your_merge_request_id(s)&#39;</span><span class="p">,</span>  <span class="c1"># comma-separated if more than one</span>
     <span class="s1">&#39;checklist_item_regex&#39;</span><span class="p">:</span> <span class="s1">&#39;your_item_id_regex&#39;</span><span class="p">,</span>  <span class="c1"># optional, the default is r&quot;\S+&quot;</span>
 <span class="p">}</span>
 </pre></div>
@@ -835,8 +836,8 @@ for querying GitLab/GitHub.</p>
 with the <em>checklist-item</em> directive.</p>
 <div class="section" id="configuration-via-env-file">
 <h4><a class="toc-backref" href="#id20">Configuration via .env file</a><a class="headerlink" href="#configuration-via-env-file" title="Permalink to this heading">¶</a></h4>
-<p>In our <em>conf.py</em> the variables are looked for in the environment first, e.g. in a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file (by using the Python
-<em>decouple</em> module).</p>
+<p>In our <em>conf.py</em> the variables are looked for in the environment first, e.g. in a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file (by using the
+<a class="reference external" href="https://pypi.org/project/python-decouple/">python-decouple</a> package).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># copy example .env to your .env</span>
 cp doc/.env.example .env
 
@@ -859,8 +860,9 @@ cp doc/.env.example .env
 <ul class="simple">
 <li><p><em>PRIVATE_TOKEN</em> is your personal access token that has API access.</p></li>
 <li><p><em>API_HOST_NAME</em> is the host name of the API, e.g. <em>https://gitlab.example.com/api/v4</em></p></li>
-<li><p><em>PROJECT_ID</em> is the ID of the project.</p></li>
-<li><p><em>MERGE_REQUEST_ID</em> is the internal ID of the merge request.</p></li>
+<li><p><em>GIT_PLATFORM</em> shall be ‘gitlab’ if API_HOST_NAME does not contain this string</p></li>
+<li><p><em>PROJECT_ID</em> is the ID or <a class="reference external" href="https://docs.gitlab.com/ee/api/index.html#namespaced-path-encoding">URL-encoded path of the project</a>.</p></li>
+<li><p><em>MERGE_REQUEST_ID</em> are one or more internal IDs of merge requests (comma-separated) ordered from low to high priority. The data gets aggregated.</p></li>
 </ul>
 </div>
 <div class="section" id="github">
@@ -868,8 +870,9 @@ cp doc/.env.example .env
 <ul class="simple">
 <li><p><em>PRIVATE_TOKEN</em> is not needed for public repositories. Otherwise, it must be a <a class="reference external" href="https://github.blog/2013-05-16-personal-api-tokens/">personal access token</a> with the access to the targeted scope.</p></li>
 <li><p><em>API_HOST_NAME</em> is the host name of the GitHub REST API v3: <em>https://api.github.com</em></p></li>
+<li><p><em>GIT_PLATFORM</em> shall be ‘github’ if API_HOST_NAME does not contain this string</p></li>
 <li><p><em>PROJECT_ID</em> defines the repository by specifying <em>owner</em> and <em>repo</em> separated by a forward slash, e.g. <em>melexis/sphinx-traceability-extension</em>.</p></li>
-<li><p><em>MERGE_REQUEST_ID</em> is the pull request number.</p></li>
+<li><p><em>MERGE_REQUEST_ID</em> are one or more pull request numbers (comma-separated) ordered from low to high priority. The data gets aggregated.</p></li>
 </ul>
 </div>
 </div>
@@ -896,7 +899,7 @@ cp doc/.env.example .env
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2017, Stein Heselmans.
+        &#169; Copyright 2017, Melexis.
 
     </p>
   </div>

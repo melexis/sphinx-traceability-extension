@@ -686,12 +686,13 @@ for querying GitLab/GitHub.
 
     traceability_checklist = {
         'attribute_name': 'your_attribute_name',
-        'attribute_to_str': 'your_attribute_to_string'),
+        'attribute_to_str': 'your_attribute_to_string',
         'attribute_values': 'your_attribute_values',  # two values, comma-separated
         'private_token': 'your_private_token',  # optional, depending on accessibility
         'api_host_name': 'https://api.github.com' or 'https://gitlab.example.com/api/v4',
+        'git_platform': 'github' or 'gitlab',
         'project_id': 'the_owner/your_repo' or 'your_project_id',
-        'merge_request_id': 'your_merge_request_id(s)'),  # comma-separated if more than one
+        'merge_request_id': 'your_merge_request_id(s)',  # comma-separated if more than one
         'checklist_item_regex': 'your_item_id_regex',  # optional, the default is r"\S+"
     }
 
@@ -700,8 +701,8 @@ with the *checklist-item* directive.
 
 Configuration via .env file
 ---------------------------
-In our *conf.py* the variables are looked for in the environment first, e.g. in a ``.env`` file (by using the Python
-*decouple* module).
+In our *conf.py* the variables are looked for in the environment first, e.g. in a ``.env`` file (by using the
+`python-decouple <https://pypi.org/project/python-decouple/>`_ package).
 
 .. code-block:: bash
 
@@ -722,16 +723,20 @@ GitLab
 ``````
 - *PRIVATE_TOKEN* is your personal access token that has API access.
 - *API_HOST_NAME* is the host name of the API, e.g. *https://gitlab.example.com/api/v4*
-- *PROJECT_ID* is the ID of the project.
-- *MERGE_REQUEST_ID* is the internal ID of the merge request.
+- *GIT_PLATFORM* shall be 'gitlab' if API_HOST_NAME does not contain this string
+- *PROJECT_ID* is the ID or `URL-encoded path of the project`_.
+- *MERGE_REQUEST_ID* are one or more internal IDs of merge requests (comma-separated) ordered from low to high priority. The data gets aggregated.
+
 
 GitHub
 ``````
 - *PRIVATE_TOKEN* is not needed for public repositories. Otherwise, it must be a `personal access token`_ with the access to the targeted scope.
 - *API_HOST_NAME* is the host name of the GitHub REST API v3: *https://api.github.com*
+- *GIT_PLATFORM* shall be 'github' if API_HOST_NAME does not contain this string
 - *PROJECT_ID* defines the repository by specifying *owner* and *repo* separated by a forward slash, e.g. *melexis/sphinx-traceability-extension*.
-- *MERGE_REQUEST_ID* is the pull request number.
+- *MERGE_REQUEST_ID* are one or more pull request numbers (comma-separated) ordered from low to high priority. The data gets aggregated.
 
+.. _`URL-encoded path of the project`: https://docs.gitlab.com/ee/api/index.html#namespaced-path-encoding
 .. _`personal access token`: https://github.blog/2013-05-16-personal-api-tokens/
 
 .. _traceability_jira_automation:
