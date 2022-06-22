@@ -399,7 +399,8 @@ def query_checklist(settings, attr_values):
     headers = {}
     if not settings.get('private_token'):
         settings['private_token'] = ''
-    if 'github' in settings['api_host_name']:
+    git_platform = settings['git_platform'].lower() if 'git_platform' in settings else settings['api_host_name']
+    if 'github' in git_platform:
         # explicitly request the v3 version of the REST API
         headers['Accept'] = 'application/vnd.github.v3+json'
         if settings['private_token']:
@@ -407,12 +408,14 @@ def query_checklist(settings, attr_values):
         base_url = "{}/repos/{}/pulls/".format(settings['api_host_name'].rstrip('/'),
                                                settings['project_id'],)
         key = 'body'
-    elif 'gitlab' in settings['api_host_name']:
+    elif 'gitlab' in git_platform:
         headers['PRIVATE-TOKEN'] = settings['private_token']
         base_url = "{}/projects/{}/merge_requests/".format(settings['api_host_name'].rstrip('/'),
                                                            settings['project_id'],)
         key = 'description'
     else:
+        report_warning("Failed to determine which GIT platform to use (GitHub or GitLab); "
+                       "please configure traceability_checklist['git_platform']")
         return {}
 
     for merge_request_id in str(settings['merge_request_id']).split(','):
