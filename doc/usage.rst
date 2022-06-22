@@ -690,6 +690,7 @@ for querying GitLab/GitHub.
         'attribute_values': 'your_attribute_values',  # two values, comma-separated
         'private_token': 'your_private_token',  # optional, depending on accessibility
         'api_host_name': 'https://api.github.com' or 'https://gitlab.example.com/api/v4',
+        'git_platform': 'github' or 'gitlab',
         'project_id': 'the_owner/your_repo' or 'your_project_id',
         'merge_request_id': 'your_merge_request_id(s)',  # comma-separated if more than one
         'checklist_item_regex': 'your_item_id_regex',  # optional, the default is r"\S+"
@@ -722,13 +723,16 @@ GitLab
 ``````
 - *PRIVATE_TOKEN* is your personal access token that has API access.
 - *API_HOST_NAME* is the host name of the API, e.g. *https://gitlab.example.com/api/v4*
+- *GIT_PLATFORM* shall be 'gitlab' if API_HOST_NAME does not contain this string
 - *PROJECT_ID* is the ID or `URL-encoded path of the project`_.
 - *MERGE_REQUEST_ID* are one or more internal IDs of merge requests (comma-separated) ordered from low to high priority. The data gets aggregated.
+
 
 GitHub
 ``````
 - *PRIVATE_TOKEN* is not needed for public repositories. Otherwise, it must be a `personal access token`_ with the access to the targeted scope.
 - *API_HOST_NAME* is the host name of the GitHub REST API v3: *https://api.github.com*
+- *GIT_PLATFORM* shall be 'github' if API_HOST_NAME does not contain this string
 - *PROJECT_ID* defines the repository by specifying *owner* and *repo* separated by a forward slash, e.g. *melexis/sphinx-traceability-extension*.
 - *MERGE_REQUEST_ID* are one or more pull request numbers (comma-separated) ordered from low to high priority. The data gets aggregated.
 
