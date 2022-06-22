@@ -386,7 +386,8 @@ def define_attribute(attr, app):
 def query_checklist(settings, attr_values):
     """ Queries specified API host name for the description of the specified merge request.
 
-    Reports a warning if the API host name is invalid or the response does not contain a description.
+    Reports a warning if the API host name is invalid, something went wrong with the GET request of the PR/MR,
+    or the response does not contain a description.
 
     Args:
         settings (dict): Dictionary with the environment variables specified for the checklist feature.
@@ -395,7 +396,6 @@ def query_checklist(settings, attr_values):
     Returns:
         (dict) The query results with zero or more key-value pairs in the form of {item ID: ItemInfo}.
     """
-    query_results = {}
     headers = {}
     if not settings.get('private_token'):
         settings['private_token'] = ''
@@ -417,19 +417,22 @@ def query_checklist(settings, attr_values):
         report_warning("Failed to determine which GIT platform to use (GitHub or GitLab); "
                        "please configure traceability_checklist['git_platform']")
         return {}
-
-    for merge_request_id in str(settings['merge_request_id']).split(','):
-        url = base_url + merge_request_id.strip()
-        with Session() as session:
-            with session.get(url, headers=headers) as response:
-                response = response.json()
-
-        description = response.get(key)
-        if description:
-            query_results = {**query_results, **_parse_description(description, attr_values, merge_request_id,
-                                                                   settings['checklist_item_regex'])}
-        else:
-            report_warning("The query did not return a description. URL = {}. Response = {}.".format(url, response))
+    query_results = {}
+    with Session() as session:
+        for merge_request_id in str(settings['merge_request_id']).split(','):
+            url = base_url + merge_request_id.strip()
+            try:
+                with session.get(url, headers=headers) as response:
+                    response = response.json()
+            except Exception as err:
+                report_warning("traceability_checklist: failed to GET {!r}: {!r}".format(url, err))
+                continue
+            description = response.get(key)
+            if description:
+                query_results = {**query_results, **_parse_description(description, attr_values, merge_request_id,
+                                                                       settings['checklist_item_regex'])}
+            else:
+                report_warning("The query did not return a description. URL = {}. Response = {}.".format(url, response))
     return query_results
 
 
