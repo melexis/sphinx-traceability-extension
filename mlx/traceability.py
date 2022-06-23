@@ -397,21 +397,19 @@ def query_checklist(settings, attr_values):
         (dict) The query results with zero or more key-value pairs in the form of {item ID: ItemInfo}.
     """
     headers = {}
-    if not settings.get('private_token'):
-        settings['private_token'] = ''
-    git_platform = settings['git_platform'].lower() if 'git_platform' in settings else settings['api_host_name']
+    private_token = settings.get('private_token', '')
+    api_host_name = settings['api_host_name'].rstrip('/')
+    git_platform = settings.get('git_platform', api_host_name).lower()
     if 'github' in git_platform:
         # explicitly request the v3 version of the REST API
         headers['Accept'] = 'application/vnd.github.v3+json'
-        if settings['private_token']:
-            headers['Authorization'] = 'token {}'.format(settings['private_token'])
-        base_url = "{}/repos/{}/pulls/".format(settings['api_host_name'].rstrip('/'),
-                                               settings['project_id'],)
+        if private_token:
+            headers['Authorization'] = 'token {}'.format(private_token)
+        base_url = "{}/repos/{}/pulls/".format(api_host_name, settings['project_id'])
         key = 'body'
     elif 'gitlab' in git_platform:
-        headers['PRIVATE-TOKEN'] = settings['private_token']
-        base_url = "{}/projects/{}/merge_requests/".format(settings['api_host_name'].rstrip('/'),
-                                                           settings['project_id'],)
+        headers['PRIVATE-TOKEN'] = private_token
+        base_url = "{}/projects/{}/merge_requests/".format(api_host_name, settings['project_id'])
         key = 'description'
     else:
         report_warning("Failed to determine which GIT platform to use (GitHub or GitLab); "
