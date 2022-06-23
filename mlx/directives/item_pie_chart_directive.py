@@ -72,7 +72,11 @@ class ItemPieChart(TraceableBaseNode):
                            self['document'], self['line'])
         p_node = nodes.paragraph()
         p_node += nodes.Text(statistics)
-        top_node += self.build_pie_chart(chart_labels, env)
+        if chart_labels:
+            top_node += self.build_pie_chart(chart_labels, env)
+        else:
+            report_warning("item-piechart does not contain any items: no image will be generated",
+                           self['document'], self['line'])
         top_node += p_node
         self.replace_self(top_node)
 
