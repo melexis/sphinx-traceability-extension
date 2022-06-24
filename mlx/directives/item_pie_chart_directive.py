@@ -228,14 +228,12 @@ class ItemPieChart(TraceableBaseNode):
 
         fig, axes = plt.subplots()
         colors = self['colors'] if self['colors'] else None
-        axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes), startangle=90, colors=colors)
+        _, texts, autotexts = axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes), startangle=90, colors=colors)
         axes.axis('equal')
         folder_name = path.join(env.app.srcdir, '_images')
         if not path.exists(folder_name):
             mkdir(folder_name)
-        hash_string = str(self['colors'])
-        for pie_slice in axes.__dict__['texts']:
-            hash_string += str(pie_slice)
+        hash_string = str(self['colors']) + str(texts) + str(autotexts)
         hash_value = sha256(hash_string.encode()).hexdigest()  # create hash value based on chart parameters
         rel_file_path = path.join('_images', 'piechart-{}.png'.format(hash_value))
         if rel_file_path not in env.images:
