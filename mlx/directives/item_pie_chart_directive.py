@@ -74,9 +74,8 @@ class ItemPieChart(TraceableBaseNode):
         p_node += nodes.Text(statistics)
         if chart_labels:
             top_node += self.build_pie_chart(chart_labels, env)
-        elif not self['allowempty']:
-            report_warning("item-piechart does not contain any items: no image will be generated. "
-                           "If this was your goal, add the :allowempty: flag to hide this warning.",
+        else:
+            report_warning("item-piechart does not contain any items: no image will be generated",
                            self['document'], self['line'])
         top_node += p_node
         self.replace_self(top_node)
@@ -281,7 +280,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :<<attribute>>: error, fail, pass ...
          :<<attribute>>: regexp
          :colors: <<color>> ...
-         :allowempty:
+
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -291,7 +290,6 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'id_set': directives.unchanged,
         'label_set': directives.unchanged,
         'colors': directives.unchanged,
-        'allowempty': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -300,19 +298,23 @@ class ItemPieChartDirective(TraceableBaseDirective):
         """ Processes the contents of the directive. """
         env = self.state.document.settings.env
 
-        node = ItemPieChart('')
-        node['document'] = env.docname
-        node['line'] = self.lineno
+        item_chart_node = ItemPieChart('')
+        item_chart_node['document'] = env.docname
+        item_chart_node['line'] = self.lineno
 
-        self.process_title(node)
-        self._process_id_set(node)
-        self._process_label_set(node)
-        self._process_attribute(node)
-        self.add_found_attributes(node)
-        self.process_options(node, {'colors': {'default': []}})
-        self.check_option_presence(node, 'allowempty')
+        self.process_title(item_chart_node)
 
-        return [node]
+        self._process_id_set(item_chart_node)
+
+        self._process_label_set(item_chart_node)
+
+        self._process_attribute(item_chart_node)
+
+        self.add_found_attributes(item_chart_node)
+
+        self.process_options(item_chart_node, {'colors': {'default': []}})
+
+        return [item_chart_node]
 
     def _process_id_set(self, node):
         """ Processes id_set option. At least two arguments are required. Otherwise, a warning is reported. """
