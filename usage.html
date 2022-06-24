@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 8.7.0 documentation</title>
+  <title>Usage &mdash; Traceability 8.8.0 documentation</title>
   
 
   
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                8.7.0
+                8.8.0
               </div>
             
           
@@ -286,7 +286,7 @@ relations) on every re-build.</p>
 </div>
 <p>Attributes can be added to the item, using the configured attribute keys in <a class="reference internal" href="configuration.html#traceability-default-config"><span class="std std-ref">Default config</span></a>
 (e.g. <em>value</em> in the above example). The content of the attribute is treated as a single string and should
-match the regular expression in configuration.</p>
+<a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">match</a> the regular expression in configuration.</p>
 <p>The relations to other documentation items can be specified as:</p>
 <ul class="simple">
 <li><p>a space-separated list of item ID’s, or</p></li>
@@ -374,9 +374,9 @@ all items will be affected. Newline characters in the <code class="docutils lite
 <p>Section <a class="reference internal" href="configuration.html#traceability-config-attributes"><span class="std std-ref">Valid attributes</span></a> explain how attributes can be added to the configuration. It is possible
 to add content to the attributes. A detailed description can be added to an attribute definition:</p>
 <ul class="simple">
-<li><p>The name (id) of the attribute needs to match the configured attribute. This name is not case sensitive.</p></li>
+<li><p>The name (id) of the attribute needs to fully match the configured attribute. This name is not case sensitive.</p></li>
 <li><p>Caption or short description of the attribute.</p></li>
-<li><p>Content of attribute including any rst content including text, images, formulas, code-blocks, etc.</p></li>
+<li><p>Content of attribute including any RST content including text, images, formulas, code-blocks, etc.</p></li>
 </ul>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-attribute</span><span class="p">::</span> status The status of a requirement
 
@@ -389,7 +389,7 @@ to add content to the attributes. A detailed description can be added to an attr
 <p>By default, attributes get sorted naturally. This default behavior can be changed by use of the dedicated
 <code class="docutils literal notranslate"><span class="pre">attribute-sort</span></code> directive. The <code class="docutils literal notranslate"><span class="pre">filter</span></code> option allows filtering on item IDs. Its value gets treated as a regular
 expression. If this option is missing, the configuration will be applied to all items. The <code class="docutils literal notranslate"><span class="pre">sort</span></code> option must be a
-list of attributes, of which the order is used to sort the attributes of those items that match the filter regex.
+list of attributes, of which the order is used to sort the attributes of those items that <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">match</a> the filter regex.
 Attributes that are missing from this list get sorted naturally and appended afterwards.</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">attribute-sort</span><span class="p">::</span>
     <span class="nc">:filter:</span> RQT-
@@ -414,10 +414,10 @@ Attributes that are missing from this list get sorted naturally and appended aft
     <span class="nc">:showcontents:</span>
 </pre></div>
 </div>
-<p>where <em>SWRQT</em> (<em>filter</em> argument) can be replaced by any Python regular expression. Documentation items matching
+<p>where <em>SWRQT</em> (<em>filter</em> argument) can be replaced by any Python regular expression. Documentation items that <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">match</a>
 their ID to the given regular expression end up in the list.</p>
 <p>where <em>status</em> can be replaced by any configured attribute, and <em>Appr</em> can be replaced by any Python regular
-expression. Documentation items where the <em>status</em> attribute matches the given regular expression end up in the list.</p>
+expression. Documentation items of which the <em>status</em> attribute <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matches</a> the given regular expression end up in the list.</p>
 <p>By default, the caption of every item in the list is shown. By providing the <em>nocaptions</em> flag, the
 caption can be omitted. This gives a smaller list, but also less details.</p>
 <p>By default, the contents of every item in the list is hidden. By providing the <em>showcontents</em> flag, the
@@ -436,15 +436,16 @@ contents can be shown. This can significantly lengthen the list.</p>
     <span class="nc">:nocaptions:</span>
 </pre></div>
 </div>
-<p>where the <em>filter</em> argument can be replaced by any Python regular expression. Documentation items matching
+<p>where the <em>filter</em> argument can be replaced by any Python regular expression. Documentation items <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a>
 their ID to the given regular expression end up in the list.</p>
 <p>where <em>status</em> can be replaced by any configured attribute, and <em>Appr</em> can be replaced by any Python regular
-expression. Documentation items where the <em>status</em> attribute matches the given regular expression end up in the list.</p>
-<p>where <em>attributes</em> argument is a space-separated list of attributes that should be matched in the matrix.</p>
-<p>Above arguments can be avoided, or left empty, in which case the table will contain all attributes for all
+expression. Documentation items of which the <em>status</em> attribute <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matches</a> the given regular expression end up in the list.</p>
+<p>where the <em>attributes</em> argument contains a space-separated list of configured attributes to create a column for,
+in which the values for that attribute are listed.</p>
+<p>Above arguments can be avoided, or left empty, in which case the table will contain all configured attributes and all
 documentation items.</p>
-<p>Documentation items matching their ID to the given <em>filter</em> regular expression end up as rows in the generated table.
-The matching attribute values end up as columns in the generated table. Documentation items
+<p>Documentation items <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a> their ID to the given <em>filter</em> regular expression end up as rows in the generated table.
+The <em>attributes</em> end up as columns in the generated table. Documentation items
 that don’t have a value for a certain attribute will have an empty cell at the corresponding location.</p>
 <p>By default, the caption for every item in the table is shown. By providing the <em>nocaptions</em> flag, the
 caption can be omitted. This gives a smaller table, but also less details. If you only care about the captions and want
@@ -480,16 +481,16 @@ span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, y
     <span class="nc">:coverage:</span> &gt;= 99.5
 </pre></div>
 </div>
-<p>Documentation items matching their ID to the given <em>source</em> regular expression end up in the leftmost column of the
-generated table. Documentation items matching their ID to the given <em>target</em> regular expression(s) with a matching
-relationship (see <em>type</em> argument) will end up in the right-hand column(s) of the generated table.</p>
+<p>Documentation items <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a> their ID to the given <em>source</em> regular expression end up in the leftmost column of the
+generated table. Documentation items <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a> their ID to the given <em>target</em> regular expression(s) with a
+relationship that is included (see <em>type</em> argument) will end up in the right-hand column(s) of the generated table.</p>
 <p><strong>Special note on external relations</strong>: This directive allows showing external relationships, but has some
 limitations in doing so:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>The external relation needs to be specified explicitly in the <em>type</em> option.</p></li>
 <li><p>No regex filtering on target item names is supported.</p></li>
-<li><p>External items can only be used as source when the regex of the source option does not match any internal items.</p></li>
+<li><p>External items can only be used as source when the regex of the source option does not <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">match</a> any internal items.</p></li>
 <li><p>External relationships are ignored when linking via intermediate items.</p></li>
 </ul>
 </div></blockquote>
@@ -519,7 +520,7 @@ When omitted (only possible if 0 or 1 <em>target</em> argument is given), the ri
 <dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
 <p>The list of relationships that should be used to filter the target columns. The relationships considered for
 filtering are from the “Source” items to the “Target” items.
-When multiple arguments are provided, the target column will show items that match <em>any</em> of the given relationships
+When multiple arguments are provided, the target column will show items that have <em>any</em> of the given relationships
 provided, i.e. the same filtering is applied to all “Target” columns in the matrix.
 When omitted, all possible relations are considered <strong>except for external relations</strong>.</p>
 </dd>
@@ -680,14 +681,14 @@ per source item</em>.</p>
 </div>
 <p>where the <em>source</em> and <em>target</em> arguments can be replaced by any Python regular expression.</p>
 <p>where <em>status</em> can be replaced by any configured attribute, and <em>Appr</em> can be replaced by any Python regular
-expression. Only documentation items where the <em>status</em> attribute matches the given regular expression end up in
+expression. Only documentation items where the <em>status</em> attribute <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matches</a> the given regular expression end up in
 the <em>source</em> part of the matrix. The attribute value is <strong>not</strong> used as a filter on the <em>target</em> part. To filter on the
 <em>target</em> part instead of the <em>source</em> part, add the optional <em>filtertarget</em> flag.</p>
-<p>The <em>type</em> argument is a space-separated list of relationships that should be matched in the matrix.</p>
-<p>Documentation items matching their ID to the given <em>source</em> regular expression end up as columns of the
-generated table. Documentation items matching their ID to the given <em>target</em> regular expression end up as
-rows of the generated table. Where source and target items have a matching relationship (see <em>type</em> argument)
-an ‘x’ will be placed in the cell at co-ordinates of source/target.</p>
+<p>The <em>type</em> argument is a space-separated list of relationships that will be included in the matrix.</p>
+<p>Documentation items <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a> their ID to the given <em>source</em> regular expression end up as columns of the
+generated table. Documentation items <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a> their ID to the given <em>target</em> regular expression end up as
+rows of the generated table. If source and target items are linked to each other via a relationship that is included
+(see <em>type</em> argument) an ‘x’ will be placed in the cell at coordinates of source/target.</p>
 <p>Captions for items in the 2D table are never shown, as it would overload the table.</p>
 <p>Optionally, the <em>class</em> attribute can be specified to customize table output, especially useful when rendering to
 LaTeX. Normally the <em>longtable</em> class is used when the number of rows is greater than 30 which allows long tables to
@@ -708,11 +709,11 @@ span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, y
 <p>where the <em>top</em> argument can be replaced by any Python regular expression. The <em>top_relation_filter</em> and <em>type</em>
 arguments are space-separated lists of relationships.</p>
 <p>The directive generates an expandable tree of links to documentation items. A nested bullet list is generated
-with, at the top level, the top level documentation items. These are the ones matching their ID to the <em>top</em>
-regular expression and not having any relation of <em>top_relation_filter</em> kind to a documentation item matching the same
+with, at the top level, the top level documentation items. These are the ones <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a> their ID to the <em>top</em>
+regular expression and not having any relation of <em>top_relation_filter</em> kind to a documentation item <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matching</a> the same
 <em>top</em> regular expression against its ID.</p>
 <p>The <em>status</em> can be replaced by any configured attribute, and <em>Appr</em> can be replaced by any Python regular
-expression. Only documentation items where the <em>status</em> attribute matches the given regular expression end up in
+expression. Only documentation items where the <em>status</em> attribute <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matches</a> the given regular expression end up in
 the tree.</p>
 <p>Going deeper down this nested bullet list, the item’s relationships are checked: if there is a <em>type</em>
 relationship (<em>type</em> is a space-separated list of relationships), it gets added as a one-level-deeper item in
@@ -832,7 +833,7 @@ for querying GitLab/GitHub.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If the <em>checklist_item_regex</em> is configured, a warning is reported for each item ID that matches it and is not defined
+<p>If the <em>checklist_item_regex</em> is configured, a warning is reported for each item ID that <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matches</a> it and is not defined
 with the <em>checklist-item</em> directive.</p>
 <div class="section" id="configuration-via-env-file">
 <h4><a class="toc-backref" href="#id20">Configuration via .env file</a><a class="headerlink" href="#configuration-via-env-file" title="Permalink to this heading">¶</a></h4>

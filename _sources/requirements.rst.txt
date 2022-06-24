@@ -165,3 +165,6 @@ Test coverage
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: not covered, covered
     :colors: slategrey
+
+.. item-piechart:: Chart without any items: no image or warning shall be generated
+    :id_set: NONEXISTENT [IU]TEST
