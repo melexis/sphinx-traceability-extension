@@ -391,11 +391,11 @@ rst_epilog = ".. |RST|   replace:: :abbr:`RST (reStructuredText)`"
 # OrderedDict([('regex', (default, :hover+:active, :visited)), ...])
 # OrderedDict generates a dict with a deterministic order, used to prioritize the regexes, top to bottom
 traceability_hyperlink_colors = OrderedDict([
-    (r'^RQT|r[\d]+', ('#7F00FF', '#b369ff')),
-    (r'^[IU]TEST_REP', ('rgba(255, 0, 0, 1)', 'rgba(255, 0, 0, 0.7)', 'rgb(200, 0, 0)')),
-    (r'^[IU]TEST', ('goldenrod', 'hsl(43, 62%, 58%)', 'darkgoldenrod')),
-    (r'^SYS_', ('', 'springgreen', '')),
-    (r'^SRS_', ('', 'orange', '')),
+    (r'RQT|r[\d]+', ('#7F00FF', '#b369ff')),
+    (r'[IU]TEST_REP', ('rgba(255, 0, 0, 1)', 'rgba(255, 0, 0, 0.7)', 'rgb(200, 0, 0)')),
+    (r'[IU]TEST', ('goldenrod', 'hsl(43, 62%, 58%)', 'darkgoldenrod')),
+    (r'SYS_', ('', 'springgreen', '')),
+    (r'SRS_', ('', 'orange', '')),
 ])
 
 # traceability_item_no_captions = True

@@ -133,7 +133,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         Returns:
             bool: True if relationship is an external one, False otherwise
         '''
-        return True if re.search('^ext_.*', relation) else False
+        return relation.startswith('ext_')
 
     def is_item_top_level(self, env, item_id):
         '''
