@@ -225,7 +225,8 @@ class ItemPieChart(TraceableBaseNode):
 
         fig, axes = plt.subplots()
         colors = self['colors'] if self['colors'] else None
-        _, texts, autotexts = axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes), startangle=90, colors=colors)
+        _, texts, autotexts = axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes),
+                                       startangle=90, colors=colors)
         axes.axis('equal')
         folder_name = path.join(env.app.srcdir, '_images')
         if not path.exists(folder_name):
