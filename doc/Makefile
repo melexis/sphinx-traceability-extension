@@ -2,10 +2,11 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    = -j auto
-SPHINXBUILD   = sphinx-build
-PAPER         =
-BUILDDIR      = _build
+SPHINXOPTS    ?= -j auto
+SPHINXBUILD   ?= sphinx-build
+PYTHONWARNINGS?= default::DeprecationWarning
+PAPER         ?=
+BUILDDIR      ?= _build
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4

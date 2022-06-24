@@ -25,7 +25,7 @@ class ItemTree(TraceableBaseNode):
             top_node.append(p_node)
         else:
             ul_node = nodes.bullet_list()
-            ul_node.set_class('bonsai')
+            ul_node['classes'].append('bonsai')
             for id_ in top_item_ids:
                 if self.is_item_top_level(app.env, id_):
                     ul_node.append(self._generate_bullet_list_tree(app, collection, id_))
@@ -43,13 +43,13 @@ class ItemTree(TraceableBaseNode):
         bullet_list_item = nodes.list_item()
         bullet_list_item['id'] = nodes.make_id(item_id)
         p_node = nodes.paragraph()
-        p_node.set_class('thumb')
+        p_node['classes'].append('thumb')
         bullet_list_item.append(p_node)
         bullet_list_item.append(self.make_internal_item_ref(app, item_id))
-        bullet_list_item.set_class('has-children')
-        bullet_list_item.set_class('collapsed')
+        bullet_list_item['classes'].append('has-children')
+        bullet_list_item['classes'].append('collapsed')
         childcontent = nodes.bullet_list()
-        childcontent.set_class('bonsai')
+        childcontent['classes'].append('bonsai')
         # Then recurse one level, and add dependencies
         for relation in self['type']:
             tgts = collection.get_item(item_id).iter_targets(relation)
