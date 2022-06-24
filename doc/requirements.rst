@@ -166,5 +166,5 @@ Test coverage
     :label_set: not covered, covered
     :colors: slategrey
 
-.. item-piechart:: Chart without any items to trigger warning
+.. item-piechart:: Chart without any items: no image or warning shall be generated
     :id_set: NONEXISTENT [IU]TEST
