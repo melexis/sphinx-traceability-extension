@@ -59,7 +59,7 @@ Documentation items can be defined using the *item* directive, specifying:
 
 Attributes can be added to the item, using the configured attribute keys in :ref:`traceability_default_config`
 (e.g. *value* in the above example). The content of the attribute is treated as a single string and should
-match the regular expression in configuration.
+match_ the regular expression in configuration.
 
 The relations to other documentation items can be specified as:
 
@@ -162,9 +162,9 @@ Adding description to attributes
 Section :ref:`traceability_config_attributes` explain how attributes can be added to the configuration. It is possible
 to add content to the attributes. A detailed description can be added to an attribute definition:
 
-- The name (id) of the attribute needs to match the configured attribute. This name is not case sensitive.
+- The name (id) of the attribute needs to fully match the configured attribute. This name is not case sensitive.
 - Caption or short description of the attribute.
-- Content of attribute including any rst content including text, images, formulas, code-blocks, etc.
+- Content of attribute including any RST content including text, images, formulas, code-blocks, etc.
 
 .. code-block:: rest
 
@@ -179,7 +179,7 @@ Configuring attribute order
 By default, attributes get sorted naturally. This default behavior can be changed by use of the dedicated
 ``attribute-sort`` directive. The ``filter`` option allows filtering on item IDs. Its value gets treated as a regular
 expression. If this option is missing, the configuration will be applied to all items. The ``sort`` option must be a
-list of attributes, of which the order is used to sort the attributes of those items that match the filter regex.
+list of attributes, of which the order is used to sort the attributes of those items that match_ the filter regex.
 Attributes that are missing from this list get sorted naturally and appended afterwards.
 
 .. code-block:: rest
@@ -216,11 +216,11 @@ A flat list of documentation items can be generated using a Python regular expre
         :nocaptions:
         :showcontents:
 
-where *SWRQT* (*filter* argument) can be replaced by any Python regular expression. Documentation items matching
+where *SWRQT* (*filter* argument) can be replaced by any Python regular expression. Documentation items that match_
 their ID to the given regular expression end up in the list.
 
 where *status* can be replaced by any configured attribute, and *Appr* can be replaced by any Python regular
-expression. Documentation items where the *status* attribute matches the given regular expression end up in the list.
+expression. Documentation items of which the *status* attribute matches_ the given regular expression end up in the list.
 
 By default, the caption of every item in the list is shown. By providing the *nocaptions* flag, the
 caption can be omitted. This gives a smaller list, but also less details.
@@ -247,19 +247,20 @@ A matrix listing the attributes of documentation items can be generated using:
         :transpose:
         :nocaptions:
 
-where the *filter* argument can be replaced by any Python regular expression. Documentation items matching
+where the *filter* argument can be replaced by any Python regular expression. Documentation items matching_
 their ID to the given regular expression end up in the list.
 
 where *status* can be replaced by any configured attribute, and *Appr* can be replaced by any Python regular
-expression. Documentation items where the *status* attribute matches the given regular expression end up in the list.
+expression. Documentation items of which the *status* attribute matches_ the given regular expression end up in the list.
 
-where *attributes* argument is a space-separated list of attributes that should be matched in the matrix.
+where the *attributes* argument contains a space-separated list of configured attributes to create a column for,
+in which the values for that attribute are listed.
 
-Above arguments can be avoided, or left empty, in which case the table will contain all attributes for all
+Above arguments can be avoided, or left empty, in which case the table will contain all configured attributes and all
 documentation items.
 
-Documentation items matching their ID to the given *filter* regular expression end up as rows in the generated table.
-The matching attribute values end up as columns in the generated table. Documentation items
+Documentation items matching_ their ID to the given *filter* regular expression end up as rows in the generated table.
+The *attributes* end up as columns in the generated table. Documentation items
 that don't have a value for a certain attribute will have an empty cell at the corresponding location.
 
 By default, the caption for every item in the table is shown. By providing the *nocaptions* flag, the
@@ -305,16 +306,16 @@ A traceability matrix of documentation items can be generated using:
         :hidetitle:
         :coverage: >= 99.5
 
-Documentation items matching their ID to the given *source* regular expression end up in the leftmost column of the
-generated table. Documentation items matching their ID to the given *target* regular expression(s) with a matching
-relationship (see *type* argument) will end up in the right-hand column(s) of the generated table.\
+Documentation items matching_ their ID to the given *source* regular expression end up in the leftmost column of the
+generated table. Documentation items matching_ their ID to the given *target* regular expression(s) with a
+relationship that is included (see *type* argument) will end up in the right-hand column(s) of the generated table.
 
 **Special note on external relations**: This directive allows showing external relationships, but has some
 limitations in doing so:
 
   - The external relation needs to be specified explicitly in the *type* option.
   - No regex filtering on target item names is supported.
-  - External items can only be used as source when the regex of the source option does not match any internal items.
+  - External items can only be used as source when the regex of the source option does not match_ any internal items.
   - External relationships are ignored when linking via intermediate items.
 
 :source: *optional*, *single argument*
@@ -342,7 +343,7 @@ limitations in doing so:
 
     The list of relationships that should be used to filter the target columns. The relationships considered for
     filtering are from the "Source" items to the "Target" items.
-    When multiple arguments are provided, the target column will show items that match *any* of the given relationships
+    When multiple arguments are provided, the target column will show items that have *any* of the given relationships
     provided, i.e. the same filtering is applied to all "Target" columns in the matrix.
     When omitted, all possible relations are considered **except for external relations**.
 
@@ -508,16 +509,16 @@ A 2D-matrix of documentation items can be generated using:
 where the *source* and *target* arguments can be replaced by any Python regular expression.
 
 where *status* can be replaced by any configured attribute, and *Appr* can be replaced by any Python regular
-expression. Only documentation items where the *status* attribute matches the given regular expression end up in
+expression. Only documentation items where the *status* attribute matches_ the given regular expression end up in
 the *source* part of the matrix. The attribute value is **not** used as a filter on the *target* part. To filter on the
 *target* part instead of the *source* part, add the optional *filtertarget* flag.
 
-The *type* argument is a space-separated list of relationships that should be matched in the matrix.
+The *type* argument is a space-separated list of relationships that will be included in the matrix.
 
-Documentation items matching their ID to the given *source* regular expression end up as columns of the
-generated table. Documentation items matching their ID to the given *target* regular expression end up as
-rows of the generated table. Where source and target items have a matching relationship (see *type* argument)
-an 'x' will be placed in the cell at co-ordinates of source/target.
+Documentation items matching_ their ID to the given *source* regular expression end up as columns of the
+generated table. Documentation items matching_ their ID to the given *target* regular expression end up as
+rows of the generated table. If source and target items are linked to each other via a relationship that is included
+(see *type* argument) an 'x' will be placed in the cell at coordinates of source/target.
 
 Captions for items in the 2D table are never shown, as it would overload the table.
 
@@ -548,12 +549,12 @@ where the *top* argument can be replaced by any Python regular expression. The *
 arguments are space-separated lists of relationships.
 
 The directive generates an expandable tree of links to documentation items. A nested bullet list is generated
-with, at the top level, the top level documentation items. These are the ones matching their ID to the *top*
-regular expression and not having any relation of *top_relation_filter* kind to a documentation item matching the same
+with, at the top level, the top level documentation items. These are the ones matching_ their ID to the *top*
+regular expression and not having any relation of *top_relation_filter* kind to a documentation item matching_ the same
 *top* regular expression against its ID.
 
 The *status* can be replaced by any configured attribute, and *Appr* can be replaced by any Python regular
-expression. Only documentation items where the *status* attribute matches the given regular expression end up in
+expression. Only documentation items where the *status* attribute matches_ the given regular expression end up in
 the tree.
 
 Going deeper down this nested bullet list, the item's relationships are checked: if there is a *type*
@@ -696,7 +697,7 @@ for querying GitLab/GitHub.
         'checklist_item_regex': 'your_item_id_regex',  # optional, the default is r"\S+"
     }
 
-If the *checklist_item_regex* is configured, a warning is reported for each item ID that matches it and is not defined
+If the *checklist_item_regex* is configured, a warning is reported for each item ID that matches_ it and is not defined
 with the *checklist-item* directive.
 
 Configuration via .env file
@@ -747,3 +748,7 @@ Jira ticket creation
 
 Jira tickets that are based on traceable items can be automatically created by means of an additional plugin called
 `mlx.jira-traceability <https://github.com/melexis/jira-traceability>`_.
+
+.. _match: https://docs.python.org/3/library/re.html#re.match
+.. _matches: https://docs.python.org/3/library/re.html#re.match
+.. _matching: https://docs.python.org/3/library/re.html#re.match

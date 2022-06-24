@@ -9,8 +9,8 @@ def report_warning(msg, docname=None, lineno=None):
 
     Args:
         msg (any __str__): Message of the warning, gets converted to str.
-        docname (str): Relative path to the document on which the error occured, without extension.
-        lineno (int): Line number in the document on which the error occured.
+        docname (str): Relative path to the document on which the error occurred, without extension.
+        lineno (int): Line number in the document on which the error occurred.
     '''
     msg = str(msg)
     logger = getLogger(__name__)
@@ -52,9 +52,9 @@ class TraceabilityException(Exception):
 
     def get_document(self):
         '''
-        Get document in which error occured
+        Get document in which error occurred
 
         Returns:
-            str: The name of the document in which the error occured
+            str: The name of the document in which the error occurred
         '''
         return self.docname

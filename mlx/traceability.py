@@ -6,7 +6,7 @@ Traceability plugin
 Sphinx extension for reStructuredText that added traceable documentation items.
 See readme for more details.
 """
-
+import warnings
 from collections import OrderedDict, namedtuple
 from re import fullmatch, match
 from os import path
@@ -218,6 +218,9 @@ def perform_consistency_check(app, doctree):
     if app.config.traceability_hyperlink_colors:
         app.add_css_file('hyperlink_colors.css')
         generate_color_css(app, app.config.traceability_hyperlink_colors)
+        if [regex for regex in app.config.traceability_hyperlink_colors if not regex.startswith('^')]:
+            warnings.warn('Regexes in traceability_hyperlink_colors will be handled by re.match instead of re.search '
+                          'in mlx.traceability>=9', DeprecationWarning)
 
     regex = app.config.traceability_checklist.get('checklist_item_regex')
     if regex is not None and app.config.traceability_checklist['has_checklist_items']:
@@ -397,21 +400,19 @@ def query_checklist(settings, attr_values):
         (dict) The query results with zero or more key-value pairs in the form of {item ID: ItemInfo}.
     """
     headers = {}
-    if not settings.get('private_token'):
-        settings['private_token'] = ''
-    git_platform = settings['git_platform'].lower() if 'git_platform' in settings else settings['api_host_name']
+    private_token = settings.get('private_token', '')
+    api_host_name = settings['api_host_name'].rstrip('/')
+    git_platform = settings.get('git_platform', api_host_name).lower()
     if 'github' in git_platform:
         # explicitly request the v3 version of the REST API
         headers['Accept'] = 'application/vnd.github.v3+json'
-        if settings['private_token']:
-            headers['Authorization'] = 'token {}'.format(settings['private_token'])
-        base_url = "{}/repos/{}/pulls/".format(settings['api_host_name'].rstrip('/'),
-                                               settings['project_id'],)
+        if private_token:
+            headers['Authorization'] = 'token {}'.format(private_token)
+        base_url = "{}/repos/{}/pulls/".format(api_host_name, settings['project_id'])
         key = 'body'
     elif 'gitlab' in git_platform:
-        headers['PRIVATE-TOKEN'] = settings['private_token']
-        base_url = "{}/projects/{}/merge_requests/".format(settings['api_host_name'].rstrip('/'),
-                                                           settings['project_id'],)
+        headers['PRIVATE-TOKEN'] = private_token
+        base_url = "{}/projects/{}/merge_requests/".format(api_host_name, settings['project_id'])
         key = 'description'
     else:
         report_warning("Failed to determine which GIT platform to use (GitHub or GitLab); "
