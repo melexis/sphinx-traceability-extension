@@ -358,9 +358,12 @@ class ItemPieChartDirective(TraceableBaseDirective):
         if 'id_set' in self.options and len(self.options['id_set'].split()) >= 2:
             self._warn_if_comma_separated('id_set', node['document'])
             node['id_set'] = self.options['id_set'].split()
+            if len(node['id_set']) < 3 and self.options.get('targettype'):
+                report_warning('item-piechart: the targettype option is only viable with an id_set with 3 '
+                               'arguments.', node['document'], node['line'])
         else:
             node['id_set'] = []
-            report_warning('Traceability: Expected at least two arguments in id_set.',
+            report_warning('item-piechart: Expected at least two arguments in id_set.',
                            node['document'],
                            node['line'])
 
@@ -391,7 +394,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
                 node['priorities'] = [x.strip(' ') for x in self.options[attr].split(',')]
                 del self.options[attr]
             else:
-                report_warning('Traceability: The <<attribute>> option is only viable with an id_set with 3 '
+                report_warning('item-piechart: The <<attribute>> option is only viable with an id_set with 3 '
                                'arguments.',
                                node['document'],
                                node['line'],)
