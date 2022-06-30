@@ -34,7 +34,8 @@ class ItemPieChart(TraceableBaseNode):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.collection = None
-        self.relationships = []
+        self.source_relationships = []
+        self.target_relationships = []
         self.priorities = {}  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
         self.attribute_id = ''
         self.linked_attributes = {}  # source_id (str): attr_value (str)
@@ -52,7 +53,8 @@ class ItemPieChart(TraceableBaseNode):
         env = app.builder.env
         top_node = self.create_top_node(self['title'])
         self.collection = collection
-        self.relationships = self.collection.iter_relations()
+        self.source_relationships = self['sourcetype'] if self['sourcetype'] else self.collection.iter_relations()
+        self.target_relationships = self['targettype'] if self['targettype'] else self.collection.iter_relations()
         self._set_priorities()
         self._set_attribute_id()
 
@@ -62,7 +64,8 @@ class ItemPieChart(TraceableBaseNode):
             if source_item.is_placeholder():
                 continue
             self.linked_attributes[source_id] = self['label_set'][0].lower()  # default is "uncovered"
-            self.loop_relationships(source_id, source_item, self['id_set'][1], self._match_covered)
+            self.loop_relationships(source_id, source_item, self.source_relationships, self['id_set'][1],
+                                    self._match_covered)
 
         chart_labels, statistics = self._prepare_labels_and_values(list(self.priorities),
                                                                    list(self.linked_attributes.values()))
@@ -92,19 +95,20 @@ class ItemPieChart(TraceableBaseNode):
         if len(self['id_set']) > 2:
             self.attribute_id = self['id_set'][2]
 
-    def loop_relationships(self, top_source_id, source_item, pattern, match_function):
+    def loop_relationships(self, top_source_id, source_item, relationships, pattern, match_function):
         """
-        Loops through all relationships and for each relationship it loops through the matches that have been found
-        for the source item. If the matched item is not a placeholder and matches to the specified pattern, the
+        Loops through the source relationships and for each relationship it loops through the matches that have been
+        found for the source item. If the matched item is not a placeholder and matches to the specified pattern, the
         specified function is called with the matched item as a parameter.
 
         Args:
             top_source_id (str): Item identifier of the top source item.
             source_item (TraceableItem): Traceable item to be used as a source for the relationship search.
+            relationships (list): List of relationships to consider.
             pattern (str): Regexp pattern string to be used on items that have a relationship to the source item.
             match_function (func): Function to be called when the regular expression hits.
         """
-        for relationship in self.relationships:
+        for relationship in relationships:
             for target_id in source_item.iter_targets(relationship, explicit=True, implicit=True):
                 target_item = self.collection.get_item(target_id)
                 # placeholders don't end up in any item-matrix (less duplicate warnings for missing items)
@@ -116,7 +120,7 @@ class ItemPieChart(TraceableBaseNode):
     def _match_covered(self, top_source_id, nested_source_item):
         """
         Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
-        used, it loops through all relationships again, this time with the matched item as the source.
+        used, it loops through the source relationships again, this time with the matched item as the source.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
@@ -125,7 +129,8 @@ class ItemPieChart(TraceableBaseNode):
         """
         self.linked_attributes[top_source_id] = self['label_set'][1].lower()  # default is "covered"
         if self.attribute_id:
-            self.loop_relationships(top_source_id, nested_source_item, self.attribute_id, self._match_attribute_values)
+            self.loop_relationships(top_source_id, nested_source_item, self.target_relationships, self.attribute_id,
+                                    self._match_attribute_values)
 
     def _match_attribute_values(self, top_source_id, nested_target_item):
         """ Links the highest priority attribute value of nested relations to the top source id.
@@ -276,7 +281,8 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :<<attribute>>: error, fail, pass ...
          :<<attribute>>: regexp
          :colors: <<color>> ...
-
+         :sourcetype: <<relationship>> ...
+         :targettype: <<relationship>> ...
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -286,6 +292,8 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'id_set': directives.unchanged,
         'label_set': directives.unchanged,
         'colors': directives.unchanged,
+        'sourcetype': directives.unchanged,
+        'targettype': directives.unchanged,
     }
     # Content disallowed
     has_content = False
@@ -294,23 +302,27 @@ class ItemPieChartDirective(TraceableBaseDirective):
         """ Processes the contents of the directive. """
         env = self.state.document.settings.env
 
-        item_chart_node = ItemPieChart('')
-        item_chart_node['document'] = env.docname
-        item_chart_node['line'] = self.lineno
+        node = ItemPieChart('')
+        node['document'] = env.docname
+        node['line'] = self.lineno
 
-        self.process_title(item_chart_node)
+        self.process_title(node)
+        self._process_id_set(node)
+        self._process_label_set(node)
+        self._process_attribute(node)
+        self.add_found_attributes(node)
+        self.process_options(
+            node,
+            {
+                'colors': {'default': []},
+                'sourcetype': {'default': []},
+                'targettype': {'default': []},
+            }
+        )
+        self.check_relationships(node['sourcetype'], env)
+        self.check_relationships(node['targettype'], env)
 
-        self._process_id_set(item_chart_node)
-
-        self._process_label_set(item_chart_node)
-
-        self._process_attribute(item_chart_node)
-
-        self.add_found_attributes(item_chart_node)
-
-        self.process_options(item_chart_node, {'colors': {'default': []}})
-
-        return [item_chart_node]
+        return [node]
 
     def _process_id_set(self, node):
         """ Processes id_set option. At least two arguments are required. Otherwise, a warning is reported. """
