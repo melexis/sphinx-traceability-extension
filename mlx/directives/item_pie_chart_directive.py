@@ -38,7 +38,7 @@ class ItemPieChart(TraceableBaseNode):
         self.target_relationships = []
         self.priorities = {}  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
         self.attribute_id = ''
-        self.linked_attributes = {}  # source_id (str): attr_value (str)
+        self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
     def perform_replacement(self, app, collection):
         """
@@ -55,6 +55,7 @@ class ItemPieChart(TraceableBaseNode):
         self.collection = collection
         self.source_relationships = self['sourcetype'] if self['sourcetype'] else self.collection.iter_relations()
         self.target_relationships = self['targettype'] if self['targettype'] else self.collection.iter_relations()
+        self.relationship_to_string = app.config.traceability_relationship_to_string
         self._set_priorities()
         self._set_attribute_id()
 
@@ -63,15 +64,15 @@ class ItemPieChart(TraceableBaseNode):
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder():
                 continue
-            self.linked_attributes[source_id] = self['label_set'][0].lower()  # default is "uncovered"
+            self.linked_labels[source_id] = self['label_set'][0].lower()  # default is "uncovered"
             self.loop_relationships(source_id, source_item, self.source_relationships, self['id_set'][1],
                                     self._match_covered)
 
         chart_labels, statistics = self._prepare_labels_and_values(list(self.priorities),
-                                                                   list(self.linked_attributes.values()))
+                                                                   list(self.linked_labels.values()))
         if self['colors'] and len(self['colors']) < len(chart_labels):
-            report_warning("item-piechart contains {} slices but you've only specified {} color(s)"
-                           .format(len(chart_labels), len(self['colors'])),
+            report_warning("item-piechart contains {} slices: {} color(s) will be reused"
+                           .format(len(chart_labels), len(chart_labels) - len(self['colors'])),
                            self['document'], self['line'])
         p_node = nodes.paragraph()
         p_node += nodes.Text(statistics)
@@ -84,11 +85,19 @@ class ItemPieChart(TraceableBaseNode):
         """ Initializes the priorities dictionary with labels as keys and priority numbers as values. """
         for idx, label in enumerate(self['label_set']):
             self.priorities[label] = idx
-        # store :<<attribute>>: arguments in reverse order in lowercase for case-insensitivity
+
+        extra_labels = []
         if self['priorities']:
-            for idx, attr in enumerate([value.lower() for value in self['priorities'][::-1]],
-                                       start=len(self['label_set'])):
-                self.priorities[attr] = idx
+            extra_labels.extend(self['priorities'])
+        elif self['targettype']:
+            for relationship in reversed(self['targettype']):
+                reverse_relationship = self.collection.get_reverse_relation(relationship)
+                extra_labels.append(self.relationship_to_string[reverse_relationship].lower())
+
+        # store :<<attribute>>: or :targettype: arguments in reverse order in lowercase for case-insensitivity
+        for idx, attr in enumerate([value.lower() for value in reversed(extra_labels)],
+                                   start=len(self['label_set'])):
+            self.priorities[attr] = idx
 
     def _set_attribute_id(self):
         """ Sets the attribute_id if a third item ID in the id_set option is given. """
@@ -115,9 +124,9 @@ class ItemPieChart(TraceableBaseNode):
                 if not target_item or target_item.is_placeholder():
                     continue
                 if re.match(pattern, target_id):
-                    match_function(top_source_id, target_item)
+                    match_function(top_source_id, target_item, relationship)
 
-    def _match_covered(self, top_source_id, nested_source_item):
+    def _match_covered(self, top_source_id, nested_source_item, *_):
         """
         Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
         used, it loops through the target relationships, this time with the matched item as the source.
@@ -127,16 +136,44 @@ class ItemPieChart(TraceableBaseNode):
             nested_source_item (TraceableItem): Nested traceable item to be used as a source for looping through its
                 relationships, e.g. a test item.
         """
-        self.linked_attributes[top_source_id] = self['label_set'][1].lower()  # default is "covered"
+        self.linked_labels[top_source_id] = self['label_set'][1].lower()  # default is "covered"
         if self.attribute_id:
-            self.loop_relationships(top_source_id, nested_source_item, self.target_relationships, self.attribute_id,
-                                    self._match_attribute_values)
+            if self['priorities']:
+                self.loop_relationships(top_source_id, nested_source_item, self.target_relationships, self.attribute_id,
+                                        self._match_attribute_values)
+            elif self['targettype']:
+                self.loop_relationships(top_source_id, nested_source_item, self.target_relationships, self.attribute_id,
+                                        self._match_target_types)
 
-    def _match_attribute_values(self, top_source_id, nested_target_item):
+    def _store_linked_label(self, top_source_id, label):
+        if top_source_id not in self.linked_labels:
+            self.linked_labels[top_source_id] = label
+        else:
+            # store newly encountered label if it has a higher priority
+            stored_priority = self.priorities[self.linked_labels[top_source_id]]
+            latest_priority = self.priorities[label]
+            if latest_priority > stored_priority:
+                self.linked_labels[top_source_id] = label
+
+    def _match_target_types(self, top_source_id, nested_target_item, relationship):
+        """ L
+
+        Args:
+            top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
+            nested_target_item (TraceableItem): Nested traceable item used as a target while looping through
+                relationships, e.g. a test report item.
+            relationship (str): Relationship with `nested_target_item` as target
+        """
+        reverse_relationship = self.collection.get_reverse_relation(relationship)
+        reverse_relationship_str = self.relationship_to_string[reverse_relationship].lower()
+        self._store_linked_label(top_source_id, reverse_relationship_str)
+
+
+    def _match_attribute_values(self, top_source_id, nested_target_item, *_):
         """ Links the highest priority attribute value of nested relations to the top source id.
 
         This function is only called when the <<attribute>> option is used. It gets the attribute value from the nested
-        target item and stores it as value in the dict `linked_attributes` with the top source id as key, but only if
+        target item and stores it as value in the dict `linked_labels` with the top source id as key, but only if
         the priority of the attribute value is higher than what's already been stored.
 
         Args:
@@ -148,23 +185,15 @@ class ItemPieChart(TraceableBaseNode):
         attribute_value = nested_target_item.get_attribute(self['attribute']).lower()
         if attribute_value not in self.priorities:
             attribute_value = self['label_set'][2].lower()  # default is "executed"
+        self._store_linked_label(top_source_id, attribute_value)
 
-        if top_source_id not in self.linked_attributes:
-            self.linked_attributes[top_source_id] = attribute_value
-        else:
-            # store newly encountered attribute value if it has a higher priority
-            stored_attribute_priority = self.priorities[self.linked_attributes[top_source_id]]
-            latest_attribute_priority = self.priorities[attribute_value]
-            if latest_attribute_priority > stored_attribute_priority:
-                self.linked_attributes[top_source_id] = attribute_value
-
-    def _prepare_labels_and_values(self, lower_labels, attributes):
+    def _prepare_labels_and_values(self, lower_labels, discovered_labels):
         """ Keeps case-sensitivity of :<<attribute>>: arguments in labels and calculates slice size based on the
         highest-priority label for each relevant item.
 
         Args:
             lower_labels (list): List of unique lower-case labels (str).
-            attributes (list): List of labels with the highest priority for each relevant item.
+            discovered_labels (list): List of labels with the highest priority for each relevant item.
 
         Returns:
             (dict) Dictionary containing the slice labels as keys and slice sizes (int) as values.
@@ -174,11 +203,11 @@ class ItemPieChart(TraceableBaseNode):
         chart_labels = OrderedDict()
         for label in lower_labels:
             chart_labels[label] = 0
-        for attribute in attributes:
-            chart_labels[attribute] += 1
+        for label in discovered_labels:
+            chart_labels[label] += 1
 
         # get statistics before removing any labels with value 0
-        statistics = self._get_statistics(chart_labels[self['label_set'][0]], len(attributes))
+        statistics = self._get_statistics(chart_labels[self['label_set'][0]], len(discovered_labels))
         # removes labels with count value equal to 0 and the corresponding configured color
         indices_to_remove = set()
         for idx, label in enumerate(list(chart_labels)):
