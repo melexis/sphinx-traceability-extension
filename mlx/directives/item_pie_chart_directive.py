@@ -97,7 +97,7 @@ class ItemPieChart(TraceableBaseNode):
 
     def loop_relationships(self, top_source_id, source_item, relationships, pattern, match_function):
         """
-        Loops through the source relationships and for each relationship it loops through the matches that have been
+        Loops through the relationships and for each relationship it loops through the matches that have been
         found for the source item. If the matched item is not a placeholder and matches to the specified pattern, the
         specified function is called with the matched item as a parameter.
 
@@ -120,7 +120,7 @@ class ItemPieChart(TraceableBaseNode):
     def _match_covered(self, top_source_id, nested_source_item):
         """
         Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
-        used, it loops through the source relationships again, this time with the matched item as the source.
+        used, it loops through the target relationships, this time with the matched item as the source.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
