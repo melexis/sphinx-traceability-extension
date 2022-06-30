@@ -156,7 +156,7 @@ class ItemPieChart(TraceableBaseNode):
                 self.linked_labels[top_source_id] = label
 
     def _match_target_types(self, top_source_id, nested_target_item, relationship):
-        """ L
+        """ Links the reverse of the highest priority relationship of nested relations to the top source id.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
