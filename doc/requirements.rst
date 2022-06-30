@@ -125,6 +125,7 @@ Design coverage
     :id_set: RQT DESIGN
     :label_set: uncovered, covered
     :functional: .*
+    :sourcetype: fulfilled_by
 
 Test coverage
 =============
@@ -140,10 +141,14 @@ Test coverage
 .. item-piechart:: Chart fetching third label from defaults
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: not covered, covered
-    :colors: orange c b
+    :colors: orange c b darkred green yellow
+    :sourcetype: validated_by
+    :targettype: failed_by passed_by skipped_by
 
-.. item-piechart:: Test coverage chart with test results
+.. item-piechart:: Test coverage chart with test results, based on the :result: attribute
     :id_set: RQT [IU]TEST [IU]TEST_REP
+    :sourcetype: validated_by
+    :targettype: passed_by skipped_by failed_by
     :label_set: uncovered, covered, ran test
     :result: ERROR, fail, pass
     :colors: orange c b darkred #FF0000 g pink
@@ -155,6 +160,16 @@ Test coverage
     ERROR: darkred (dark red)
     fail: #FF0000 (red)
     pass: g (green)
+
+.. item-piechart:: Test coverage chart with test results, based on the :targettype: option
+    :id_set: RQT [IU]TEST [IU]TEST_REP
+    :label_set: uncovered, covered, ran test
+    :targettype: failed_by passed_by skipped_by
+    :colors: orange c b r g y
+
+.. item-piechart:: All uncovered as the bad sourcetype results in 0 links
+    :id_set: RQT [IU]TEST
+    :sourcetype: impacts_on
 
 .. item-piechart:: All uncovered as there is no direct relationship
     :id_set: [IU]TEST_REP RQT

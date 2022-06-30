@@ -322,6 +322,9 @@ traceability_relationships = {
     'fulfills': 'fulfilled_by',
     'implements': 'implemented_by',
     'validates': 'validated_by',
+    'passes': 'passed_by',
+    'fails': 'failed_by',
+    'skipped': 'skipped_by',
     'ext_toolname': ''
 }
 
@@ -338,6 +341,12 @@ traceability_relationship_to_string = {
     'implemented_by': 'Implemented by',
     'validates': 'Validates',
     'validated_by': 'Validated by',
+    'passes': 'Passes',
+    'passed_by': 'Passed by',
+    'fails': 'Fails',
+    'failed_by': 'Failed by',
+    'skipped': 'Skipped',
+    'skipped_by': 'Skipped by',
     'ext_toolname': 'Reference to toolname'
 }
 
