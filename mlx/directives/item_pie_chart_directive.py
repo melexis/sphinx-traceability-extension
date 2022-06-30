@@ -90,7 +90,7 @@ class ItemPieChart(TraceableBaseNode):
         if self['priorities']:
             extra_labels.extend(self['priorities'])
         elif self['targettype']:
-            for relationship in reversed(self['targettype']):
+            for relationship in self['targettype']:
                 reverse_relationship = self.collection.get_reverse_relation(relationship)
                 extra_labels.append(self.relationship_to_string[reverse_relationship].lower())
 
