@@ -136,7 +136,7 @@ class ItemPieChart(TraceableBaseNode):
             nested_source_item (TraceableItem): Nested traceable item to be used as a source for looping through its
                 relationships, e.g. a test item.
         """
-        self.linked_labels[top_source_id] = self['label_set'][1].lower()  # default is "covered"
+        self._store_linked_label(top_source_id, self['label_set'][1].lower())  # default is "covered"
         if self.attribute_id:
             if self['priorities']:
                 self.loop_relationships(top_source_id, nested_source_item, self.target_relationships, self.attribute_id,
