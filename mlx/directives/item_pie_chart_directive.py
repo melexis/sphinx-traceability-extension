@@ -120,7 +120,7 @@ class ItemPieChart(TraceableBaseNode):
         for relationship in relationships:
             for target_id in source_item.iter_targets(relationship, explicit=True, implicit=True):
                 target_item = self.collection.get_item(target_id)
-                # placeholders don't end up in any item-matrix (less duplicate warnings for missing items)
+                # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
                 if not target_item or target_item.is_placeholder():
                     continue
                 if re.match(pattern, target_id):
