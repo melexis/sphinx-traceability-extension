@@ -149,7 +149,7 @@ Test coverage
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :sourcetype: validated_by
     :targettype: passed_by skipped_by failed_by
-    :label_set: uncovered, covered, ran test
+    :label_set: uncovered, covered, has report
     :result: ERROR, fail, pass
     :colors: orange c b darkred #FF0000 g pink
 
