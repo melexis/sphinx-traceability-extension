@@ -584,6 +584,8 @@ A pie chart of documentation items can be generated using:
     .. item-piechart:: Test coverage of requirements with report results
         :id_set: RQT TEST TEST_REP
         :label_set: uncovered, covered, executed
+        :sourcetype: validated_by covered_by
+        :targettype: failed_by passed_by skipped_by
         :result: error, fail, pass
         :functional: .*
         :colors: orange c b darkred #FF0000 g
@@ -604,12 +606,29 @@ are comma-separated lists.
     ID, the second label is used. The third label (optional) is used for items with both relationships covered.
     The labels in the example are the default values.
 
+:sourcetype: *optional*, *multiple arguments (space-separated)*
+
+    The list of relationships that should be used to filter the target. The relationships considered for
+    filtering are from the "Source" items to the "Target" items. In this example, if an RQT-item
+    is not linked to a TEST-item with *validated_by* and/or *covered_by*, this source item will be labeled as
+    *uncovered*.
+
+:targettype: *optional*, *multiple arguments (space-separated)*
+
+    The list of relationships that should be used to filter the nested target. The relationships considered for
+    filtering are from the "Target" items to the "Target-of-target" items. These relationhips will also be used to label
+    additional slices if the *<<attribute>>* option that accepts multiple arguments is unused.
+    In this example, if a TEST-item is not linked to a TEST_REP-item with one or more of
+    *passed_by/skipped_by/failed_by*, the source item will be labeled as *covered* instead of
+    *passes*, *skipped* or *fails*, which are the human readable and reversed
+    forms of the arguments for this option. If an RQT-item with multiple TEST-items, one linked to
+
 :<<attribute>>: *optional*, *multiple arguments (comma-separated)*
 
     The optional *result* can be replaced by any configured attribute of the third item ID. Its arguments are possible
     values of this attribute, ordered in priority from high to low. Using this option splits up the slice with the third
-    label. In this example an RQT item with multiple TEST items, one with a *fail* and others a *pass* as *result* value
-    in the TEST_REP item, will be added to the *fail* slice of the pie chart.
+    label. In this example an RQT-item with multiple TEST-items, one with a *fail* and others a *pass* as *result* value
+    in the TEST_REP-item, will be added to the *fail* slice of the pie chart.
 
 :<<attribute>>: *optional*, *single argument*
 
