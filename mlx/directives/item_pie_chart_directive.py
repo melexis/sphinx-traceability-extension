@@ -146,10 +146,14 @@ class ItemPieChart(TraceableBaseNode):
                                         self._match_target_types)
 
     def _store_linked_label(self, top_source_id, label):
-        if top_source_id not in self.linked_labels:
-            self.linked_labels[top_source_id] = label
-        else:
-            # store newly encountered label if it has a higher priority
+        """ Stores the label with the given item ID as key in ``linked_labels`` if it has a higher priority.
+
+        Args:
+            top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
+            label (str): Label to store if it has a higher priority than the one that has been stored.
+        """
+        if label != self.linked_labels[top_source_id]:
+            # store different label if it has a higher priority
             stored_priority = self.priorities[self.linked_labels[top_source_id]]
             latest_priority = self.priorities[label]
             if latest_priority > stored_priority:
