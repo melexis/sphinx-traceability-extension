@@ -36,8 +36,8 @@ class ItemPieChart(TraceableBaseNode):
         self.collection = None
         self.source_relationships = []
         self.target_relationships = []
-        self.priorities = {}  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
-        self.attribute_id = ''
+        self.priorities = OrderedDict()  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
+        self.nested_target_regex = ''
         self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
     def perform_replacement(self, app, collection):
@@ -57,7 +57,7 @@ class ItemPieChart(TraceableBaseNode):
         self.target_relationships = self['targettype'] if self['targettype'] else self.collection.iter_relations()
         self.relationship_to_string = app.config.traceability_relationship_to_string
         self._set_priorities()
-        self._set_attribute_id()
+        self._set_nested_target_regex()
 
         for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
             source_item = self.collection.get_item(source_id)
@@ -99,51 +99,10 @@ class ItemPieChart(TraceableBaseNode):
                                    start=len(self['label_set'])):
             self.priorities[attr] = idx
 
-    def _set_attribute_id(self):
-        """ Sets the attribute_id if a third item ID in the id_set option is given. """
+    def _set_nested_target_regex(self):
+        """ Sets the ``nested_target_regex`` if a third item ID in the id_set option is given. """
         if len(self['id_set']) > 2:
-            self.attribute_id = self['id_set'][2]
-
-    def loop_relationships(self, top_source_id, source_item, relationships, pattern, match_function):
-        """
-        Loops through the relationships and for each relationship it loops through the matches that have been
-        found for the source item. If the matched item is not a placeholder and matches to the specified pattern, the
-        specified function is called with the matched item as a parameter.
-
-        Args:
-            top_source_id (str): Item identifier of the top source item.
-            source_item (TraceableItem): Traceable item to be used as a source for the relationship search.
-            relationships (list): List of relationships to consider.
-            pattern (str): Regexp pattern string to be used on items that have a relationship to the source item.
-            match_function (func): Function to be called when the regular expression hits.
-        """
-        for relationship in relationships:
-            for target_id in source_item.iter_targets(relationship, explicit=True, implicit=True):
-                target_item = self.collection.get_item(target_id)
-                # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
-                if not target_item or target_item.is_placeholder():
-                    continue
-                if re.match(pattern, target_id):
-                    match_function(top_source_id, target_item, relationship)
-
-    def _match_covered(self, top_source_id, nested_source_item, *_):
-        """
-        Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
-        used, it loops through the target relationships, this time with the matched item as the source.
-
-        Args:
-            top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
-            nested_source_item (TraceableItem): Nested traceable item to be used as a source for looping through its
-                relationships, e.g. a test item.
-        """
-        self._store_linked_label(top_source_id, self['label_set'][1].lower())  # default is "covered"
-        if self.attribute_id:
-            if self['priorities']:
-                self.loop_relationships(top_source_id, nested_source_item, self.target_relationships, self.attribute_id,
-                                        self._match_attribute_values)
-            elif self['targettype']:
-                self.loop_relationships(top_source_id, nested_source_item, self.target_relationships, self.attribute_id,
-                                        self._match_target_types)
+            self.nested_target_regex = self['id_set'][2]
 
     def _store_linked_label(self, top_source_id, label):
         """ Stores the label with the given item ID as key in ``linked_labels`` if it has a higher priority.
@@ -159,14 +118,73 @@ class ItemPieChart(TraceableBaseNode):
             if latest_priority > stored_priority:
                 self.linked_labels[top_source_id] = label
 
-    def _match_target_types(self, top_source_id, nested_target_item, relationship):
+    def loop_relationships(self, top_source_id, source_item, relationships, pattern, match_function):
+        """
+        Loops through the relationships and for each relationship it loops through the matches that have been
+        found for the source item. If the matched item is not a placeholder and matches to the specified pattern, the
+        specified function is called with the matched item as a parameter.
+
+        Args:
+            top_source_id (str): Item identifier of the top source item.
+            source_item (TraceableItem): Traceable item to be used as a source for the relationship search.
+            relationships (list): List of relationships to consider.
+            pattern (str): Regexp pattern string to be used on items that have a relationship to the source item.
+            match_function (func): Function to be called when the regular expression hits.
+
+        Returns:
+            bool: True when the source item has at least one item linked to it via one of the given relationships
+                and its ID was a match for the given pattern; False otherwise
+        """
+        has_valid_target_item = False
+        for relationship in relationships:
+            for target_id in source_item.iter_targets(relationship, explicit=True, implicit=True):
+                target_item = self.collection.get_item(target_id)
+                # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
+                if not target_item or target_item.is_placeholder():
+                    continue
+                if re.match(pattern, target_id):
+                    has_valid_target_item = True
+                    is_covered_nested = match_function(top_source_id, target_item, relationship)
+                    if match_function == _match_covered and is_covered_nested is False:
+                        # if one target item is not covered by a nested target item, treat top source item as
+                        # covered instead of executed
+                        self.linked_labels[top_source_id] = self['label_set'][1].lower()
+                        return has_valid_target_item
+        return has_valid_target_item
+
+    def _match_covered(self, top_source_id, nested_source_item, *_):
+        """
+        Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
+        used for labeling, it loops through the target relationships, this time with the matched item as the source.
+        Otherwise, if the targettype option is used, those relationships will be used as labels. If no nested
+        target is found, the second label will be used ('covered' by default)
+
+        Args:
+            top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
+            nested_source_item (TraceableItem): Nested traceable item to be used as a source for looping through its
+                relationships, e.g. a test item.
+
+        Returns:
+            bool: False if no valid target could be found for the nested item; True otherwise
+        """
+        self._store_linked_label(top_source_id, self['label_set'][1].lower())  # default is "covered"
+        if self['targettype'] and not self['priorities']:
+            match_function = self._match_target_types
+        else:
+            match_function = self._match_attribute_values
+        if self.nested_target_regex:
+            return self.loop_relationships(
+                top_source_id, nested_source_item, self.target_relationships, self.nested_target_regex, match_function)
+        return False
+
+    def _match_target_types(self, top_source_id, _, relationship):
         """ Links the reverse of the highest priority relationship of nested relations to the top source id.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             nested_target_item (TraceableItem): Nested traceable item used as a target while looping through
                 relationships, e.g. a test report item.
-            relationship (str): Relationship with `nested_target_item` as target
+            relationship (str): Relationship with ``nested_target_item`` as target
         """
         reverse_relationship = self.collection.get_reverse_relation(relationship)
         reverse_relationship_str = self.relationship_to_string[reverse_relationship].lower()
@@ -182,8 +200,8 @@ class ItemPieChart(TraceableBaseNode):
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
-            nested_target_item (TraceableItem): Nested traceable item used as a target while looping through
-                relationships, e.g. a test report item.
+            nested_target_item (TraceableItem): Traceable item with ID that matched for ``nested_target_regex``:
+                its <<attribute>> value needs to be considered
         """
         # case-insensitivity
         attribute_value = nested_target_item.get_attribute(self['attribute']).lower()
@@ -221,7 +239,7 @@ class ItemPieChart(TraceableBaseNode):
         self['colors'] = [color for idx, color in enumerate(self['colors']) if idx not in indices_to_remove]
 
         for priority in self['priorities']:
-            if priority.lower() in chart_labels:
+            if priority != priority.lower() and priority.lower() in chart_labels:  # TODO: fix order of self['colors']
                 value = chart_labels.pop(priority.lower())
                 chart_labels[priority] = value
         return chart_labels, statistics
