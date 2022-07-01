@@ -138,17 +138,40 @@ Test coverage
     :nocaptions:
     :stats:
 
+.. item-matrix:: Trace requirements to test case reports
+    :source: RQT
+    :intermediate: [IU]TEST
+    :target: [IU]TEST_REP
+    :targetcolumns: result
+    :type: validated_by | passed_by skipped_by failed_by
+    :splitintermediates:
+    :sourcetitle: Requirement
+    :intermediatetitle: Test case
+    :targettitle: Test case report
+    :nocaptions:
+    :stats:
+
 .. item-piechart:: Chart fetching third label from defaults
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: not covered, covered
+    :colors: orange c b
+
+.. item-piechart:: Test coverage chart targeting UTEST and ITEST
+    :id_set: RQT [IU]TEST [IU]TEST_REP
+    :label_set: not covered, covered
     :colors: orange c b darkred green yellow
-    :sourcetype: validated_by
+    :targettype: failed_by passed_by skipped_by
+
+.. item-piechart:: Test coverage chart targeting ITEST only
+    :id_set: RQT ITEST ITEST_REP
+    :label_set: not covered, covered
+    :colors: orange c b darkred green yellow
     :targettype: failed_by passed_by skipped_by
 
 .. item-piechart:: Test coverage chart with test results, based on the :result: attribute
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :sourcetype: validated_by
-    :targettype: passed_by skipped_by failed_by
+    :targettype: failed_by passed_by skipped_by
     :label_set: uncovered, covered, has report
     :result: ERROR, fail, pass
     :colors: orange c b darkred #FF0000 g pink
@@ -164,8 +187,16 @@ Test coverage
 .. item-piechart:: Test coverage chart with test results, based on the :targettype: option
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: uncovered, covered, ran test
+    :sourcetype: validated_by
     :targettype: failed_by passed_by skipped_by
     :colors: orange c b r g y
+
+.. item-piechart:: Test coverage chart with test results, based on the :targettype: option (in bad order)
+    :id_set: RQT [IU]TEST [IU]TEST_REP
+    :label_set: uncovered, covered, ran test
+    :sourcetype: validated_by
+    :targettype: skipped_by passed_by failed_by
+    :colors: orange c b y g r
 
 .. item-piechart:: All uncovered as the bad sourcetype results in 0 links
     :id_set: RQT [IU]TEST
