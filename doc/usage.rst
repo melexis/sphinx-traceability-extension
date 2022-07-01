@@ -624,6 +624,11 @@ are comma-separated lists.
     in the *:<<attribute>>:* option (*:result:* in the example). Matplotlib supports many formats, explained in their
     demo_.
 
+.. note::
+
+    In this example, if an RQT-item is linked to one or more TEST-items and at least one TEST-item is not linked
+    to a TEST_REP-item, the RQT-item will be labeled as *covered* instead of *executed*.
+
 .. _demo: https://matplotlib.org/stable/gallery/color/color_demo.html#color-demo
 
 .. _traceability_checklist:
