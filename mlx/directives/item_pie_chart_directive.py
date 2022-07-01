@@ -68,16 +68,17 @@ class ItemPieChart(TraceableBaseNode):
             self.loop_relationships(source_id, source_item, self.source_relationships, self['id_set'][1],
                                     self._match_covered)
 
-        chart_labels, statistics = self._prepare_labels_and_values(list(self.priorities),
-                                                                   list(self.linked_labels.values()))
-        if self['colors'] and len(self['colors']) < len(chart_labels):
+        data, statistics = self._prepare_labels_and_values(list(self.priorities),
+                                                           list(self.linked_labels.values()),
+                                                           self['colors'])
+        if data['colors'] and len(data['colors']) < len(data['labels']):
             report_warning("item-piechart contains {} slices: {} color(s) will be reused"
-                           .format(len(chart_labels), len(chart_labels) - len(self['colors'])),
+                           .format(len(data['labels']), len(data['labels']) - len(data['colors'])),
                            self['document'], self['line'])
         p_node = nodes.paragraph()
         p_node += nodes.Text(statistics)
-        if chart_labels:
-            top_node += self.build_pie_chart(chart_labels, env)
+        if data['labels']:
+            top_node += self.build_pie_chart(data['sizes'], data['labels'], data['colors'], env)
         top_node += p_node
         self.replace_self(top_node)
 
@@ -145,7 +146,7 @@ class ItemPieChart(TraceableBaseNode):
                 if re.match(pattern, target_id):
                     has_valid_target_item = True
                     is_covered_nested = match_function(top_source_id, target_item, relationship)
-                    if match_function == _match_covered and is_covered_nested is False:
+                    if top_source_id == source_item.id and is_covered_nested is False:
                         # if one target item is not covered by a nested target item, treat top source item as
                         # covered instead of executed
                         self.linked_labels[top_source_id] = self['label_set'][1].lower()
@@ -209,40 +210,49 @@ class ItemPieChart(TraceableBaseNode):
             attribute_value = self['label_set'][2].lower()  # default is "executed"
         self._store_linked_label(top_source_id, attribute_value)
 
-    def _prepare_labels_and_values(self, lower_labels, discovered_labels):
+    def _prepare_labels_and_values(self, lower_labels, discovered_labels, colors):
         """ Keeps case-sensitivity of :<<attribute>>: arguments in labels and calculates slice size based on the
         highest-priority label for each relevant item.
 
         Args:
-            lower_labels (list): List of unique lower-case labels (str).
+            lower_labels (list): List of unique lower-case labels (str), ordered by priority from low to high.
             discovered_labels (list): List of labels with the highest priority for each relevant item.
+            colors (list): List of colors in the order as they are defined
 
         Returns:
             (dict) Dictionary containing the slice labels as keys and slice sizes (int) as values.
             (str) Coverage statistics.
         """
         # initialize dictionary for each possible value, and count label occurences
-        chart_labels = OrderedDict()
-        for label in lower_labels:
-            chart_labels[label] = 0
+        ordered_colors = colors[:len(lower_labels)]
+        if len(colors) > 3:
+            # reverse order for :<<attribute>>: or :targettype:
+            ordered_colors = colors[:3] + colors[len(lower_labels) - 1:2:-1]
+        pie_data = {
+            'labels': lower_labels,
+            'sizes': [0] * len(lower_labels),
+            'colors': ordered_colors,
+        }
+        labels = pie_data['labels']
         for label in discovered_labels:
-            chart_labels[label] += 1
+            pie_data['sizes'][labels.index(label)] += 1
 
         # get statistics before removing any labels with value 0
-        statistics = self._get_statistics(chart_labels[self['label_set'][0]], len(discovered_labels))
+        statistics = self._get_statistics(pie_data['sizes'][0], len(discovered_labels))
         # removes labels with count value equal to 0 and the corresponding configured color
-        indices_to_remove = set()
-        for idx, label in enumerate(list(chart_labels)):
-            if chart_labels[label] == 0:
-                del chart_labels[label]
-                indices_to_remove.add(idx)
-        self['colors'] = [color for idx, color in enumerate(self['colors']) if idx not in indices_to_remove]
+        for idx in reversed(range(len(labels))):
+            if pie_data['sizes'][idx] == 0:
+                del pie_data['labels'][idx]
+                del pie_data['sizes'][idx]
+                if len(pie_data['colors']) > idx:
+                    del pie_data['colors'][idx]
 
         for priority in self['priorities']:
-            if priority != priority.lower() and priority.lower() in chart_labels:  # TODO: fix order of self['colors']
-                value = chart_labels.pop(priority.lower())
-                chart_labels[priority] = value
-        return chart_labels, statistics
+            priority_lowercase = priority.lower()
+            if priority != priority_lowercase and priority_lowercase in pie_data['labels']:
+                index = pie_data['labels'].index(priority_lowercase)
+                pie_data['labels'][index] = priority
+        return pie_data, statistics
 
     @staticmethod
     def _get_statistics(count_uncovered, count_total):
@@ -264,30 +274,30 @@ class ItemPieChart(TraceableBaseNode):
                                                                            total=count_total,
                                                                            pct=percentage,)
 
-    def build_pie_chart(self, chart_labels, env):
+    def build_pie_chart(self, sizes, labels, colors, env):
         """
         Builds and returns image node containing the pie chart image.
 
         Args:
-            chart_labels (dict): Dictionary containing the slice labels as keys and slice sizes (int) as values.
+            sizes (list): List of slice sizes (int)
+            labels (list): List of labels (str)
+            colors (list): List of colors (str); if empty, default colors will be used
             env (sphinx.environment.BuildEnvironment): Sphinx' build environment.
 
         Returns:
             (nodes.image) Image node containing the pie chart image.
         """
-        labels = list(chart_labels)
-        sizes = list(chart_labels.values())
         explode = self._get_explode_values(labels, self['label_set'])
-
+        if not colors:
+            colors = None
         fig, axes = plt.subplots()
-        colors = self['colors'] if self['colors'] else None
         _, texts, autotexts = axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes),
                                        startangle=90, colors=colors)
         axes.axis('equal')
         folder_name = path.join(env.app.srcdir, '_images')
         if not path.exists(folder_name):
             mkdir(folder_name)
-        hash_string = str(self['colors']) + str(texts) + str(autotexts)
+        hash_string = str(colors) + str(texts) + str(autotexts)
         hash_value = sha256(hash_string.encode()).hexdigest()  # create hash value based on chart parameters
         rel_file_path = path.join('_images', 'piechart-{}.png'.format(hash_value))
         if rel_file_path not in env.images:
