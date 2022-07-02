@@ -192,7 +192,6 @@ class ItemPieChart(TraceableBaseNode):
         reverse_relationship_str = self.relationship_to_string[reverse_relationship].lower()
         self._store_linked_label(top_source_id, reverse_relationship_str)
 
-
     def _match_attribute_values(self, top_source_id, nested_target_item, *_):
         """ Links the highest priority attribute value of nested relations to the top source id.
 
