@@ -37,7 +37,7 @@ class ItemPieChart(TraceableBaseNode):
         self.source_relationships = []
         self.target_relationships = []
         self.relationship_to_string = {}
-        self.priorities = OrderedDict()  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
+        self.priorities = OrderedDict()  # default priority order is 'uncovered', 'covered', 'executed'
         self.nested_target_regex = ''
         self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
