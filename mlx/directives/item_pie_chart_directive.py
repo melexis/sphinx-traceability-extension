@@ -37,7 +37,7 @@ class ItemPieChart(TraceableBaseNode):
         self.source_relationships = []
         self.target_relationships = []
         self.relationship_to_string = {}
-        self.priorities = OrderedDict()  # default priority order is 'uncovered', 'covered', 'executed', 'pass', 'fail', 'error'
+        self.priorities = OrderedDict()  # default priority order is 'uncovered', 'covered', 'executed'
         self.nested_target_regex = ''
         self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
@@ -191,7 +191,6 @@ class ItemPieChart(TraceableBaseNode):
         reverse_relationship = self.collection.get_reverse_relation(relationship)
         reverse_relationship_str = self.relationship_to_string[reverse_relationship].lower()
         self._store_linked_label(top_source_id, reverse_relationship_str)
-
 
     def _match_attribute_values(self, top_source_id, nested_target_item, *_):
         """ Links the highest priority attribute value of nested relations to the top source id.

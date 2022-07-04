@@ -1,8 +1,8 @@
 {
     "sphinx": {
         "enabled": true,
-        "min": 24,
-        "max": 24,
+        "min": 23,
+        "max": 23,
         "exclude": [
             "WARNING: the mlx.traceability extension is not safe for parallel reading",
             "WARNING: doing serial read"
