@@ -615,13 +615,14 @@ are comma-separated lists.
 
 :targettype: *optional*, *multiple arguments (space-separated)*
 
-    The list of relationships that should be used to filter the nested target. The relationships considered for
-    filtering are from the "Target" items to the "Target-of-target" items. These relationhips will also be used to label
-    additional slices if the *<<attribute>>* option that accepts multiple arguments is unused.
-    In this example, if a TEST-item is not linked to a TEST_REP-item with one or more of
-    *passed_by/skipped_by/failed_by*, the source item will be labeled as *covered* instead of
+    The list of relationships that should be used to filter the nested target, ordered in priority from high to low.
+    The relationships considered for
+    filtering are from the "Target" items to the "Target-of-target" items. These relationships will also be used to
+    label additional slices if the *<<attribute>>* option that accepts multiple arguments is unused.
+    In this example, excluding the `:result:` option, if a TEST-item is not linked to a TEST_REP-item with one or more
+    of *passed_by/skipped_by/failed_by*, the source item will be labeled as *covered* instead of
     *passes*, *skipped* or *fails*, which are the human readable and reversed
-    forms of the arguments for this option. If an RQT-item with multiple TEST-items, one linked to
+    forms of the arguments for this option.
 
 :<<attribute>>: *optional*, *multiple arguments (comma-separated)*
 
