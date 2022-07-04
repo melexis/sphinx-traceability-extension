@@ -494,7 +494,7 @@ def setup(app):
             'asil': '^(QM|[ABCD])$',
             'aspice': '^[123]$',
             'status': '^.*$',
-            'result': '(?i)^(pass|fail|error)$',
+            'result': '(?i)^(pass|fail|error|skip)$',
             'attendees': '^([A-Z]{3}[, ]*)+$',
             'assignee': '^.*$',
             'effort': r'^([\d\.]+(mo|[wdhm]) ?)+$',

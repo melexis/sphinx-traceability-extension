@@ -160,27 +160,27 @@ Integration test reports
 ========================
 
 .. item:: ITEST_REP-CAPTION Report with attribute missing from priority list
-    :depends_on: ITEST-CAPTION
-    :result: RUNNING
+    :skipped: ITEST-CAPTION
+    :result: skip
 
 .. item:: ITEST_REP-AUTO_REVERSE
-    :depends_on: ITEST-AUTO_REVERSE
+    :passes: ITEST-AUTO_REVERSE
     :result: pass
 
 .. item:: ITEST_REP-COVERAGE
-    :depends_on: ITEST-COVERAGE
+    :fails: ITEST-COVERAGE
     :result: error
 
 .. item:: ITEST_REP-MATRIX
-    :depends_on: ITEST-MATRIX
+    :passes: ITEST-MATRIX
     :result: pass
 
 .. item:: ITEST_REP-TREE
-    :depends_on: ITEST-TREE
+    :passes: ITEST-TREE
     :result: PASS
 
 .. item:: ITEST_REP-TREE_SCOPE
-    :depends_on: ITEST-TREE_SCOPE
+    :fails: ITEST-TREE_SCOPE
     :result: ERROR
 
 .. item:: ITEST_REP-ATTRIBUTES_MATRIX
@@ -188,6 +188,10 @@ Integration test reports
 
 .. item:: ITEST_REP-r100
     :depends_on: ITEST-r100
+
+.. item:: ITEST_REP-LIST
+    :skipped: ITEST-LIST
+    :result: skip
 
 Attribute details
 =================
@@ -499,7 +503,7 @@ Source and target columns
     :intermediate: ITEST-
     :target: ITEST_REP-
     :hidetarget:
-    :type: validated_by | impacts_on
+    :type: validated_by | passes fails skipped
     :sourcetitle: requirements
     :intermediatetitle: integration tests
     :targettitle: integration tests results
