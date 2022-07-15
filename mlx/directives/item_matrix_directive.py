@@ -90,7 +90,8 @@ class ItemMatrix(TraceableBaseNode):
             if ' | ' in self['type']:
                 mapping_via_intermediate = self.linking_via_intermediate(source_ids, targets_with_ids, collection)
 
-        duplicate_source_count = 0
+        duplicate_count_total = 0
+        duplicate_count_covered = 0
         rows = Rows([], [], [], [0, 0])
         for source_id in source_ids:
             source_item = collection.get_item(source_id)
@@ -99,17 +100,33 @@ class ItemMatrix(TraceableBaseNode):
             covered = False
             rights = [[] for _ in range(int(bool(self['intermediate'])) + len(self['target']))]
             if mapping_via_intermediate:
-                covered = source_id in mapping_via_intermediate
-                if covered:
-                    args = [rows, source_item, rights, app]
-                    duplicate_source_count += self._store_source_via_intermediate(mapping_via_intermediate[source_id],
-                                                                                  *args)
+                if not mapping_via_intermediate[source_id]:
+                    self._store_data(rows, source_item, rights, covered, app)
+                    continue
+                covered_intermediates = {intermediate: any(target_set for target_set in target_sets)
+                                         for intermediate, target_sets in mapping_via_intermediate[source_id].items()}
+
+                if self['coveredintermediates']:
+                    covered = all(covered_intermediates.values())
+                else:
+                    covered = any(covered_intermediates.values())
+
+                if self['splitintermediates']:
+                    for intermediate, target_sets in mapping_via_intermediate[source_id].items():
+                        self._store_row_with_intermediate({intermediate: target_sets},
+                                                            rows, source_item, rights, covered, app)
+                    duplicate_count_total += len(mapping_via_intermediate[source_id]) - 1
+                    duplicate_count_covered += len(mapping_via_intermediate[source_id]) - 1 if covered else 0
+                else:
+                    self._store_row_with_intermediate({intermediate: target_sets for intermediate, target_sets
+                                                        in mapping_via_intermediate[source_id].items()
+                                                        if covered and covered_intermediates[intermediate]},
+                                                        rows, source_item, rights, covered, app)
             else:
                 has_external_target = self.add_external_targets(rights, source_item, external_relationships, app)
                 has_internal_target = self.add_internal_targets(rights, source_id, targets_with_ids, relationships,
                                                                 collection)
                 covered = has_external_target or has_internal_target
-            if not (covered and mapping_via_intermediate):
                 self._store_data(rows, source_item, rights, covered, app)
 
         if not source_ids:
@@ -127,8 +144,8 @@ class ItemMatrix(TraceableBaseNode):
 
         tgroup += self._build_table_body(rows, self['group'], self['onlycovered'], self['onlyuncovered'])
 
-        count_total = rows.counters[0] + rows.counters[1] - duplicate_source_count
-        count_covered = rows.counters[0] - duplicate_source_count
+        count_total = rows.counters[0] + rows.counters[1] - duplicate_count_total
+        count_covered = rows.counters[0] - duplicate_count_covered
         try:
             percentage = 100 * count_covered / count_total
         except ZeroDivisionError:
@@ -310,8 +327,6 @@ class ItemMatrix(TraceableBaseNode):
     def linking_via_intermediate(self, source_ids, targets_with_ids, collection):
         """ Maps source IDs to IDs of target items that are linked via an itermediate item per target
 
-        Only covered source IDs are stored.
-
         Args:
             source_ids (list): List of item IDs of source items
             targets_with_ids (list): List of lists, which contain target IDs to take into consideration, per target
@@ -332,8 +347,7 @@ class ItemMatrix(TraceableBaseNode):
         for idx, rel in enumerate(links_with_relationships[0]):
             links_with_relationships[0][idx] = collection.get_reverse_relation(rel)
 
-        source_to_links_map = {}
-        excluded_source_ids = set()
+        source_to_links_map = {source_id: {} for source_id in source_ids}
         for intermediate_id in collection.get_items(self['intermediate'], sort=bool(self['intermediatetitle'])):
             intermediate_item = collection.get_item(intermediate_id)
 
@@ -342,32 +356,17 @@ class ItemMatrix(TraceableBaseNode):
                 potential_source_ids.update(intermediate_item.iter_targets(reverse_rel, sort=False))
             # apply :source: filter
             potential_source_ids = potential_source_ids.intersection(source_ids)
-            potential_source_ids = potential_source_ids.difference(excluded_source_ids)
-            if not potential_source_ids:
-                continue
 
             potential_target_ids = set()
             for forward_rel in links_with_relationships[1]:
                 potential_target_ids.update(intermediate_item.iter_targets(forward_rel, sort=False))
-            if not potential_target_ids:
-                if self['coveredintermediates']:
-                    excluded_source_ids.update(potential_source_ids)
-                continue
             # apply :target: filter
-            covered = False
             actual_targets = []
             for target_ids in targets_with_ids:
                 linked_target_ids = potential_target_ids.intersection(target_ids)
-                if linked_target_ids:
-                    covered = True
                 actual_targets.append(set(collection.get_item(id_) for id_ in linked_target_ids))
 
-            if covered:
-                self._store_targets(source_to_links_map, potential_source_ids, actual_targets, intermediate_item)
-            elif self['coveredintermediates']:
-                excluded_source_ids.update(potential_source_ids)
-        for source_id in excluded_source_ids:
-            source_to_links_map.pop(source_id, None)
+            self._store_targets(source_to_links_map, potential_source_ids, actual_targets, intermediate_item)
         return source_to_links_map
 
     @staticmethod
@@ -387,25 +386,7 @@ class ItemMatrix(TraceableBaseNode):
                 source_to_links_map[source_id] = {}
             source_to_links_map[source_id][intermediate_item] = targets
 
-    def _store_source_via_intermediate(self, linked_items, *args):
-        """ Stores row(s) for a source, linking targets via intermediates
-
-        Args:
-            linked_items (dict): Mapping of all intermediate IDs to the list of sets of target items per target
-
-        Returns:
-            int: Number of rows that have been added with a duplicate source ID
-        """
-        duplicate_source_count = 0
-        if self['splitintermediates']:
-            for intermediate, targets in linked_items.items():
-                self._store_row_with_intermediate({intermediate: targets}, *args)
-            duplicate_source_count += len(linked_items) - 1
-        else:
-            self._store_row_with_intermediate(linked_items, *args)
-        return duplicate_source_count
-
-    def _store_row_with_intermediate(self, linked_items, rows, source, empty_right_cells, app):
+    def _store_row_with_intermediate(self, linked_items, rows, source, empty_right_cells, covered, app):
         """ Stores a row for a source, linking targets via one or all intermediates
 
         Args:
@@ -417,7 +398,7 @@ class ItemMatrix(TraceableBaseNode):
         """
         right_cells = deepcopy(empty_right_cells)
         self.add_all_targets(right_cells, linked_items)
-        self._store_data(rows, source, right_cells, True, app)
+        self._store_data(rows, source, right_cells, covered, app)
 
     def _store_data(self, rows, source, right_cells, covered, app):
         """ Stores the data in one or more rows in the given Rows object.
