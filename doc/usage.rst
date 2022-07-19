@@ -355,8 +355,12 @@ limitations in doing so:
 :<<attribute>>: *optional*, *single argument*
 
     Python-style regular expression used to filter the source items (left column) based on their attributes.
-    The attribute value is **not** used to filter target items.
+    The attribute value is **not** used to filter target items, unless the optional ``:filtertarget:`` flag is set.
     When omitted, no filtering is done on the source item attributes.
+
+:filtertarget: *optional*, *flag*
+
+    When enabled, ``:<<attribute>>:`` filtering is done on target instead of source items.
 
 :sourcecolumns: *optional*, *multiple arguments (space-separated)*
 
