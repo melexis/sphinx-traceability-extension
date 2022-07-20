@@ -482,11 +482,13 @@ linked via the ``:intermediate:`` RQT-items:
     that list sources and the linked targets. The argument will be used as title for this new column.
 
 :coveredintermediates: *optional*, *flag*
+
     When enabled, all sources that have one or more intermediates that are uncovered will be treated as uncovered even
     when the source has another intermediate that *is* covered, i.e. **all**
     intermediates must be covered for the linked source to be covered.
 
 :splitintermediates: *optional*, *flag*
+
     When enabled, a row will be created for every intermediate item instead of grouping them together in the same
     row for the source item. This can be useful if you want to group target items per intermediate item *instead of
     per source item*.
