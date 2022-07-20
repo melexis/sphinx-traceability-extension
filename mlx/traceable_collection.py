@@ -215,7 +215,7 @@ class TraceableCollection:
                 rev_relation = self.get_reverse_relation(relation)
                 if rev_relation == self.NO_RELATION_STR:
                     continue
-                for tgt in item.iter_targets(relation):
+                for tgt in item.yield_targets(relation):
                     # Target item exists?
                     if tgt not in self.items:
                         errors.append(TraceabilityException("{source} {relation} {target}, but {target} is not known"
@@ -226,15 +226,15 @@ class TraceableCollection:
                         continue
                     # Reverse relation exists?
                     target = self.get_item(tgt)
-                    if itemid not in target.iter_targets(rev_relation, sort=False):
+                    if itemid not in target.yield_targets(rev_relation):
                         errors.append(TraceabilityException("No automatic reverse relation: {source} {relation} "
                                                             "{target}".format(source=tgt,
                                                                               relation=rev_relation,
                                                                               target=itemid),
                                                             item.get_document()))
                     # Circular relation exists?
-                    for target_of_target in target.iter_targets(relation, sort=False):
-                        if target_of_target in item.iter_targets(rev_relation, sort=False):
+                    for target_of_target in target.yield_targets(relation):
+                        if target_of_target in item.yield_targets(rev_relation):
                             errors.append(TraceabilityException(
                                 "Circular relationship found: {} {} {} {} {} {} {}"
                                 .format(itemid, relation, tgt, relation, target_of_target, relation, itemid),
@@ -322,7 +322,7 @@ class TraceableCollection:
         '''
         external_targets_to_item_ids = {}
         for item_id, item in self.items.items():
-            for target in item.iter_targets(relation):
+            for target in item.yield_targets_sorted(relation):
                 if not re.match(regex, target):
                     continue
                 if target not in external_targets_to_item_ids:

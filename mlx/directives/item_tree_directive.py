@@ -51,16 +51,15 @@ class ItemTree(TraceableBaseNode):
         childcontent = nodes.bullet_list()
         childcontent['classes'].append('bonsai')
         # Then recurse one level, and add dependencies
+        item = collection.get_item(item_id)
         for relation in self['type']:
-            tgts = collection.get_item(item_id).iter_targets(relation)
-            for target in tgts:
-                # print('%s has child %s for relation %s' % (item_id, target, relation))
-                if collection.get_item(target).attributes_match(self['filter-attributes']):
+            for target_id in item.yield_targets_sorted(relation):  # TODO replace with natsort(yield_targets)?
+                if collection.get_item(target_id).attributes_match(self['filter-attributes']):
                     try:
-                        childcontent.append(self._generate_bullet_list_tree(app, collection, target))
+                        childcontent.append(self._generate_bullet_list_tree(app, collection, target_id))
                     except RecursionError as err:
                         msg = ("Could not process item-tree {!r} because of a circular relationship: {} {} {}"
-                               .format(self['title'], item_id, relation, target))
+                               .format(self['title'], item_id, relation, target_id))
                         raise TraceabilityException(msg) from err
         bullet_list_item.append(childcontent)
         return bullet_list_item
