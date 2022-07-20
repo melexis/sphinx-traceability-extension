@@ -46,6 +46,12 @@ class TraceableItem(TraceableBaseClass):
         if not other.is_placeholder():
             self._placeholder = False
 
+    @property
+    def all_relations(self):
+        ''' generator: Yields a relationship and the corresponding targets, both naturally sorted. '''
+        for relation, targets in natsorted({**self.explicit_relations, **self.implicit_relations}.items()):
+            yield relation, natsorted(targets)
+
     @staticmethod
     def _add_relations(relations_of_self, relations_of_other):
         ''' Adds all relations from other item to own relations.
