@@ -32,10 +32,15 @@ class ItemMatrix(TraceableBaseNode):
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
         Rows = namedtuple('Rows', "sorted covered uncovered counters")
-        source_ids = collection.get_items(self['source'], attributes=self['filter-attributes'])
+        filters = {x: None for x in ['source', 'target']}
+        if self['filtertarget']:
+            filters['target'] = self['filter-attributes']
+        else:
+            filters['source'] = self['filter-attributes']
+        source_ids = collection.get_items(self['source'], attributes=filters['source'])
         targets_with_ids = []
         for target_regex in self['target']:
-            targets_with_ids.append(collection.get_items(target_regex))
+            targets_with_ids.append(collection.get_items(target_regex, attributes=filters['target']))
         top_node = self.create_top_node(self['title'], hide_title=self['hidetitle'])
         table = nodes.table()
         if self.get('classes'):
@@ -627,6 +632,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
          :nocaptions:
          :onlycaptions:
          :hidetitle:
+         :filtertarget:
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -658,6 +664,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'nocaptions': directives.flag,
         'onlycaptions': directives.flag,
         'hidetitle': directives.flag,
+        'filtertarget': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -743,6 +750,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         self.check_option_presence(node, 'coveredintermediates')
         self.check_option_presence(node, 'stats')
         self.check_option_presence(node, 'hidetitle')
+        self.check_option_presence(node, 'filtertarget')
 
         if node['onlycovered'] and node['onlyuncovered']:
             raise TraceabilityException(
