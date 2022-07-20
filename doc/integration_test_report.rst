@@ -503,7 +503,7 @@ Source and target columns
     :intermediate: ITEST-
     :target: ITEST_REP-
     :hidetarget:
-    :type: validated_by | passes fails skipped
+    :type: validated_by | passed_by failed_by skipped_by
     :sourcetitle: requirements
     :intermediatetitle: integration tests
     :targettitle: integration tests results
