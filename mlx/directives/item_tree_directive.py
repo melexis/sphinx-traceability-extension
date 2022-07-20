@@ -109,13 +109,13 @@ class ItemTreeDirective(TraceableBaseDirective):
         self.process_options(
             item_tree_node,
             {
-                'top':                 {'default': ''},
+                'top':                 {'default': '', 'is_pattern': True},
                 'top_relation_filter': {'default': []},
                 'type':                {'default': []},
             },
         )
 
-        self.add_found_attributes(item_tree_node)
+        self.add_found_attributes(item_tree_node, is_pattern=True)
 
         self.check_relationships(item_tree_node['top_relation_filter'], env)
 

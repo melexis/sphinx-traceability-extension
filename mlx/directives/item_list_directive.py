@@ -69,11 +69,11 @@ class ItemListDirective(TraceableBaseDirective):
         self.process_options(
             item_list_node,
             {
-                'filter': {'default': ''},
+                'filter': {'default': '', 'is_pattern': True},
             },
         )
 
-        self.add_found_attributes(item_list_node)
+        self.add_found_attributes(item_list_node, is_pattern=True)
 
         self.check_option_presence(item_list_node, 'showcontents')
 

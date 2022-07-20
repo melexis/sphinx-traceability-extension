@@ -149,7 +149,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         item = env.traceability_collection.get_item(item_id)
         for relation in self['top_relation_filter']:
             for tgt in item.yield_targets(relation):
-                if re.match(self['top'], tgt):
+                if self['top'].match(tgt):
                     return False
         return True
 

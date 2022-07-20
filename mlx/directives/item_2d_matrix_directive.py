@@ -62,7 +62,7 @@ class Item2DMatrix(TraceableBaseNode):
             collection (TraceableCollection): Collection for which to generate the nodes.
             source_regex (str): Regex for filtering source items.
             target_regex (str): Regex for filtering target items.
-            filter_attributes (dict): Dictionary of attribute-value pairs.
+            filter_attributes (dict): Dictionary of attribute-regex pairs.
             filter_target (bool): True to use attributes to filter target items, False to filter source items.
 
         Returns:
@@ -121,8 +121,8 @@ class Item2DMatrixDirective(TraceableBaseDirective):
         self.process_options(
             node,
             {
-                'target': {'default': ''},
-                'source': {'default': ''},
+                'target': {'default': '', 'is_pattern': True},
+                'source': {'default': '', 'is_pattern': True},
                 'type':   {'default': []},
                 'hit':    {'default': 'x'},
                 'miss':   {'default': ''},
@@ -130,7 +130,7 @@ class Item2DMatrixDirective(TraceableBaseDirective):
         )
         self.check_option_presence(node, 'filtertarget')
 
-        self.add_found_attributes(node)
+        self.add_found_attributes(node, is_pattern=True)
 
         self.check_relationships(node['type'], env)
 

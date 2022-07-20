@@ -10,6 +10,7 @@ class TraceableAttribute(TraceableBaseClass):
     '''
     Storage for an attribute to a traceable documentation item
     '''
+    regex = None
 
     def __init__(self, attrid, value):
         '''
@@ -17,7 +18,7 @@ class TraceableAttribute(TraceableBaseClass):
 
         Args:
             attrid (str): Attribute identification
-            value (str): Regex to which the attribute values should match
+            value (str): Pattern to which the attribute values should match
         '''
         super(TraceableAttribute, self).__init__(attrid)
         self.value = value
@@ -44,11 +45,20 @@ class TraceableAttribute(TraceableBaseClass):
         if other.value is not None:
             self.value = other.value
 
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        self._value = new_value
+        self.regex = re.compile(new_value)
+
     def can_accept(self, value):
         '''
-        Check whether a certain value can be accepted for attribute value
+        Check whether a certain value can be accepted as attribute value
 
         Args:
-            value (str): Value to be checked against validness
+            value (str): Value to check the validity of
         '''
-        return re.match(self.value, value)
+        return self.regex.match(value)

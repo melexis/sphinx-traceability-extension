@@ -324,16 +324,21 @@ class TraceableItem(TraceableBaseClass):
                 retval += '\t\t{target}\n'.format(target=tgtid)
         return retval
 
-    def is_match(self, regex):
+    def is_match(self, pattern):
         ''' Checks if the item matches a given regular expression.
 
         Args:
-            regex (str): Regex to match the given item against.
+            pattern (str/re.Pattern): Regular expression pattern to match the given item against.
 
         Returns:
             bool: True if the given regex matches the item identification.
         '''
-        return re.match(regex, self.get_id())
+        if pattern == '':
+            return True
+        try:
+            return pattern.match(self.id)
+        except AttributeError:
+            return re.match(pattern, self.id)
 
     def attributes_match(self, attributes):
         ''' Checks if item matches a given set of attributes.
@@ -344,11 +349,16 @@ class TraceableItem(TraceableBaseClass):
         Returns:
             bool: True if the given attributes match the item attributes.
         '''
-        for attr, regex in attributes.items():
+        for attr, pattern in attributes.items():
             if attr not in self.attributes:
                 return False
-            if not re.match(regex, self.get_attribute(attr)):
-                return False
+            attribute_value = self.attributes[attr]
+            try:
+                if pattern and not pattern.match(attribute_value):
+                    return False
+            except AttributeError:
+                if not re.match(pattern, attribute_value):
+                    return False
         return True
 
     def is_related(self, relations, target_id):

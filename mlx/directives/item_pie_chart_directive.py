@@ -38,7 +38,7 @@ class ItemPieChart(TraceableBaseNode):
         self.target_relationships = []
         self.relationship_to_string = {}
         self.priorities = OrderedDict()  # default priority order is 'uncovered', 'covered', 'executed'
-        self.nested_target_regex = ''
+        self.nested_target_regex = re.compile('')
         self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
     def perform_replacement(self, app, collection):
@@ -59,14 +59,14 @@ class ItemPieChart(TraceableBaseNode):
         self.relationship_to_string = app.config.traceability_relationship_to_string
         self._set_priorities()
         self._set_nested_target_regex()
-
+        target_regex = re.compile(self['id_set'][1])
         for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
             source_item = self.collection.get_item(source_id)
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder():
                 continue
             self.linked_labels[source_id] = self['label_set'][0].lower()  # default is "uncovered"
-            self.loop_relationships(source_id, source_item, self.source_relationships, self['id_set'][1],
+            self.loop_relationships(source_id, source_item, self.source_relationships, target_regex,
                                     self._match_covered)
 
         data, statistics = self._prepare_labels_and_values(list(self.priorities),
@@ -104,7 +104,7 @@ class ItemPieChart(TraceableBaseNode):
     def _set_nested_target_regex(self):
         """ Sets the ``nested_target_regex`` if a third item ID in the id_set option is given. """
         if len(self['id_set']) > 2:
-            self.nested_target_regex = self['id_set'][2]
+            self.nested_target_regex = re.compile(self['id_set'][2])
 
     def _store_linked_label(self, top_source_id, label):
         """ Stores the label with the given item ID as key in ``linked_labels`` if it has a higher priority.
@@ -130,7 +130,8 @@ class ItemPieChart(TraceableBaseNode):
             top_source_id (str): Item identifier of the top source item.
             source_item (TraceableItem): Traceable item to be used as a source for the relationship search.
             relationships (list): List of relationships to consider.
-            pattern (str): Regexp pattern string to be used on items that have a relationship to the source item.
+            pattern (re.Pattern): Compiled regexp pattern to be used on items that have a relationship to the source
+                item.
             match_function (func): Function to be called when the regular expression hits.
 
         Returns:
@@ -144,7 +145,7 @@ class ItemPieChart(TraceableBaseNode):
                 # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
                 if not target_item or target_item.is_placeholder():
                     continue
-                if re.match(pattern, target_id):
+                if pattern.match(target_id):
                     has_valid_target_item = True
                     is_covered_nested = match_function(top_source_id, target_item, relationship)
                     if top_source_id == source_item.id and is_covered_nested is False:
@@ -174,7 +175,7 @@ class ItemPieChart(TraceableBaseNode):
             match_function = self._match_target_types
         else:
             match_function = self._match_attribute_values
-        if self.nested_target_regex:
+        if self.nested_target_regex.pattern:
             return self.loop_relationships(
                 top_source_id, nested_source_item, self.target_relationships, self.nested_target_regex, match_function)
         return False
