@@ -399,12 +399,12 @@ Traceability from integration tests to requirements
     :type: validates
     :stats:
 
-.. item-matrix:: All integration tests that have a report
+.. item-matrix:: All integration tests that have passed
     :source: ITEST-
     :sourcetitle: integration tests
     :targettitle: requirements
     :type: validates
-    :sourcetype: impacts_on
+    :sourcetype: passed_by
     :stats:
 
 Traceability via intermediate items
