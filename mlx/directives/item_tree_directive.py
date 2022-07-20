@@ -53,7 +53,7 @@ class ItemTree(TraceableBaseNode):
         # Then recurse one level, and add dependencies
         item = collection.get_item(item_id)
         for relation in self['type']:
-            for target_id in item.yield_targets_sorted(relation):  # TODO replace with natsort(yield_targets)?
+            for target_id in item.yield_targets_sorted(relation):
                 if collection.get_item(target_id).attributes_match(self['filter-attributes']):
                     try:
                         childcontent.append(self._generate_bullet_list_tree(app, collection, target_id))
