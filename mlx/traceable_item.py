@@ -391,11 +391,7 @@ class TraceableItem(TraceableBaseClass):
         Returns:
             bool: True if the item has every relationship in given list of list is empty, False otherwise.
         '''
-        own_relations = self.iter_relations(sort=False)
-        for relation in relations:
-            if relation not in own_relations:
-                return False
-        return True
+        return set(relations).issubset(self.iter_relations(sort=False))
 
     def to_dict(self):
         ''' Exports item to a dictionary.
