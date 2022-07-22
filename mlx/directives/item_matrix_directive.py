@@ -388,7 +388,7 @@ class ItemMatrix(TraceableBaseNode):
                 source_to_links_map[source_id] = {}
             source_to_links_map[source_id][intermediate_item] = targets
 
-    def _store_row_with_intermediate(self, linked_items, rows, source, empty_right_cells, covered, app):
+    def _store_row_with_intermediate(self, linked_items, rows, source, empty_right_cells, *args):
         """ Stores a row for a source, linking targets via one or all intermediates
 
         Args:
@@ -396,11 +396,10 @@ class ItemMatrix(TraceableBaseNode):
             rows (Rows): Rows namedtuple object to extend
             source (TraceableItem): Source item
             empty_right_cells (list): List of empty lists to fill with intermediates items, followed by target items
-            app (sphinx.application.Sphinx): Sphinx application object
         """
         right_cells = deepcopy(empty_right_cells)
         self.add_all_targets(right_cells, linked_items)
-        self._store_data(rows, source, right_cells, covered, app)
+        self._store_data(rows, source, right_cells, *args)
 
     def _store_data(self, rows, source, right_cells, covered, app):
         """ Stores the data in one or more rows in the given Rows object.
