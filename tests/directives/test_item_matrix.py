@@ -22,12 +22,14 @@ class TestItemMatrix(TestCase):
         dut['splittargets'] = splittargets
         rows = self.Rows([], [], [], [0, 0])
         left = nodes.entry('left')
-        rights = [nodes.entry('right1'), nodes.entry('right2')]
-        dut._store_data(rows, left, rights, covered, None)
+        target1 = [nodes.entry('right1')]
+        target2 = [nodes.entry('right2')]
+        dut._store_data(rows, left, [target1, target2], covered, None)
 
         self.assertEqual([len(attr) for attr in rows[:3]], expected_lengths)
         my_row = nodes.row()
         my_row += left
-        my_row += rights
+        my_row += target1
+        my_row += target2
         for idx, rows_per_type in enumerate(rows[:3]):  # verify that rows contain the three entries
             self.assertEqual(str(rows_per_type), str([my_row] * expected_lengths[idx]))
