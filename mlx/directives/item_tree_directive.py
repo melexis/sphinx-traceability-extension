@@ -1,10 +1,13 @@
 from docutils import nodes
 from docutils.parsers.rst import directives
+from natsort import natsorted, natsort_keygen
 from sphinx.builders.latex import LaTeXBuilder
 
 from mlx.traceability import report_warning, TraceabilityException
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
+
+natsort_key = natsort_keygen()
 
 
 class ItemTree(TraceableBaseNode):
@@ -17,7 +20,7 @@ class ItemTree(TraceableBaseNode):
             app: Sphinx application object to use.
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
-        top_item_ids = collection.get_items(self['top'], self['filter-attributes'])
+        top_items = collection.get_item_objects(self['top'], self['filter-attributes'])
         top_node = self.create_top_node(self['title'])
         if isinstance(app.builder, LaTeXBuilder):
             p_node = nodes.paragraph()
@@ -26,42 +29,65 @@ class ItemTree(TraceableBaseNode):
         else:
             ul_node = nodes.bullet_list()
             ul_node['classes'].append('bonsai')
-            for id_ in top_item_ids:
-                if self.is_item_top_level(app.env, id_):
-                    ul_node.append(self._generate_bullet_list_tree(app, collection, id_))
+            container = {}
+            for item in top_items:
+                if not item.is_linked(self['top_relation_filter'], self['top']):
+                    container[item.id] = []
+                    self._fill_container(collection, item, container)
+            for item_id in natsorted(container):
+                ul_node.append(self._generate_bullet_list_tree(app, item_id, container[item_id]))
             top_node += ul_node
         self.replace_self(top_node)
 
-    def _generate_bullet_list_tree(self, app, collection, item_id):
+    def _fill_container(self, collection, item, container):
+        """ Fills the container with the ID of every valid target of the given item, recursively
+
+        Args:
+            collection (TraceableCollection): Collection of all traceable items.
+            item (TraceableItem): Traceable item to add if it has at least one valid target item.
+            container (dict): Container to fill.
+
+        Returns:
+            dict: Container: mapping of an item ID to a list of nested containers.
+        """
+        for relation in self['type']:
+            for target_id in item.yield_targets_sorted(relation):
+                target_item = collection.get_item(target_id)
+                if target_item.attributes_match(self['filter-attributes']):
+                    try:
+                        container[item.id].append(self._fill_container(collection, target_item, {target_id: []}))
+                    except RecursionError as err:
+                        msg = ("Could not process item-tree {!r} because of a circular relationship: {} {} {}"
+                               .format(self['title'], item.id, relation, target_id))
+                        raise TraceabilityException(msg) from err
+        container[item.id].sort(key=natsort_key)
+        return container
+
+    def _generate_bullet_list_tree(self, app, item_id, containers):
         '''
         Generates a bullet list tree for the given item ID.
 
         This function returns the given item ID as a bullet item node, makes a child bulleted list, and adds all
         of the matching child items to it.
         '''
-        # First add current item_id
+        # First add current item ID
         bullet_list_item = nodes.list_item()
         bullet_list_item['id'] = nodes.make_id(item_id)
-        p_node = nodes.paragraph()
-        p_node['classes'].append('thumb')
+        arrow_node = nodes.paragraph()
+        arrow_node['classes'].append('thumb')
+        bullet_list_item.append(arrow_node)
+        p_node = self.make_internal_item_ref(app, item_id)
         bullet_list_item.append(p_node)
-        bullet_list_item.append(self.make_internal_item_ref(app, item_id))
         bullet_list_item['classes'].append('has-children')
         bullet_list_item['classes'].append('collapsed')
-        childcontent = nodes.bullet_list()
-        childcontent['classes'].append('bonsai')
+        if containers:
+            childcontent = nodes.bullet_list()
+            childcontent['classes'].append('bonsai')
+            bullet_list_item.append(childcontent)
         # Then recurse one level, and add dependencies
-        item = collection.get_item(item_id)
-        for relation in self['type']:
-            for target_id in item.yield_targets_sorted(relation):
-                if collection.get_item(target_id).attributes_match(self['filter-attributes']):
-                    try:
-                        childcontent.append(self._generate_bullet_list_tree(app, collection, target_id))
-                    except RecursionError as err:
-                        msg = ("Could not process item-tree {!r} because of a circular relationship: {} {} {}"
-                               .format(self['title'], item_id, relation, target_id))
-                        raise TraceabilityException(msg) from err
-        bullet_list_item.append(childcontent)
+        for container in containers:
+            for target_id, nested_containers in container.items():
+                childcontent.append(self._generate_bullet_list_tree(app, target_id, nested_containers))
         return bullet_list_item
 
 

@@ -311,6 +311,25 @@ class TraceableCollection:
             return natsorted(matches, reverse=reverse)
         return matches
 
+    def get_item_objects(self, regex, attributes=None):
+        '''
+        Get all items that match a given regular expression
+
+        Placeholders are excluded
+
+        Args:
+            regex (str): Regex to match the items in this collection against
+            attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against
+
+        Returns:
+            list: An iterable of items matching the given regex.
+        '''
+        for item in self.items.values():
+            if item.is_placeholder():
+                continue
+            if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
+                yield item
+
     def get_external_targets(self, regex, relation):
         ''' Get all external targets for a given external relation with the IDs of their linked internal items
 

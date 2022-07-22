@@ -135,24 +135,6 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         '''
         return relation.startswith('ext_')
 
-    def is_item_top_level(self, env, item_id):
-        '''
-        Checks if item with given item ID is a top level item.
-
-        True, if the item is a top level item:
-
-        - given relation does not exist for given item,
-        - or given relation exists, but targets don't match the 'top' regexp.
-
-        False, otherwise.
-        '''
-        item = env.traceability_collection.get_item(item_id)
-        for relation in self['top_relation_filter']:
-            for tgt in item.yield_targets(relation):
-                if re.match(self['top'], tgt):
-                    return False
-        return True
-
     def make_attribute_ref(self, app, attr_id, value=''):
         """
         Creates a reference node for an attribute, embedded in a paragraph.

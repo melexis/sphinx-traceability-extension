@@ -73,6 +73,22 @@ class TraceableItem(TraceableBaseClass):
         '''
         return self._placeholder
 
+    def is_linked(self, relationships, target_pattern):
+        ''' Checks if item is linked with any of the forwards relationships to a target matching the regex pattern
+
+        Args:
+            relationships (iterable): Forward relationships (str)
+            target_pattern (str/re.Pattern): Regular expression pattern
+
+        Returns:
+            bool: True if linked; False otherwise
+        '''
+        for rel in relationships:
+            for target in self.yield_targets(rel):
+                if re.match(target_pattern, target):
+                    return True
+        return False
+
     def add_target(self, relation, target, implicit=False):
         ''' Adds a relation to another traceable item.
 
