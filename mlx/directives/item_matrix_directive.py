@@ -100,11 +100,12 @@ class ItemMatrix(TraceableBaseNode):
             covered = False
             rights = [[] for _ in range(int(bool(self['intermediate'])) + len(self['target']))]
             if mapping_via_intermediate:
-                if not mapping_via_intermediate[source_id]:
-                    self._store_data(rows, source_item, rights, covered, app)
+                intermediates = mapping_via_intermediate[source_id]
+                if not intermediates:
+                    self._store_data(rows, source_item, rights, False, app)
                     continue
                 covered_intermediates = {intermediate: any(target_set for target_set in target_sets)
-                                         for intermediate, target_sets in mapping_via_intermediate[source_id].items()}
+                                         for intermediate, target_sets in intermediates.items()}
 
                 if self['coveredintermediates']:
                     covered = all(covered_intermediates.values())
@@ -112,16 +113,17 @@ class ItemMatrix(TraceableBaseNode):
                     covered = any(covered_intermediates.values())
 
                 if self['splitintermediates']:
-                    for intermediate, target_sets in mapping_via_intermediate[source_id].items():
+                    for intermediate, target_sets in intermediates.items():
                         self._store_row_with_intermediate({intermediate: target_sets},
-                                                            rows, source_item, rights, covered, app)
-                    duplicate_count_total += len(mapping_via_intermediate[source_id]) - 1
-                    duplicate_count_covered += len(mapping_via_intermediate[source_id]) - 1 if covered else 0
+                                                           rows, source_item, rights, covered, app)
+                    duplicate_count_for_source = len(intermediates) - 1
+                    duplicate_count_total += duplicate_count_for_source
+                    duplicate_count_covered += duplicate_count_for_source if covered else 0
                 else:
                     self._store_row_with_intermediate({intermediate: target_sets for intermediate, target_sets
-                                                        in mapping_via_intermediate[source_id].items()
-                                                        if covered and covered_intermediates[intermediate]},
-                                                        rows, source_item, rights, covered, app)
+                                                       in intermediates.items()
+                                                       if covered and covered_intermediates[intermediate]},
+                                                       rows, source_item, rights, covered, app)
             else:
                 has_external_target = self.add_external_targets(rights, source_item, external_relationships, app)
                 has_internal_target = self.add_internal_targets(rights, source_id, targets_with_ids, relationships,
