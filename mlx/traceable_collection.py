@@ -312,17 +312,16 @@ class TraceableCollection:
         return matches
 
     def get_item_objects(self, regex, attributes=None):
-        '''
-        Get all items that match a given regular expression
+        ''' Get all items that match a given regular expression as TraceableItem instances.
 
-        Placeholders are excluded
+        Placeholders are excluded.
 
         Args:
             regex (str): Regex to match the items in this collection against
             attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against
 
         Returns:
-            list: An iterable of items matching the given regex.
+            generator: An iterable of items matching the given regex.
         '''
         for item in self.items.values():
             if item.is_placeholder():
