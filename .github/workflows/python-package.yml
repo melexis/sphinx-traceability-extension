@@ -1,6 +1,14 @@
 name: Test and deploy on tag
 
-on: push
+on:
+  push:
+    tags:
+    branches:
+    - master
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+  pull_request_target:
+    types: [assigned, opened, synchronize, reopened]
 
 jobs:
   test:
