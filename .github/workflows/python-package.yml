@@ -1,6 +1,11 @@
 name: Test and deploy on tag
 
-on: [push, pull_request]
+on:
+  tags:
+  push:
+    branches:
+    - master
+  pull_request:
 
 jobs:
   test:
