@@ -29,7 +29,7 @@ class TestTraceableItem(TestCase):
         item.set_document(self.docname)
         item.self_test()
         self.assertEqual(self.identification, item.get_id())
-        self.assertFalse(item.is_placeholder())
+        self.assertFalse(item.is_placeholder)
         self.assertIsNotNone(item.get_document())
         self.assertEqual(0, item.get_line_number())
         self.assertIsNone(item.get_node())
@@ -43,7 +43,7 @@ class TestTraceableItem(TestCase):
             item.self_test()
         self.assertEqual(err.exception.get_document(), self.docname)
         self.assertEqual(self.identification, item.get_id())
-        self.assertTrue(item.is_placeholder())
+        self.assertTrue(item.is_placeholder)
         # Verify dict
         self.assertEqual({}, item.to_dict())
 

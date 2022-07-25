@@ -122,8 +122,8 @@ class TestTraceableCollection(TestCase):
         self.assertEqual(1, len(relations))
         self.assertEqual(relations[0], self.identification_src)
         # Assert item are not placeholders
-        self.assertFalse(item1_out.is_placeholder())
-        self.assertFalse(item2_out.is_placeholder())
+        self.assertFalse(item1_out.is_placeholder)
+        self.assertFalse(item2_out.is_placeholder)
 
     def test_add_relation_unknown_source(self):
         # with unknown source item, the generation of a placeholder is expected
@@ -139,7 +139,7 @@ class TestTraceableCollection(TestCase):
         item1 = coll.get_item(self.identification_src)
         self.assertIsNotNone(item1)
         self.assertEqual(self.identification_src, item1.get_id())
-        self.assertTrue(item1.is_placeholder())
+        self.assertTrue(item1.is_placeholder)
         # Assert explicit forward relation is created
         relations = item1.iter_targets(self.fwd_relation, explicit=True, implicit=False)
         self.assertEqual(1, len(relations))
@@ -196,7 +196,7 @@ class TestTraceableCollection(TestCase):
         item2 = coll.get_item(self.identification_tgt)
         self.assertIsNotNone(item2)
         self.assertEqual(self.identification_tgt, item2.get_id())
-        self.assertTrue(item2.is_placeholder())
+        self.assertTrue(item2.is_placeholder)
         # Assert implicit reverse relation is created
         relations = item2.iter_targets(self.rev_relation, explicit=False, implicit=True)
         self.assertEqual(1, len(relations))
@@ -228,7 +228,7 @@ class TestTraceableCollection(TestCase):
         self.assertEqual(0, len(relations))
         # Assert item2 is not a placeholder item
         item2_read = coll.get_item(self.identification_tgt)
-        self.assertFalse(item2.is_placeholder())
+        self.assertFalse(item2.is_placeholder)
         self.assertEqual(item2, item2_read)
         # Assert implicit reverse relation is created
         relations = item2.iter_targets(self.rev_relation, explicit=False, implicit=True)
