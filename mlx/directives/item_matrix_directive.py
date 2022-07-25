@@ -115,7 +115,7 @@ class ItemMatrix(TraceableBaseNode):
                 if self['splitintermediates']:
                     for intermediate, target_sets in intermediates.items():
                         self._store_row_with_intermediate({intermediate: target_sets},
-                                                           rows, source_item, rights, covered, app)
+                                                          rows, source_item, rights, covered, app)
                     duplicate_count_for_source = len(intermediates) - 1
                     duplicate_count_total += duplicate_count_for_source
                     duplicate_count_covered += duplicate_count_for_source if covered else 0
@@ -123,7 +123,7 @@ class ItemMatrix(TraceableBaseNode):
                     self._store_row_with_intermediate({intermediate: target_sets for intermediate, target_sets
                                                        in intermediates.items()
                                                        if covered and covered_intermediates[intermediate]},
-                                                       rows, source_item, rights, covered, app)
+                                                      rows, source_item, rights, covered, app)
             else:
                 has_external_target = self.add_external_targets(rights, source_item, external_relationships, app)
                 has_internal_target = self.add_internal_targets(rights, source_id, targets_with_ids, relationships,
