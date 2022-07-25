@@ -63,7 +63,7 @@ class ItemPieChart(TraceableBaseNode):
         for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
             source_item = self.collection.get_item(source_id)
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
-            if source_item.is_placeholder():
+            if source_item.is_placeholder:
                 continue
             self.linked_labels[source_id] = self['label_set'][0].lower()  # default is "uncovered"
             self.loop_relationships(source_id, source_item, self.source_relationships, target_regex,
@@ -143,7 +143,7 @@ class ItemPieChart(TraceableBaseNode):
             for target_id in source_item.yield_targets(relationship):
                 target_item = self.collection.get_item(target_id)
                 # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
-                if not target_item or target_item.is_placeholder():
+                if not target_item or target_item.is_placeholder:
                     continue
                 if pattern.match(target_id):
                     has_valid_target_item = True
