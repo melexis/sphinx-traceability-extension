@@ -62,7 +62,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         p_node = nodes.paragraph()
 
         # Only create link when target item (or notification item) exists, warn otherwise (in html and terminal)
-        if item_info.is_placeholder():
+        if item_info.is_placeholder:
             notification_item_id = app.config.traceability_notifications.get('undefined-reference')
             notification_item = app.env.traceability_collection.get_item(notification_item_id)
             if not notification_item:
@@ -217,7 +217,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         Args:
             item_info (TraceableItem): TraceableItem object.
         """
-        if item_info.is_placeholder():
+        if item_info.is_placeholder:
             report_warning("Traceability: cannot link to '%s', item is not defined" % item_info.get_id(),
                            self['document'], self['line'])
             return True

@@ -29,7 +29,7 @@ class TraceableItem(TraceableBaseClass):
         self.implicit_relations = {}
         self.attributes = {}
         self.attribute_order = []
-        self._placeholder = placeholder
+        self._is_placeholder = placeholder
 
     def update(self, other):
         ''' Updates item with other object. Stores the sum of both objects.
@@ -43,8 +43,13 @@ class TraceableItem(TraceableBaseClass):
         # Remainder of fields: update if they improve the quality of the item
         for attr in other.attributes:
             self.add_attribute(attr, other.attributes[attr], False)
-        if not other.is_placeholder():
-            self._placeholder = False
+        if not other.is_placeholder:
+            self._is_placeholder = False
+
+    @property
+    def is_placeholder(self):
+        ''' bool: True if this item is a placeholder; False otherwise '''
+        return self._is_placeholder
 
     @property
     def all_relations(self):
@@ -64,14 +69,6 @@ class TraceableItem(TraceableBaseClass):
             if relation not in relations_of_self:
                 relations_of_self[relation] = []
             relations_of_self[relation].extend(relations_of_other[relation])
-
-    def is_placeholder(self):
-        ''' Gets whether the item is a placeholder or not.
-
-        Returns:
-            bool: True if the item is a placeholder, False otherwise.
-        '''
-        return self._placeholder
 
     def is_linked(self, relationships, target_pattern):
         ''' Checks if item is linked with any of the forwards relationships to a target matching the regex pattern
@@ -315,7 +312,7 @@ class TraceableItem(TraceableBaseClass):
             str: String representation of the item.
         '''
         retval = TraceableItem.STRING_TEMPLATE.format(identification=self.get_id())
-        retval += '\tPlaceholder: {placeholder}\n'.format(placeholder=self.is_placeholder())
+        retval += '\tPlaceholder: {placeholder}\n'.format(placeholder=self.is_placeholder)
         for attribute in self.attributes:
             retval += '\tAttribute {attribute} = {value}\n'.format(attribute=attribute,
                                                                    value=self.attributes[attribute])
@@ -400,7 +397,7 @@ class TraceableItem(TraceableBaseClass):
             dict: Dictionary representation of the object.
         '''
         data = {}
-        if not self.is_placeholder():
+        if not self.is_placeholder:
             data = super(TraceableItem, self).to_dict()
             data['attributes'] = self.attributes
             data['targets'] = {}
@@ -420,7 +417,7 @@ class TraceableItem(TraceableBaseClass):
         '''
         super(TraceableItem, self).self_test()
         # Item should not be a placeholder
-        if self.is_placeholder():
+        if self.is_placeholder:
             raise TraceabilityException('item {item} is not defined'.format(item=self.get_id()), self.get_document())
         # Item's attributes should be valid, empty string is allowed
         for attribute in self.iter_attributes():

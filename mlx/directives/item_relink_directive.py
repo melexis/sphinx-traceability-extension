@@ -85,7 +85,7 @@ class ItemRelinkDirective(TraceableBaseDirective):
                 collection.add_relation(item_id, forward_type, target_id)
 
         # Remove source from collection if it is not defined as an item
-        if source.is_placeholder():
+        if source.is_placeholder:
             collection.items.pop(source_id)
 
         # The ItemRelink node has no final representation, so is removed from the tree

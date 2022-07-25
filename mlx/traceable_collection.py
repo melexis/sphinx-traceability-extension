@@ -74,7 +74,7 @@ class TraceableCollection:
         if itemid in self.items:
             olditem = self.items[itemid]
             # ... and it's not a placeholder, log an error
-            if not olditem.is_placeholder():
+            if not olditem.is_placeholder:
                 raise TraceabilityException('duplicating {itemid}'.format(itemid=itemid), item.get_document())
             # ... otherwise, update the item with new content
             else:
@@ -270,12 +270,12 @@ class TraceableCollection:
         if source_id not in self.items:
             return False
         source = self.items[source_id]
-        if not source or source.is_placeholder():
+        if not source or source.is_placeholder:
             return False
         if target_id not in self.items:
             return False
         target = self.items[target_id]
-        if not target or target.is_placeholder():
+        if not target or target.is_placeholder:
             return False
         if not relations:
             relations = self.relations
@@ -300,7 +300,7 @@ class TraceableCollection:
         '''
         matches = []
         for itemid, item in self.items.items():
-            if item.is_placeholder():
+            if item.is_placeholder:
                 continue
             if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
@@ -324,7 +324,7 @@ class TraceableCollection:
             generator: An iterable of items matching the given regex.
         '''
         for item in self.items.values():
-            if item.is_placeholder():
+            if item.is_placeholder:
                 continue
             if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 yield item
