@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 8.8.0 documentation</title>
+  <title>Usage &mdash; Traceability 8.9.0 documentation</title>
   
 
   
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                8.8.0
+                8.9.0
               </div>
             
           
@@ -532,18 +532,22 @@ and is solely used to filter source items - in addition to the <em>source</em> f
 <dt class="field-odd">&lt;&lt;attribute&gt;&gt;</dt>
 <dd class="field-odd"><p><em>optional</em>, <em>single argument</em></p>
 <p>Python-style regular expression used to filter the source items (left column) based on their attributes.
-The attribute value is <strong>not</strong> used to filter target items.
+The attribute value is <strong>not</strong> used to filter target items, unless the optional <code class="docutils literal notranslate"><span class="pre">:filtertarget:</span></code> flag is set.
 When omitted, no filtering is done on the source item attributes.</p>
 </dd>
-<dt class="field-even">sourcecolumns</dt>
-<dd class="field-even"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
+<dt class="field-even">filtertarget</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>When enabled, <code class="docutils literal notranslate"><span class="pre">:&lt;&lt;attribute&gt;&gt;:</span></code> filtering is done on target instead of source items.</p>
+</dd>
+<dt class="field-odd">sourcecolumns</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
 <p>A list of attributes and/or relationships. For each attribute, the value for each source item gets added to the
 matrix in a new column, after the column that contains the source items. For each relationship, a column with
 the items linked to the source items via the relationship gets added and its representation will be used in the
 header. The order of the arguments will be used for the order of the columns.</p>
 </dd>
-<dt class="field-odd">targetcolumns</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
+<dt class="field-even">targetcolumns</dt>
+<dd class="field-even"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
 <p>A list of attributes. For each attribute, the value for each target item gets added to the matrix in a new column,
 after the column that contains the target items. For each relationship, a column with the items linked to
 the target items via the relationship gets added and its representation will be used in the header.
@@ -551,62 +555,62 @@ The order of the arguments will be used for the order of the columns.
 This option cannot be enabled when the <code class="docutils literal notranslate"><span class="pre">:target:</span></code> contains more than one regex.
 Note that this option implies <code class="docutils literal notranslate"><span class="pre">:splittargets:</span></code>.</p>
 </dd>
-<dt class="field-even">splittargets</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-odd">splittargets</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>Split up every target item in a separate cell. By default, they are listed in a single cell per source
 (and per <code class="docutils literal notranslate"><span class="pre">:target:</span></code> regex).</p>
 </dd>
-<dt class="field-odd">hidesource</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-even">hidesource</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
 <p>When enabled, the column with the source items is hidden.</p>
 </dd>
-<dt class="field-even">hidetarget</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-odd">hidetarget</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>When enabled, all columns with target items are hidden.</p>
 </dd>
-<dt class="field-odd">group</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>choice: top/bottom</em></p>
+<dt class="field-even">group</dt>
+<dd class="field-even"><p><em>optional</em>, <em>choice: top/bottom</em></p>
 <p>The <em>group</em> argument can be used to group source items that don’t have any target items. You can explicitly specify
 to have them grouped at the <em>top</em> or <em>bottom</em> of the matrix.</p>
 </dd>
-<dt class="field-even">onlycovered</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-odd">onlycovered</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>By default, all source items are included. By providing the <em>onlycovered</em> flag, only covered items are shown in the
 output. This option takes precedence over the <code class="docutils literal notranslate"><span class="pre">:group:</span></code> option.</p>
 </dd>
-<dt class="field-odd">onlyuncovered</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-even">onlyuncovered</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
 <p>By default, all source items are included. By providing the <em>onlyuncovered</em> flag, only uncovered items are shown in
 the output. This option takes precedence over the <code class="docutils literal notranslate"><span class="pre">:group:</span></code> option.</p>
 </dd>
-<dt class="field-even">nocaptions</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-odd">nocaptions</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>By default, the caption for every item in the table is shown. By providing the <em>nocaptions</em> flag, the
 caption can be omitted. This gives a smaller table, but also less details.</p>
 </dd>
-<dt class="field-odd">onlycaptions</dt>
-<dd class="field-odd"><p>If you only care about the captions and want to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
+<dt class="field-even">onlycaptions</dt>
+<dd class="field-even"><p>If you only care about the captions and want to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
 </dd>
-<dt class="field-even">stats</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-odd">stats</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>By providing the <em>stats</em> flag, some statistics (coverage percentage) are calculated and displayed above the
 matrix. The plugin counts the number of items having at least one target item in (any of) the target-column(s) (=covered or allocated),
 and the number of items having no target in every target-column (=not covered or allocated). And calculates a
 coverage/allocation percentage from these counts.
 When omitted this percentage is not displayed.</p>
 </dd>
-<dt class="field-odd">hidetitle</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<dt class="field-even">hidetitle</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
 <p>By providing the <em>hidetitle</em> flag, the title will be hidden.</p>
 </dd>
-<dt class="field-even">coverage</dt>
-<dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
+<dt class="field-odd">coverage</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>single argument</em></p>
 <p>The <em>coverage</em> option can be used to evaluate the coverage statistics (see description of <code class="docutils literal notranslate"><span class="pre">:stats:</span></code> option).
 It expects an operator followed by a percentage value, e.g. ‘&gt;= 95’, used as the righthand side of the expression.
 The coverage (as a percentage) will be prepended. If the evaluation is false or invalid, a warning will be reported.</p>
 </dd>
-<dt class="field-odd">class</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>single argument</em></p>
+<dt class="field-even">class</dt>
+<dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
 <p>The <em>class</em> attribute can be specified to customize table output, especially useful when rendering to LaTeX.
 Normally the <em>longtable</em> class is used when the number of rows is greater than 30 which allows long tables to
 span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, you can force the use of this environment.</p>
@@ -652,14 +656,14 @@ the source and target items.</p>
 that list sources and the linked targets. The argument will be used as title for this new column.</p>
 </dd>
 <dt class="field-even">coveredintermediates</dt>
-<dd class="field-even"><p><em>optional</em>, <em>flag</em>
-When enabled, all sources that have one or more intermediates that are uncovered will be treated as uncovered even
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>When enabled, all sources that have one or more intermediates that are uncovered will be treated as uncovered even
 when the source has another intermediate that <em>is</em> covered, i.e. <strong>all</strong>
 intermediates must be covered for the linked source to be covered.</p>
 </dd>
 <dt class="field-odd">splitintermediates</dt>
-<dd class="field-odd"><p><em>optional</em>, <em>flag</em>
-When enabled, a row will be created for every intermediate item instead of grouping them together in the same
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<p>When enabled, a row will be created for every intermediate item instead of grouping them together in the same
 row for the source item. This can be useful if you want to group target items per intermediate item <em>instead of
 per source item</em>.</p>
 </dd>
@@ -734,6 +738,8 @@ to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-piechart</span><span class="p">::</span> Test coverage of requirements with report results
     <span class="nc">:id_set:</span> RQT TEST TEST_REP
     <span class="nc">:label_set:</span> uncovered, covered, executed
+    <span class="nc">:sourcetype:</span> validated_by covered_by
+    <span class="nc">:targettype:</span> failed_by passed_by skipped_by
     <span class="nc">:result:</span> error, fail, pass
     <span class="nc">:functional:</span> .*
     <span class="nc">:colors:</span> orange c b darkred #FF0000 g
@@ -755,12 +761,30 @@ item, the first label is used. For those with a relationship, but without a rela
 ID, the second label is used. The third label (optional) is used for items with both relationships covered.
 The labels in the example are the default values.</p>
 </dd>
+<dt class="field-odd">sourcetype</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
+<p>The list of relationships that should be used to filter the target. The relationships considered for
+filtering are from the “Source” items to the “Target” items. In this example, if an RQT-item
+is not linked to a TEST-item with <em>validated_by</em> and/or <em>covered_by</em>, this source item will be labeled as
+<em>uncovered</em>.</p>
+</dd>
+<dt class="field-even">targettype</dt>
+<dd class="field-even"><p><em>optional</em>, <em>multiple arguments (space-separated)</em></p>
+<p>The list of relationships that should be used to filter the nested target, ordered in priority from high to low.
+The relationships considered for
+filtering are from the “Target” items to the “Target-of-target” items. These relationships will also be used to
+label additional slices if the <em>&lt;&lt;attribute&gt;&gt;</em> option that accepts multiple arguments is unused.
+In this example, excluding the <cite>:result:</cite> option, if a TEST-item is not linked to a TEST_REP-item with one or more
+of <em>passed_by/skipped_by/failed_by</em>, the source item will be labeled as <em>covered</em> instead of
+<em>passes</em>, <em>skipped</em> or <em>fails</em>, which are the human readable and reversed
+forms of the arguments for this option.</p>
+</dd>
 <dt class="field-odd">&lt;&lt;attribute&gt;&gt;</dt>
 <dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (comma-separated)</em></p>
 <p>The optional <em>result</em> can be replaced by any configured attribute of the third item ID. Its arguments are possible
 values of this attribute, ordered in priority from high to low. Using this option splits up the slice with the third
-label. In this example an RQT item with multiple TEST items, one with a <em>fail</em> and others a <em>pass</em> as <em>result</em> value
-in the TEST_REP item, will be added to the <em>fail</em> slice of the pie chart.</p>
+label. In this example an RQT-item with multiple TEST-items, one with a <em>fail</em> and others a <em>pass</em> as <em>result</em> value
+in the TEST_REP-item, will be added to the <em>fail</em> slice of the pie chart.</p>
 </dd>
 <dt class="field-even">&lt;&lt;attribute&gt;&gt;</dt>
 <dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
@@ -776,6 +800,11 @@ in the <em>:&lt;&lt;attribute&gt;&gt;:</em> option (<em>:result:</em> in the exa
 <a class="reference external" href="https://matplotlib.org/stable/gallery/color/color_demo.html#color-demo">demo</a>.</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this example, if an RQT-item is linked to one or more TEST-items and at least one TEST-item is not linked
+to a TEST_REP-item, the RQT-item will be labeled as <em>covered</em> instead of <em>executed</em>.</p>
+</div>
 </div>
 <div class="section" id="defining-items-with-a-custom-checklist-attribute-advanced">
 <span id="traceability-checklist"></span><h2><a class="toc-backref" href="#id17">Defining items with a custom checklist attribute (advanced)</a><a class="headerlink" href="#defining-items-with-a-custom-checklist-attribute-advanced" title="Permalink to this heading">¶</a></h2>
