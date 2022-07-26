@@ -4,22 +4,19 @@ from copy import copy, deepcopy
 
 from docutils import nodes
 from docutils.parsers.rst import directives
-from natsort import natsorted
+from natsort import natsorted, natsort_keygen
 
 from mlx.traceability_exception import TraceabilityException, report_warning
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
 from mlx.traceable_item import TraceableItem
 
+natsort_key = natsort_keygen(key=lambda item: getattr(item, 'id', ''))
+
 
 def group_choice(argument):
     """Conversion function for the "group" option."""
     return directives.choice(argument, ('top', 'bottom'))
-
-
-def sort_entries(container):
-    """Returns the TraceableItem entries in the given container in natural order"""
-    return natsorted(container, key=lambda item: getattr(item, 'id', ''))
 
 
 class ItemMatrix(TraceableBaseNode):
@@ -280,8 +277,8 @@ class ItemMatrix(TraceableBaseNode):
                 for target_item in target_items.difference(added_items_per_column[idx]):
                     right_cells[idx].append(target_item)
                     added_items_per_column[idx].add(target_item)
-                right_cells[idx] = sort_entries(right_cells[idx])
-        right_cells[0] = sort_entries(right_cells[0])
+                right_cells[idx].sort(key=natsort_key)
+        right_cells[0].sort(key=natsort_key)
 
     def add_external_targets(self, right_cells, source_item, external_relationships, app):
         """ Adds links to external targets for given source to the list of data per column
@@ -297,7 +294,7 @@ class ItemMatrix(TraceableBaseNode):
         """
         has_external_target = False
         for external_relationship in external_relationships:
-            for target_id in source_item.iter_targets(external_relationship):
+            for target_id in source_item.yield_targets_sorted(external_relationship):
                 ext_item_ref = self.make_external_item_ref(app, target_id, external_relationship)
                 for cell in right_cells:
                     cell.append(ext_item_ref)
@@ -355,13 +352,13 @@ class ItemMatrix(TraceableBaseNode):
 
             potential_source_ids = set()
             for reverse_rel in links_with_relationships[0]:
-                potential_source_ids.update(intermediate_item.iter_targets(reverse_rel, sort=False))
+                potential_source_ids.update(intermediate_item.yield_targets(reverse_rel))
             # apply :source: filter
             potential_source_ids = potential_source_ids.intersection(source_ids)
 
             potential_target_ids = set()
             for forward_rel in links_with_relationships[1]:
-                potential_target_ids.update(intermediate_item.iter_targets(forward_rel, sort=False))
+                potential_target_ids.update(intermediate_item.yield_targets(forward_rel))
             # apply :target: filter
             actual_targets = []
             for target_ids in targets_with_ids:
@@ -445,7 +442,8 @@ class ItemMatrix(TraceableBaseNode):
                     items = target_items
                 elif row_idx < len(target_items):
                     items = [target_items[row_idx]]
-                row += self._create_cell_for_items(sort_entries(items), app)
+                items.sort(key=natsort_key)
+                row += self._create_cell_for_items(items, app)
             # target columns: attributes and extra relations
             target_attribute_cells = []
             if self['targetcolumns']:
@@ -554,7 +552,7 @@ class ItemMatrix(TraceableBaseNode):
         """
         cell = nodes.entry('')
         if not isinstance(item, nodes.paragraph):
-            for linked_item in item.iter_targets(relation):
+            for linked_item in item.yield_targets_sorted(relation):
                 if self.is_relation_external(relation):
                     cell += self.make_external_item_ref(app, linked_item, relation)
                 else:

@@ -62,7 +62,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         p_node = nodes.paragraph()
 
         # Only create link when target item (or notification item) exists, warn otherwise (in html and terminal)
-        if item_info.is_placeholder():
+        if item_info.is_placeholder:
             notification_item_id = app.config.traceability_notifications.get('undefined-reference')
             notification_item = app.env.traceability_collection.get_item(notification_item_id)
             if not notification_item:
@@ -134,25 +134,6 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
             bool: True if relationship is an external one, False otherwise
         '''
         return relation.startswith('ext_')
-
-    def is_item_top_level(self, env, item_id):
-        '''
-        Checks if item with given item ID is a top level item.
-
-        True, if the item is a top level item:
-
-        - given relation does not exist for given item,
-        - or given relation exists, but targets don't match the 'top' regexp.
-
-        False, otherwise.
-        '''
-        item = env.traceability_collection.get_item(item_id)
-        for relation in self['top_relation_filter']:
-            tgts = item.iter_targets(relation, sort=False)
-            for tgt in tgts:
-                if re.match(self['top'], tgt):
-                    return False
-        return True
 
     def make_attribute_ref(self, app, attr_id, value=''):
         """
@@ -236,7 +217,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         Args:
             item_info (TraceableItem): TraceableItem object.
         """
-        if item_info.is_placeholder():
+        if item_info.is_placeholder:
             report_warning("Traceability: cannot link to '%s', item is not defined" % item_info.get_id(),
                            self['document'], self['line'])
             return True

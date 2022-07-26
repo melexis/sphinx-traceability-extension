@@ -3,12 +3,11 @@ name: Test and deploy on tag
 on:
   push:
     tags:
+    - 'v*'
     branches:
     - master
   pull_request:
-    types: [assigned, opened, synchronize, reopened]
-  pull_request_target:
-    types: [assigned, opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
 
 jobs:
   test:
