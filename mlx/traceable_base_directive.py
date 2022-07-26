@@ -47,12 +47,13 @@ class TraceableBaseDirective(Directive, ABC):
 
         Args:
             node (TraceableBaseNode): Node object for which to add found attributes to.
-            is_pattern (bool): True to treat the attribute date as a regular expression pattern and compile it.
+            is_pattern (bool): True to treat the attribute value as a regular expression pattern and compile it if it
+                is not empty.
         """
         node['filter-attributes'] = {}
         for attr in set(TraceableItem.defined_attributes) & set(self.options) - self.conflicting_options:
             value = self.options[attr]
-            if is_pattern:
+            if is_pattern and value != '':
                 value = re.compile(value)
             node['filter-attributes'][attr] = value
 

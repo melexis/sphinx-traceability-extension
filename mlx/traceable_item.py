@@ -82,7 +82,11 @@ class TraceableItem(TraceableBaseClass):
         '''
         for rel in relationships:
             for target in self.yield_targets(rel):
-                if re.match(target_pattern, target):
+                try:
+                    match = target_pattern.match(target)
+                except AttributeError:
+                    match = re.match(target_pattern, target)
+                if match:
                     return True
         return False
 
@@ -365,9 +369,11 @@ class TraceableItem(TraceableBaseClass):
         for attr, pattern in attributes.items():
             if attr not in self.attributes:
                 return False
+            if pattern == '':
+                continue
             attribute_value = self.attributes[attr]
             try:
-                if pattern and not pattern.match(attribute_value):
+                if not pattern.match(attribute_value):
                     return False
             except AttributeError:
                 if not re.match(pattern, attribute_value):
