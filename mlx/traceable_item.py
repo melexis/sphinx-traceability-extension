@@ -29,7 +29,7 @@ class TraceableItem(TraceableBaseClass):
         self.implicit_relations = {}
         self.attributes = {}
         self.attribute_order = []
-        self._placeholder = placeholder
+        self._is_placeholder = placeholder
 
     def update(self, other):
         ''' Updates item with other object. Stores the sum of both objects.
@@ -43,8 +43,19 @@ class TraceableItem(TraceableBaseClass):
         # Remainder of fields: update if they improve the quality of the item
         for attr in other.attributes:
             self.add_attribute(attr, other.attributes[attr], False)
-        if not other.is_placeholder():
-            self._placeholder = False
+        if not other.is_placeholder:
+            self._is_placeholder = False
+
+    @property
+    def is_placeholder(self):
+        ''' bool: True if this item is a placeholder; False otherwise '''
+        return self._is_placeholder
+
+    @property
+    def all_relations(self):
+        ''' generator: Yields a relationship and the corresponding targets, both naturally sorted. '''
+        for relation, targets in natsorted({**self.explicit_relations, **self.implicit_relations}.items()):
+            yield relation, natsorted(targets)
 
     @staticmethod
     def _add_relations(relations_of_self, relations_of_other):
@@ -59,13 +70,21 @@ class TraceableItem(TraceableBaseClass):
                 relations_of_self[relation] = []
             relations_of_self[relation].extend(relations_of_other[relation])
 
-    def is_placeholder(self):
-        ''' Gets whether the item is a placeholder or not.
+    def is_linked(self, relationships, target_pattern):
+        ''' Checks if item is linked with any of the forwards relationships to a target matching the regex pattern
+
+        Args:
+            relationships (iterable): Forward relationships (str)
+            target_pattern (str/re.Pattern): Regular expression pattern
 
         Returns:
-            bool: True if the item is a placeholder, False otherwise.
+            bool: True if linked; False otherwise
         '''
-        return self._placeholder
+        for rel in relationships:
+            for target in self.yield_targets(rel):
+                if re.match(target_pattern, target):
+                    return True
+        return False
 
     def add_target(self, relation, target, implicit=False):
         ''' Adds a relation to another traceable item.
@@ -170,6 +189,28 @@ class TraceableItem(TraceableBaseClass):
             return natsorted(targets)
         return targets
 
+    def yield_targets(self, relation, explicit=True, implicit=True):
+        ''' Gets an iterable of targets to other traceable items.
+
+        Args:
+            relation (str): Name of the relation.
+            explicit (bool): If True, explicitly expressed relations are included.
+            implicit (bool): If True, implicitly expressed relations are included.
+
+        Returns:
+            generator: Targets to other traceable items, unsorted
+        '''
+        if explicit and relation in self.explicit_relations:
+            for target in self.explicit_relations[relation]:
+                yield target
+        if implicit and relation in self.implicit_relations:
+            for target in self.implicit_relations[relation]:
+                yield target
+
+    def yield_targets_sorted(self, *args, **kwargs):
+        gen = self.yield_targets(*args, **kwargs)
+        return natsorted(gen)
+
     def iter_relations(self, sort=True):
         ''' Iterates over available relations: naturally sorted by default.
 
@@ -271,7 +312,7 @@ class TraceableItem(TraceableBaseClass):
             str: String representation of the item.
         '''
         retval = TraceableItem.STRING_TEMPLATE.format(identification=self.get_id())
-        retval += '\tPlaceholder: {placeholder}\n'.format(placeholder=self.is_placeholder())
+        retval += '\tPlaceholder: {placeholder}\n'.format(placeholder=self.is_placeholder)
         for attribute in self.attributes:
             retval += '\tAttribute {attribute} = {value}\n'.format(attribute=attribute,
                                                                    value=self.attributes[attribute])
@@ -334,7 +375,7 @@ class TraceableItem(TraceableBaseClass):
             bool: True if given item is related through the given relationships, False otherwise.
         '''
         for relation in relations:
-            if target_id in self.iter_targets(relation, explicit=True, implicit=True, sort=False):
+            if target_id in self.yield_targets(relation, explicit=True, implicit=True):
                 return True
         return False
 
@@ -347,11 +388,7 @@ class TraceableItem(TraceableBaseClass):
         Returns:
             bool: True if the item has every relationship in given list of list is empty, False otherwise.
         '''
-        own_relations = self.iter_relations(sort=False)
-        for relation in relations:
-            if relation not in own_relations:
-                return False
-        return True
+        return set(relations).issubset(self.iter_relations(sort=False))
 
     def to_dict(self):
         ''' Exports item to a dictionary.
@@ -360,7 +397,7 @@ class TraceableItem(TraceableBaseClass):
             dict: Dictionary representation of the object.
         '''
         data = {}
-        if not self.is_placeholder():
+        if not self.is_placeholder:
             data = super(TraceableItem, self).to_dict()
             data['attributes'] = self.attributes
             data['targets'] = {}
@@ -380,7 +417,7 @@ class TraceableItem(TraceableBaseClass):
         '''
         super(TraceableItem, self).self_test()
         # Item should not be a placeholder
-        if self.is_placeholder():
+        if self.is_placeholder:
             raise TraceabilityException('item {item} is not defined'.format(item=self.get_id()), self.get_document())
         # Item's attributes should be valid, empty string is allowed
         for attribute in self.iter_attributes():

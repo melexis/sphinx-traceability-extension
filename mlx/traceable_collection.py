@@ -74,7 +74,7 @@ class TraceableCollection:
         if itemid in self.items:
             olditem = self.items[itemid]
             # ... and it's not a placeholder, log an error
-            if not olditem.is_placeholder():
+            if not olditem.is_placeholder:
                 raise TraceabilityException('duplicating {itemid}'.format(itemid=itemid), item.get_document())
             # ... otherwise, update the item with new content
             else:
@@ -215,7 +215,7 @@ class TraceableCollection:
                 rev_relation = self.get_reverse_relation(relation)
                 if rev_relation == self.NO_RELATION_STR:
                     continue
-                for tgt in item.iter_targets(relation):
+                for tgt in item.yield_targets(relation):
                     # Target item exists?
                     if tgt not in self.items:
                         errors.append(TraceabilityException("{source} {relation} {target}, but {target} is not known"
@@ -226,15 +226,15 @@ class TraceableCollection:
                         continue
                     # Reverse relation exists?
                     target = self.get_item(tgt)
-                    if itemid not in target.iter_targets(rev_relation, sort=False):
+                    if itemid not in target.yield_targets(rev_relation):
                         errors.append(TraceabilityException("No automatic reverse relation: {source} {relation} "
                                                             "{target}".format(source=tgt,
                                                                               relation=rev_relation,
                                                                               target=itemid),
                                                             item.get_document()))
                     # Circular relation exists?
-                    for target_of_target in target.iter_targets(relation, sort=False):
-                        if target_of_target in item.iter_targets(rev_relation, sort=False):
+                    for target_of_target in target.yield_targets(relation):
+                        if target_of_target in item.yield_targets(rev_relation):
                             errors.append(TraceabilityException(
                                 "Circular relationship found: {} {} {} {} {} {} {}"
                                 .format(itemid, relation, tgt, relation, target_of_target, relation, itemid),
@@ -270,12 +270,12 @@ class TraceableCollection:
         if source_id not in self.items:
             return False
         source = self.items[source_id]
-        if not source or source.is_placeholder():
+        if not source or source.is_placeholder:
             return False
         if target_id not in self.items:
             return False
         target = self.items[target_id]
-        if not target or target.is_placeholder():
+        if not target or target.is_placeholder:
             return False
         if not relations:
             relations = self.relations
@@ -300,7 +300,7 @@ class TraceableCollection:
         '''
         matches = []
         for itemid, item in self.items.items():
-            if item.is_placeholder():
+            if item.is_placeholder:
                 continue
             if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
@@ -310,6 +310,24 @@ class TraceableCollection:
         elif sort:
             return natsorted(matches, reverse=reverse)
         return matches
+
+    def get_item_objects(self, regex, attributes=None):
+        ''' Get all items that match a given regular expression as TraceableItem instances.
+
+        Placeholders are excluded.
+
+        Args:
+            regex (str): Regex to match the items in this collection against
+            attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against
+
+        Returns:
+            generator: An iterable of items matching the given regex.
+        '''
+        for item in self.items.values():
+            if item.is_placeholder:
+                continue
+            if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
+                yield item
 
     def get_external_targets(self, regex, relation):
         ''' Get all external targets for a given external relation with the IDs of their linked internal items
@@ -322,7 +340,7 @@ class TraceableCollection:
         '''
         external_targets_to_item_ids = {}
         for item_id, item in self.items.items():
-            for target in item.iter_targets(relation):
+            for target in item.yield_targets_sorted(relation):
                 if not re.match(regex, target):
                     continue
                 if target not in external_targets_to_item_ids:

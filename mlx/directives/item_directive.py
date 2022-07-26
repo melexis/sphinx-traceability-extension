@@ -25,7 +25,7 @@ class Item(TraceableBaseNode):
         if app.config.traceability_render_attributes_per_item:
             self._process_attributes(dl_node, app)
         if app.config.traceability_render_relationship_per_item:
-            self._process_relationships(collection, dl_node, app)
+            self._process_relationships(dl_node, app)
         if dl_node.children:
             top_node.append(dl_node)
         # Note: content should be displayed during read of RST file, as it contains other RST objects
@@ -56,23 +56,20 @@ class Item(TraceableBaseNode):
                 li_node.append(dd_node)
             dl_node.append(li_node)
 
-    def _process_relationships(self, collection, *args):
-        """ Processes all relationships of the item. All targets get listed per relationship.
+    def _process_relationships(self, *args):
+        """ Processes all relationships of the item in natural order.
 
-        Args:
-            collection (TraceableCollection): Collection of all TraceableItems.
+        All targets get naturally sorted per relationship.
         """
-        for rel in collection.iter_relations():
-            targets = self._item.iter_targets(rel)
-            if targets:
-                self._list_targets_for_relation(rel, targets, *args)
+        for rel, targets in self._item.all_relations:
+            self._list_targets_for_relation(rel, targets, *args)
 
     def _list_targets_for_relation(self, relation, targets, dl_node, app):
         """ Add a list with all targets for a specific relation to the given definition list.
 
         Args:
             relation (str): Name of the relation.
-            targets (list): Naturally sorted list of targets to other traceable item(s).
+            targets (iterable): Naturally sorted iterable of targets to other traceable item(s).
             dl_node (nodes.definition_list): Definition list of the item.
             app: Sphinx's application object to use.
         """

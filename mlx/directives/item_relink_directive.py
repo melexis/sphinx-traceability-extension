@@ -75,7 +75,7 @@ class ItemRelinkDirective(TraceableBaseDirective):
             return []
 
         affected_items = set()
-        for item_id in source.iter_targets(reverse_type, sort=False):
+        for item_id in source.yield_targets(reverse_type):
             affected_items.add(item_id)
         for item_id in affected_items:
             item = collection.get_item(item_id)
@@ -85,7 +85,7 @@ class ItemRelinkDirective(TraceableBaseDirective):
                 collection.add_relation(item_id, forward_type, target_id)
 
         # Remove source from collection if it is not defined as an item
-        if source.is_placeholder():
+        if source.is_placeholder:
             collection.items.pop(source_id)
 
         # The ItemRelink node has no final representation, so is removed from the tree
