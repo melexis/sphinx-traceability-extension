@@ -479,19 +479,20 @@ linked via the ``:intermediate:`` RQT-items:
 :intermediatetitle: *optional*, *single argument*
 
     When given, an extra column that lists the intermediate item(s) per source item will be added between the columns
-    that list sources and the linked targets. The argument will be used as title for this new column.
+    that list sources and the linked targets. The argument will be used as title for this new column. Intermediates will
+    only be listed if both themselves and their source are covered, unless the *splitintermediates* flag is set.
 
 :coveredintermediates: *optional*, *flag*
 
     When enabled, all sources that have one or more intermediates that are uncovered will be treated as uncovered even
-    when the source has another intermediate that *is* covered, i.e. **all**
-    intermediates must be covered for the linked source to be covered.
+    when the source has another intermediate that *is* covered, i.e. **all** intermediates must be covered for the
+    linked source to be covered.
 
 :splitintermediates: *optional*, *flag*
 
-    When enabled, a row will be created for every intermediate item instead of grouping them together in the same
-    row for the source item. This can be useful if you want to group target items per intermediate item *instead of
-    per source item*.
+    When enabled, a row will be created for every intermediate item instead of grouping them together in the same row
+    as the source item. In addition, all intermediates will be listed, regardless of their coverage status. This can be
+    useful if you want to group target items per intermediate item *instead of per source item*.
 
 .. _traceability_usage_2d_matrix:
 
