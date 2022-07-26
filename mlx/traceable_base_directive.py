@@ -52,7 +52,7 @@ class TraceableBaseDirective(Directive, ABC):
         Returns:
             (str) Formatted caption.
         """
-        report_warning("TraceableBaseDirective.get_caption() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseDirective.get_caption() will be removed in version 10.x in favor of "
                        "TraceableBaseDirective.caption", docname=env.docname, lineno=self.lineno)
         return self.caption
 

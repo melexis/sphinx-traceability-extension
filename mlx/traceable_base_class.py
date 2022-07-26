@@ -36,7 +36,7 @@ class TraceableBaseClass:
 
     @property
     def id(self):
-        report_warning("TraceableBaseClass.id will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.id will be removed in version 10.x in favor of "
                        "TraceableBaseClass.identifier", docname=self.docname, lineno=self.lineno)
         return self.identifier
 
@@ -80,7 +80,7 @@ class TraceableBaseClass:
         Returns:
             str: identification
         '''
-        report_warning("TraceableBaseClass.get_id() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.get_id() will be removed in version 10.x in favor of "
                        "TraceableBaseClass.identifier", docname=self.docname, lineno=self.lineno)
         return self.identifier
 
@@ -102,7 +102,7 @@ class TraceableBaseClass:
         Returns:
             str: Short name
         '''
-        report_warning("TraceableBaseClass.get_name() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.get_name() will be removed in version 10.x in favor of "
                        "TraceableBaseClass.name", docname=self.docname, lineno=self.lineno)
         return self.name
 
@@ -124,7 +124,7 @@ class TraceableBaseClass:
         Returns:
             str: Short caption
         '''
-        report_warning("TraceableBaseClass.get_caption() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.get_caption() will be removed in version 10.x in favor of "
                        "TraceableBaseClass.caption", docname=self.docname, lineno=self.lineno)
         return self.caption
 
@@ -158,7 +158,7 @@ class TraceableBaseClass:
         Returns:
             str: Path to docname
         '''
-        report_warning("TraceableBaseClass.get_document() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.get_document() will be removed in version 10.x in favor of "
                        "TraceableBaseClass.docname", docname=self.docname, lineno=self.lineno)
         return self.docname
 
@@ -169,7 +169,7 @@ class TraceableBaseClass:
         Returns:
             int: Line number in given document
         '''
-        report_warning("TraceableBaseClass.get_line_number() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.get_line_number() will be removed in version 10.x in favor of "
                        "TraceableBaseClass.lineno", docname=self.docname, lineno=self.lineno)
         return self.lineno
 
@@ -205,7 +205,7 @@ class TraceableBaseClass:
         Returns:
             str: Content of the item
         '''
-        report_warning("TraceableBaseClass.get_content() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.get_content() will be removed in version 10.x in favor of "
                        "TraceableBaseClass.content", docname=self.docname, lineno=self.lineno)
         return self.content
 
@@ -216,7 +216,7 @@ class TraceableBaseClass:
         Args:
             node (node): Docutils node object
         '''
-        report_warning("TraceableBaseClass.bind_node() will be deprecated in version 10.x: "
+        report_warning("TraceableBaseClass.bind_node() will be removed in version 10.x: "
                        "set TraceableBaseClass.node directly instead", docname=self.docname, lineno=self.lineno)
         self.node = node
 
@@ -227,7 +227,7 @@ class TraceableBaseClass:
         Returns:
             node: Docutils node object
         '''
-        report_warning("TraceableBaseClass.get_node() will be deprecated in version 10.x in favor of "
+        report_warning("TraceableBaseClass.get_node() will be removed in version 10.x in favor of "
                        "TraceableBaseClass.node", docname=self.docname, lineno=self.lineno)
         return self.node
 
