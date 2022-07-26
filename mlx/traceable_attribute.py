@@ -18,7 +18,7 @@ class TraceableAttribute(TraceableBaseClass):
 
         Args:
             attrid (str): Attribute identification
-            value (str): Pattern to which the attribute values should match
+            value (str): Pattern string to which the attribute values should match
         '''
         super(TraceableAttribute, self).__init__(attrid)
         self.value = value
