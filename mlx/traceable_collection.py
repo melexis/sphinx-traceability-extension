@@ -69,18 +69,17 @@ class TraceableCollection:
         Args:
             item (TraceableItem): Traceable item to add
         '''
-        itemid = item.get_id()
         # If the item already exists ...
-        if itemid in self.items:
-            olditem = self.items[itemid]
+        if item.identifier in self.items:
+            olditem = self.items[item.identifier]
             # ... and it's not a placeholder, log an error
             if not olditem.is_placeholder:
-                raise TraceabilityException('duplicating {itemid}'.format(itemid=itemid), item.get_document())
+                raise TraceabilityException('duplicating {itemid}'.format(itemid=item.identifier), item.docname)
             # ... otherwise, update the item with new content
             else:
                 item.update(olditem)
         # add it
-        self.items[item.get_id()] = item
+        self.items[item.identifier] = item
 
     def get_item(self, itemid):
         '''
@@ -131,7 +130,7 @@ class TraceableCollection:
         source = self.items[source_id]
         # Error if relation is unknown
         if relation not in self.relations:
-            raise TraceabilityException('Relation {name} not known'.format(name=relation), source.get_document())
+            raise TraceabilityException('Relation {name} not known'.format(name=relation), source.docname)
         # Add forward relation
         source.add_target(relation, target_id)
         # When reverse relation exists, continue to create/adapt target-item
@@ -199,10 +198,10 @@ class TraceableCollection:
         for itemid in self.items:
             item = self.get_item(itemid)
             # Only for relevant items, filtered on document name
-            if docname is not None and item.get_document() != docname and item.get_document() is not None:
+            if docname is not None and item.docname != docname and item.docname is not None:
                 continue
             # Check if docname of notification item will be used
-            if item.get_document() is None and notification_item:
+            if item.docname is None and notification_item:
                 continue
             # On item level
             try:
@@ -222,7 +221,7 @@ class TraceableCollection:
                                                             .format(source=itemid,
                                                                     relation=relation,
                                                                     target=tgt),
-                                                            item.get_document()))
+                                                            item.docname))
                         continue
                     # Reverse relation exists?
                     target = self.get_item(tgt)
@@ -231,14 +230,14 @@ class TraceableCollection:
                                                             "{target}".format(source=tgt,
                                                                               relation=rev_relation,
                                                                               target=itemid),
-                                                            item.get_document()))
+                                                            item.docname))
                     # Circular relation exists?
                     for target_of_target in target.yield_targets(relation):
                         if target_of_target in item.yield_targets(rev_relation):
                             errors.append(TraceabilityException(
                                 "Circular relationship found: {} {} {} {} {} {} {}"
                                 .format(itemid, relation, tgt, relation, target_of_target, relation, itemid),
-                                item.get_document()))
+                                item.docname))
         if errors:
             raise MultipleTraceabilityExceptions(errors)
 

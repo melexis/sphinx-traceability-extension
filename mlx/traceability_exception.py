@@ -30,8 +30,15 @@ class MultipleTraceabilityExceptions(Exception):
         '''
         self.errors = errors
 
+    def __iter__(self):
+        '''Iterate over multiple exceptions'''
+        yield from self.errors
+
     def iter(self):
         '''Iterator for multiple exceptions'''
+        report_warning("MultipleTraceabilityExceptions.iter() will be deprecated in version 10.x: "
+                       "you can now loop over an instance of this class directly",
+                       docname=env.docname, lineno=self.lineno)
         return self.errors
 
 
@@ -57,4 +64,6 @@ class TraceabilityException(Exception):
         Returns:
             str: The name of the document in which the error occurred
         '''
+        report_warning("TraceabilityException.get_document() will be deprecated in version 10.x in favor of "
+                       "TraceabilityException.docname", docname=env.docname, lineno=self.lineno)
         return self.docname

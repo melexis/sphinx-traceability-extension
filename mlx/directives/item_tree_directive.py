@@ -32,7 +32,7 @@ class ItemTree(TraceableBaseNode):
             container = {}
             for item in top_items:
                 if not item.is_linked(self['top_relation_filter'], self['top']):
-                    container[item.id] = []
+                    container[item.identifier] = []
                     self._fill_container(collection, item, container)
             for item_id in natsorted(container):
                 ul_node.append(self._generate_bullet_list_tree(app, item_id, container[item_id]))
@@ -55,12 +55,12 @@ class ItemTree(TraceableBaseNode):
                 target_item = collection.get_item(target_id)
                 if target_item.attributes_match(self['filter-attributes']):
                     try:
-                        container[item.id].append(self._fill_container(collection, target_item, {target_id: []}))
+                        container[item.identifier].append(self._fill_container(collection, target_item, {target_id: []}))
                     except RecursionError as err:
                         msg = ("Could not process item-tree {!r} because of a circular relationship: {} {} {}"
-                               .format(self['title'], item.id, relation, target_id))
+                               .format(self['title'], item.identifier, relation, target_id))
                         raise TraceabilityException(msg) from err
-        container[item.id].sort(key=natsort_key)
+        container[item.identifier].sort(key=natsort_key)
         return container
 
     def _generate_bullet_list_tree(self, app, item_id, containers):

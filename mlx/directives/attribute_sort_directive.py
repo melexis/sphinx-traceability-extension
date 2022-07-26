@@ -20,7 +20,7 @@ class AttributeSort(TraceableBaseNode):
         ignored_items = collection.add_attribute_sorting_rule(self['filter'], self['sort'])
         for item in ignored_items:
             report_warning("The sorting of the attributes of item {} has already been configured by {}; ignoring {}"
-                           .format(item.id, item.attribute_order, self['sort']), self['document'], self['line'])
+                           .format(item.identifier, item.attribute_order, self['sort']), self['document'], self['line'])
         self.replace_self([])
 
 

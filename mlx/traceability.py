@@ -206,10 +206,10 @@ def perform_consistency_check(app, doctree):
     try:
         env.traceability_collection.self_test(app.config.traceability_notifications.get('undefined-reference'))
     except TraceabilityException as err:
-        report_warning(str(err), err.get_document())
-    except MultipleTraceabilityExceptions as errs:
-        for err in errs.iter():
-            report_warning(str(err), err.get_document())
+        report_warning(str(err), err.docname)
+    except MultipleTraceabilityExceptions as errors:
+        for err in errors:
+            report_warning(str(err), err.docname)
 
     if app.config.traceability_json_export_path:
         fname = app.config.traceability_json_export_path
@@ -380,7 +380,7 @@ def define_attribute(attr, app):
     """ Defines a new attribute. """
     attrobject = TraceableAttribute(attr, app.config.traceability_attributes[attr])
     if attr in app.config.traceability_attribute_to_string:
-        attrobject.set_name(app.config.traceability_attribute_to_string[attr])
+        attrobject.name = app.config.traceability_attribute_to_string[attr]
     else:
         report_warning('Traceability: attribute {attr} cannot be translated to string'.format(attr=attr))
     TraceableItem.define_attribute(attrobject)

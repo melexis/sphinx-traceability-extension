@@ -146,20 +146,20 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
 
         if attr_id in TraceableItem.defined_attributes:
             attr_info = TraceableItem.defined_attributes[attr_id]
-            attr_name = attr_info.get_name()
+            attr_name = attr_info.name
             if attr_info.docname:
                 newnode = nodes.reference('', '')
                 innernode = nodes.emphasis(attr_name + value, attr_name + value)
                 newnode['refdocname'] = attr_info.docname
                 try:
                     newnode['refuri'] = app.builder.get_relative_uri(self['document'], attr_info.docname)
-                    newnode['refuri'] += '#' + attr_info.get_name()
+                    newnode['refuri'] += '#' + attr_name
                 except NoUri:
                     # ignore if no URI can be determined, e.g. for LaTeX output :(
                     pass
                 newnode.append(innernode)
             else:
-                newnode = nodes.Text('{attr}{value}'.format(attr=attr_info.get_name(), value=value))
+                newnode = nodes.Text('{attr}{value}'.format(attr=attr_name, value=value))
         else:
             newnode = nodes.Text('{attr}{value}'.format(attr=attr_id, value=value))
         p_node += newnode
@@ -196,15 +196,15 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
             nodes.inline/None: Inline node containing the item's caption or ID to be shown on hover, or None to not
                 show anything on hover.
         """
-        display_text = item_info.id
+        display_text = item_info.identifier
         hidden_node = None
         if item_info and item_info.caption:
             if self.get('onlycaptions'):
                 display_text = item_info.caption
-                hidden_node = nodes.inline('', item_info.id)
+                hidden_node = nodes.inline('', item_info.identifier)
                 hidden_node['classes'].append('popup_caption')
             elif not self.get('nocaptions'):
-                display_text = '{0.id} : {0.caption}'.format(item_info)
+                display_text = '{0.identifier} : {0.caption}'.format(item_info)
             else:
                 hidden_node = nodes.inline('', item_info.caption)
                 hidden_node['classes'].append('popup_caption')
@@ -218,7 +218,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
             item_info (TraceableItem): TraceableItem object.
         """
         if item_info.is_placeholder:
-            report_warning("Traceability: cannot link to '%s', item is not defined" % item_info.get_id(),
+            report_warning("Traceability: cannot link to '%s', item is not defined" % item_info.identifier,
                            self['document'], self['line'])
             return True
         return False
