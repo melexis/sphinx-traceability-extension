@@ -82,7 +82,7 @@ class TraceableBaseClass:
         '''
         report_warning("TraceableBaseClass.get_id() will be deprecated in version 10.x in favor of "
                        "TraceableBaseClass.identifier", docname=self.docname, lineno=self.lineno)
-        return self.id
+        return self.identifier
 
     def set_name(self, name):
         '''
