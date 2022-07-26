@@ -24,7 +24,7 @@ class TraceableAttribute(TraceableBaseClass):
         self.value = value
 
     @staticmethod
-    def to_id(id):
+    def to_id(identifier):
         '''
         Convert a given identification to a storable id
 
@@ -33,7 +33,7 @@ class TraceableAttribute(TraceableBaseClass):
         Returns:
             str - Converted storable identification
         '''
-        return id.lower()
+        return identifier.lower()
 
     def update(self, other):
         '''

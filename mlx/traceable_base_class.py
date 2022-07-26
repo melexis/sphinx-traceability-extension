@@ -24,7 +24,7 @@ class TraceableBaseClass:
             name (str): Base class object identification
             state: The state of the state machine, which controls the parsing
         '''
-        self.identifier = name
+        self.identifier = self.to_id(name)
         self.name = name
         self.caption = None
         self.docname = None
@@ -41,7 +41,7 @@ class TraceableBaseClass:
         return self.identifier
 
     @staticmethod
-    def to_id(id):
+    def to_id(identifier):
         '''
         Convert a given identification to a storable id
 
@@ -50,7 +50,7 @@ class TraceableBaseClass:
         Returns:
             str - Converted storable identification
         '''
-        return self.identifier
+        return identifier
 
     def update(self, other):
         '''
