@@ -280,14 +280,14 @@ class TraceableCollection:
             relations = self.relations
         return self.items[source_id].is_related(relations, target_id)
 
-    def get_items(self, pattern, attributes=None, sortattributes=None, reverse=False, sort=True):
+    def get_items(self, regex, attributes=None, sortattributes=None, reverse=False, sort=True):
         '''
         Get all items that match a given regular expression
 
         Placeholders are excluded
 
         Args:
-            pattern (str/re.Pattern): Regex pattern to match the items in this collection against
+            regex (str/re.Pattern): Regex pattern or object to match the items in this collection against
             attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against
             sortattributes (list): List of attributes on which to alphabetically sort the items
             reverse (bool): True for reverse sorting
@@ -301,7 +301,7 @@ class TraceableCollection:
         for itemid, item in self.items.items():
             if item.is_placeholder:
                 continue
-            if item.is_match(pattern) and (not attributes or item.attributes_match(attributes)):
+            if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
         if sortattributes:
             return sorted(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
@@ -328,11 +328,11 @@ class TraceableCollection:
             if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 yield item
 
-    def get_external_targets(self, pattern, relation):
+    def get_external_targets(self, regex, relation):
         ''' Get all external targets for a given external relation with the IDs of their linked internal items
 
         Args:
-            pattern (str/re.Pattern): Regex pattern to match the external target
+            regex (str/re.Pattern): Regex pattern or object to match the external target
             relation (str): External relation
         Returns:
             dict: Dictionary mapping external targets to the IDs of their linked internal items
@@ -341,9 +341,9 @@ class TraceableCollection:
         for item_id, item in self.items.items():
             for target in item.yield_targets_sorted(relation):
                 try:
-                    match = pattern.match(target)
+                    match = regex.match(target)
                 except AttributeError:
-                    match = re.match(pattern, target)
+                    match = re.match(regex, target)
                 if not match:
                     continue
                 if target not in external_targets_to_item_ids:

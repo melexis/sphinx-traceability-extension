@@ -120,23 +120,23 @@ class ItemPieChart(TraceableBaseNode):
             if latest_priority > stored_priority:
                 self.linked_labels[top_source_id] = label
 
-    def loop_relationships(self, top_source_id, source_item, relationships, pattern, match_function):
+    def loop_relationships(self, top_source_id, source_item, relationships, regex, match_function):
         """
         Loops through the relationships and for each relationship it loops through the matches that have been
-        found for the source item. If the matched item is not a placeholder and matches to the specified pattern, the
-        specified function is called with the matched item as a parameter.
+        found for the source item. If the matched item is not a placeholder and matches to the specified regular
+        expression object, the specified function is called with the matched item as a parameter.
 
         Args:
             top_source_id (str): Item identifier of the top source item.
             source_item (TraceableItem): Traceable item to be used as a source for the relationship search.
             relationships (list): List of relationships to consider.
-            pattern (re.Pattern): Compiled regexp pattern to be used on items that have a relationship to the source
+            regex (re.Pattern): Compiled regex pattern to be used on items that have a relationship to the source
                 item.
             match_function (func): Function to be called when the regular expression hits.
 
         Returns:
             bool: True when the source item has at least one item linked to it via one of the given relationships
-                and its ID was a match for the given pattern; False otherwise
+                and its ID was a match for the given regex; False otherwise
         """
         has_valid_target_item = False
         for relationship in relationships:
@@ -145,7 +145,7 @@ class ItemPieChart(TraceableBaseNode):
                 # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
                 if not target_item or target_item.is_placeholder:
                     continue
-                if pattern.match(target_id):
+                if regex.match(target_id):
                     has_valid_target_item = True
                     is_covered_nested = match_function(top_source_id, target_item, relationship)
                     if top_source_id == source_item.identifier and is_covered_nested is False:

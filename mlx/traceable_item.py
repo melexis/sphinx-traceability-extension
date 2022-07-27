@@ -70,12 +70,12 @@ class TraceableItem(TraceableBaseClass):
                 relations_of_self[relation] = []
             relations_of_self[relation].extend(relations_of_other[relation])
 
-    def is_linked(self, relationships, target_pattern):
+    def is_linked(self, relationships, target_regex):
         ''' Checks if item is linked with any of the forwards relationships to a target matching the regex pattern
 
         Args:
             relationships (iterable): Forward relationships (str)
-            target_pattern (str/re.Pattern): Regular expression pattern
+            target_regex (str/re.Pattern): Regular expression pattern or object
 
         Returns:
             bool: True if linked; False otherwise
@@ -83,9 +83,9 @@ class TraceableItem(TraceableBaseClass):
         for rel in relationships:
             for target in self.yield_targets(rel):
                 try:
-                    match = target_pattern.match(target)
+                    match = target_regex.match(target)
                 except AttributeError:
-                    match = re.match(target_pattern, target)
+                    match = re.match(target_regex, target)
                 if match:
                     return True
         return False
@@ -341,21 +341,21 @@ class TraceableItem(TraceableBaseClass):
                 retval += '\t\t{target}\n'.format(target=tgtid)
         return retval
 
-    def is_match(self, pattern):
+    def is_match(self, regex):
         ''' Checks if the item matches a given regular expression.
 
         Args:
-            pattern (str/re.Pattern): Regular expression pattern to match the given item against.
+            regex (str/re.Pattern): Regular expression pattern or object to match the given item against.
 
         Returns:
             bool: True if the given regex matches the item identification.
         '''
-        if pattern == '':
+        if regex == '':
             return True
         try:
-            return pattern.match(self.identifier)
+            return regex.match(self.identifier)
         except AttributeError:
-            return re.match(pattern, self.identifier)
+            return re.match(regex, self.identifier)
 
     def attributes_match(self, attributes):
         ''' Checks if item matches a given set of attributes.
@@ -366,17 +366,17 @@ class TraceableItem(TraceableBaseClass):
         Returns:
             bool: True if the given attributes match the item attributes.
         '''
-        for attr, pattern in attributes.items():
+        for attr, regex in attributes.items():
             if attr not in self.attributes:
                 return False
-            if pattern == '':
+            if regex == '':
                 continue
             attribute_value = self.attributes[attr]
             try:
-                if not pattern.match(attribute_value):
+                if not regex.match(attribute_value):
                     return False
             except AttributeError:
-                if not re.match(pattern, attribute_value):
+                if not re.match(regex, attribute_value):
                     return False
         return True
 
