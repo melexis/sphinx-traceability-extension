@@ -56,7 +56,7 @@ class AttributeSortDirective(TraceableBaseDirective):
             node,
             {
                 'sort':   {'default': []},
-                'filter': {'default': r"\S+"},
+                'filter': {'default': r"\S+", 'is_pattern': True},
             },
         )
         return [node]

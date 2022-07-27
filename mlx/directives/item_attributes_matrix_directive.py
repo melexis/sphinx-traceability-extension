@@ -148,11 +148,11 @@ class ItemAttributesMatrixDirective(TraceableBaseDirective):
         self.process_options(
             node,
             {
-                'filter': {'default': ''},
+                'filter': {'default': '', 'is_pattern': True},
             },
         )
 
-        self.add_found_attributes(node)
+        self.add_found_attributes(node, is_pattern=True)
 
         # Process ``attributes`` option, given as a string with attributes
         # separated by space. It is converted to a list.

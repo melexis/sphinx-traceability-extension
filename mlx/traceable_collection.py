@@ -288,7 +288,7 @@ class TraceableCollection:
         Placeholders are excluded
 
         Args:
-            regex (str): Regex to match the items in this collection against
+            regex (str/re.Pattern): Regex pattern or object to match the items in this collection against
             attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against
             sortattributes (list): List of attributes on which to alphabetically sort the items
             reverse (bool): True for reverse sorting
@@ -333,7 +333,7 @@ class TraceableCollection:
         ''' Get all external targets for a given external relation with the IDs of their linked internal items
 
         Args:
-            regex (str): Regex to match the external target
+            regex (str/re.Pattern): Regex pattern or object to match the external target
             relation (str): External relation
         Returns:
             dict: Dictionary mapping external targets to the IDs of their linked internal items
@@ -341,7 +341,11 @@ class TraceableCollection:
         external_targets_to_item_ids = {}
         for item_id, item in self.items.items():
             for target in item.yield_targets_sorted(relation):
-                if not re.match(regex, target):
+                try:
+                    match = regex.match(target)
+                except AttributeError:
+                    match = re.match(regex, target)
+                if not match:
                     continue
                 if target not in external_targets_to_item_ids:
                     external_targets_to_item_ids[target] = [item_id]

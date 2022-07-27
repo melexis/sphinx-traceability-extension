@@ -70,19 +70,23 @@ class TraceableItem(TraceableBaseClass):
                 relations_of_self[relation] = []
             relations_of_self[relation].extend(relations_of_other[relation])
 
-    def is_linked(self, relationships, target_pattern):
+    def is_linked(self, relationships, target_regex):
         ''' Checks if item is linked with any of the forwards relationships to a target matching the regex pattern
 
         Args:
             relationships (iterable): Forward relationships (str)
-            target_pattern (str/re.Pattern): Regular expression pattern
+            target_regex (str/re.Pattern): Regular expression pattern or object
 
         Returns:
             bool: True if linked; False otherwise
         '''
         for rel in relationships:
             for target in self.yield_targets(rel):
-                if re.match(target_pattern, target):
+                try:
+                    match = target_regex.match(target)
+                except AttributeError:
+                    match = re.match(target_regex, target)
+                if match:
                     return True
         return False
 
@@ -341,12 +345,17 @@ class TraceableItem(TraceableBaseClass):
         ''' Checks if the item matches a given regular expression.
 
         Args:
-            regex (str): Regex to match the given item against.
+            regex (str/re.Pattern): Regular expression pattern or object to match the given item against.
 
         Returns:
             bool: True if the given regex matches the item identification.
         '''
-        return re.match(regex, self.get_id())
+        if regex == '':
+            return True
+        try:
+            return regex.match(self.id)
+        except AttributeError:
+            return re.match(regex, self.id)
 
     def attributes_match(self, attributes):
         ''' Checks if item matches a given set of attributes.
@@ -360,8 +369,15 @@ class TraceableItem(TraceableBaseClass):
         for attr, regex in attributes.items():
             if attr not in self.attributes:
                 return False
-            if not re.match(regex, self.get_attribute(attr)):
-                return False
+            if regex == '':
+                continue
+            attribute_value = self.attributes[attr]
+            try:
+                if not regex.match(attribute_value):
+                    return False
+            except AttributeError:
+                if not re.match(regex, attribute_value):
+                    return False
         return True
 
     def is_related(self, relations, target_id):
