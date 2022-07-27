@@ -53,7 +53,7 @@ class TraceableBaseDirective(Directive, ABC):
             (str) Formatted caption.
         """
         report_warning("TraceableBaseDirective.get_caption() will be removed in version 10.x in favor of "
-                       "TraceableBaseDirective.caption", docname=env.docname, lineno=self.lineno)
+                       "TraceableBaseDirective.caption")
         return self.caption
 
     def add_found_attributes(self, node, is_pattern=False):

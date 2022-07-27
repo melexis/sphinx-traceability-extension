@@ -37,8 +37,7 @@ class MultipleTraceabilityExceptions(Exception):
     def iter(self):
         '''Iterator for multiple exceptions'''
         report_warning("MultipleTraceabilityExceptions.iter() will be removed in version 10.x: "
-                       "you can now loop over an instance of this class directly",
-                       docname=env.docname, lineno=self.lineno)
+                       "you can now loop over an instance of this class directly")
         return self.errors
 
 
@@ -65,5 +64,5 @@ class TraceabilityException(Exception):
             str: The name of the document in which the error occurred
         '''
         report_warning("TraceabilityException.get_document() will be removed in version 10.x in favor of "
-                       "TraceabilityException.docname", docname=env.docname, lineno=self.lineno)
+                       "TraceabilityException.docname", docname=self.docname)
         return self.docname

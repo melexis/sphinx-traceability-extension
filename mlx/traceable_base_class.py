@@ -147,9 +147,9 @@ class TraceableBaseClass:
             docname (str): Path to docname
             lineno (int): Line number in given document
         '''
-        report_warning("TraceableBaseClass.set_document() will be depracated in version 10.x: "
-                       "use TraceableBaseClass.set_location() instead", docname=self.docname, lineno=self.lineno)
         self.set_location(docname, lineno=lineno)
+        report_warning("TraceableBaseClass.set_document() will be removed in version 10.x: "
+                       "use TraceableBaseClass.set_location() instead", docname=self.docname, lineno=self.lineno)
 
     def get_document(self):
         '''
