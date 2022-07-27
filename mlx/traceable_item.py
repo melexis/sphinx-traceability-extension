@@ -30,6 +30,7 @@ class TraceableItem(TraceableBaseClass):
         self.attributes = {}
         self.attribute_order = []
         self._is_placeholder = placeholder
+        self.ref_nodes = {}
 
     def update(self, other):
         ''' Updates item with other object. Stores the sum of both objects.

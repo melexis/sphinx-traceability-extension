@@ -57,8 +57,14 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         """
         env = app.builder.env
         item_info = env.traceability_collection.get_item(item_id)
+        display_option = 'default'
+        for option in ('onlycaptions', 'nocaptions', 'default'):
+            if self.get(option):
+                display_option = option
+                if option in item_info.ref_nodes:
+                    return item_info.ref_nodes[option]
+                break
         notification_item = None
-
         p_node = nodes.paragraph()
 
         # Only create link when target item (or notification item) exists, warn otherwise (in html and terminal)
@@ -99,6 +105,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         newnode.append(innernode)
         p_node += newnode
 
+        item_info.ref_nodes[display_option] = p_node
         return p_node
 
     @staticmethod
