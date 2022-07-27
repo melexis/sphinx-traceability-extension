@@ -251,9 +251,8 @@ class TraceableItem(TraceableBaseClass):
             overwrite (bool): Overwrite existing attribute value, if any.
         '''
         if not attr or value is None or attr not in TraceableItem.defined_attributes:
-            raise TraceabilityException('item {item} has invalid attribute ({attr}={value})'.format(item=self.identifier,
-                                                                                                    attr=attr,
-                                                                                                    value=value),
+            raise TraceabilityException('item {item} has invalid attribute ({attr}={value})'
+                                        .format(item=self.identifier, attr=attr, value=value),
                                         self.docname)
         if not TraceableItem.defined_attributes[attr].can_accept(value):
             raise TraceabilityException('item {item} attribute does not match defined attributes ({attr}={value})'
@@ -269,8 +268,8 @@ class TraceableItem(TraceableBaseClass):
             attr (str): Name of the attribute.
         '''
         if not attr:
-            raise TraceabilityException('item {item}: cannot remove invalid attribute {attr}'.format(item=self.identifier,
-                                                                                                     attr=attr),
+            raise TraceabilityException('item {item}: cannot remove invalid attribute {attr}'
+                                        .format(item=self.identifier, attr=attr),
                                         self.docname)
         del self.attributes[attr]
 
