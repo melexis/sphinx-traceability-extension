@@ -47,7 +47,7 @@ def generate_color_css(app, hyperlink_colors):
 
     Args:
         app: Sphinx application object to use.
-        hyperlink_colors: Dictionary with regex strings as keys and list/tuple of strings as values.
+        hyperlink_colors (dict): Dictionary with regex strings as keys and list/tuple of strings as values.
     """
     class_names = app.config.traceability_class_names
     with open(path.join(path.dirname(__file__), 'assets', 'hyperlink_colors.css'), 'w') as css_file:
