@@ -1,5 +1,5 @@
 import re
-from collections import OrderedDict, namedtuple
+from collections import namedtuple
 from copy import copy, deepcopy
 
 from docutils import nodes
@@ -133,7 +133,7 @@ class ItemMatrix(TraceableBaseNode):
             for ext_rel in external_relationships:
                 external_targets = collection.get_external_targets(self['source'], ext_rel)
                 # natural sorting on source
-                for ext_source, target_ids in OrderedDict(natsorted(external_targets.items())).items():
+                for ext_source, target_ids in natsorted(external_targets.items()):
                     covered = False
                     source_link = self.make_external_item_ref(app, ext_source, ext_rel)
                     rights = [[] for _ in range(len(self['target']))]

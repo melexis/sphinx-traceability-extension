@@ -340,11 +340,8 @@ class TraceableCollection:
         '''
         external_targets_to_item_ids = {}
         for item_id, item in self.items.items():
-            for target in item.yield_targets_sorted(relation):
+            for target in item.yield_targets(relation):
                 if not re.match(regex, target):
                     continue
-                if target not in external_targets_to_item_ids:
-                    external_targets_to_item_ids[target] = [item_id]
-                else:
-                    external_targets_to_item_ids[target].append(item_id)
+                external_targets_to_item_ids.setdefault(target, []).append(item_id)
         return external_targets_to_item_ids

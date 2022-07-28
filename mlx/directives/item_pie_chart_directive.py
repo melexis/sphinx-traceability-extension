@@ -1,6 +1,5 @@
 import re
 from hashlib import sha256
-from collections import OrderedDict
 from os import environ, mkdir, path
 
 from docutils import nodes
@@ -37,7 +36,7 @@ class ItemPieChart(TraceableBaseNode):
         self.source_relationships = []
         self.target_relationships = []
         self.relationship_to_string = {}
-        self.priorities = OrderedDict()  # default priority order is 'uncovered', 'covered', 'executed'
+        self.priorities = {}  # default priority order is 'uncovered', 'covered', 'executed'
         self.nested_target_regex = ''
         self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
