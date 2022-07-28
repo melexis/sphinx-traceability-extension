@@ -50,17 +50,18 @@ class ItemTree(TraceableBaseNode):
         Returns:
             dict: Container: mapping of an item ID to a list of nested containers.
         """
+        parent_id = item.identifier
         for relation in self['type']:
             for target_id in item.yield_targets_sorted(relation):
                 target_item = collection.get_item(target_id)
                 if target_item.attributes_match(self['filter-attributes']):
                     try:
-                        container[item.identifier].append(self._fill_container(collection, target_item, {target_id: []}))
+                        container[parent_id].append(self._fill_container(collection, target_item, {target_id: []}))
                     except RecursionError as err:
                         msg = ("Could not process item-tree {!r} because of a circular relationship: {} {} {}"
-                               .format(self['title'], item.identifier, relation, target_id))
+                               .format(self['title'], parent_id, relation, target_id))
                         raise TraceabilityException(msg) from err
-        container[item.identifier].sort(key=natsort_key)
+        container[parent_id].sort(key=natsort_key)
         return container
 
     def _generate_bullet_list_tree(self, app, item_id, containers):
