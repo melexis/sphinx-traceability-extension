@@ -19,9 +19,9 @@ class ItemAttribute(TraceableBaseNode):
         """
         if self['id'] in TraceableItem.defined_attributes:
             attr = TraceableItem.defined_attributes[self['id']]
-            header = attr.get_name()
-            if attr.get_caption():
-                header += ' : ' + attr.get_caption()
+            header = attr.name
+            if attr.caption:
+                header += ' : ' + attr.caption
         else:
             header = self['id']
         top_node = self.create_top_node(header)
@@ -66,9 +66,9 @@ class ItemAttributeDirective(TraceableBaseDirective):
             attribute_node['id'] = stored_id
         else:
             attr = TraceableItem.defined_attributes[stored_id]
-            attr.set_caption(self.get_caption())
-            attr.set_document(env.docname, self.lineno)
-            attribute_node['id'] = attr.get_id()
+            attr.caption = self.caption
+            attr.set_location(env.docname, self.lineno)
+            attribute_node['id'] = attr.identifier
 
         # Output content of attribute to document
         template = []

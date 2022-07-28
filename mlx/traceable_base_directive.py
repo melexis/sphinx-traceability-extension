@@ -29,7 +29,8 @@ class TraceableBaseDirective(Directive, ABC):
         else:
             node['title'] = default_title
 
-    def get_caption(self):
+    @property
+    def caption(self):
         """ Gets the item's caption.
 
         Item caption is the text following the mandatory id argument. Caption should be considered a to be line of text.
@@ -41,6 +42,19 @@ class TraceableBaseDirective(Directive, ABC):
         if len(self.arguments) > 1:
             return self.arguments[1].replace('\n', ' ')
         return ''
+
+    def get_caption(self):
+        """ Gets the item's caption.
+
+        Item caption is the text following the mandatory id argument. Caption should be considered a to be line of text.
+        Remove line breaks.
+
+        Returns:
+            (str) Formatted caption.
+        """
+        report_warning("TraceableBaseDirective.get_caption() will be removed in version 10.x in favor of "
+                       "TraceableBaseDirective.caption")
+        return self.caption
 
     def add_found_attributes(self, node, is_pattern=False):
         """ Adds found attributes to node. Attribute data is a single string.

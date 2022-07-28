@@ -148,7 +148,7 @@ class ItemPieChart(TraceableBaseNode):
                 if regex.match(target_id):
                     has_valid_target_item = True
                     is_covered_nested = match_function(top_source_id, target_item, relationship)
-                    if top_source_id == source_item.id and is_covered_nested is False:
+                    if top_source_id == source_item.identifier and is_covered_nested is False:
                         # if one target item is not covered by a nested target item, treat top source item as
                         # covered instead of executed
                         self.linked_labels[top_source_id] = self['label_set'][1].lower()
