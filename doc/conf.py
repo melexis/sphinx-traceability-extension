@@ -367,9 +367,7 @@ def traceability_callback_per_item(name, collection):
     """
     item = collection.get_item(name)
     if name == 'r001':
-        content_str = item.get_content()
-        content_str += '\n\nThis line was added by ``traceability_callback_per_item`` and is parsed as |RST| syntax.'
-        item.set_content(content_str)
+        item.content += '\n\nThis line was added by ``traceability_callback_per_item`` and is parsed as |RST| syntax.'
     if name.startswith('RQT') and not (('functional' in item.attributes) ^ ('non_functional' in item.attributes)):
         # When it is not marked as either functional or non-functional, mark it as functional
         item.add_attribute('functional', '')

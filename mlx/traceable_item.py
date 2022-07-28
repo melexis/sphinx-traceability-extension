@@ -70,19 +70,23 @@ class TraceableItem(TraceableBaseClass):
                 relations_of_self[relation] = []
             relations_of_self[relation].extend(relations_of_other[relation])
 
-    def is_linked(self, relationships, target_pattern):
+    def is_linked(self, relationships, target_regex):
         ''' Checks if item is linked with any of the forwards relationships to a target matching the regex pattern
 
         Args:
             relationships (iterable): Forward relationships (str)
-            target_pattern (str/re.Pattern): Regular expression pattern
+            target_regex (str/re.Pattern): Regular expression pattern or object
 
         Returns:
             bool: True if linked; False otherwise
         '''
         for rel in relationships:
             for target in self.yield_targets(rel):
-                if re.match(target_pattern, target):
+                try:
+                    match = target_regex.match(target)
+                except AttributeError:
+                    match = re.match(target_regex, target)
+                if match:
                     return True
         return False
 
@@ -100,17 +104,17 @@ class TraceableItem(TraceableBaseClass):
                              (e.g. automatic reverse) relation is added here.
         '''
         # When target is the item itself, it is an error: no circular relationships
-        if self.get_id() == target:
-            raise TraceabilityException('circular relationship {src} {rel} {tgt}'.format(src=self.get_id(),
+        if self.identifier == target:
+            raise TraceabilityException('circular relationship {src} {rel} {tgt}'.format(src=self.identifier,
                                                                                          rel=relation,
                                                                                          tgt=target),
-                                        self.get_document())
+                                        self.docname)
         # When relation is already explicit, we shouldn't add. It is an error.
         if relation in self.explicit_relations and target in self.explicit_relations[relation]:
-            raise TraceabilityException('duplicating {src} {rel} {tgt}'.format(src=self.get_id(),
+            raise TraceabilityException('duplicating {src} {rel} {tgt}'.format(src=self.identifier,
                                                                                rel=relation,
                                                                                tgt=target),
-                                        self.get_document())
+                                        self.docname)
         # When relation is already implicit, we shouldn't add. When relation-to-add is explicit, it should move
         # from implicit to explicit.
         elif relation in self.implicit_relations and target in self.implicit_relations[relation]:
@@ -232,7 +236,7 @@ class TraceableItem(TraceableBaseClass):
         Args:
             attr (TraceableAttribute): Attribute to be assigned.
         '''
-        TraceableItem.defined_attributes[attr.get_id()] = attr
+        TraceableItem.defined_attributes[attr.identifier] = attr
 
     def add_attribute(self, attr, value, overwrite=True):
         ''' Adds an attribute key-value pair to the traceable item.
@@ -247,14 +251,13 @@ class TraceableItem(TraceableBaseClass):
             overwrite (bool): Overwrite existing attribute value, if any.
         '''
         if not attr or value is None or attr not in TraceableItem.defined_attributes:
-            raise TraceabilityException('item {item} has invalid attribute ({attr}={value})'.format(item=self.get_id(),
-                                                                                                    attr=attr,
-                                                                                                    value=value),
-                                        self.get_document())
+            raise TraceabilityException('item {item} has invalid attribute ({attr}={value})'
+                                        .format(item=self.identifier, attr=attr, value=value),
+                                        self.docname)
         if not TraceableItem.defined_attributes[attr].can_accept(value):
             raise TraceabilityException('item {item} attribute does not match defined attributes ({attr}={value})'
-                                        .format(item=self.get_id(), attr=attr, value=value),
-                                        self.get_document())
+                                        .format(item=self.identifier, attr=attr, value=value),
+                                        self.docname)
         if overwrite or attr not in self.attributes:
             self.attributes[attr] = value
 
@@ -265,9 +268,9 @@ class TraceableItem(TraceableBaseClass):
             attr (str): Name of the attribute.
         '''
         if not attr:
-            raise TraceabilityException('item {item}: cannot remove invalid attribute {attr}'.format(item=self.get_id(),
-                                                                                                     attr=attr),
-                                        self.get_document())
+            raise TraceabilityException('item {item}: cannot remove invalid attribute {attr}'
+                                        .format(item=self.identifier, attr=attr),
+                                        self.docname)
         del self.attributes[attr]
 
     def get_attribute(self, attr):
@@ -311,7 +314,7 @@ class TraceableItem(TraceableBaseClass):
         Returns:
             str: String representation of the item.
         '''
-        retval = TraceableItem.STRING_TEMPLATE.format(identification=self.get_id())
+        retval = TraceableItem.STRING_TEMPLATE.format(identification=self.identifier)
         retval += '\tPlaceholder: {placeholder}\n'.format(placeholder=self.is_placeholder)
         for attribute in self.attributes:
             retval += '\tAttribute {attribute} = {value}\n'.format(attribute=attribute,
@@ -341,12 +344,17 @@ class TraceableItem(TraceableBaseClass):
         ''' Checks if the item matches a given regular expression.
 
         Args:
-            regex (str): Regex to match the given item against.
+            regex (str/re.Pattern): Regular expression pattern or object to match the given item against.
 
         Returns:
             bool: True if the given regex matches the item identification.
         '''
-        return re.match(regex, self.get_id())
+        if regex == '':
+            return True
+        try:
+            return regex.match(self.identifier)
+        except AttributeError:
+            return re.match(regex, self.identifier)
 
     def attributes_match(self, attributes):
         ''' Checks if item matches a given set of attributes.
@@ -360,8 +368,15 @@ class TraceableItem(TraceableBaseClass):
         for attr, regex in attributes.items():
             if attr not in self.attributes:
                 return False
-            if not re.match(regex, self.get_attribute(attr)):
-                return False
+            if regex == '':
+                continue
+            attribute_value = self.attributes[attr]
+            try:
+                if not regex.match(attribute_value):
+                    return False
+            except AttributeError:
+                if not re.match(regex, attribute_value):
+                    return False
         return True
 
     def is_related(self, relations, target_id):
@@ -418,18 +433,18 @@ class TraceableItem(TraceableBaseClass):
         super(TraceableItem, self).self_test()
         # Item should not be a placeholder
         if self.is_placeholder:
-            raise TraceabilityException('item {item} is not defined'.format(item=self.get_id()), self.get_document())
+            raise TraceabilityException('item {item} is not defined'.format(item=self.identifier), self.docname)
         # Item's attributes should be valid, empty string is allowed
         for attribute in self.iter_attributes():
             value = self.attributes[attribute]
             if value is None or not TraceableItem.defined_attributes[attribute].can_accept(value):
                 raise TraceabilityException('item {item} has invalid attribute value for {attribute}'
-                                            .format(item=self.get_id(), attribute=attribute))
+                                            .format(item=self.identifier, attribute=attribute))
         # Targets should have no duplicates
         for relation in self.iter_relations(sort=False):
             tgts = self.iter_targets(relation, sort=False)
             cnt_duplicate = len(tgts) - len(set(tgts))
             if cnt_duplicate:
                 raise TraceabilityException('{cnt} duplicate target(s) found for {item} {relation})'
-                                            .format(cnt=cnt_duplicate, item=self.get_id(), relation=relation),
-                                            self.get_document())
+                                            .format(cnt=cnt_duplicate, item=self.identifier, relation=relation),
+                                            self.docname)

@@ -1,4 +1,5 @@
 """ Module for the base class for all Traceability directives. """
+import re
 from abc import ABC, abstractmethod
 from docutils.parsers.rst import Directive
 
@@ -28,7 +29,8 @@ class TraceableBaseDirective(Directive, ABC):
         else:
             node['title'] = default_title
 
-    def get_caption(self):
+    @property
+    def caption(self):
         """ Gets the item's caption.
 
         Item caption is the text following the mandatory id argument. Caption should be considered a to be line of text.
@@ -41,15 +43,33 @@ class TraceableBaseDirective(Directive, ABC):
             return self.arguments[1].replace('\n', ' ')
         return ''
 
-    def add_found_attributes(self, node):
-        """ Adds found attributes to item. Attribute data is a single string.
+    def get_caption(self):
+        """ Gets the item's caption.
+
+        Item caption is the text following the mandatory id argument. Caption should be considered a to be line of text.
+        Remove line breaks.
+
+        Returns:
+            (str) Formatted caption.
+        """
+        report_warning("TraceableBaseDirective.get_caption() will be removed in version 10.x in favor of "
+                       "TraceableBaseDirective.caption")
+        return self.caption
+
+    def add_found_attributes(self, node, is_pattern=False):
+        """ Adds found attributes to node. Attribute data is a single string.
 
         Args:
             node (TraceableBaseNode): Node object for which to add found attributes to.
+            is_pattern (bool): True to treat the attribute value as a regular expression pattern and compile it if it
+                is not empty.
         """
         node['filter-attributes'] = {}
         for attr in set(TraceableItem.defined_attributes) & set(self.options) - self.conflicting_options:
-            node['filter-attributes'][attr] = self.options[attr]
+            value = self.options[attr]
+            if is_pattern and value != '':
+                value = re.compile(value)
+            node['filter-attributes'][attr] = value
 
     def add_attributes(self, node, option, default, description='attribute'):
         """ Adds all valid attribute keys in the option's value to the node
@@ -139,16 +159,18 @@ class TraceableBaseDirective(Directive, ABC):
 
                 | {
                 |     'target': { 'default': [''] },
-                |     'source': { 'default': '' },
-                |     'targettitle': { 'default': ['Target'], 'delimiter': ','},
+                |     'source': { 'default': '', 'is_pattern': True },
+                |     'targettitle': { 'default': ['Target'], 'delimiter': ',' },
                 |     'sourcetitle': { 'default': 'Source' },
                 |     'type': { 'default': [] },
                 | }
 
                 The 'default' configuration is mandatory. It is used to set the value in case none is given AND it is
                 used to determine the type of the option (list or single value).
-                The 'delimiter' value is optional and defaults to ' ' (single space). It is used to determine what
-                character needs to be used to split the option value into a list.
+                The 'delimiter' configuration is optional and defaults to ' ' (single space). It is used to determine
+                which character needs to be used to split the option value into a list.
+                The 'is_pattern' configuration is optional and defaults to False. If True, each option value is
+                treated as a regular expression pattern (str) and compiled to a re.Pattern object.
             docname (str): Document name.
 
         Returns:
@@ -156,13 +178,16 @@ class TraceableBaseDirective(Directive, ABC):
         """
         for option, option_config in options.items():
             if option in self.options:
+                value = self.options[option]
+                if option == 'filter':
+                    value = value.replace('\n', '').strip()
                 if isinstance(option_config['default'], list):
                     delimiter = option_config.get('delimiter', None)
                     if delimiter == ' ':
                         self._warn_if_comma_separated(option, docname)
-                    node[option] = [x.strip() for x in self.options[option].split(delimiter)]
+                    node[option] = [x.strip() for x in value.split(delimiter)]
                 else:
-                    node[option] = self.options[option]
+                    node[option] = value
             elif docname:
                 report_warning('%s argument required for %s directive' % (option, self.name),
                                docname,
@@ -170,6 +195,12 @@ class TraceableBaseDirective(Directive, ABC):
                 return False
             else:
                 node[option] = option_config['default']
+
+            if option_config.get('is_pattern') and node[option]:
+                if isinstance(node[option], str):
+                    node[option] = re.compile(node[option])
+                else:
+                    node[option] = [re.compile(value) for value in node[option]]
         return True
 
     def check_option_presence(self, node, option):

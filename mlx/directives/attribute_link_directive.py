@@ -17,10 +17,9 @@ class AttributeLink(TraceableBaseNode):
             app: Sphinx application object to use.
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
-        filtered_item_ids = collection.get_items(self['filter'])
+        filtered_items = collection.get_item_objects(self['filter'])
         for attribute, value in self['filter-attributes'].items():
-            for item_id in filtered_item_ids:
-                item = collection.get_item(item_id)
+            for item in filtered_items:
                 try:
                     item.add_attribute(attribute, value)
                 except TraceabilityException as err:
@@ -57,10 +56,9 @@ class AttributeLinkDirective(TraceableBaseDirective):
         self.process_options(
             node,
             {
-                'filter': {'default': r"\S+"},
+                'filter': {'default': r"\S+", 'is_pattern': True},
             },
         )
-        node['filter'] = node['filter'].replace('\n', '').strip()
         self.add_found_attributes(node)
 
         return [node]

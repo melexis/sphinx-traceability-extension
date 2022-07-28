@@ -11,7 +11,7 @@ from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
 from mlx.traceable_item import TraceableItem
 
-natsort_key = natsort_keygen(key=lambda item: getattr(item, 'id', ''))
+natsort_key = natsort_keygen(key=lambda item: getattr(item, 'identifier', ''))
 
 
 def group_choice(argument):
@@ -21,6 +21,8 @@ def group_choice(argument):
 
 class ItemMatrix(TraceableBaseNode):
     '''Matrix for cross referencing documentation items'''
+
+    COVERAGE_REGEX = re.compile(r'([><]=?|==|!=)\s*[\d\./]+')
 
     def perform_replacement(self, app, collection):
         """
@@ -480,7 +482,7 @@ class ItemMatrix(TraceableBaseNode):
         covered = False
         for idx, target_regex in enumerate(self['target']):
             for target in target_items:
-                if re.match(target_regex, target.get_id()):
+                if target_regex and target_regex.match(target.identifier):
                     target_cells[idx].append(target)
                     covered = True
         return covered
@@ -500,7 +502,7 @@ class ItemMatrix(TraceableBaseNode):
             if isinstance(entry, nodes.Node):
                 cell += entry
             else:
-                cell += self.make_internal_item_ref(app, entry.get_id())
+                cell += self.make_internal_item_ref(app, entry.identifier)
         return cell
 
     def _create_cells_for_info_cols(self, item, values, app):
@@ -569,7 +571,7 @@ class ItemMatrix(TraceableBaseNode):
         """
         if self['coverage']:
             pattern = r'([><]=?|==|!=)\s*[\d\./]+'
-            if re.fullmatch(pattern, self['coverage']):
+            if self.COVERAGE_REGEX.fullmatch(self['coverage']):
                 expression = '{} {}'.format(percentage, self['coverage'])
                 if not eval(expression):  # pylint: disable=eval-used
                     report_warning('Item-matrix with title {!r} has bad coverage: {} evaluates to False'
@@ -591,7 +593,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
     Syntax::
 
       .. item-matrix:: title
-         :target: regexp
+         :target: regexp ...
          :source: regexp
          :intermediate: regexp
          :<<attribute>>: regexp
@@ -664,14 +666,14 @@ class ItemMatrixDirective(TraceableBaseDirective):
 
         self.process_title(node, 'Traceability matrix of items')
 
-        self.add_found_attributes(node)
+        self.add_found_attributes(node, is_pattern=True)
 
         self.process_options(
             node,
             {
-                'target':            {'default': ['']},
-                'intermediate':      {'default': ''},
-                'source':            {'default': ''},
+                'target':            {'default': [''], 'is_pattern': True},
+                'intermediate':      {'default': '', 'is_pattern': True},
+                'source':            {'default': '', 'is_pattern': True},
                 'targettitle':       {'default': ['Target'], 'delimiter': ','},
                 'sourcetitle':       {'default': 'Source'},
                 'intermediatetitle': {'default': ''},
@@ -698,8 +700,8 @@ class ItemMatrixDirective(TraceableBaseDirective):
         if number_of_targets != number_of_targettitles:
             raise TraceabilityException(
                 "Item-matrix directive should have the same number of values for the options 'target' and "
-                "'targettitle'. Got target: {targets} and targettitle: {titles}"
-                .format(targets=node['target'], titles=node['targettitle']),
+                "'targettitle'. Got target: {targets!r} and targettitle: {titles!r}"
+                .format(targets=self.options['target'], titles=self.options['targettitle']),
                 docname=env.docname)
 
         if node['type']:

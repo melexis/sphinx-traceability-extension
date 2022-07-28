@@ -19,7 +19,7 @@ class Item(TraceableBaseNode):
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
         self._item = collection.get_item(self['id'])
-        item_id = self._item.get_id()
+        item_id = self._item.identifier
         top_node = self.create_top_node(item_id, app=app)
         dl_node = nodes.definition_list()
         if app.config.traceability_render_attributes_per_item:
@@ -159,7 +159,7 @@ class ItemDirective(TraceableBaseDirective):
 
         self.check_caption_flags(item_node, app.config.traceability_item_no_captions)
 
-        return [item.get_node(), item_node, item.content_node]
+        return [item.node, item_node, item.content_node]
 
     def _store_item_info(self, target_id, env):
         """ Stores item info and adds TraceableItem to the collection.
@@ -173,10 +173,10 @@ class ItemDirective(TraceableBaseDirective):
         """
         target_node = nodes.target('', '', ids=[target_id])
         item = TraceableItem(target_id, state=self.state)
-        item.set_document(env.docname, self.lineno)
-        item.bind_node(target_node)
-        item.set_caption(self.get_caption())
-        item.set_content('\n'.join(self.content))
+        item.set_location(env.docname, self.lineno)
+        item.node = target_node
+        item.caption = self.caption
+        item.content = '\n'.join(self.content)
         try:
             env.traceability_collection.add_item(item)
         except TraceabilityException as err:
