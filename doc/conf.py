@@ -15,7 +15,6 @@ import errno
 import os
 import subprocess
 import sys
-from collections import OrderedDict
 
 import mlx.traceability
 from mlx.traceability import report_warning
@@ -395,15 +394,15 @@ def traceability_inspect_item(name, collection):
 
 rst_epilog = ".. |RST|   replace:: :abbr:`RST (reStructuredText)`"
 
-# OrderedDict([('regex', (default, :hover+:active, :visited)), ...])
-# OrderedDict generates a dict with a deterministic order, used to prioritize the regexes, top to bottom
-traceability_hyperlink_colors = OrderedDict([
-    (r'RQT|r[\d]+', ('#7F00FF', '#b369ff')),
-    (r'[IU]TEST_REP', ('rgba(255, 0, 0, 1)', 'rgba(255, 0, 0, 0.7)', 'rgb(200, 0, 0)')),
-    (r'[IU]TEST', ('goldenrod', 'hsl(43, 62%, 58%)', 'darkgoldenrod')),
-    (r'SYS_', ('', 'springgreen', '')),
-    (r'SRS_', ('', 'orange', '')),
-])
+# {'regex': (default, :hover+:active, :visited)), ...}
+# A dictionary with deterministic order, used to prioritize the regexes, top to bottom
+traceability_hyperlink_colors = {
+    r'RQT|r[\d]+': ('#7F00FF', '#b369ff'),
+    r'[IU]TEST_REP': ('rgba(255, 0, 0, 1)', 'rgba(255, 0, 0, 0.7)', 'rgb(200, 0, 0)'),
+    r'[IU]TEST': ('goldenrod', 'hsl(43, 62%, 58%)', 'darkgoldenrod'),
+    r'SYS_': ('', 'springgreen', ''),
+    r'SRS_': ('', 'orange', ''),
+}
 
 # traceability_item_no_captions = True
 # traceability_list_no_captions = True

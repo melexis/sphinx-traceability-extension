@@ -7,7 +7,7 @@ Sphinx extension for reStructuredText that added traceable documentation items.
 See readme for more details.
 """
 import warnings
-from collections import OrderedDict, namedtuple
+from collections import namedtuple
 from re import fullmatch, match
 from os import path
 
@@ -47,7 +47,7 @@ def generate_color_css(app, hyperlink_colors):
 
     Args:
         app: Sphinx application object to use.
-        hyperlink_colors (OrderedDict): Ordered dict with regex strings as keys and list/tuple of strings as values.
+        hyperlink_colors (dict): Dictionary with regex strings as keys and list/tuple of strings as values.
     """
     class_names = app.config.traceability_class_names
     with open(path.join(path.dirname(__file__), 'assets', 'hyperlink_colors.css'), 'w') as css_file:
@@ -590,7 +590,7 @@ def setup(app):
     app.add_config_value('traceability_tree_no_captions', False, 'env')
 
     # Configuration for customizing the color of hyperlinked items
-    app.add_config_value('traceability_hyperlink_colors', OrderedDict([]), 'env')
+    app.add_config_value('traceability_hyperlink_colors', {}, 'env')
     # Dictionary used by plugin to pass class names via application object
     app.add_config_value('traceability_class_names', {}, 'env')
 
