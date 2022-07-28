@@ -34,8 +34,10 @@ class ItemTree(TraceableBaseNode):
                 if not item.is_linked(self['top_relation_filter'], self['top']):
                     container[item.identifier] = []
                     self._fill_container(collection, item, container)
+            del top_items
             for item_id in natsorted(container):
                 ul_node.append(self._generate_bullet_list_tree(app, item_id, container[item_id]))
+            del container
             top_node += ul_node
         self.replace_self(top_node)
 
@@ -52,7 +54,8 @@ class ItemTree(TraceableBaseNode):
         """
         parent_id = item.identifier
         for relation in self['type']:
-            for target_id in item.yield_targets_sorted(relation):
+            target_ids = item.yield_targets_sorted(relation)
+            for target_id in target_ids:
                 target_item = collection.get_item(target_id)
                 if target_item.attributes_match(self['filter-attributes']):
                     try:
@@ -61,6 +64,7 @@ class ItemTree(TraceableBaseNode):
                         msg = ("Could not process item-tree {!r} because of a circular relationship: {} {} {}"
                                .format(self['title'], parent_id, relation, target_id))
                         raise TraceabilityException(msg) from err
+            del target_ids
         container[parent_id].sort(key=natsort_key)
         return container
 
@@ -89,6 +93,7 @@ class ItemTree(TraceableBaseNode):
         for container in containers:
             for target_id, nested_containers in container.items():
                 childcontent.append(self._generate_bullet_list_tree(app, target_id, nested_containers))
+            del container
         return bullet_list_item
 
 
