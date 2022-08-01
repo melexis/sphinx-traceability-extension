@@ -44,6 +44,8 @@ class TestAttributeLinkDirective(TestCase):
         self.assertEqual(em_node.rawsource, 'some_id')
         self.assertEqual(str(em_node.children[0]), 'some_id')
         self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['default'])
+        self.assertNotIn('nocaptions', self.app.builder.env.traceability_ref_nodes[self.node['id']])
+        self.assertNotIn('onlycaptions', self.app.builder.env.traceability_ref_nodes[self.node['id']])
 
     def test_make_internal_item_ref_show_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
