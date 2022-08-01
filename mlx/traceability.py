@@ -320,6 +320,7 @@ def initialize_environment(app):
     # generates placeholders when parsing the reverse relationships, the
     # database of items needs to be empty on every re-build.
     env.traceability_collection = TraceableCollection()
+    env.traceability_ref_nodes = {}
 
     app.config.traceability_checklist['has_checklist_items'] = False
     add_checklist_attribute(app.config.traceability_checklist,

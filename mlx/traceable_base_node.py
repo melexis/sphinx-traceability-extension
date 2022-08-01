@@ -56,15 +56,23 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         paragraph. Reference text adds also a caption if it exists.
         """
         env = app.builder.env
+        ref_nodes = env.traceability_ref_nodes
+        display_option = 'default'
+        for option in (name for name in ('onlycaptions', 'nocaptions') if self.get(name)):
+            display_option = option
+            break
+        if item_id in ref_nodes and display_option in ref_nodes[item_id]:
+            return ref_nodes[item_id][display_option]  # cached paragraph node
+        else:
+            ref_nodes[item_id] = {}
         item_info = env.traceability_collection.get_item(item_id)
         notification_item = None
-
         p_node = nodes.paragraph()
 
         # Only create link when target item (or notification item) exists, warn otherwise (in html and terminal)
         if item_info.is_placeholder:
             notification_item_id = app.config.traceability_notifications.get('undefined-reference')
-            notification_item = app.env.traceability_collection.get_item(notification_item_id)
+            notification_item = env.traceability_collection.get_item(notification_item_id)
             if not notification_item:
                 self.has_warned_about_undefined(item_info)
                 txt = nodes.Text('%s not defined, broken link' % item_id)
@@ -99,6 +107,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         newnode.append(innernode)
         p_node += newnode
 
+        ref_nodes[item_id][display_option] = p_node
         return p_node
 
     @staticmethod
