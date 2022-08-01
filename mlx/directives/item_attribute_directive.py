@@ -52,12 +52,12 @@ class ItemAttributeDirective(TraceableBaseDirective):
 
         # Convert to lower-case as sphinx only allows lowercase arguments (attribute to item directive)
         attribute_id = self.arguments[0]
-        target_node = nodes.target('', '', ids=[attribute_id])
         attribute_node = ItemAttribute('')
         attribute_node['document'] = env.docname
         attribute_node['line'] = self.lineno
 
         stored_id = TraceableAttribute.to_id(attribute_id)
+        target_node = nodes.target('', '', ids=[stored_id])
         if stored_id not in TraceableItem.defined_attributes:
             report_warning('Found attribute description which is not defined in configuration ({})'
                            .format(attribute_id),

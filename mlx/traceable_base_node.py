@@ -162,7 +162,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
                 newnode['refdocname'] = attr_info.docname
                 try:
                     newnode['refuri'] = app.builder.get_relative_uri(self['document'], attr_info.docname)
-                    newnode['refuri'] += '#' + attr_name
+                    newnode['refuri'] += '#' + attr_info.identifier
                 except NoUri:
                     # ignore if no URI can be determined, e.g. for LaTeX output :(
                     pass
