@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mlx.traceability_exception &mdash; Traceability 8.9.0 documentation</title>
+  <title>mlx.traceability_exception &mdash; Traceability 9.0.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                8.9.0
+                9.0.0
               </div>
             
           
@@ -194,8 +194,14 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">errors</span>
 
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Iterate over multiple exceptions&#39;&#39;&#39;</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span>
+
 <div class="viewcode-block" id="MultipleTraceabilityExceptions.iter"><a class="viewcode-back" href="../../implementation.html#mlx.traceability_exception.MultipleTraceabilityExceptions.iter">[docs]</a>    <span class="k">def</span> <span class="nf">iter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Iterator for multiple exceptions&#39;&#39;&#39;</span>
+        <span class="n">report_warning</span><span class="p">(</span><span class="s2">&quot;MultipleTraceabilityExceptions.iter() will be removed in version 10.x: &quot;</span>
+                       <span class="s2">&quot;you can now loop over an instance of this class directly&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span></div></div>
 
 
@@ -221,6 +227,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The name of the document in which the error occurred</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">report_warning</span><span class="p">(</span><span class="s2">&quot;TraceabilityException.get_document() will be removed in version 10.x in favor of &quot;</span>
+                       <span class="s2">&quot;TraceabilityException.docname&quot;</span><span class="p">,</span> <span class="n">docname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">docname</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">docname</span></div></div>
 </pre></div>
 

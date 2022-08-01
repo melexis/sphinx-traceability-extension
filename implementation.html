@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Software Implementation &mdash; Traceability 8.9.0 documentation</title>
+  <title>Software Implementation &mdash; Traceability 9.0.0 documentation</title>
   
 
   
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                8.9.0
+                9.0.0
               </div>
             
           
@@ -263,6 +263,17 @@ relations.</p>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.all_relations">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_relations</span></span><a class="headerlink" href="#mlx.traceable_item.TraceableItem.all_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields a relationship and the corresponding targets, both naturally sorted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.attributes_match">
 <span class="sig-name descname"><span class="pre">attributes_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.attributes_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.attributes_match" title="Permalink to this definition">¶</a></dt>
@@ -343,12 +354,32 @@ relations.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.is_linked">
+<span class="sig-name descname"><span class="pre">is_linked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relationships</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_regex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_linked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_linked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if item is linked with any of the forwards relationships to a target matching the regex pattern</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>relationships</strong> (<em>iterable</em>) – Forward relationships (str)</p></li>
+<li><p><strong>target_regex</strong> (<em>str/re.Pattern</em>) – Regular expression pattern or object</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if linked; False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.is_match">
 <span class="sig-name descname"><span class="pre">is_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_match" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the item matches a given regular expression.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>regex</strong> (<em>str</em>) – Regex to match the given item against.</p>
+<dd class="field-odd"><p><strong>regex</strong> (<em>str/re.Pattern</em>) – Regular expression pattern or object to match the given item against.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if the given regex matches the item identification.</p>
@@ -359,16 +390,13 @@ relations.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="py property">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.is_placeholder">
-<span class="sig-name descname"><span class="pre">is_placeholder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_placeholder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_placeholder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets whether the item is a placeholder or not.</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_placeholder</span></span><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_placeholder" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if this item is a placeholder; False otherwise</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>True if the item is a placeholder, False otherwise.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -514,6 +542,27 @@ relations.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.yield_targets">
+<span class="sig-name descname"><span class="pre">yield_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.yield_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.yield_targets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an iterable of targets to other traceable items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>relation</strong> (<em>str</em>) – Name of the relation.</p></li>
+<li><p><strong>explicit</strong> (<em>bool</em>) – If True, explicitly expressed relations are included.</p></li>
+<li><p><strong>implicit</strong> (<em>bool</em>) – If True, implicitly expressed relations are included.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Targets to other traceable items, unsorted</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div></blockquote>
@@ -635,7 +684,7 @@ already have their attributes sorted will be returned as a list; used to report 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>regex</strong> (<em>str</em>) – Regex to match the external target</p></li>
+<li><p><strong>regex</strong> (<em>str/re.Pattern</em>) – Regex pattern or object to match the external target</p></li>
 <li><p><strong>relation</strong> (<em>str</em>) – External relation</p></li>
 </ul>
 </dd>
@@ -666,6 +715,27 @@ already have their attributes sorted will be returned as a list; used to report 
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.get_item_objects">
+<span class="sig-name descname"><span class="pre">get_item_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_item_objects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_item_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all items that match a given regular expression as TraceableItem instances.</p>
+<p>Placeholders are excluded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>regex</strong> (<em>str</em>) – Regex to match the items in this collection against</p></li>
+<li><p><strong>attributes</strong> (<em>dict</em>) – Dictionary with attribute-regex pairs to match the items in this collection against</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An iterable of items matching the given regex.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.get_items">
 <span class="sig-name descname"><span class="pre">get_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sortattributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all items that match a given regular expression</p>
@@ -673,7 +743,7 @@ already have their attributes sorted will be returned as a list; used to report 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>regex</strong> (<em>str</em>) – Regex to match the items in this collection against</p></li>
+<li><p><strong>regex</strong> (<em>str/re.Pattern</em>) – Regex pattern or object to match the items in this collection against</p></li>
 <li><p><strong>attributes</strong> (<em>dict</em>) – Dictionary with attribute-regex pairs to match the items in this collection against</p></li>
 <li><p><strong>sortattributes</strong> (<em>list</em>) – List of attributes on which to alphabetically sort the items</p></li>
 <li><p><strong>reverse</strong> (<em>bool</em>) – True for reverse sorting</p></li>

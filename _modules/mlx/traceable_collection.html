@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mlx.traceable_collection &mdash; Traceability 8.9.0 documentation</title>
+  <title>mlx.traceable_collection &mdash; Traceability 9.0.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                8.9.0
+                9.0.0
               </div>
             
           
@@ -233,18 +233,17 @@
 <span class="sd">        Args:</span>
 <span class="sd">            item (TraceableItem): Traceable item to add</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">itemid</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
         <span class="c1"># If the item already exists ...</span>
-        <span class="k">if</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
-            <span class="n">olditem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">itemid</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="n">olditem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span>
             <span class="c1"># ... and it&#39;s not a placeholder, log an error</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">olditem</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;duplicating </span><span class="si">{itemid}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itemid</span><span class="o">=</span><span class="n">itemid</span><span class="p">),</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">olditem</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;duplicating </span><span class="si">{itemid}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itemid</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">identifier</span><span class="p">),</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span><span class="p">)</span>
             <span class="c1"># ... otherwise, update the item with new content</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">item</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">olditem</span><span class="p">)</span>
         <span class="c1"># add it</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">get_id</span><span class="p">()]</span> <span class="o">=</span> <span class="n">item</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span></div>
 
 <div class="viewcode-block" id="TraceableCollection.get_item"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.get_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemid</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -295,7 +294,7 @@
         <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span>
         <span class="c1"># Error if relation is unknown</span>
         <span class="k">if</span> <span class="n">relation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;Relation </span><span class="si">{name}</span><span class="s1"> not known&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">relation</span><span class="p">),</span> <span class="n">source</span><span class="o">.</span><span class="n">get_document</span><span class="p">())</span>
+            <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;Relation </span><span class="si">{name}</span><span class="s1"> not known&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">relation</span><span class="p">),</span> <span class="n">source</span><span class="o">.</span><span class="n">docname</span><span class="p">)</span>
         <span class="c1"># Add forward relation</span>
         <span class="n">source</span><span class="o">.</span><span class="n">add_target</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">target_id</span><span class="p">)</span>
         <span class="c1"># When reverse relation exists, continue to create/adapt target-item</span>
@@ -363,10 +362,10 @@
         <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
             <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
             <span class="c1"># Only for relevant items, filtered on document name</span>
-            <span class="k">if</span> <span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()</span> <span class="o">!=</span> <span class="n">docname</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span> <span class="o">!=</span> <span class="n">docname</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="c1"># Check if docname of notification item will be used</span>
-            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">notification_item</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">notification_item</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="c1"># On item level</span>
             <span class="k">try</span><span class="p">:</span>
@@ -379,30 +378,30 @@
                 <span class="n">rev_relation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reverse_relation</span><span class="p">(</span><span class="n">relation</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">rev_relation</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NO_RELATION_STR</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="k">for</span> <span class="n">tgt</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">tgt</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">yield_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">):</span>
                     <span class="c1"># Target item exists?</span>
                     <span class="k">if</span> <span class="n">tgt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
                         <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TraceabilityException</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{source}</span><span class="s2"> </span><span class="si">{relation}</span><span class="s2"> </span><span class="si">{target}</span><span class="s2">, but </span><span class="si">{target}</span><span class="s2"> is not known&quot;</span>
                                                             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">itemid</span><span class="p">,</span>
                                                                     <span class="n">relation</span><span class="o">=</span><span class="n">relation</span><span class="p">,</span>
                                                                     <span class="n">target</span><span class="o">=</span><span class="n">tgt</span><span class="p">),</span>
-                                                            <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()))</span>
+                                                            <span class="n">item</span><span class="o">.</span><span class="n">docname</span><span class="p">))</span>
                         <span class="k">continue</span>
                     <span class="c1"># Reverse relation exists?</span>
                     <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">tgt</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">itemid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">rev_relation</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">itemid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">yield_targets</span><span class="p">(</span><span class="n">rev_relation</span><span class="p">):</span>
                         <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TraceabilityException</span><span class="p">(</span><span class="s2">&quot;No automatic reverse relation: </span><span class="si">{source}</span><span class="s2"> </span><span class="si">{relation}</span><span class="s2"> &quot;</span>
                                                             <span class="s2">&quot;</span><span class="si">{target}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">tgt</span><span class="p">,</span>
                                                                               <span class="n">relation</span><span class="o">=</span><span class="n">rev_relation</span><span class="p">,</span>
                                                                               <span class="n">target</span><span class="o">=</span><span class="n">itemid</span><span class="p">),</span>
-                                                            <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()))</span>
+                                                            <span class="n">item</span><span class="o">.</span><span class="n">docname</span><span class="p">))</span>
                     <span class="c1"># Circular relation exists?</span>
-                    <span class="k">for</span> <span class="n">target_of_target</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="n">target_of_target</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">rev_relation</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">target_of_target</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">yield_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">target_of_target</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">yield_targets</span><span class="p">(</span><span class="n">rev_relation</span><span class="p">):</span>
                             <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TraceabilityException</span><span class="p">(</span>
                                 <span class="s2">&quot;Circular relationship found: </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span>
                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">itemid</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">target_of_target</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">itemid</span><span class="p">),</span>
-                                <span class="n">item</span><span class="o">.</span><span class="n">get_document</span><span class="p">()))</span>
+                                <span class="n">item</span><span class="o">.</span><span class="n">docname</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MultipleTraceabilityExceptions</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span></div>
 
@@ -434,12 +433,12 @@
         <span class="k">if</span> <span class="n">source_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">source_id</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">source</span> <span class="ow">or</span> <span class="n">source</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">source</span> <span class="ow">or</span> <span class="n">source</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">target_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">target_id</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">target</span> <span class="ow">or</span> <span class="n">target</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">target</span> <span class="ow">or</span> <span class="n">target</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">relations</span><span class="p">:</span>
             <span class="n">relations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span>
@@ -452,7 +451,7 @@
 <span class="sd">        Placeholders are excluded</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            regex (str): Regex to match the items in this collection against</span>
+<span class="sd">            regex (str/re.Pattern): Regex pattern or object to match the items in this collection against</span>
 <span class="sd">            attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against</span>
 <span class="sd">            sortattributes (list): List of attributes on which to alphabetically sort the items</span>
 <span class="sd">            reverse (bool): True for reverse sorting</span>
@@ -464,7 +463,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">itemid</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_match</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes_match</span><span class="p">(</span><span class="n">attributes</span><span class="p">)):</span>
                 <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
@@ -475,24 +474,43 @@
             <span class="k">return</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">matches</span></div>
 
+<div class="viewcode-block" id="TraceableCollection.get_item_objects"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.get_item_objects">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Get all items that match a given regular expression as TraceableItem instances.</span>
+
+<span class="sd">        Placeholders are excluded.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            regex (str): Regex to match the items in this collection against</span>
+<span class="sd">            attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            generator: An iterable of items matching the given regex.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_match</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes_match</span><span class="p">(</span><span class="n">attributes</span><span class="p">)):</span>
+                <span class="k">yield</span> <span class="n">item</span></div>
+
 <div class="viewcode-block" id="TraceableCollection.get_external_targets"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.get_external_targets">[docs]</a>    <span class="k">def</span> <span class="nf">get_external_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">relation</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Get all external targets for a given external relation with the IDs of their linked internal items</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            regex (str): Regex to match the external target</span>
+<span class="sd">            regex (str/re.Pattern): Regex pattern or object to match the external target</span>
 <span class="sd">            relation (str): External relation</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Dictionary mapping external targets to the IDs of their linked internal items</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">external_targets_to_item_ids</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">item_id</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iter_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">):</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">yield_targets</span><span class="p">(</span><span class="n">relation</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">external_targets_to_item_ids</span><span class="p">:</span>
-                    <span class="n">external_targets_to_item_ids</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item_id</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">external_targets_to_item_ids</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+                <span class="n">external_targets_to_item_ids</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">external_targets_to_item_ids</span></div></div>
 </pre></div>
 
