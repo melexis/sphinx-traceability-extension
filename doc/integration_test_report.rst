@@ -375,7 +375,7 @@ Traceability from external sources
     :sourcetitle: external items
     :targettitle: internal items
     :type: ext_toolname
-    :targetattributes: asil aspice
+    :targetcolumns: asil aspice
     :onlycaptions:
     :stats:
 

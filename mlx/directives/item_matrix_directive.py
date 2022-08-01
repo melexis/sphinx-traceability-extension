@@ -632,9 +632,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'type': directives.unchanged,  # relationship types separated by space
         'sourcetype': directives.unchanged,  # relationship types separated by space
         'sourcecolumns': directives.unchanged,  # attributes separated by space
-        'sourceattributes': directives.unchanged,  # deprecated in 9.x
         'targetcolumns': directives.unchanged,  # attributes separated by space
-        'targetattributes': directives.unchanged,  # deprecated in 9.x
         'hidesource': directives.flag,
         'hidetarget': directives.flag,
         'splitintermediates': directives.flag,
@@ -707,15 +705,6 @@ class ItemMatrixDirective(TraceableBaseDirective):
         if node['type']:
             self.check_relationships(node['type'].replace(' | ', ' ').split(' '), env)
         self.check_relationships(node['sourcetype'], env)
-
-        if 'sourceattributes' in self.options:
-            report_warning("Option 'sourceattributes' will be deprecated in version 9.x in favor of 'sourcecolumns'",
-                           docname=env.docname, lineno=self.lineno)
-            self.options['sourcecolumns'] = self.options['sourceattributes']
-        if 'targetattributes' in self.options:
-            report_warning("Option 'targetattributes' will be deprecated in version 9.x in favor of 'targetcolumns'",
-                           docname=env.docname, lineno=self.lineno)
-            self.options['targetcolumns'] = self.options['targetattributes']
         self.add_attributes_and_relations(node, 'sourcecolumns', app.env.traceability_collection.relations)
         self.add_attributes_and_relations(node, 'targetcolumns', app.env.traceability_collection.relations)
         if number_of_targets > 1 and node['targetcolumns']:
