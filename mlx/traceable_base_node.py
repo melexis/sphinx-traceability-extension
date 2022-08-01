@@ -182,7 +182,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         The regexp of the first item in the ordered dictionary has the highest priority.
 
         Args:
-            hyperlink_colors (OrderedDict): Ordered dict with regex strings as keys and list/tuple of strings as values.
+            hyperlink_colors (dict): Dictionary with regex strings as keys and list/tuple of strings as values.
             item_id (str): A traceability item ID.
 
         Returns:
