@@ -54,7 +54,12 @@ class TraceableItem(TraceableBaseClass):
     @property
     def all_relations(self):
         ''' generator: Yields a relationship and the corresponding targets, both naturally sorted. '''
-        for relation, targets in natsorted({**self.explicit_relations, **self.implicit_relations}.items()):
+        for relation in natsorted({**self.explicit_relations, **self.implicit_relations}):
+            targets = set()
+            if relation in self.explicit_relations:
+                targets.update(self.explicit_relations[relation])
+            if relation in self.implicit_relations:
+                targets.update(self.implicit_relations[relation])
             yield relation, natsorted(targets)
 
     @staticmethod
