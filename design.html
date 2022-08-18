@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Software Design &mdash; Traceability 9.0.0 documentation</title>
+  <title>Software Design &mdash; Traceability 9.0.1 documentation</title>
   
 
   
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                9.0.0
+                9.0.1
               </div>
             
           
@@ -499,6 +499,9 @@ Exception &lt;|-- MultipleTraceabilityExceptions
 <dt>Fulfills</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em>RQT-DUMMY : Dummy requirement that is not covered by a test</em></a></p>
 </p>
 </dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em>RQT-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
+</p>
+</dd>
 <dt>Impacts on</dt><dd><p><p><a class="reference external" href="#DESIGN-ATTRIBUTES"><em>DESIGN-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
 </p>
 </dd>
@@ -589,7 +592,13 @@ parser. So other plugins and/or the native sphinx tool performs conversions from
 <dt>Depends on</dt><dd><p><p><a class="reference external" href="#DESIGN-ITEMIZE"><em>DESIGN-ITEMIZE : Allow splitting the documentation in parts</em></a></p>
 </p>
 </dd>
-<dt>Fulfills</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em>RQT-DUMMY : Dummy requirement that is not covered by a test</em></a></p>
+<dt>Fulfills</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em>RQT-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em>RQT-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em>RQT-DUMMY : Dummy requirement that is not covered by a test</em></a></p>
 </p>
 </dd>
 <dt>Impacts on</dt><dd><p><p><a class="reference external" href="#DESIGN-ATTRIBUTES_MATRIX"><em>DESIGN-ATTRIBUTES_MATRIX : Overview of attributes on documentation parts</em></a></p>
@@ -832,7 +841,8 @@ documentation parts.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p>
+<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p>
 </td>
 <td><p></p></td>
 </tr>
@@ -866,7 +876,8 @@ documentation parts.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p>
-<p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
+<p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p>
+</td>
 <td><p><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
@@ -912,7 +923,8 @@ documentation parts.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p>
+<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p>
 </td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
@@ -938,7 +950,8 @@ documentation parts.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p>
-<p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
+<p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p>
+</td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>

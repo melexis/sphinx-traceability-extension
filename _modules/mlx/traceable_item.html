@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mlx.traceable_item &mdash; Traceability 9.0.0 documentation</title>
+  <title>mlx.traceable_item &mdash; Traceability 9.0.1 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                9.0.0
+                9.0.1
               </div>
             
           
@@ -218,7 +218,12 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; generator: Yields a relationship and the corresponding targets, both naturally sorted. &#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">relation</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">natsorted</span><span class="p">({</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">natsorted</span><span class="p">({</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">}):</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">:</span>
+                <span class="n">targets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">:</span>
+                <span class="n">targets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">])</span>
             <span class="k">yield</span> <span class="n">relation</span><span class="p">,</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
