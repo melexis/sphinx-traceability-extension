@@ -5,6 +5,7 @@ from abc import abstractmethod, ABC
 from docutils import nodes
 from sphinx.errors import NoUri
 from sphinx.builders.latex import LaTeXBuilder
+from sphinx.util.osutil import SEP
 
 from mlx.traceability_exception import report_warning
 from mlx.traceable_item import TraceableItem
@@ -61,10 +62,6 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         for option in (name for name in ('onlycaptions', 'nocaptions') if self.get(name)):
             display_option = option
             break
-        if item_id in ref_nodes and display_option in ref_nodes[item_id]:
-            return ref_nodes[item_id][display_option]  # cached paragraph node
-        else:
-            ref_nodes[item_id] = {}
         item_info = env.traceability_collection.get_item(item_id)
         notification_item = None
         p_node = nodes.paragraph()
@@ -78,24 +75,28 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
                 txt = nodes.Text('%s not defined, broken link' % item_id)
                 p_node.append(txt)
                 return p_node
-
-        display_text, text_on_hover_node = self._get_caption_info(item_info)
-
-        newnode = nodes.reference('', '')
-        innernode = nodes.emphasis(display_text, display_text)
-        if notification_item:
             item_info = notification_item
         try:
             if self['document'] == item_info.docname and hasattr(app.builder, 'link_suffix'):
-                relative_path = item_info.docname + app.builder.link_suffix
+                relative_path = item_info.docname.split(SEP)[-1] + app.builder.link_suffix
             else:
                 relative_path = app.builder.get_relative_uri(self['document'], item_info.docname)
-            newnode['refuri'] = relative_path
-            newnode['refuri'] += '#' + item_info.identifier
-            newnode['refdocname'] = item_info.docname
         except NoUri:
-            # ignore if no URI can be determined, e.g. for LaTeX output :(
-            pass
+            # ignore if no URI can be determined, e.g. for LaTeX output
+            relative_path = ''
+
+        if item_id not in ref_nodes:
+            ref_nodes[item_id] = {}
+        if display_option not in ref_nodes[item_id]:
+            ref_nodes[item_id][display_option] = {}
+        if relative_path in ref_nodes[item_id][display_option]:
+            return ref_nodes[item_id][display_option][relative_path]  # cached paragraph node
+
+        display_text, text_on_hover_node = self._get_caption_info(item_info)
+        newnode = nodes.reference('', '')
+        innernode = nodes.emphasis(display_text, display_text)
+        newnode['refuri'] = f"{relative_path}#{item_info.identifier}"
+        newnode['refdocname'] = item_info.docname
 
         # change text color if item_id matches a regex in traceability_hyperlink_colors
         colors = self._find_colors_for_class(app.config.traceability_hyperlink_colors, item_id)
@@ -108,7 +109,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         newnode.append(innernode)
         p_node += newnode
 
-        ref_nodes[item_id][display_option] = p_node
+        ref_nodes[item_id][display_option][relative_path] = p_node
         return p_node
 
     @staticmethod
