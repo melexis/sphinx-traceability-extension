@@ -78,6 +78,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
             item_info = notification_item
         try:
             if self['document'] == item_info.docname and hasattr(app.builder, 'link_suffix'):
+                # include filename so that the returned node can be reused on every page in the same directory
                 relative_path = item_info.docname.split(SEP)[-1] + app.builder.link_suffix
             else:
                 relative_path = app.builder.get_relative_uri(self['document'], item_info.docname)
