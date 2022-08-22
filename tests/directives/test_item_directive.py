@@ -5,12 +5,17 @@ from sphinx.application import Sphinx
 from sphinx.builders.latex import LaTeXBuilder
 from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.environment import BuildEnvironment
+from sphinx.errors import NoUri
 
 from mlx.directives.item_directive import Item as dut
 from mlx.traceable_collection import TraceableCollection
 from mlx.traceable_item import TraceableItem
 
 from parameterized import parameterized
+
+
+def raise_no_uri(*args, **kwargs):
+    raise NoUri
 
 
 class TestItemDirective(TestCase):
@@ -22,13 +27,14 @@ class TestItemDirective(TestCase):
         self.node['id'] = 'some_id'
         self.node['line'] = 1
         self.item = TraceableItem(self.node['id'])
-        self.item.set_document(self.node['document'], self.node['line'])
-        self.item.bind_node(self.node)
+        self.item.set_location(self.node['document'], self.node['line'])
+        self.item.node = self.node
         self.app.config = Mock()
         self.app.config.traceability_hyperlink_colors = {}
 
     def test_make_internal_item_ref_no_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
+        mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment()
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
@@ -42,12 +48,13 @@ class TestItemDirective(TestCase):
         self.assertEqual(ref_node.tagname, 'reference')
         self.assertEqual(em_node.rawsource, 'some_id')
         self.assertEqual(str(em_node.children[0]), 'some_id')
-        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['default'])
+        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['default'][f'{self.node["document"]}.html'])
         self.assertNotIn('nocaptions', self.app.builder.env.traceability_ref_nodes[self.node['id']])
         self.assertNotIn('onlycaptions', self.app.builder.env.traceability_ref_nodes[self.node['id']])
 
     def test_make_internal_item_ref_show_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
+        mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment()
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
@@ -63,10 +70,11 @@ class TestItemDirective(TestCase):
         self.assertEqual(str(em_node), '<emphasis>some_id : caption text</emphasis>')
         self.assertEqual(ref_node.tagname, 'reference')
         self.assertEqual(em_node.rawsource, 'some_id : caption text')
-        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['default'])
+        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['default'][f'{self.node["document"]}.html'])
 
     def test_make_internal_item_ref_only_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
+        mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment()
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
@@ -86,10 +94,11 @@ class TestItemDirective(TestCase):
             '</emphasis>')
         self.assertEqual(ref_node.tagname, 'reference')
         self.assertEqual(em_node.rawsource, 'caption text')
-        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['onlycaptions'])
+        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['onlycaptions'][f'{self.node["document"]}.html'])
 
-    def test_make_internal_item_ref_hide_caption(self):
+    def test_make_internal_item_ref_hide_caption_html(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
+        mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment()
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
@@ -108,10 +117,11 @@ class TestItemDirective(TestCase):
                          '</emphasis>')
         self.assertEqual(ref_node.tagname, 'reference')
         self.assertEqual(em_node.rawsource, 'some_id')
-        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['nocaptions'])
+        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['nocaptions'][f'{self.node["document"]}.html'])
 
     def test_make_internal_item_ref_hide_caption_latex(self):
         mock_builder = MagicMock(spec=LaTeXBuilder)
+        mock_builder.get_relative_uri = Mock(side_effect=raise_no_uri)
         mock_builder.env = BuildEnvironment()
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
@@ -127,7 +137,7 @@ class TestItemDirective(TestCase):
         self.assertEqual(str(em_node), '<emphasis>some_id</emphasis>')
         self.assertEqual(ref_node.tagname, 'reference')
         self.assertEqual(em_node.rawsource, 'some_id')
-        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['nocaptions'])
+        self.assertEqual(p_node, self.app.builder.env.traceability_ref_nodes[self.node['id']]['nocaptions'][''])
 
     @parameterized.expand([
         ("ext_toolname", True),
