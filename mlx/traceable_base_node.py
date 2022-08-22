@@ -86,7 +86,11 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         if notification_item:
             item_info = notification_item
         try:
-            newnode['refuri'] = app.builder.get_relative_uri(self['document'], item_info.docname)
+            if self['document'] == item_info.docname and hasattr(app.builder, 'link_suffix'):
+                relative_path = item_info.docname + app.builder.link_suffix
+            else:
+                relative_path = app.builder.get_relative_uri(self['document'], item_info.docname)
+            newnode['refuri'] = relative_path
             newnode['refuri'] += '#' + item_info.identifier
             newnode['refdocname'] = item_info.docname
         except NoUri:
