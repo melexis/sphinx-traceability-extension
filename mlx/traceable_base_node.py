@@ -83,15 +83,12 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
 
         newnode = nodes.reference('', '')
         innernode = nodes.emphasis(display_text, display_text)
+        if notification_item:
+            item_info = notification_item
         try:
-            if not notification_item:
-                newnode['refuri'] = app.builder.get_relative_uri(self['document'], item_info.docname)
-                newnode['refuri'] += '#' + item_id
-                newnode['refdocname'] = item_info.docname
-            else:
-                newnode['refuri'] = app.builder.get_relative_uri(self['document'], notification_item.docname)
-                newnode['refuri'] += '#' + notification_item_id
-                newnode['refdocname'] = notification_item.docname
+            newnode['refuri'] = app.builder.get_relative_uri(self['document'], item_info.docname)
+            newnode['refuri'] += '#' + item_info.identifier
+            newnode['refdocname'] = item_info.docname
         except NoUri:
             # ignore if no URI can be determined, e.g. for LaTeX output :(
             pass
