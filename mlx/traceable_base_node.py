@@ -63,6 +63,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
             display_option = option
             break
         item_info = env.traceability_collection.get_item(item_id)
+        link_item = item_info
         notification_item = None
         p_node = nodes.paragraph()
 
@@ -75,13 +76,13 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
                 txt = nodes.Text('%s not defined, broken link' % item_id)
                 p_node.append(txt)
                 return p_node
-            item_info = notification_item
+            link_item = notification_item
         try:
-            if self['document'] == item_info.docname and hasattr(app.builder, 'link_suffix'):
+            if self['document'] == link_item.docname and hasattr(app.builder, 'link_suffix'):
                 # include filename so that the returned node can be reused on every page in the same directory
-                relative_path = item_info.docname.split(SEP)[-1] + app.builder.link_suffix
+                relative_path = link_item.docname.split(SEP)[-1] + app.builder.link_suffix
             else:
-                relative_path = app.builder.get_relative_uri(self['document'], item_info.docname)
+                relative_path = app.builder.get_relative_uri(self['document'], link_item.docname)
         except NoUri:
             # ignore if no URI can be determined, e.g. for LaTeX output
             relative_path = ''
@@ -93,11 +94,11 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         if relative_path in ref_nodes[item_id][display_option]:
             return ref_nodes[item_id][display_option][relative_path]  # cached paragraph node
 
-        display_text, text_on_hover_node = self._get_caption_info(item_info)
+        display_text, text_on_hover_node = self._get_caption_info(item_info)  # display original item
         newnode = nodes.reference('', '')
         innernode = nodes.emphasis(display_text, display_text)
-        newnode['refuri'] = f"{relative_path}#{item_info.identifier}"
-        newnode['refdocname'] = item_info.docname
+        newnode['refuri'] = f"{relative_path}#{link_item.identifier}"
+        newnode['refdocname'] = link_item.docname
 
         # change text color if item_id matches a regex in traceability_hyperlink_colors
         colors = self._find_colors_for_class(app.config.traceability_hyperlink_colors, item_id)
