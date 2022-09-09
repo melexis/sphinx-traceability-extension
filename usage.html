@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 9.0.2 documentation</title>
+  <title>Usage &mdash; Traceability 9.1.0 documentation</title>
   
 
   
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                9.0.2
+                9.1.0
               </div>
             
           
@@ -744,6 +744,7 @@ to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
     <span class="nc">:result:</span> error, fail, pass
     <span class="nc">:functional:</span> .*
     <span class="nc">:colors:</span> orange c b darkred #FF0000 g
+    <span class="nc">:hidetitle:</span>
 </pre></div>
 </div>
 <p>where the <em>id_set</em> arguments can be replaced by any Python regular expression. The <em>label_set</em> and <em>result</em> arguments
@@ -799,6 +800,10 @@ When omitted, no filtering is done on the source item attributes.</p>
 a color for each label in <em>label_set</em>, followed by as many colors as possible attribute values that you’ve listed
 in the <em>:&lt;&lt;attribute&gt;&gt;:</em> option (<em>:result:</em> in the example). Matplotlib supports many formats, explained in their
 <a class="reference external" href="https://matplotlib.org/stable/gallery/color/color_demo.html#color-demo">demo</a>.</p>
+</dd>
+<dt class="field-even">hidetitle</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>By providing the <em>hidetitle</em> flag, the title will be hidden.</p>
 </dd>
 </dl>
 <div class="admonition note">

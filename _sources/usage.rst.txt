@@ -596,6 +596,7 @@ A pie chart of documentation items can be generated using:
         :result: error, fail, pass
         :functional: .*
         :colors: orange c b darkred #FF0000 g
+        :hidetitle:
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
@@ -650,6 +651,10 @@ are comma-separated lists.
     a color for each label in *label_set*, followed by as many colors as possible attribute values that you've listed
     in the *:<<attribute>>:* option (*:result:* in the example). Matplotlib supports many formats, explained in their
     demo_.
+
+:hidetitle: *optional*, *flag*
+
+    By providing the *hidetitle* flag, the title will be hidden.
 
 .. note::
 
