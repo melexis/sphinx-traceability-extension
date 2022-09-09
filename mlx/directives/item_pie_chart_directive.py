@@ -51,7 +51,7 @@ class ItemPieChart(TraceableBaseNode):
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
         env = app.builder.env
-        top_node = self.create_top_node(self['title'])
+        top_node = self.create_top_node(self['title'], hide_title=self['hidetitle'])
         self.collection = collection
         self.source_relationships = self['sourcetype'] if self['sourcetype'] else self.collection.iter_relations()
         self.target_relationships = self['targettype'] if self['targettype'] else self.collection.iter_relations()
