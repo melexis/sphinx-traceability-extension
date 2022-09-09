@@ -16,7 +16,6 @@ import os
 import subprocess
 import sys
 
-import matplotlib
 import mlx.traceability
 from mlx.traceability import report_warning
 from pkg_resources import get_distribution
@@ -450,10 +449,6 @@ else:
         print("Can't find 'plantuml.jar' file.")
         print("You need to add path to 'plantuml.jar' file to your PATH variable.")
         sys.exit(os.strerror(errno.EPERM))
-
-# Configure Matplotlib to use Lato font
-matplotlib.rcParams['font.sans-serif'] = 'Lato'
-
 
 def setup(app):
 
