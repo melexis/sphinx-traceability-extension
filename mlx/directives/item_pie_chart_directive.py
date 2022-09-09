@@ -8,6 +8,7 @@ import matplotlib as mpl
 if not environ.get('DISPLAY'):
     mpl.use('Agg')
 import matplotlib.pyplot as plt  # pylint: disable=wrong-import-order
+from sphinx.builders.latex import LaTeXBuilder
 
 from mlx.traceability_exception import report_warning
 from mlx.traceable_base_directive import TraceableBaseDirective
@@ -299,9 +300,10 @@ class ItemPieChart(TraceableBaseNode):
             mkdir(folder_name)
         hash_string = str(colors) + str(texts) + str(autotexts)
         hash_value = sha256(hash_string.encode()).hexdigest()  # create hash value based on chart parameters
-        rel_file_path = path.join('_images', 'piechart-{}.png'.format(hash_value))
+        image_format = 'pdf' if isinstance(env.app.builder, LaTeXBuilder) else 'svg'
+        rel_file_path = path.join('_images', 'piechart-{}.{}'.format(hash_value, image_format))
         if rel_file_path not in env.images:
-            fig.savefig(path.join(env.app.srcdir, rel_file_path), format='png', bbox_inches='tight')
+            fig.savefig(path.join(env.app.srcdir, rel_file_path), format=image_format, bbox_inches='tight')
             env.images[rel_file_path] = ['_images', path.split(rel_file_path)[-1]]  # store file name in build env
 
         image_node = nodes.image()
