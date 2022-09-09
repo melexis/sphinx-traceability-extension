@@ -344,6 +344,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :colors: <<color>> ...
          :sourcetype: <<relationship>> ...
          :targettype: <<relationship>> ...
+         :hidetitle:
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -355,6 +356,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'colors': directives.unchanged,
         'sourcetype': directives.unchanged,
         'targettype': directives.unchanged,
+        'hidetitle': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -382,6 +384,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         )
         self.check_relationships(node['sourcetype'], env)
         self.check_relationships(node['targettype'], env)
+        self.check_option_presence(node, 'hidetitle')
 
         return [node]
 
