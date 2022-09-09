@@ -290,10 +290,9 @@ class ItemPieChart(TraceableBaseNode):
         explode = self._get_explode_values(labels, self['label_set'])
         if not colors:
             colors = None
-        fig, axes = plt.subplots()
+        fig, axes = plt.subplots(subplot_kw=dict(aspect="equal"))
         _, texts, autotexts = axes.pie(sizes, explode=explode, labels=labels, autopct=pct_wrapper(sizes),
                                        startangle=90, colors=colors)
-        axes.axis('equal')
         folder_name = path.join(env.app.srcdir, '_images')
         if not path.exists(folder_name):
             mkdir(folder_name)
@@ -301,10 +300,11 @@ class ItemPieChart(TraceableBaseNode):
         hash_value = sha256(hash_string.encode()).hexdigest()  # create hash value based on chart parameters
         rel_file_path = path.join('_images', 'piechart-{}.png'.format(hash_value))
         if rel_file_path not in env.images:
-            fig.savefig(path.join(env.app.srcdir, rel_file_path), format='png')
+            fig.savefig(path.join(env.app.srcdir, rel_file_path), format='png', bbox_inches='tight')
             env.images[rel_file_path] = ['_images', path.split(rel_file_path)[-1]]  # store file name in build env
 
         image_node = nodes.image()
+        image_node['classes'].append('pie-chart')
         image_node['uri'] = rel_file_path
         image_node['candidates'] = '*'  # look at uri value for source path, relative to the srcdir folder
         return image_node
