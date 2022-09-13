@@ -37,7 +37,7 @@ class ItemPieChart(TraceableBaseNode):
         self.source_relationships = []
         self.target_relationships = []
         self.relationship_to_string = {}
-        self.priorities = {}  # default priority order is 'uncovered', 'covered', 'executed'
+        self.priorities = []  # default priority order is 'uncovered', 'covered', 'executed'
         self.nested_target_regex = re.compile('')
         self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
@@ -65,11 +65,11 @@ class ItemPieChart(TraceableBaseNode):
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder:
                 continue
-            self.linked_labels[source_id] = self['label_set'][0].lower()  # default is "uncovered"
+            self.linked_labels[source_id] = self.priorities[0]  # default is "uncovered"
             self.loop_relationships(source_id, source_item, self.source_relationships, target_regex,
                                     self._match_covered)
 
-        data, statistics = self._prepare_labels_and_values(list(self.priorities),
+        data, statistics = self._prepare_labels_and_values(self.priorities,
                                                            list(self.linked_labels.values()),
                                                            self['colors'])
         if data['colors'] and len(data['colors']) < len(data['labels']):
@@ -83,23 +83,34 @@ class ItemPieChart(TraceableBaseNode):
         top_node += p_node
         self.replace_self(top_node)
 
+    def _relationships_to_labels(self, relationships):
+        """ Converts the list of relationships to a list to the corresponding labels.
+
+        The human-readable version of the reverse relationship will be used as label.
+
+        Args:
+            relationships (list): List of relationships (str)
+
+        Returns:
+            list: Labels to use
+        """
+        labels = []
+        for relationship in relationships:
+            reverse_relationship = self.collection.get_reverse_relation(relationship)
+            labels.append(self.relationship_to_string[reverse_relationship].lower())
+        return labels
+
     def _set_priorities(self):
         """ Initializes the priorities dictionary with labels as keys and priority numbers as values. """
-        for idx, label in enumerate(self['label_set']):
-            self.priorities[label] = idx
+        self.priorities = list(self['label_set'])
 
-        extra_labels = []
-        if self['priorities']:
-            extra_labels.extend(self['priorities'])
+        if self['splitsourcetype'] and self['sourcetype']:
+            self.priorities.extend(reversed(self._relationships_to_labels(self['sourcetype'])))
+
+        if self['attr_values']:
+            self.priorities.extend(reversed([val.lower() for val in self['attr_values']]))
         elif self['targettype']:
-            for relationship in self['targettype']:
-                reverse_relationship = self.collection.get_reverse_relation(relationship)
-                extra_labels.append(self.relationship_to_string[reverse_relationship].lower())
-
-        # store :<<attribute>>: or :targettype: arguments in reverse order in lowercase for case-insensitivity
-        for idx, attr in enumerate([value.lower() for value in reversed(extra_labels)],
-                                   start=len(self['label_set'])):
-            self.priorities[attr] = idx
+            self.priorities.extend(reversed(self._relationships_to_labels(self['targettype'])))
 
     def _set_nested_target_regex(self):
         """ Sets the ``nested_target_regex`` if a third item ID in the id_set option is given. """
@@ -115,8 +126,8 @@ class ItemPieChart(TraceableBaseNode):
         """
         if label != self.linked_labels[top_source_id]:
             # store different label if it has a higher priority
-            stored_priority = self.priorities[self.linked_labels[top_source_id]]
-            latest_priority = self.priorities[label]
+            stored_priority = self.priorities.index(self.linked_labels[top_source_id])
+            latest_priority = self.priorities.index(label)
             if latest_priority > stored_priority:
                 self.linked_labels[top_source_id] = label
 
@@ -138,7 +149,8 @@ class ItemPieChart(TraceableBaseNode):
             bool: True when the source item has at least one item linked to it via one of the given relationships
                 and its ID was a match for the given regex; False otherwise
         """
-        has_valid_target_item = False
+        has_valid_target = False
+        consider_nested_targets = True
         for relationship in relationships:
             for target_id in source_item.yield_targets(relationship):
                 target_item = self.collection.get_item(target_id)
@@ -146,41 +158,45 @@ class ItemPieChart(TraceableBaseNode):
                 if not target_item or target_item.is_placeholder:
                     continue
                 if regex.match(target_id):
-                    has_valid_target_item = True
-                    is_covered_nested = match_function(top_source_id, target_item, relationship)
-                    if top_source_id == source_item.identifier and is_covered_nested is False:
-                        # if one target item is not covered by a nested target item, treat top source item as
-                        # covered instead of executed
-                        self.linked_labels[top_source_id] = self['label_set'][1].lower()
-                        return has_valid_target_item
-        return has_valid_target_item
+                    has_valid_target = True
+                    if consider_nested_targets is False:  # at least one target doesn't have a nested target
+                        _ = match_function(top_source_id, None, relationship)
+                    else:
+                        consider_nested_targets = match_function(top_source_id, target_item, relationship)
+        return has_valid_target and consider_nested_targets
 
-    def _match_covered(self, top_source_id, nested_source_item, *_):
+    def _match_covered(self, top_source_id, nested_source_item, relationship):
         """
         Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
         used for labeling, it loops through the target relationships, this time with the matched item as the source.
         Otherwise, if the targettype option is used, those relationships will be used as labels. If no nested
-        target is found, the second label will be used ('covered' by default)
+        target is found or `nested_source_item` is None, the top-level relationship is used to determine the label.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
-            nested_source_item (TraceableItem): Nested traceable item to be used as a source for looping through its
-                relationships, e.g. a test item.
+            nested_source_item (None/TraceableItem): Nested traceable item to be used as a source for looping through
+                its relationships, e.g. a test item. If None, only the given `relationship` is taken into account.
+            relationship (str): Relationship from top-level source item to the target item
 
         Returns:
-            bool: False if no valid target could be found for the nested item; True otherwise
+            bool: False if no valid target could be found for `nested_source_item` or it was None; True otherwise
         """
-        self._store_linked_label(top_source_id, self['label_set'][1].lower())  # default is "covered"
-        if self['targettype'] and not self['priorities']:
-            match_function = self._match_target_types
-        else:
-            match_function = self._match_attribute_values
-        if self.nested_target_regex.pattern:
-            return self.loop_relationships(
+        has_nested_target = False
+        if nested_source_item and self.nested_target_regex.pattern:
+            if self['targettype'] and not self['attr_values']:
+                match_function = self._match_by_type
+            else:
+                match_function = self._match_attribute_values
+            has_nested_target = self.loop_relationships(
                 top_source_id, nested_source_item, self.target_relationships, self.nested_target_regex, match_function)
-        return False
+        if not has_nested_target:
+            if self['splitsourcetype'] and self['sourcetype']:
+                self._match_by_type(top_source_id, None, relationship)
+            else:
+                self.linked_labels[top_source_id] = self.priorities[1]  # default is "covered"
+        return has_nested_target
 
-    def _match_target_types(self, top_source_id, _, relationship):
+    def _match_by_type(self, top_source_id, _, relationship):
         """ Links the reverse of the highest priority relationship of nested relations to the top source id.
 
         Args:
@@ -192,6 +208,7 @@ class ItemPieChart(TraceableBaseNode):
         reverse_relationship = self.collection.get_reverse_relation(relationship)
         reverse_relationship_str = self.relationship_to_string[reverse_relationship].lower()
         self._store_linked_label(top_source_id, reverse_relationship_str)
+        return True
 
     def _match_attribute_values(self, top_source_id, nested_target_item, *_):
         """ Links the highest priority attribute value of nested relations to the top source id.
@@ -208,15 +225,16 @@ class ItemPieChart(TraceableBaseNode):
         # case-insensitivity
         attribute_value = nested_target_item.get_attribute(self['attribute']).lower()
         if attribute_value not in self.priorities:
-            attribute_value = self['label_set'][2].lower()  # default is "executed"
+            attribute_value = self.priorities[2]  # default is "executed"
         self._store_linked_label(top_source_id, attribute_value)
+        return True
 
-    def _prepare_labels_and_values(self, lower_labels, discovered_labels, colors):
+    def _prepare_labels_and_values(self, ordered_labels, discovered_labels, colors):
         """ Keeps case-sensitivity of :<<attribute>>: arguments in labels and calculates slice size based on the
         highest-priority label for each relevant item.
 
         Args:
-            lower_labels (list): List of unique lower-case labels (str), ordered by priority from low to high.
+            ordered_labels (list): List of unique labels (str), ordered by priority from low to high.
             discovered_labels (list): List of labels with the highest priority for each relevant item.
             colors (list): List of colors in the order as they are defined
 
@@ -225,13 +243,16 @@ class ItemPieChart(TraceableBaseNode):
             (str) Coverage statistics.
         """
         # initialize dictionary for each possible value, and count label occurences
-        ordered_colors = colors[:len(lower_labels)]
+        ordered_colors = colors[:len(ordered_labels)]
         if len(colors) > 3:
-            # reverse order for :<<attribute>>: or :targettype:
-            ordered_colors = colors[:3] + colors[len(lower_labels) - 1:2:-1]
+            # reverse order for labels specified by :sourcetype: or :<<attribute>>: or :targettype:
+            sourcetypes = len(self['sourcetype']) if self['splitsourcetype'] else 0
+            ordered_colors[3:3+sourcetypes] = reversed(ordered_colors[3:3+sourcetypes])
+            ordered_colors[3+sourcetypes:] = reversed(ordered_colors[3+sourcetypes:])
+
         pie_data = {
-            'labels': lower_labels,
-            'sizes': [0] * len(lower_labels),
+            'labels': ordered_labels,
+            'sizes': [0] * len(ordered_labels),
             'colors': ordered_colors,
         }
         labels = pie_data['labels']
@@ -248,7 +269,7 @@ class ItemPieChart(TraceableBaseNode):
                 if len(pie_data['colors']) > idx:
                     del pie_data['colors'][idx]
 
-        for priority in self['priorities']:
+        for priority in self['attr_values']:
             priority_lowercase = priority.lower()
             if priority != priority_lowercase and priority_lowercase in pie_data['labels']:
                 index = pie_data['labels'].index(priority_lowercase)
@@ -347,6 +368,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :colors: <<color>> ...
          :sourcetype: <<relationship>> ...
          :targettype: <<relationship>> ...
+         :splitsourcetype:
          :hidetitle:
     """
     # Optional argument: title (whitespace allowed)
@@ -359,6 +381,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'colors': directives.unchanged,
         'sourcetype': directives.unchanged,
         'targettype': directives.unchanged,
+        'splitsourcetype': directives.flag,
         'hidetitle': directives.flag,
     }
     # Content disallowed
@@ -387,7 +410,13 @@ class ItemPieChartDirective(TraceableBaseDirective):
         )
         self.check_relationships(node['sourcetype'], env)
         self.check_relationships(node['targettype'], env)
+        self.check_option_presence(node, 'splitsourcetype')
         self.check_option_presence(node, 'hidetitle')
+
+        if node['splitsourcetype'] and not node['sourcetype']:
+            report_warning('item-piechart: The splitsourcetype flag must not be used when the sourcetype option is '
+                           'unused; disabling splitsourcetype.', node['document'], node['line'])
+            node['splitsourcetype'] = False
 
         return [node]
 
@@ -423,13 +452,13 @@ class ItemPieChartDirective(TraceableBaseDirective):
         A warning is reported when this option is given while the id_set does not contain 3 IDs.
         """
         node['attribute'] = ''
-        node['priorities'] = []
+        node['attr_values'] = []
         for attr in set(TraceableItem.defined_attributes) & set(self.options):
             if ',' not in self.options[attr]:
                 continue  # this :<<attribute>>: is meant for filtering
             if len(node['id_set']) == 3:
                 node['attribute'] = attr
-                node['priorities'] = [x.strip(' ') for x in self.options[attr].split(',')]
+                node['attr_values'] = [x.strip(' ') for x in self.options[attr].split(',') if x]
                 del self.options[attr]
             else:
                 report_warning('item-piechart: The <<attribute>> option is only viable with an id_set with 3 '
