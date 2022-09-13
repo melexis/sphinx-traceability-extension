@@ -595,6 +595,7 @@ A pie chart of documentation items can be generated using:
         :targettype: failed_by passed_by skipped_by
         :result: error, fail, pass
         :functional: .*
+        :splitsourcetype:
         :colors: orange c b darkred #FF0000 g
         :hidetitle:
 
@@ -645,12 +646,18 @@ are comma-separated lists.
     The attribute value is **not** used to filter target items.
     When omitted, no filtering is done on the source item attributes.
 
+:splitsourcetype: *optional*, *flag*
+
+    Enable this flag in combination with the *sourcetype* option to split the slice with the second label in *label_set*
+    into a slice for each relationship between sources and targets. Then, the second label in *label_set* will not
+    be used (but you'll still need to specify a color for it in the *colors* option, if you want custom colors).
+
 :colors: *optional*, *multiple arguments (space-separated)*
 
     By default, matplotlib will choose the colors. This option allows you to define custom colors. You should specify
-    a color for each label in *label_set*, followed by as many colors as possible attribute values that you've listed
-    in the *:<<attribute>>:* option (*:result:* in the example). Matplotlib supports many formats, explained in their
-    demo_.
+    a color for each regex in *id_set*, followed by as many relationships/colors given for *sourcetype* option, if
+    the *splitsourcetype* flag is used, and the *targettype* option or the *<<attribute>>* option (*:result:* in the
+    example). Matplotlib supports many formats, explained in their demo_.
 
 :hidetitle: *optional*, *flag*
 
