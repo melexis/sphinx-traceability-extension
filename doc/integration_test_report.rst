@@ -193,6 +193,16 @@ Integration test reports
     :skipped: ITEST-LIST
     :result: skip
 
+Waivers
+=======
+
+.. item:: WAIVER-NOT_IMPLEMENTED The test case has not been implemented yet.
+    :validates: ITEST_REP-COVERAGE
+    :status: not implemented
+
+.. item:: WAIVER-EXPECTED_FAILURE The failure of the test case was expected.
+    :validates: ITEST_REP-TREE_SCOPE
+
 Attribute details
 =================
 

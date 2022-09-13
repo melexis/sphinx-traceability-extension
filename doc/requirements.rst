@@ -198,6 +198,14 @@ Test coverage
     :targettype: skipped_by passed_by failed_by
     :colors: orange c b y g r
 
+.. item-piechart:: Test cases as source using sourcetype to label with the :splitsourcetype: flag
+    :id_set: [IU]TEST [IU]TEST_REP WAIVER
+    :label_set: not executed, unused, expected failure
+    :sourcetype: failed_by passed_by skipped_by
+    :status: not implemented,
+    :colors: orange black cyan r g y slategrey
+    :splitsourcetype:
+
 .. item-piechart:: All uncovered as the bad sourcetype results in 0 links
     :id_set: RQT [IU]TEST
     :sourcetype: impacts_on
