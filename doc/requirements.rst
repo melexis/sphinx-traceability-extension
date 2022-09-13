@@ -123,7 +123,7 @@ Design coverage
 
 .. item-piechart:: Design coverage chart of functional requirements
     :id_set: RQT DESIGN
-    :label_set: uncovered, covered
+    :label_set: Uncovered, Covered
     :functional: .*
     :sourcetype: fulfilled_by
 
