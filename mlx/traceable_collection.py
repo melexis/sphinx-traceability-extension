@@ -23,6 +23,7 @@ class TraceableCollection:
         self.relations = {}
         self.items = {}
         self.relations_sorted = {}
+        self.placeholders_to_relink = set()
 
     def add_relation_pair(self, forward, reverse=NO_RELATION_STR):
         '''
@@ -196,6 +197,8 @@ class TraceableCollection:
             raise TraceabilityException('No relations configured', 'configuration')
         # Validate each item
         for itemid in self.items:
+            if itemid in self.placeholders_to_relink:
+                return  # This placeholder item will be removed during the processing of the ItemRelink is processed
             item = self.get_item(itemid)
             # Only for relevant items, filtered on document name
             if docname is not None and item.docname != docname and item.docname is not None:

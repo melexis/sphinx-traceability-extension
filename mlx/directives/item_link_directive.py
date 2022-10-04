@@ -15,6 +15,22 @@ class ItemLink(TraceableBaseNode):
             app: Sphinx application object to use.
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
+        if self['sources']:
+            source_items = self['sources']
+        else:
+            source_items = collection.get_items(self['source'], sort=False)
+        if self['targets']:
+            target_items = self['targets']
+        else:
+            target_items = collection.get_items(self['target'], sort=False)
+        # Processing of the item-link items. They get added as additional relationships
+        # to the existing items. Should be done before converting anything to docutils.
+        for source in source_items:
+            for target in target_items:
+                try:
+                    collection.add_relation(source, self['type'], target)
+                except TraceabilityException as err:
+                    report_warning(err, self['docname'], self['line'])
         self.replace_self([])
 
 
@@ -74,24 +90,6 @@ class ItemLinkDirective(TraceableBaseDirective):
                 process_options_success = False
         if not process_options_success:
             return []
-
-        if node['sources']:
-            source_items = node['sources']
-        else:
-            source_items = env.traceability_collection.get_items(node['source'], sort=False)
-        if node['targets']:
-            target_items = node['targets']
-        else:
-            target_items = env.traceability_collection.get_items(node['target'], sort=False)
-
-        # Processing of the item-link items. They get added as additional relationships
-        # to the existing items. Should be done before converting anything to docutils.
-        for source in source_items:
-            for target in target_items:
-                try:
-                    env.traceability_collection.add_relation(source, node['type'], target)
-                except TraceabilityException as err:
-                    report_warning(err, env.docname, self.lineno)
 
         # The ItemLink node has no final representation, so is removed from the tree
         return [node]
