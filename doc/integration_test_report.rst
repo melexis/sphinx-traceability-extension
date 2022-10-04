@@ -748,11 +748,11 @@ This is a subtitle that has a ``item-link`` item under it. You shouldn't see any
 .. test: link to later (bottom of this page) defined source, should not warn
 
 .. item-link::
-    :source: late\d
+    :source: r003|late001|CL
     :type: trace
     :targets: r001
 
-.. warning on next 2 item-links due to the use of all or none of the mutually exclusive options:
+.. warnings on next 2 item-links due to the use of all or none of the mutually exclusive options:
 
 .. item-link::
     :source: late001
