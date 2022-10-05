@@ -122,7 +122,8 @@ involved. In that case, you can use the ``item-link`` directive as follows:
 
 .. note::
 
-    The options ``sources`` and ``targets`` *can* be combined with the options ``target`` and ``source`` respectively.
+    Exactly **1** of the options ``sources`` *or* ``source`` shall be used with exactly **1** of the options ``targets``
+    *or* ``target``.
 
 This directive has no representation in the documentation build output.
 
