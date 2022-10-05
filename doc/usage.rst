@@ -161,6 +161,11 @@ Example usage of the ``item-relink`` directive:
 
 This directive has no representation in the documentation build output.
 
+.. note::
+
+    This ``item-relink`` directive is processed *after* the ``item-link`` directive. Thus, the ``item-link`` directive
+    *can* use the item given to the ``remap`` option.
+
 -------------------------------------------------
 Adding attributes outside of the item definitions
 -------------------------------------------------
