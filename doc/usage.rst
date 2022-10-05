@@ -97,20 +97,20 @@ involved. In that case, you can use the ``item-link`` directive as follows:
         :target: TST[345]
         :type: validates
 
-:sources: *multiple arguments*, *mutually exclusive with ``source``*
+:sources: *multiple arguments*, *mutually exclusive with* ``source``
 
     List of item IDs to add the given forward relationship type to, linking them to every target item.
 
-:source: *single argument*, *mutually exclusive with ``sources``*
+:source: *single argument*, *mutually exclusive with* ``sources``
 
     Regular expression to filter items from the traceable collection and add the given forward relationship type to,
     linking them to every target item.
 
-:targets: *multiple arguments*, *mutually exclusive with ``target``*
+:targets: *multiple arguments*, *mutually exclusive with* ``target``
 
     List of item IDs to add the reverse of the given relationship type to, linking them to every source item.
 
-:target: *single argument*, *mutually exclusive with ``targets``*
+:target: *single argument*, *mutually exclusive with* ``targets``
 
     Regular expression to filter items from the traceable collection and add the reverse of the given relationship type
     to, linking them to every source item.
