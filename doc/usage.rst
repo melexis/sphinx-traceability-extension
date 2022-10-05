@@ -92,9 +92,40 @@ involved. In that case, you can use the ``item-link`` directive as follows:
         :targets: TST3 TST4 TST5
         :type: validates
 
+    .. item-link::
+        :source: RQT1\d
+        :target: TST1\d
+        :type: validates
+
 This directive has no representation in the documentation build output. It will
-just add an additional relationship to the items mentioned in ``sources`` and
-``targets``.
+just add the relationship between source and target item(s).
+
+:sources: *multiple arguments*, *mutually exclusive with source*
+
+    List of item IDs to add the given forward relationship type to, linking them to every target item.
+
+:source: *single argument*, *mutually exclusive with ``sources``*
+
+    Regular expression to filter items from the traceable collection and add the given forward relationship type to,
+    linking them to every target item.
+
+:targets: *multiple arguments*, *mutually exclusive with target*
+
+    List of item IDs to add the reverse of the given relationship type to, linking them to every source item.
+
+:target: *single argument*, *mutually exclusive with ``targets``*
+
+    Regular expression to filter items from the traceable collection and add the reverse of the given relationship type
+    to, linking them to every source item.
+
+:type: *required*, *single argument*
+
+    Relationship type, used to link all source items to all target items.
+    The value must not be empty.
+
+.. note::
+
+    The options ``sources`` and ``targets`` *can* be combined with the options ``target`` and ``source`` respectively.
 
 ------------------------------------------
 Changing targets or removing relationships
