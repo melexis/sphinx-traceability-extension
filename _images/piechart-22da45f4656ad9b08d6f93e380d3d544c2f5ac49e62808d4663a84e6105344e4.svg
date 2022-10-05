@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2022-09-15T19:20:10.626398</dc:date>
+    <dc:date>2022-10-05T14:34:03.025994</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.5.3, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.6.0, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -56,7 +56,7 @@ z
    <g id="matplotlib.axis_2"/>
    <g id="text_1">
     <!-- uncovered -->
-    <g transform="translate(94.259125 265.49252)scale(0.1 -0.1)">
+    <g transform="translate(94.259125 265.49252) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-75" d="M 989 3242 
 L 989 1174 
@@ -300,7 +300,7 @@ z
    </g>
    <g id="text_2">
     <!-- 100% -->
-    <g transform="translate(127.548187 206.909495)scale(0.1 -0.1)">
+    <g transform="translate(127.548187 206.909495) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-31" d="M 800 435 
 L 1782 435 
@@ -448,7 +448,7 @@ z
      <use xlink:href="#Lato-Regular-25" x="174"/>
     </g>
     <!-- (16) -->
-    <g transform="translate(131.785687 217.630745)scale(0.1 -0.1)">
+    <g transform="translate(131.785687 217.630745) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-28" d="M 784 2013 
 Q 784 1328 958 681 

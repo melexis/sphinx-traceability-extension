@@ -92,9 +92,40 @@ involved. In that case, you can use the ``item-link`` directive as follows:
         :targets: TST3 TST4 TST5
         :type: validates
 
-This directive has no representation in the documentation build output. It will
-just add an additional relationship to the items mentioned in ``sources`` and
-``targets``.
+    .. item-link::
+        :source: RQT\d
+        :target: TST[345]
+        :type: validates
+
+:sources: *multiple arguments*, *mutually exclusive with* ``source``
+
+    List of item IDs to add the given forward relationship type to, linking them to every target item.
+
+:source: *single argument*, *mutually exclusive with* ``sources``
+
+    Regular expression to filter items from the traceable collection and add the given forward relationship type to,
+    linking them to every target item.
+
+:targets: *multiple arguments*, *mutually exclusive with* ``target``
+
+    List of item IDs to add the reverse of the given relationship type to, linking them to every source item.
+
+:target: *single argument*, *mutually exclusive with* ``targets``
+
+    Regular expression to filter items from the traceable collection and add the reverse of the given relationship type
+    to, linking them to every source item.
+
+:type: *required*, *single argument*
+
+    Relationship type, used to link all source items to all target items.
+    The value must not be empty.
+
+.. note::
+
+    Exactly **1** of the options ``sources`` *or* ``source`` shall be used with exactly **1** of the options ``targets``
+    *or* ``target``.
+
+This directive has no representation in the documentation build output.
 
 ------------------------------------------
 Changing targets or removing relationships
@@ -129,6 +160,11 @@ Example usage of the ``item-relink`` directive:
     The value must not be empty.
 
 This directive has no representation in the documentation build output.
+
+.. note::
+
+    This ``item-relink`` directive is processed *after* the ``item-link`` directive. Thus, the ``item-link`` directive
+    *can* use the item given to the ``remap`` option.
 
 -------------------------------------------------
 Adding attributes outside of the item definitions

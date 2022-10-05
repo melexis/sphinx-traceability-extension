@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2022-09-15T19:20:10.552865</dc:date>
+    <dc:date>2022-10-05T14:34:02.937608</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.5.3, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.6.0, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -92,7 +92,7 @@ z
    <g id="matplotlib.axis_2"/>
    <g id="text_1">
     <!-- not executed -->
-    <g transform="translate(7.2 235.961729)scale(0.1 -0.1)">
+    <g transform="translate(7.2 235.961729) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-6e" d="M 451 0 
 L 451 3242 
@@ -355,7 +355,7 @@ z
    </g>
    <g id="text_2">
     <!-- 77% -->
-    <g transform="translate(89.406672 190.218179)scale(0.1 -0.1)">
+    <g transform="translate(89.406672 190.218179) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-37" d="M 3459 4586 
 L 3459 4330 
@@ -464,7 +464,7 @@ z
      <use xlink:href="#Lato-Regular-25" x="116"/>
     </g>
     <!-- (24) -->
-    <g transform="translate(90.744172 200.939429)scale(0.1 -0.1)">
+    <g transform="translate(90.744172 200.939429) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-28" d="M 784 2013 
 Q 784 1328 958 681 
@@ -588,7 +588,7 @@ z
    </g>
    <g id="text_3">
     <!-- expected failure -->
-    <g transform="translate(257.633835 113.732292)scale(0.1 -0.1)">
+    <g transform="translate(257.633835 113.732292) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-70" d="M 451 -1098 
 L 451 3242 
@@ -778,7 +778,7 @@ z
    </g>
    <g id="text_4">
     <!-- 3% -->
-    <g transform="translate(199.202632 121.711989)scale(0.1 -0.1)">
+    <g transform="translate(199.202632 121.711989) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-33" d="M 1914 4637 
 Q 2205 4637 2451 4553 
@@ -841,7 +841,7 @@ z
      <use xlink:href="#Lato-Regular-25" x="58"/>
     </g>
     <!-- (1) -->
-    <g transform="translate(200.540132 132.433239)scale(0.1 -0.1)">
+    <g transform="translate(200.540132 132.433239) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-31" d="M 800 435 
 L 1782 435 
@@ -870,7 +870,7 @@ z
    </g>
    <g id="text_5">
     <!-- skipped -->
-    <g transform="translate(243.649532 81.145)scale(0.1 -0.1)">
+    <g transform="translate(243.649532 81.145) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-73" d="M 2339 2707 
 Q 2301 2637 2221 2637 
@@ -963,7 +963,7 @@ z
    </g>
    <g id="text_6">
     <!-- 6% -->
-    <g transform="translate(191.574831 103.937103)scale(0.1 -0.1)">
+    <g transform="translate(191.574831 103.937103) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-36" d="M 1517 2867 
 Q 1453 2790 1398 2716 
@@ -1014,7 +1014,7 @@ z
      <use xlink:href="#Lato-Regular-25" x="58"/>
     </g>
     <!-- (2) -->
-    <g transform="translate(192.912331 114.658353)scale(0.1 -0.1)">
+    <g transform="translate(192.912331 114.658353) scale(0.1 -0.1)">
      <use xlink:href="#Lato-Regular-28"/>
      <use xlink:href="#Lato-Regular-32" x="26.699997"/>
      <use xlink:href="#Lato-Regular-29" x="84.699997"/>
@@ -1022,7 +1022,7 @@ z
    </g>
    <g id="text_7">
     <!-- passes -->
-    <g transform="translate(201.106052 40.704394)scale(0.1 -0.1)">
+    <g transform="translate(201.106052 40.704394) scale(0.1 -0.1)">
      <use xlink:href="#Lato-Regular-70"/>
      <use xlink:href="#Lato-Regular-61" x="56.050003"/>
      <use xlink:href="#Lato-Regular-73" x="105.750015"/>
@@ -1033,7 +1033,7 @@ z
    </g>
    <g id="text_8">
     <!-- 10% -->
-    <g transform="translate(165.469297 81.87859)scale(0.1 -0.1)">
+    <g transform="translate(165.469297 81.87859) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-30" d="M 3520 2291 
 Q 3520 1690 3390 1250 
@@ -1078,7 +1078,7 @@ z
      <use xlink:href="#Lato-Regular-25" x="116"/>
     </g>
     <!-- (3) -->
-    <g transform="translate(169.706797 92.59984)scale(0.1 -0.1)">
+    <g transform="translate(169.706797 92.59984) scale(0.1 -0.1)">
      <use xlink:href="#Lato-Regular-28"/>
      <use xlink:href="#Lato-Regular-33" x="26.699997"/>
      <use xlink:href="#Lato-Regular-29" x="84.699997"/>
@@ -1086,7 +1086,7 @@ z
    </g>
    <g id="text_9">
     <!-- not implemented -->
-    <g transform="translate(156.128125 26.592469)scale(0.1 -0.1)">
+    <g transform="translate(156.128125 26.592469) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-6d" d="M 451 0 
 L 451 3242 
@@ -1145,12 +1145,12 @@ z
    </g>
    <g id="text_10">
     <!-- 3% -->
-    <g transform="translate(143.835882 74.181176)scale(0.1 -0.1)">
+    <g transform="translate(143.835882 74.181176) scale(0.1 -0.1)">
      <use xlink:href="#Lato-Regular-33"/>
      <use xlink:href="#Lato-Regular-25" x="58"/>
     </g>
     <!-- (1) -->
-    <g transform="translate(145.173382 84.902426)scale(0.1 -0.1)">
+    <g transform="translate(145.173382 84.902426) scale(0.1 -0.1)">
      <use xlink:href="#Lato-Regular-28"/>
      <use xlink:href="#Lato-Regular-31" x="26.699997"/>
      <use xlink:href="#Lato-Regular-29" x="84.699997"/>

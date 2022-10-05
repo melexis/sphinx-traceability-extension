@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mlx.traceable_collection &mdash; Traceability 9.2.0 documentation</title>
+  <title>mlx.traceable_collection &mdash; Traceability 9.3.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                9.2.0
+                9.3.0
               </div>
             
           
@@ -187,6 +187,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">relations</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relations_sorted</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">placeholders_to_relink</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TraceableCollection.add_relation_pair"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.add_relation_pair">[docs]</a>    <span class="k">def</span> <span class="nf">add_relation_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forward</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">NO_RELATION_STR</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -360,6 +361,8 @@
             <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;No relations configured&#39;</span><span class="p">,</span> <span class="s1">&#39;configuration&#39;</span><span class="p">)</span>
         <span class="c1"># Validate each item</span>
         <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">placeholders_to_relink</span><span class="p">:</span>
+                <span class="k">return</span>  <span class="c1"># This placeholder item will be removed during the processing of the ItemRelink is processed</span>
             <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
             <span class="c1"># Only for relevant items, filtered on document name</span>
             <span class="k">if</span> <span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span> <span class="o">!=</span> <span class="n">docname</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

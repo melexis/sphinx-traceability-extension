@@ -742,26 +742,26 @@ This is a subtitle that has a ``item-link`` item under it. You shouldn't see any
 
 .. item-link::
     :sources: r001
-    :targets: r002
+    :target: r\d+2
     :type: trace
 
 .. test: link to later (bottom of this page) defined source, should not warn
 
 .. item-link::
-    :sources: late001
+    :source: r003|late001|CL
     :type: trace
     :targets: r001
 
-.. warning on next item-link due to missing sources:
+.. warnings on next 2 item-links due to the use of all or none of the mutually exclusive options:
 
 .. item-link::
+    :source: late001
+    :sources: late001
+    :target: r001
+    :targets: r001
     :type: trace
-    :targets: r100
-
-.. warning on next item-link due to missing targets:
 
 .. item-link::
-    :sources: r100
     :type: trace
 
 .. warning on next item-link due to missing relation type:

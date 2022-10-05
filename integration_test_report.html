@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Integration test report &mdash; Traceability 9.2.0 documentation</title>
+  <title>Integration test report &mdash; Traceability 9.3.0 documentation</title>
   
 
   
@@ -40,6 +40,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
         <script src="_static/traceability.js"></script>
     
@@ -73,7 +74,7 @@
             
             
               <div class="version">
-                9.2.0
+                9.3.0
               </div>
             
           
@@ -355,7 +356,19 @@
 <dt>Traces</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 </p>
 </dd>
-<dt>Traced by</dt><dd><p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
+<dt>Traced by</dt><dd><p><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em>r003 : Item defined after r006 and before r007</em></a></p>
 </p>
 </dd>
 <dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em>r006 : Depends on all</em></a></p>
@@ -537,7 +550,10 @@
 <dt>Fulfilled by</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em>r007 : Depends on all with stereotypes</em></a></p>
 </p>
 </dd>
-<dt>Traces</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<dt>Traces</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
+</p>
+</dd>
+<dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 </p>
 </dd>
 <dt>Traced by</dt><dd><p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em>r005 : Another (does not show captions on the related items)</em></a></p>
@@ -1136,9 +1152,12 @@ at A/B/C/D for increasing safety requirements.</p>
 <p class="admonition-title">All ASIL items</p>
 </div>
 <ul class="simple">
-<li><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></li>
-<li><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></li>
-<li><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></li>
+<li><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</li>
+<li><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</li>
+<li><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</li>
 <li><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em>QUE-UNIT_TESTS : Added unit tests</em></a></p></li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
 </li>
@@ -1211,7 +1230,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <div class="item admonition">
 <p class="admonition-title">All (no captions)</p>
 </div>
-<p>Statistics: 79 out of 93 covered: 84%</p>
+<p>Statistics: 80 out of 93 covered: 86%</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 50%" />
@@ -1223,277 +1242,272 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
+<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p></td>
+<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p></td>
+<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em class="has_hidden_caption">DESIGN-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em class="has_hidden_caption">DESIGN-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em class="has_hidden_caption">DESIGN-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em class="has_hidden_caption">DESIGN-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em class="has_hidden_caption">DESIGN-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em class="has_hidden_caption">DESIGN-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em class="has_hidden_caption">DESIGN-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em class="has_hidden_caption">DESIGN-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em class="has_hidden_caption">DESIGN-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em class="has_hidden_caption">DESIGN-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em class="has_hidden_caption">DESIGN-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em class="has_hidden_caption">DESIGN-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em class="has_hidden_caption">DESIGN-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em class="has_hidden_caption">DESIGN-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em class="has_hidden_caption">DESIGN-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em class="has_hidden_caption">DESIGN-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em class="has_hidden_caption">DESIGN-TRACEABILITY<span class="popup_caption">Top level design for mlx.traceability</span></em></a></p><p><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em class="has_hidden_caption">DESIGN-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em class="has_hidden_caption">DESIGN-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em class="has_hidden_caption">DESIGN-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em class="has_hidden_caption">DESIGN-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em class="has_hidden_caption">DESIGN-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em class="has_hidden_caption">DESIGN-TRACEABILITY<span class="popup_caption">Top level design for mlx.traceability</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em class="has_hidden_caption">DESIGN-TRACEABILITY<span class="popup_caption">Top level design for mlx.traceability</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TRACEABILITY"><em class="has_hidden_caption">RQT-TRACEABILITY<span class="popup_caption">A plugin for sphinx documentation system, adding traceability</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-ATTRIBUTES_MATRIX"><em>ITEST_REP-ATTRIBUTES_MATRIX</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-AUTO_REVERSE"><em class="has_hidden_caption">ITEST-AUTO_REVERSE<span class="popup_caption">Tests automatic creation of reverse relations</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-AUTO_REVERSE"><em class="has_hidden_caption">ITEST-AUTO_REVERSE<span class="popup_caption">Tests automatic creation of reverse relations</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-AUTO_REVERSE"><em>ITEST_REP-AUTO_REVERSE</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em class="has_hidden_caption">ITEST-CAPTION<span class="popup_caption">Tests caption</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em class="has_hidden_caption">ITEST-CAPTION<span class="popup_caption">Tests caption</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-CAPTION"><em class="has_hidden_caption">ITEST_REP-CAPTION<span class="popup_caption">Report with attribute missing from priority list</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-COVERAGE"><em class="has_hidden_caption">ITEST-COVERAGE<span class="popup_caption">Tests calculation of coverage for relations between documentation parts.</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-COVERAGE"><em class="has_hidden_caption">ITEST-COVERAGE<span class="popup_caption">Tests calculation of coverage for relations between documentation parts.</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-COVERAGE"><em>ITEST_REP-COVERAGE</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-LIST"><em class="has_hidden_caption">ITEST-LIST<span class="popup_caption">Tests listing of documentation parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-LIST"><em class="has_hidden_caption">ITEST-LIST<span class="popup_caption">Tests listing of documentation parts</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-LIST"><em>ITEST_REP-LIST</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-MATRIX"><em class="has_hidden_caption">ITEST-MATRIX<span class="popup_caption">Tests auto-generation of traceability matrix.</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-MATRIX"><em class="has_hidden_caption">ITEST-MATRIX<span class="popup_caption">Tests auto-generation of traceability matrix.</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-MATRIX"><em>ITEST_REP-MATRIX</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-TREE"><em>ITEST_REP-TREE</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-TREE_SCOPE"><em>ITEST_REP-TREE_SCOPE</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#ITEST-r100"><em class="has_hidden_caption">ITEST-r100<span class="popup_caption">Test a requirement using the ``requirement`` type</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#ITEST-r100"><em class="has_hidden_caption">ITEST-r100<span class="popup_caption">Test a requirement using the ``requirement`` type</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#ITEST_REP-r100"><em>ITEST_REP-r100</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r100"><em class="has_hidden_caption">r100<span class="popup_caption">A requirement using the ``requirement`` type</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-ATTRIBUTES_MATRIX"><em>ITEST_REP-ATTRIBUTES_MATRIX</em></a></p></td>
+<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-ATTRIBUTES_MATRIX"><em>ITEST_REP-ATTRIBUTES_MATRIX</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-AUTO_REVERSE"><em>ITEST_REP-AUTO_REVERSE</em></a></p></td>
+<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-AUTO_REVERSE"><em>ITEST_REP-AUTO_REVERSE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-AUTO_REVERSE"><em class="has_hidden_caption">ITEST-AUTO_REVERSE<span class="popup_caption">Tests automatic creation of reverse relations</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-CAPTION"><em class="has_hidden_caption">ITEST_REP-CAPTION<span class="popup_caption">Report with attribute missing from priority list</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-CAPTION"><em class="has_hidden_caption">ITEST_REP-CAPTION<span class="popup_caption">Report with attribute missing from priority list</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em class="has_hidden_caption">ITEST-CAPTION<span class="popup_caption">Tests caption</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-COVERAGE"><em>ITEST_REP-COVERAGE</em></a></p></td>
+<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-COVERAGE"><em>ITEST_REP-COVERAGE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-COVERAGE"><em class="has_hidden_caption">ITEST-COVERAGE<span class="popup_caption">Tests calculation of coverage for relations between documentation parts.</span></em></a></p><p><a class="reference external" href="integration_test_report.html#WAIVER-NOT_IMPLEMENTED"><em class="has_hidden_caption">WAIVER-NOT_IMPLEMENTED<span class="popup_caption">The test case has not been implemented yet.</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-LIST"><em>ITEST_REP-LIST</em></a></p></td>
+<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-LIST"><em>ITEST_REP-LIST</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-LIST"><em class="has_hidden_caption">ITEST-LIST<span class="popup_caption">Tests listing of documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-MATRIX"><em>ITEST_REP-MATRIX</em></a></p></td>
+<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-MATRIX"><em>ITEST_REP-MATRIX</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-MATRIX"><em class="has_hidden_caption">ITEST-MATRIX<span class="popup_caption">Tests auto-generation of traceability matrix.</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-TREE"><em>ITEST_REP-TREE</em></a></p></td>
+<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-TREE"><em>ITEST_REP-TREE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-TREE_SCOPE"><em>ITEST_REP-TREE_SCOPE</em></a></p></td>
+<tr class="row-even"><td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-TREE_SCOPE"><em>ITEST_REP-TREE_SCOPE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p><p><a class="reference external" href="integration_test_report.html#WAIVER-EXPECTED_FAILURE"><em class="has_hidden_caption">WAIVER-EXPECTED_FAILURE<span class="popup_caption">The failure of the test case was expected.</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#ITEST_REP-r100"><em>ITEST_REP-r100</em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#ITEST_REP-r100"><em>ITEST_REP-r100</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#ITEST-r100"><em class="has_hidden_caption">ITEST-r100<span class="popup_caption">Test a requirement using the ``requirement`` type</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#QUE-PACKAGE_TEST"><em class="has_hidden_caption">QUE-PACKAGE_TEST<span class="popup_caption">Tested the package</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-PACKAGE_TEST"><em class="has_hidden_caption">QUE-PACKAGE_TEST<span class="popup_caption">Tested the package</span></em></a></p></td>
 <td><p><a class="reference external" href="checklist.html#QUE-PROCESS"><em class="has_hidden_caption">QUE-PROCESS<span class="popup_caption">Followed the process</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-PROCESS"><em class="has_hidden_caption">QUE-PROCESS<span class="popup_caption">Followed the process</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#QUE-PROCESS"><em class="has_hidden_caption">QUE-PROCESS<span class="popup_caption">Followed the process</span></em></a></p></td>
 <td><p><a class="reference external" href="checklist.html#QUE-PACKAGE_TEST"><em class="has_hidden_caption">QUE-PACKAGE_TEST<span class="popup_caption">Tested the package</span></em></a></p><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em class="has_hidden_caption">QUE-UNIT_TESTS<span class="popup_caption">Added unit tests</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em class="has_hidden_caption">QUE-UNIT_TESTS<span class="popup_caption">Added unit tests</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#QUE-UNIT_TESTS"><em class="has_hidden_caption">QUE-UNIT_TESTS<span class="popup_caption">Added unit tests</span></em></a></p></td>
 <td><p><a class="reference external" href="checklist.html#QUE-PROCESS"><em class="has_hidden_caption">QUE-PROCESS<span class="popup_caption">Followed the process</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
+<td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em class="has_hidden_caption">DESIGN-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em class="has_hidden_caption">DESIGN-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-AUTO_REVERSE"><em class="has_hidden_caption">ITEST-AUTO_REVERSE<span class="popup_caption">Tests automatic creation of reverse relations</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em class="has_hidden_caption">DESIGN-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em class="has_hidden_caption">ITEST-CAPTION<span class="popup_caption">Tests caption</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION"><em>UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em class="has_hidden_caption">DESIGN-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em class="has_hidden_caption">DESIGN-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-COVERAGE"><em class="has_hidden_caption">ITEST-COVERAGE<span class="popup_caption">Tests calculation of coverage for relations between documentation parts.</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em class="has_hidden_caption">DESIGN-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-ITEMIZE"><em class="has_hidden_caption">DESIGN-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TRACEABILITY"><em class="has_hidden_caption">RQT-TRACEABILITY<span class="popup_caption">A plugin for sphinx documentation system, adding traceability</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-LIST"><em class="has_hidden_caption">ITEST-LIST<span class="popup_caption">Tests listing of documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em class="has_hidden_caption">DESIGN-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-MATRIX"><em class="has_hidden_caption">ITEST-MATRIX<span class="popup_caption">Tests auto-generation of traceability matrix.</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-PERFORMANCE"><em class="has_hidden_caption">RQT-PERFORMANCE<span class="popup_caption">The plugin shall be performant</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-PERFORMANCE"><em class="has_hidden_caption">RQT-PERFORMANCE<span class="popup_caption">The plugin shall be performant</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TRACEABILITY"><em class="has_hidden_caption">RQT-TRACEABILITY<span class="popup_caption">A plugin for sphinx documentation system, adding traceability</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-RELATED"><em>UTEST_TRACEABLE_COLLECTION-RELATED</em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TRACEABILITY"><em class="has_hidden_caption">RQT-TRACEABILITY<span class="popup_caption">A plugin for sphinx documentation system, adding traceability</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TRACEABILITY"><em class="has_hidden_caption">RQT-TRACEABILITY<span class="popup_caption">A plugin for sphinx documentation system, adding traceability</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em class="has_hidden_caption">DESIGN-TRACEABILITY<span class="popup_caption">Top level design for mlx.traceability</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ITEMIZE"><em class="has_hidden_caption">RQT-ITEMIZE<span class="popup_caption">Allow splitting the documentation in parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-PERFORMANCE"><em class="has_hidden_caption">RQT-PERFORMANCE<span class="popup_caption">The plugin shall be performant</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0001"><em class="has_hidden_caption">SRS_0001<span class="popup_caption">Software saying hello</span></em></a></p>
+<tr class="row-odd"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0001"><em class="has_hidden_caption">SRS_0001<span class="popup_caption">Software saying hello</span></em></a></p>
 </td>
 <td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0001"><em class="has_hidden_caption">SYS_0001<span class="popup_caption">Saying hello</span></em></a></p>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0002"><em class="has_hidden_caption">SRS_0002<span class="popup_caption">Software saying goodbye</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0002"><em class="has_hidden_caption">SRS_0002<span class="popup_caption">Software saying goodbye</span></em></a></p></td>
 <td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0002"><em class="has_hidden_caption">SYS_0002<span class="popup_caption">Saying goodbye</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0001"><em class="has_hidden_caption">SYS_0001<span class="popup_caption">Saying hello</span></em></a></p>
+<tr class="row-odd"><td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0001"><em class="has_hidden_caption">SYS_0001<span class="popup_caption">Saying hello</span></em></a></p>
 </td>
 <td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0001"><em class="has_hidden_caption">SRS_0001<span class="popup_caption">Software saying hello</span></em></a></p>
 <p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0002"><em class="has_hidden_caption">SYS_0002<span class="popup_caption">Saying goodbye</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0002"><em class="has_hidden_caption">SYS_0002<span class="popup_caption">Saying goodbye</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0002"><em class="has_hidden_caption">SYS_0002<span class="popup_caption">Saying goodbye</span></em></a></p></td>
 <td><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0002"><em class="has_hidden_caption">SRS_0002<span class="popup_caption">Software saying goodbye</span></em></a></p><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0001"><em class="has_hidden_caption">SYS_0001<span class="popup_caption">Saying hello</span></em></a></p>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION"><em>UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION</em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION"><em>UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
-<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
+<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-RELATED"><em>UTEST_TRACEABLE_COLLECTION-RELATED</em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-RELATED"><em>UTEST_TRACEABLE_COLLECTION-RELATED</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
-<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
-<td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="integration_test_report.html#WAIVER-EXPECTED_FAILURE"><em class="has_hidden_caption">WAIVER-EXPECTED_FAILURE<span class="popup_caption">The failure of the test case was expected.</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="integration_test_report.html#WAIVER-EXPECTED_FAILURE"><em class="has_hidden_caption">WAIVER-EXPECTED_FAILURE<span class="popup_caption">The failure of the test case was expected.</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-TREE_SCOPE"><em>ITEST_REP-TREE_SCOPE</em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="integration_test_report.html#WAIVER-NOT_IMPLEMENTED"><em class="has_hidden_caption">WAIVER-NOT_IMPLEMENTED<span class="popup_caption">The test case has not been implemented yet.</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="integration_test_report.html#WAIVER-NOT_IMPLEMENTED"><em class="has_hidden_caption">WAIVER-NOT_IMPLEMENTED<span class="popup_caption">The test case has not been implemented yet.</span></em></a></p></td>
 <td><p><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-COVERAGE"><em>ITEST_REP-COVERAGE</em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
-<td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 </td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
 </td>
-<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 </td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r100"><em class="has_hidden_caption">r100<span class="popup_caption">A requirement using the ``requirement`` type</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r100"><em class="has_hidden_caption">r100<span class="popup_caption">A requirement using the ``requirement`` type</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#ITEST-r100"><em class="has_hidden_caption">ITEST-r100<span class="popup_caption">Test a requirement using the ``requirement`` type</span></em></a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="implementation.html#IMPL-TRACEABILITY_EXCEPTION"><em>IMPL-TRACEABILITY_EXCEPTION</em></a></p></td>
 <td><p></p></td>
@@ -1526,6 +1540,12 @@ at A/B/C/D for increasing safety requirements.</p>
 </td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r008"><em class="has_hidden_caption">r008<span class="popup_caption">Requirement with invalid reference to other one</span></em></a></p></td>
 <td><p></p></td>
 </tr>
@@ -1551,12 +1571,24 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td rowspan="4"><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
+<tr class="row-even"><td rowspan="8"><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
 </td>
-<td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em>r003 : Item defined after r006 and before r007</em></a></p>
 </td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em>r006 : Depends on all</em></a></p>
@@ -1631,10 +1663,22 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em>r003 : Item defined after r006 and before r007</em></a></p>
 </td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em>r006 : Depends on all</em></a></p>
@@ -2042,7 +2086,7 @@ at A/B/C/D for increasing safety requirements.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
@@ -2122,7 +2166,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <tbody>
 <tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
@@ -2215,7 +2259,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <tbody>
 <tr class="row-even"><td rowspan="3"><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
@@ -2328,8 +2372,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td rowspan="7"><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td rowspan="7"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<tr class="row-even"><td rowspan="5"><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
+<td rowspan="5"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
@@ -2337,12 +2381,6 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p></td>
@@ -2452,99 +2490,90 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td rowspan="9"><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td rowspan="6"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
+<tr class="row-odd"><td rowspan="6"><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em class="has_hidden_caption">DESIGN-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
+<td rowspan="3"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES"><em class="has_hidden_caption">RQT-ATTRIBUTES<span class="popup_caption">Documentation parts can have attributes</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_NO_OVERWRITE</em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_ATTRIBUTE</em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE"><em>UTEST_TRACEABLE_ITEM-REMOVE_INVALID_ATTRIBUTE</em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td rowspan="2"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
-<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p></td>
-<td><p></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td rowspan="2"><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
-<td rowspan="2"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<tr class="row-even"><td rowspan="2"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em class="has_hidden_caption">DESIGN-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DUMMY"><em class="has_hidden_caption">RQT-DUMMY<span class="popup_caption">Dummy requirement that is not covered by a test</span></em></a></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">DESIGN-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<td rowspan="2"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">RQT-ATTRIBUTES_MATRIX<span class="popup_caption">Overview of attributes on documentation parts</span></em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE</em></a></p></td>
+<td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-ATTRIBUTES_MATRIX"><em class="has_hidden_caption">ITEST-ATTRIBUTES_MATRIX<span class="popup_caption">Tests overview of attributes on documentation parts</span></em></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTE_SORT"><em class="has_hidden_caption">DESIGN-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-ATTRIBUTE_SORT"><em class="has_hidden_caption">RQT-ATTRIBUTE_SORT<span class="popup_caption">Custom sorting of items' attributes</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES"><em>UTEST_TRACEABLE_COLLECTION-GET_ITEMS_SORTATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em class="has_hidden_caption">DESIGN-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-AUTO_REVERSE"><em class="has_hidden_caption">DESIGN-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-AUTO_REVERSE"><em class="has_hidden_caption">RQT-AUTO_REVERSE<span class="popup_caption">Automatic creation of reverse relations</span></em></a></p></td>
 <td><p></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-AUTO_REVERSE"><em class="has_hidden_caption">ITEST-AUTO_REVERSE<span class="popup_caption">Tests automatic creation of reverse relations</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td rowspan="2"><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em class="has_hidden_caption">DESIGN-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
+<tr class="row-odd"><td rowspan="2"><p><a class="reference external" href="design.html#DESIGN-CAPTION"><em class="has_hidden_caption">DESIGN-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 <td rowspan="2"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CAPTION"><em class="has_hidden_caption">RQT-CAPTION<span class="popup_caption">Brief description of documentation part</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION"><em>UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em class="has_hidden_caption">ITEST-CAPTION<span class="popup_caption">Tests caption</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CAPTION"><em>UTEST_TRACEABLE_ITEM-SET_CAPTION</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em class="has_hidden_caption">DESIGN-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-CONTENT"><em class="has_hidden_caption">DESIGN-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-CONTENT"><em class="has_hidden_caption">RQT-CONTENT<span class="popup_caption">Content of documentation part</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-SET_CONTENT"><em>UTEST_TRACEABLE_ITEM-SET_CONTENT</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em class="has_hidden_caption">DESIGN-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-COVERAGE"><em class="has_hidden_caption">DESIGN-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-COVERAGE"><em class="has_hidden_caption">RQT-COVERAGE<span class="popup_caption">Calculation of coverage for relations between documentation parts</span></em></a></p></td>
 <td><p></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-COVERAGE"><em class="has_hidden_caption">ITEST-COVERAGE<span class="popup_caption">Tests calculation of coverage for relations between documentation parts.</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em class="has_hidden_caption">DESIGN-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-DOCUMENTATION_ID"><em class="has_hidden_caption">DESIGN-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-DOCUMENTATION_ID"><em class="has_hidden_caption">RQT-DOCUMENTATION_ID<span class="popup_caption">Identification of documentation part</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-LIST"><em class="has_hidden_caption">DESIGN-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-LIST"><em class="has_hidden_caption">RQT-LIST<span class="popup_caption">Listing documentation parts</span></em></a></p></td>
 <td><p></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-LIST"><em class="has_hidden_caption">ITEST-LIST<span class="popup_caption">Tests listing of documentation parts</span></em></a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em class="has_hidden_caption">DESIGN-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-MATRIX"><em class="has_hidden_caption">DESIGN-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-MATRIX"><em class="has_hidden_caption">RQT-MATRIX<span class="popup_caption">Auto-generation of a traceability matrix</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_ITEM_MATRIX-STORE_ROW"><em>UTEST_ITEM_MATRIX-STORE_ROW</em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-MATRIX"><em class="has_hidden_caption">ITEST-MATRIX<span class="popup_caption">Tests auto-generation of traceability matrix.</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="design.html#DESIGN-RELATIONS"><em class="has_hidden_caption">DESIGN-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-RELATIONS"><em class="has_hidden_caption">RQT-RELATIONS<span class="popup_caption">Documentation parts can be linked to each other</span></em></a></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_COLLECTION-RELATED"><em>UTEST_TRACEABLE_COLLECTION-RELATED</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td rowspan="2"><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
+<tr class="row-odd"><td rowspan="2"><p><a class="reference external" href="design.html#DESIGN-TREE"><em class="has_hidden_caption">DESIGN-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td rowspan="2"><p><a class="h7f00ff_hb369ff reference external" href="requirements.html#RQT-TREE"><em class="has_hidden_caption">RQT-TREE<span class="popup_caption">Auto-generation of a traceability tree</span></em></a></p></td>
 <td><p></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE"><em class="has_hidden_caption">ITEST-TREE<span class="popup_caption">Tests auto-generation of a traceability tree.</span></em></a></p></td>
 </tr>
-<tr class="row-odd"><td><p></p></td>
+<tr class="row-even"><td><p></p></td>
 <td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-TREE_SCOPE"><em class="has_hidden_caption">ITEST-TREE_SCOPE<span class="popup_caption">Tests scope of a traceability tree.</span></em></a></p></td>
 </tr>
 </tbody>
@@ -2650,7 +2679,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <div class="item admonition">
 <p class="admonition-title">Basic item matrix with attributes of source and target</p>
 </div>
-<p>Statistics: 7 out of 93 covered: 7% (uncovered items are hidden)</p>
+<p>Statistics: 10 out of 93 covered: 10% (uncovered items are hidden)</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 11%" />
@@ -2676,7 +2705,46 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
+<td><p>A</p></td>
+<td><p></p></td>
+<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+<td><p>Draft</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>1</p></td>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p></td>
+<td><p>A</p></td>
+<td><p></p></td>
+<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+<td><p>Draft</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>1</p></td>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p></td>
+<td><p>A</p></td>
+<td><p></p></td>
+<td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+<td><p>Draft</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>1</p></td>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
@@ -2684,11 +2752,12 @@ at A/B/C/D for increasing safety requirements.</p>
 <td></td>
 <td><p>C</p></td>
 <td><p>1</p></td>
-<td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
 <td><p>C</p></td>
 <td><p>1</p></td>
 <td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
@@ -2701,7 +2770,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 </td>
 <td><p>C</p></td>
 <td><p></p></td>
@@ -2712,16 +2781,26 @@ at A/B/C/D for increasing safety requirements.</p>
 <td></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td rowspan="2"><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<tr class="row-even"><td rowspan="3"><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
 </td>
-<td rowspan="2"><p>A</p></td>
-<td rowspan="2"><p></p></td>
+<td rowspan="3"><p>A</p></td>
+<td rowspan="3"><p></p></td>
 <td><p><span class="target" id="namespace-group-document"></span><a class="reference external" href="http://toolname.company.com/namespace/group/workitem?document">namespace:group:document</a></p></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
+</tr>
+<tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em class="has_hidden_caption">r001<span class="popup_caption">First requirement</span></em></a></p></td>
+<td><p>Draft</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>1</p></td>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
+</td>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
 </td>
@@ -2771,7 +2850,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td></td>
 <td><p>C</p></td>
 <td><p>1</p></td>
-<td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 </tr>
@@ -2811,7 +2891,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td></td>
 <td><p>C</p></td>
 <td><p>1</p></td>
-<td><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
+<td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em class="has_hidden_caption">CL-SOME_ITEM<span class="popup_caption">A checklist item from a different PR</span></em></a></p><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em class="has_hidden_caption">CL-UNDEFINED_CL_ITEM<span class="popup_caption">Item that should be a checklist-item</span></em></a></p><p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em class="has_hidden_caption">r003<span class="popup_caption">Item defined after r006 and before r007</span></em></a></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em class="has_hidden_caption">r006<span class="popup_caption">Depends on all</span></em></a></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r007"><em class="has_hidden_caption">r007<span class="popup_caption">Depends on all with stereotypes</span></em></a></p>
 </td>
 </tr>
@@ -2983,15 +3064,18 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</td>
 <td><p>A</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
 <td><p>A</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
 <td><p>A</p></td>
 <td><p></p></td>
 </tr>
@@ -3342,13 +3426,11 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
-</td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
-</td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
@@ -3622,7 +3704,8 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -3635,7 +3718,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p>no</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -3648,7 +3732,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p>yes</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -4656,8 +4741,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
-</td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -4670,8 +4754,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
-</td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -6265,7 +6348,8 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -6278,7 +6362,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p>yes</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -6291,7 +6376,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p>no</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -6633,13 +6719,16 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</td>
 <td><p>A</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
 <td><p>A</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
 <td><p>A</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="design.html#DESIGN-ATTRIBUTES"><em>DESIGN-ATTRIBUTES : Documentation parts can have attributes</em></a></p>
@@ -6917,12 +7006,10 @@ at A/B/C/D for increasing safety requirements.</p>
 </td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
-</td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
-</td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-INIT"><em>UTEST_TRACEABLE_ITEM-INIT</em></a></p>
@@ -8012,8 +8099,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
-</td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -8068,8 +8154,7 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
-</td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -8166,7 +8251,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -8179,7 +8265,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p>yes</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -8192,7 +8279,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p>no</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
 <td><p></p></td>
 <td><p>A</p></td>
 <td><p></p></td>
@@ -8427,22 +8515,25 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</td>
+<td><p>x</p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
+<td><p>x</p></td>
 <td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
+<td><p>x</p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -9011,16 +9102,14 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p>
-</td>
+<tr class="row-odd"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE"><em>UTEST_TRACEABLE_ITEM-ADD_ATTRIBUTE_OVERWRITE</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p>
-</td>
+<tr class="row-even"><td><p><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="unit_test.html#UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES"><em>UTEST_TRACEABLE_ITEM-GET_ATTRIBUTES</em></a></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -9109,7 +9198,7 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em>r003 : Item defined after r006 and before r007</em></a></p>
 </td>
-<td><p></p></td>
+<td><p>x</p></td>
 <td><p>x</p></td>
 <td><p>x</p></td>
 <td><p>x</p></td>
@@ -9195,18 +9284,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</td>
+<td><p>x</p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -9215,8 +9295,20 @@ at A/B/C/D for increasing safety requirements.</p>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</td>
+<td><p>x</p></td>
 <td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</td>
+<td><p>x</p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
@@ -9237,7 +9329,7 @@ at A/B/C/D for increasing safety requirements.</p>
 </tr>
 <tr class="row-even"><td><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em>r003 : Item defined after r006 and before r007</em></a></p>
 </td>
-<td><p></p></td>
+<td><p>x</p></td>
 <td><p>x</p></td>
 <td><p></p></td>
 <td><p>x</p></td>
@@ -9411,7 +9503,32 @@ at A/B/C/D for increasing safety requirements.</p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
 <ul class="bonsai">
 <li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="reference external" href="checklist.html#CL-ANOTHER_ONE"><em>CL-ANOTHER_ONE</em></a></p>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="reference external" href="checklist.html#CL-SOME_ITEM"><em>CL-SOME_ITEM : A checklist item from a different PR</em></a></p>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="reference external" href="checklist.html#CL-UNDEFINED_CL_ITEM"><em>CL-UNDEFINED_CL_ITEM : Item that should be a checklist-item</em></a></p>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
 <p><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r003"><em>r003 : Item defined after r006 and before r007</em></a></p>
+<ul class="bonsai">
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em>r005 : Another (does not show captions on the related items)</em></a></p>
+<ul class="bonsai">
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em>r006 : Depends on all</em></a></p>
+</li>
+</ul>
+</li>
+<li class="has-children collapsed"><p class="thumb"></p>
+<p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em>r006 : Depends on all</em></a></p>
+</li>
+</ul>
 </li>
 <li class="has-children collapsed"><p class="thumb"></p>
 <p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r006"><em>r006 : Depends on all</em></a></p>
