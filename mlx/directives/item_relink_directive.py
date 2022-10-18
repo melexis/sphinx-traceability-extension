@@ -8,14 +8,21 @@ from mlx.traceable_base_node import TraceableBaseNode
 
 class ItemRelink(TraceableBaseNode):
     """Relinking of documentation items"""
+    order = 2  # after ItemLink
 
     def perform_replacement(self, app, collection):
-        """ Processes the item-link items, which shall be done before converting anything to docutils.
-
-        The ItemRelink node has no final representation, so is removed from the tree.
+        """ The ItemRelink node has no final representation, so is removed from the tree.
 
         Args:
             app: Sphinx application object to use.
+            collection (TraceableCollection): Collection for which to generate the nodes.
+        """
+        self.replace_self([])
+
+    def apply_effect(self, collection):
+        """ Processes the item-relink items, which shall be done before converting anything to docutils.
+
+        Args:
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
         source_id = self['remap']
@@ -26,11 +33,11 @@ class ItemRelink(TraceableBaseNode):
 
         if source is None:
             report_warning("Could not find item {!r} specified in item-relink directive".format(source_id))
-            return []
+            return
         if not reverse_type:
             report_warning("Could not find reverse relationship type for type {!r} specified in item-relink directive"
                            .format(forward_type))
-            return []
+            return
 
         affected_items = set()
         for item_id in source.yield_targets(reverse_type):
@@ -45,7 +52,6 @@ class ItemRelink(TraceableBaseNode):
         # Remove source from collection if it is not defined as an item
         if source.is_placeholder:
             collection.items.pop(source_id)
-        self.replace_self([])
 
 
 class ItemRelinkDirective(TraceableBaseDirective):
@@ -86,5 +92,5 @@ class ItemRelinkDirective(TraceableBaseDirective):
         )
         if not process_options_success:
             return []
-        env.traceability_collection.placeholders_to_relink.add(node['remap'])
+        env.traceability_collection.add_intermediate_node(node)
         return [node]

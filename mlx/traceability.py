@@ -191,8 +191,7 @@ class PendingItemXref(TraceableBaseNode):
 
 # -----------------------------------------------------------------------------
 # Event handlers
-
-def perform_consistency_check(app, doctree):
+def perform_consistency_check(app, env):
     """
     New in sphinx 1.6: consistency checker callback
 
@@ -201,8 +200,7 @@ def perform_consistency_check(app, doctree):
     If the ``checklist_item_regex`` is configured, a warning is reported
     for each item ID that matches it and is not defined as a checklist-item.
     """
-    env = app.builder.env
-
+    env.traceability_collection.process_intermediate_nodes()
     try:
         env.traceability_collection.self_test(app.config.traceability_notifications.get('undefined-reference'))
     except TraceabilityException as err:
