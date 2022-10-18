@@ -10,6 +10,16 @@ Unit Tests
 Unit Tests for mlx.traceability
 -------------------------------
 
+.. item-relink::
+    :remap: RQT-ATTRIBUTES_FAKE
+    :target: RQT-ATTRIBUTES
+    :type: validates
+
+.. item-link::
+    :sources: RQT-ATTRIBUTES_FAKE
+    :targets: UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE
+    :type: validated_by
+
 .. item:: UTEST_TRACEABLE_ITEM-INIT
     :validates: RQT-DOCUMENTATION_ID
 
@@ -48,13 +58,3 @@ Unit Tests for mlx.traceability
 
 .. item:: UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
     :validates: RQT-CAPTION
-
-.. item-link::
-    :sources: RQT-ATTRIBUTES_FAKE
-    :targets: UTEST_TRACEABLE_COLLECTION-GET_ITEMS_ATTRIBUTE
-    :type: validated_by
-
-.. item-relink::
-    :remap: RQT-ATTRIBUTES_FAKE
-    :target: RQT-ATTRIBUTES
-    :type: validates
