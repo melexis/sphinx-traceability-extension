@@ -7,12 +7,22 @@ from mlx.traceable_base_node import TraceableBaseNode
 
 class ItemLink(TraceableBaseNode):
     '''Linking of documentation items'''
+    order = 1  # before ItemRelink
 
     def perform_replacement(self, app, collection):
-        """ Processes the item-link items. The ItemLink node has no final representation, so is removed from the tree.
+        """ The ItemLink node has no final representation, so is removed from the tree.
 
         Args:
             app: Sphinx application object to use.
+            collection (TraceableCollection): Collection for which to generate the nodes.
+        """
+        self.replace_self([])
+
+    def apply_effect(self, collection):
+        """ Processes the item-link items, which shall be done before converting anything to docutils and before any
+        item-relink items have been processed.
+
+        Args:
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
         if self['sources']:
@@ -31,7 +41,6 @@ class ItemLink(TraceableBaseNode):
                     collection.add_relation(source, self['type'], target)
                 except TraceabilityException as err:
                     report_warning(err, self['docname'], self['line'])
-        self.replace_self([])
 
 
 class ItemLinkDirective(TraceableBaseDirective):
@@ -90,6 +99,5 @@ class ItemLinkDirective(TraceableBaseDirective):
                 process_options_success = False
         if not process_options_success:
             return []
-
-        # The ItemLink node has no final representation, so is removed from the tree
+        env.traceability_collection.add_intermediate_node(node)
         return [node]
