@@ -60,7 +60,8 @@ class TraceableItem(TraceableBaseClass):
                 targets.update(self.explicit_relations[relation])
             if relation in self.implicit_relations:
                 targets.update(self.implicit_relations[relation])
-            yield relation, natsorted(targets)
+            if targets:
+                yield relation, natsorted(targets)
 
     @staticmethod
     def _add_relations(relations_of_self, relations_of_other):
