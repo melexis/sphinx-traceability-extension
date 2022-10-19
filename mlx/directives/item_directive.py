@@ -151,6 +151,8 @@ class ItemDirective(TraceableBaseDirective):
         if 'class' in self.options:
             item_node['classes'].extend(self.options.get('class'))
         item = self._store_item_info(target_id, env)
+        if item is None:
+            return []
 
         # Custom callback for modifying items
         if app.config.traceability_callback_per_item:
@@ -164,12 +166,14 @@ class ItemDirective(TraceableBaseDirective):
     def _store_item_info(self, target_id, env):
         """ Stores item info and adds TraceableItem to the collection.
 
+        If an item with the same identifier already exists, a warning will be reported and this item info is ignored.
+
         Args:
             target_id (str): Item identifier.
             env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
 
         Returns:
-            TraceableItem: Instantiated TraceableItem.
+            TraceableItem/None: Instantiated TraceableItem; or None if an item with the same identifier already exists
         """
         target_node = nodes.target('', '', ids=[target_id])
         item = TraceableItem(target_id, state=self.state)
@@ -181,6 +185,7 @@ class ItemDirective(TraceableBaseDirective):
             env.traceability_collection.add_item(item)
         except TraceabilityException as err:
             report_warning(err, env.docname, self.lineno)
+            return None
 
         self._add_attributes(item, env.docname)
 
