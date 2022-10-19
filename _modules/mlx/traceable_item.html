@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mlx.traceable_item &mdash; Traceability 9.3.0 documentation</title>
+  <title>mlx.traceable_item &mdash; Traceability 9.3.1 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                9.3.0
+                9.3.1
               </div>
             
           
@@ -224,7 +224,8 @@
                 <span class="n">targets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">:</span>
                 <span class="n">targets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">])</span>
-            <span class="k">yield</span> <span class="n">relation</span><span class="p">,</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">targets</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">relation</span><span class="p">,</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_add_relations</span><span class="p">(</span><span class="n">relations_of_self</span><span class="p">,</span> <span class="n">relations_of_other</span><span class="p">):</span>
