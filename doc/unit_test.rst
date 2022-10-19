@@ -10,6 +10,8 @@ Unit Tests
 Unit Tests for mlx.traceability
 -------------------------------
 
+.. test item-link defined before item-relink and item definitions: item-link shall always be processed first
+
 .. item-relink::
     :remap: RQT-ATTRIBUTES_FAKE
     :target: RQT-ATTRIBUTES
@@ -57,4 +59,15 @@ Unit Tests for mlx.traceability
     :validates: RQT-MATRIX
 
 .. item:: UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
-    :validates: RQT-CAPTION
+
+.. test item-relink defined after item-link and item definitions: item-link shall always be processed first
+
+.. item-link::
+    :sources: nonexistent_item
+    :targets: RQT-CAPTION
+    :type: validates
+
+.. item-relink::
+    :remap: nonexistent_item
+    :target: UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
+    :type: validated_by
