@@ -201,6 +201,7 @@ def perform_consistency_check(app, env):
     for each item ID that matches it and is not defined as a checklist-item.
     """
     env.traceability_collection.process_intermediate_nodes()
+    ItemRelink.remove_placeholders(env.traceability_collection)
     try:
         env.traceability_collection.self_test(app.config.traceability_notifications.get('undefined-reference'))
     except TraceabilityException as err:

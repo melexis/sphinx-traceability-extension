@@ -9,6 +9,7 @@ from mlx.traceable_base_node import TraceableBaseNode
 class ItemRelink(TraceableBaseNode):
     """Relinking of documentation items"""
     order = 2  # after ItemLink
+    source_ids = set()
 
     def perform_replacement(self, app, collection):
         """ The ItemRelink node has no final representation, so is removed from the tree.
@@ -49,10 +50,23 @@ class ItemRelink(TraceableBaseNode):
             source.remove_targets(item_id, explicit=True, implicit=True, relations={reverse_type})
             if target_id:
                 collection.add_relation(item_id, forward_type, target_id)
+        self.source_ids.add(source_id)
 
-        # Remove source from collection if it is not defined as an item
-        if source.is_placeholder:
-            collection.items.pop(source_id)
+    @staticmethod
+    def remove_placeholders(collection):
+        """Removes items that are no longer needed to avoid a warning about them being undefined.
+
+        Items that are no longer needed are placeholders without any targets; if it has targets left, i.e. they have
+        not been relinked, a warning for each target will be reported.
+
+        Args:
+            collection (TraceableCollection): Collection for which to generate the nodes.
+        """
+        for source_id in ItemRelink.source_ids:
+            source = collection.get_item(source_id)
+            if source.is_placeholder and not [targets for _,targets in source.all_relations if targets]:
+                print(f'poppingg {source_id}')
+                collection.items.pop(source_id)
 
 
 class ItemRelinkDirective(TraceableBaseDirective):
