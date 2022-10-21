@@ -64,7 +64,7 @@ class ItemRelink(TraceableBaseNode):
         """
         for source_id in ItemRelink.source_ids:
             source = collection.get_item(source_id)
-            if source.is_placeholder and not [targets for _,targets in source.all_relations if targets]:
+            if source.is_placeholder and not [targets for _, targets in source.all_relations if targets]:
                 print(f'poppingg {source_id}')
                 collection.items.pop(source_id)
 
