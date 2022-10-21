@@ -40,7 +40,7 @@ class ItemLink(TraceableBaseNode):
                 try:
                     collection.add_relation(source, self['type'], target)
                 except TraceabilityException as err:
-                    report_warning(err, self['docname'], self['line'])
+                    report_warning(err, self['document'], self['line'])
 
 
 class ItemLinkDirective(TraceableBaseDirective):
