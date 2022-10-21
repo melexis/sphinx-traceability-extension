@@ -192,10 +192,9 @@ class PendingItemXref(TraceableBaseNode):
 # -----------------------------------------------------------------------------
 # Event handlers
 def perform_consistency_check(app, env):
-    """
-    New in sphinx 1.6: consistency checker callback
+    """Called once in between Sphinx' read stage and write stage.
 
-    Used to perform the self-test on the collection of items
+    Used to perform (re)linking of item-link and item-relink and perform the self-test on the collection of items.
 
     If the ``checklist_item_regex`` is configured, a warning is reported
     for each item ID that matches it and is not defined as a checklist-item.
