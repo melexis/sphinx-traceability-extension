@@ -469,9 +469,7 @@ def _parse_description(description, attr_values, merge_request_id, regex):
 # Extension setup
 def setup(app):
     """Extension setup"""
-
     # Javascript and stylesheet for the tree-view
-    # app.add_js_file('jquery.js') #note: can only be included once
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
     app.add_js_file('traceability.js')
