@@ -77,7 +77,8 @@ class ItemPieChart(TraceableBaseNode):
                            .format(len(data['labels']), len(data['labels']) - len(data['colors'])),
                            self['document'], self['line'])
         p_node = nodes.paragraph()
-        p_node += nodes.Text(statistics)
+        if self['stats']:
+            p_node += nodes.Text(statistics)
         if data['labels']:
             top_node += self.build_pie_chart(data['sizes'], data['labels'], data['colors'], env)
         top_node += p_node
@@ -370,6 +371,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :targettype: <<relationship>> ...
          :splitsourcetype:
          :hidetitle:
+         :stats:
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -383,6 +385,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'targettype': directives.unchanged,
         'splitsourcetype': directives.flag,
         'hidetitle': directives.flag,
+        'stats': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -412,6 +415,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         self.check_relationships(node['targettype'], env)
         self.check_option_presence(node, 'splitsourcetype')
         self.check_option_presence(node, 'hidetitle')
+        self.check_option_presence(node, 'stats')
 
         if node['splitsourcetype'] and not node['sourcetype']:
             report_warning('item-piechart: The splitsourcetype flag must not be used when the sourcetype option is '
