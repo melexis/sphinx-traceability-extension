@@ -633,10 +633,6 @@ Pie chart of documentation items
 
 A pie chart of documentation items can be generated using:
 
-.. warning::
-
-    Starting from version 10.0.0, pie chart statistics will be hidden unless the *stats* flag is provided.
-
 .. code-block:: rest
 
     .. item-piechart:: Test coverage of requirements with report results
