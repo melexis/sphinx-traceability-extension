@@ -633,6 +633,10 @@ Pie chart of documentation items
 
 A pie chart of documentation items can be generated using:
 
+.. warning::
+
+    Starting from version 10.0.0, pie chart statistics will be hidden unless the *stats* flag is provided.
+
 .. code-block:: rest
 
     .. item-piechart:: Test coverage of requirements with report results
@@ -645,6 +649,7 @@ A pie chart of documentation items can be generated using:
         :splitsourcetype:
         :colors: orange c b darkred #FF0000 g
         :hidetitle:
+        :stats:
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
@@ -709,6 +714,11 @@ are comma-separated lists.
 :hidetitle: *optional*, *flag*
 
     By providing the *hidetitle* flag, the title will be hidden.
+
+:stats: *optional*, *flag*
+
+    By providing the *stats* flag, some statistics (coverage percentage) are calculated and displayed below the
+    pie chart.
 
 .. note::
 
