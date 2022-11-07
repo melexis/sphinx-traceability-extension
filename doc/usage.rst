@@ -180,16 +180,25 @@ involved. In that case, you can use the ``attribute-link`` directive as follows:
         :asil: D
         :status: Approved
 
-This directive has no representation in the documentation build output. It will
-just add an additional attribute(s) to the items of which their ID.
-
 In the above example, the *asil* and *status* attributes with given values get
 added to all items that have an ID that starts with *RQT-*. If your documentation defines
 items *RQT-1* and *RQT-11*, but you only want to add an attribute to item *RQT-1*, you
 should use the ``filter`` option with value *RQT-1$*. If the ``filter`` option is missing,
 all items will be affected. Newline characters in the ``filter`` regex get removed.
 
-.. note:: This directive overwrites any attribute values configured in the ``item`` directive.
+:filter: *required*, *single argument*
+
+    Regular expression to filter items from the traceable collection and give them the provided attributes.
+
+:<<attribute>>: *optional*, *single argument*
+
+    Value of ``<<attribute>>`` to give to the matching items.
+
+:overwrite: *optional*, *flag*
+
+    When enabled, overwrite existing values of ``<<attribute>>``.
+
+This directive has no representation in the documentation build output.
 
 --------------------------------
 Adding description to attributes
