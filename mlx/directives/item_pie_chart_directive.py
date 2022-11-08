@@ -59,6 +59,11 @@ class ItemPieChart(TraceableBaseNode):
         self.target_relationships = self['targettype'] if self['targettype'] else self.collection.iter_relations()
         self.relationship_to_string = app.config.traceability_relationship_to_string
         self._set_priorities()
+        if self['colors'] and len(self['colors']) < len(self.priorities):
+            report_warning("item-piechart can contain up to {} slices but only {} colors have been provided: some "
+                           "colors may be reused".format(len(self.priorities), len(self['colors'])),
+                           self['document'], self['line'])
+
         self._set_nested_target_regex()
         target_regex = re.compile(self['id_set'][1])
         for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
@@ -73,10 +78,6 @@ class ItemPieChart(TraceableBaseNode):
         data, statistics = self._prepare_labels_and_values(self.priorities,
                                                            list(self.linked_labels.values()),
                                                            self['colors'])
-        if data['colors'] and len(data['colors']) < len(data['labels']):
-            report_warning("item-piechart contains {} slices: {} color(s) will be reused"
-                           .format(len(data['labels']), len(data['labels']) - len(data['colors'])),
-                           self['document'], self['line'])
         p_node = nodes.paragraph()
         p_node += nodes.Text(statistics)
         if data['labels']:
