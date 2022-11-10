@@ -6,7 +6,6 @@ Traceability plugin
 Sphinx extension for reStructuredText that added traceable documentation items.
 See readme for more details.
 """
-import warnings
 from collections import namedtuple
 from re import fullmatch, match
 from os import path
