@@ -192,15 +192,15 @@ class PendingItemXref(TraceableBaseNode):
 # -----------------------------------------------------------------------------
 # Event handlers
 def perform_consistency_check(app, env):
-    """
-    New in sphinx 1.6: consistency checker callback
+    """Called once in between Sphinx' read stage and write stage.
 
-    Used to perform the self-test on the collection of items
+    Used to perform (re)linking of item-link and item-relink and perform the self-test on the collection of items.
 
     If the ``checklist_item_regex`` is configured, a warning is reported
     for each item ID that matches it and is not defined as a checklist-item.
     """
     env.traceability_collection.process_intermediate_nodes()
+    ItemRelink.remove_placeholders(env.traceability_collection)
     try:
         env.traceability_collection.self_test(app.config.traceability_notifications.get('undefined-reference'))
     except TraceabilityException as err:
@@ -466,9 +466,7 @@ def _parse_description(description, attr_values, merge_request_id, regex):
 # Extension setup
 def setup(app):
     """Extension setup"""
-
     # Javascript and stylesheet for the tree-view
-    # app.add_js_file('jquery.js') #note: can only be included once
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
     app.add_js_file('traceability.js')

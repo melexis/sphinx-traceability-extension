@@ -326,6 +326,7 @@ class ItemPieChart(TraceableBaseNode):
         if rel_file_path not in env.images:
             fig.savefig(path.join(env.app.srcdir, rel_file_path), format=image_format, bbox_inches='tight')
             env.images[rel_file_path] = ['_images', path.split(rel_file_path)[-1]]  # store file name in build env
+        plt.close(fig)
 
         image_node = nodes.image()
         image_node['classes'].append('pie-chart')
