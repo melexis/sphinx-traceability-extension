@@ -20,10 +20,11 @@ class AttributeLink(TraceableBaseNode):
         filtered_items = collection.get_item_objects(self['filter'])
         for attribute, value in self['filter-attributes'].items():
             for item in filtered_items:
-                try:
-                    item.add_attribute(attribute, value)
-                except TraceabilityException as err:
-                    report_warning(err, self['document'], self['line'])
+                if not self['nooverwrite'] or not item.get_attribute(attribute):
+                    try:
+                        item.add_attribute(attribute, value)
+                    except TraceabilityException as err:
+                        report_warning(err, self['document'], self['line'])
         self.replace_self([])
 
 
@@ -37,10 +38,12 @@ class AttributeLinkDirective(TraceableBaseDirective):
       .. attribute-link::
          :filter: regex
          :<<attribute>>: attribute_value
+         :nooverwrite:
     """
     # Options
     option_spec = {
         'filter': directives.unchanged,
+        'nooverwrite': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -60,5 +63,6 @@ class AttributeLinkDirective(TraceableBaseDirective):
             },
         )
         self.add_found_attributes(node)
+        self.check_option_presence(node, 'nooverwrite')
 
         return [node]
