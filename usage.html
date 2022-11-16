@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 9.3.2 documentation</title>
+  <title>Usage &mdash; Traceability 9.4.0 documentation</title>
   
 
   
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                9.3.2
+                9.4.0
               </div>
             
           
@@ -394,19 +394,30 @@ involved. In that case, you can use the <code class="docutils literal notranslat
     <span class="nc">:filter:</span> RQT-
     <span class="nc">:asil:</span> D
     <span class="nc">:status:</span> Approved
+    <span class="nc">:nooverwrite:</span>
 </pre></div>
 </div>
-<p>This directive has no representation in the documentation build output. It will
-just add an additional attribute(s) to the items of which their ID.</p>
 <p>In the above example, the <em>asil</em> and <em>status</em> attributes with given values get
 added to all items that have an ID that starts with <em>RQT-</em>. If your documentation defines
 items <em>RQT-1</em> and <em>RQT-11</em>, but you only want to add an attribute to item <em>RQT-1</em>, you
 should use the <code class="docutils literal notranslate"><span class="pre">filter</span></code> option with value <em>RQT-1$</em>. If the <code class="docutils literal notranslate"><span class="pre">filter</span></code> option is missing,
 all items will be affected. Newline characters in the <code class="docutils literal notranslate"><span class="pre">filter</span></code> regex get removed.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This directive overwrites any attribute values configured in the <code class="docutils literal notranslate"><span class="pre">item</span></code> directive.</p>
-</div>
+<dl class="field-list">
+<dt class="field-odd">filter</dt>
+<dd class="field-odd"><p><em>required</em>, <em>single argument</em></p>
+<p>Regular expression to filter items from the traceable collection and give them the provided attributes.</p>
+</dd>
+<dt class="field-even">&lt;&lt;attribute&gt;&gt;</dt>
+<dd class="field-even"><p><em>optional</em>, <em>single argument</em></p>
+<p>Value of <code class="docutils literal notranslate"><span class="pre">&lt;&lt;attribute&gt;&gt;</span></code> to give to the matching items.</p>
+</dd>
+<dt class="field-odd">nooverwrite</dt>
+<dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
+<p>When enabled, do not overwrite existing values of <code class="docutils literal notranslate"><span class="pre">&lt;&lt;attribute&gt;&gt;</span></code>. It can be used to provide a default value for
+a given attribute.</p>
+</dd>
+</dl>
+<p>This directive has no representation in the documentation build output.</p>
 </div>
 <div class="section" id="adding-description-to-attributes">
 <h2><a class="toc-backref" href="#id7">Adding description to attributes</a><a class="headerlink" href="#adding-description-to-attributes" title="Permalink to this heading">¶</a></h2>
