@@ -123,7 +123,7 @@ involved. In that case, you can use the ``item-link`` directive as follows:
 
 :nooverwrite: *optional*, *flag*
 
-    Do not report an error when existing value already matches.
+    Do not report a warning when the relationship to add between the target and new source already exists.
 
 .. note::
 
@@ -167,7 +167,7 @@ Example usage of the ``item-relink`` directive:
 
 :nooverwrite: *optional*, *flag*
 
-    Do not report an error when existing value already matches.
+    Do not report a warning when the relationship to add between the target and new source already exists.
 
 This directive has no representation in the documentation build output.
 
