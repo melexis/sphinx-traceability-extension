@@ -40,7 +40,8 @@ class ItemLink(TraceableBaseNode):
                 try:
                     collection.add_relation(source, self['type'], target)
                 except TraceabilityException as err:
-                    report_warning(err, self['document'], self['line'])
+                    if not self['nooverwrite']:
+                        report_warning(err, self['document'], self['line'])
 
 
 class ItemLinkDirective(TraceableBaseDirective):
@@ -55,6 +56,7 @@ class ItemLinkDirective(TraceableBaseDirective):
          :target: regexp
          :targets: list_of_items
          :type: relationship_type
+         :nooverwrite: flag
     """
     # Options
     option_spec = {
@@ -63,6 +65,7 @@ class ItemLinkDirective(TraceableBaseDirective):
         'target': directives.unchanged,
         'targets': directives.unchanged,
         'type': directives.unchanged,
+        'nooverwrite': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -97,6 +100,8 @@ class ItemLinkDirective(TraceableBaseDirective):
                 report_warning(f"item-link: expected exactly one of the following options but got {option_amount}: "
                                f"{mutually_exclusive_options}", env.docname, self.lineno)
                 process_options_success = False
+
+        self.check_option_presence(node, 'nooverwrite')
         if not process_options_success:
             return []
         env.traceability_collection.add_intermediate_node(node)
