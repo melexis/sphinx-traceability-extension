@@ -33,12 +33,12 @@ class ItemRelink(TraceableBaseNode):
         reverse_type = collection.get_reverse_relation(forward_type)
 
         if source is None:
-            report_warning("Could not find item {!r} specified in item-relink directive".format(source_id),
+            report_warning("Could not find item {!r} with type {!r} specified in item-relink directive".format(source_id, forward_type),
                            self['document'], self['line'])
             return
         if not reverse_type:
-            report_warning("Could not find reverse relationship type for type {!r} specified in item-relink directive"
-                           .format(forward_type), self['document'], self['line'])
+            report_warning("Could not find reverse relationship type for type {!r} specified in {!r} item-relink directive"
+                           .format(forward_type, source_id), self['document'], self['line'])
             return
 
         affected_items = set()
