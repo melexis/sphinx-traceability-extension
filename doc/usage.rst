@@ -123,7 +123,7 @@ involved. In that case, you can use the ``item-link`` directive as follows:
 
 :nooverwrite: *optional*, *flag*
 
-    Do not report a warning when the relationship to add between the target and new source already exists.
+    Do not report a warning when the relationship to add between the source and target already exists.
 
 .. note::
 
