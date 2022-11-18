@@ -143,6 +143,7 @@ Example usage of the ``item-relink`` directive:
         :remap: RQT-OLD_PROJECT
         :target: RQT-NEW_PROJECT
         :type: validates
+        :nooverwrite:
 
 :remap: *required*, *single argument*
 
@@ -158,6 +159,10 @@ Example usage of the ``item-relink`` directive:
 
     Relationship type, for which the values for the ``remap`` and ``target`` options are the target.
     The value must not be empty.
+
+:nooverwrite: *optional*, *flag*
+
+    Do not report an error when existing value already matches.
 
 This directive has no representation in the documentation build output.
 
