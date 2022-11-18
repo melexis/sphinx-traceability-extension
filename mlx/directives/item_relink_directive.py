@@ -39,7 +39,7 @@ class ItemRelink(TraceableBaseNode):
         if not reverse_type:
             report_warning(("Could not find reverse relationship type for type {!r} specified in "
                             "{!r} item-relink directive").format(forward_type, source_id),
-                            self['document'], self['line'])
+                           self['document'], self['line'])
             return
 
         affected_items = set()
