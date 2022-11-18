@@ -96,6 +96,7 @@ involved. In that case, you can use the ``item-link`` directive as follows:
         :source: RQT\d
         :target: TST[345]
         :type: validates
+        :nooverwrite:
 
 :sources: *multiple arguments*, *mutually exclusive with* ``source``
 
@@ -119,6 +120,10 @@ involved. In that case, you can use the ``item-link`` directive as follows:
 
     Relationship type, used to link all source items to all target items.
     The value must not be empty.
+
+:nooverwrite: *optional*, *flag*
+
+    Do not report an error when existing value already matches.
 
 .. note::
 
