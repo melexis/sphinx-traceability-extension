@@ -6,7 +6,6 @@ Traceability plugin
 Sphinx extension for reStructuredText that added traceable documentation items.
 See readme for more details.
 """
-import warnings
 from collections import namedtuple
 from re import fullmatch, match
 from os import path
@@ -216,9 +215,6 @@ def perform_consistency_check(app, env):
     if app.config.traceability_hyperlink_colors:
         app.add_css_file('hyperlink_colors.css')
         generate_color_css(app, app.config.traceability_hyperlink_colors)
-        if [regex for regex in app.config.traceability_hyperlink_colors if not regex.startswith('^')]:
-            warnings.warn('Regexes in traceability_hyperlink_colors will be handled by re.match instead of re.search '
-                          'in mlx.traceability>=9', DeprecationWarning)
 
     regex = app.config.traceability_checklist.get('checklist_item_regex')
     if regex is not None and app.config.traceability_checklist['has_checklist_items']:

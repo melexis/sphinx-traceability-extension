@@ -354,25 +354,20 @@ Custom colors for linked items
 ------------------------------
 
 The plugin allows customization of the colors of traceable items in order to easily recognize the type of item which is
-linked to. A dictionary in the configuration file defines the regexp, which is used to search_ item IDs, as key and a
+linked to. A dictionary in the configuration file defines the regexp, which is used to match_ item IDs, as key and a
 tuple of 1-3 color defining strings as value. The first color is used for the default hyperlink state, the second color
 is used for the hover and active states, and the third color is used to override the default color of the visited state.
 Leaving a color empty results in the use of the default html style. The top regexp has the highest priority. To support
 Python versions lower than 3.7, we use an :code:`OrderedDict` to have a deterministic order for prioritizing regexes.
 
-.. warning::
-
-    In version 9.0.0, the regular expressions in `traceability_hyperlink_colors` will be used to match_ item IDs
-    instead of search_. This way, all regexes will be handled the same way by this plugin.
-
 .. code-block:: python
 
     traceability_hyperlink_colors = OrderedDict([
-        (r'^(RQT|r[\d]+', ('#7F00FF', '#b369ff')),
-        (r'^[IU]TEST_REP', ('rgba(255, 0, 0, 1)', 'rgba(255, 0, 0, 0.7)', 'rgb(200, 0, 0)')),
-        (r'^[IU]TEST', ('goldenrod', 'hsl(43, 62%, 58%)', 'darkgoldenrod')),
-        (r'^SYS_', ('', 'springgreen', '')),
-        (r'^SRS_', ('', 'orange', '')),
+        (r'(RQT|r[\d]+', ('#7F00FF', '#b369ff')),
+        (r'[IU]TEST_REP', ('rgba(255, 0, 0, 1)', 'rgba(255, 0, 0, 0.7)', 'rgb(200, 0, 0)')),
+        (r'[IU]TEST', ('goldenrod', 'hsl(43, 62%, 58%)', 'darkgoldenrod')),
+        (r'SYS_', ('', 'springgreen', '')),
+        (r'SRS_', ('', 'orange', '')),
     ])
 
 .. _traceability_notifications:
@@ -475,4 +470,3 @@ per documentation object:
     traceability_render_relationship_per_item = False
 
 .. _match: https://docs.python.org/3/library/re.html#re.match
-.. _search: https://docs.python.org/3/library/re.html#re.search

@@ -194,7 +194,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         """
         for regex, colors in hyperlink_colors.items():
             colors = tuple(colors)
-            if re.search(regex, item_id):
+            if re.match(regex, item_id):
                 return tuple(colors)
         return None
 
