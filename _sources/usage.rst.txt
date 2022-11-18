@@ -96,6 +96,7 @@ involved. In that case, you can use the ``item-link`` directive as follows:
         :source: RQT\d
         :target: TST[345]
         :type: validates
+        :nooverwrite:
 
 :sources: *multiple arguments*, *mutually exclusive with* ``source``
 
@@ -120,6 +121,10 @@ involved. In that case, you can use the ``item-link`` directive as follows:
     Relationship type, used to link all source items to all target items.
     The value must not be empty.
 
+:nooverwrite: *optional*, *flag*
+
+    Do not report a warning when the relationship to add between the source and target already exists.
+
 .. note::
 
     Exactly **1** of the options ``sources`` *or* ``source`` shall be used with exactly **1** of the options ``targets``
@@ -143,6 +148,7 @@ Example usage of the ``item-relink`` directive:
         :remap: RQT-OLD_PROJECT
         :target: RQT-NEW_PROJECT
         :type: validates
+        :nooverwrite:
 
 :remap: *required*, *single argument*
 
@@ -158,6 +164,10 @@ Example usage of the ``item-relink`` directive:
 
     Relationship type, for which the values for the ``remap`` and ``target`` options are the target.
     The value must not be empty.
+
+:nooverwrite: *optional*, *flag*
+
+    Do not report a warning when the relationship to add between the target and new source already exists.
 
 This directive has no representation in the documentation build output.
 
@@ -633,6 +643,10 @@ Pie chart of documentation items
 
 A pie chart of documentation items can be generated using:
 
+.. warning::
+
+    Starting from version 10.0.0, pie chart statistics will be hidden unless the *stats* flag is provided.
+
 .. code-block:: rest
 
     .. item-piechart:: Test coverage of requirements with report results
@@ -645,6 +659,7 @@ A pie chart of documentation items can be generated using:
         :splitsourcetype:
         :colors: orange c b darkred #FF0000 g
         :hidetitle:
+        :stats:
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
@@ -709,6 +724,11 @@ are comma-separated lists.
 :hidetitle: *optional*, *flag*
 
     By providing the *hidetitle* flag, the title will be hidden.
+
+:stats: *optional*, *flag*
+
+    By providing the *stats* flag, some statistics (coverage percentage) are calculated and displayed below the
+    pie chart.
 
 .. note::
 

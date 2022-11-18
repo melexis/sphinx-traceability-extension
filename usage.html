@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; Traceability 9.4.0 documentation</title>
+  <title>Usage &mdash; Traceability 9.5.0 documentation</title>
   
 
   
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                9.4.0
+                9.5.0
               </div>
             
           
@@ -315,6 +315,7 @@ involved. In that case, you can use the <code class="docutils literal notranslat
     <span class="nc">:source:</span> RQT\d
     <span class="nc">:target:</span> TST[345]
     <span class="nc">:type:</span> validates
+    <span class="nc">:nooverwrite:</span>
 </pre></div>
 </div>
 <dl class="field-list">
@@ -341,6 +342,10 @@ to, linking them to every source item.</p>
 <p>Relationship type, used to link all source items to all target items.
 The value must not be empty.</p>
 </dd>
+<dt class="field-even">nooverwrite</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>Do not report a warning when the relationship to add between the source and target already exists.</p>
+</dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -360,6 +365,7 @@ Example usage of the <code class="docutils literal notranslate"><span class="pre
     <span class="nc">:remap:</span> RQT-OLD_PROJECT
     <span class="nc">:target:</span> RQT-NEW_PROJECT
     <span class="nc">:type:</span> validates
+    <span class="nc">:nooverwrite:</span>
 </pre></div>
 </div>
 <dl class="field-list">
@@ -377,6 +383,10 @@ Leave it empty to remove the relationships instead of altering their target.</p>
 <dd class="field-odd"><p><em>required</em>, <em>single argument</em></p>
 <p>Relationship type, for which the values for the <code class="docutils literal notranslate"><span class="pre">remap</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> options are the target.
 The value must not be empty.</p>
+</dd>
+<dt class="field-even">nooverwrite</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>Do not report a warning when the relationship to add between the target and new source already exists.</p>
 </dd>
 </dl>
 <p>This directive has no representation in the documentation build output.</p>
@@ -786,6 +796,10 @@ to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
 <div class="section" id="pie-chart-of-documentation-items">
 <span id="traceability-usage-piechart"></span><h2><a class="toc-backref" href="#id16">Pie chart of documentation items</a><a class="headerlink" href="#pie-chart-of-documentation-items" title="Permalink to this heading">¶</a></h2>
 <p>A pie chart of documentation items can be generated using:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Starting from version 10.0.0, pie chart statistics will be hidden unless the <em>stats</em> flag is provided.</p>
+</div>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-piechart</span><span class="p">::</span> Test coverage of requirements with report results
     <span class="nc">:id_set:</span> RQT TEST TEST_REP
     <span class="nc">:label_set:</span> uncovered, covered, executed
@@ -796,6 +810,7 @@ to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
     <span class="nc">:splitsourcetype:</span>
     <span class="nc">:colors:</span> orange c b darkred #FF0000 g
     <span class="nc">:hidetitle:</span>
+    <span class="nc">:stats:</span>
 </pre></div>
 </div>
 <p>where the <em>id_set</em> arguments can be replaced by any Python regular expression. The <em>label_set</em> and <em>result</em> arguments
@@ -861,6 +876,11 @@ example). Matplotlib supports many formats, explained in their <a class="referen
 <dt class="field-odd">hidetitle</dt>
 <dd class="field-odd"><p><em>optional</em>, <em>flag</em></p>
 <p>By providing the <em>hidetitle</em> flag, the title will be hidden.</p>
+</dd>
+<dt class="field-even">stats</dt>
+<dd class="field-even"><p><em>optional</em>, <em>flag</em></p>
+<p>By providing the <em>stats</em> flag, some statistics (coverage percentage) are calculated and displayed below the
+pie chart.</p>
 </dd>
 </dl>
 <div class="admonition note">
