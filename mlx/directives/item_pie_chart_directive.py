@@ -1,4 +1,5 @@
 import re
+import warnings
 from hashlib import sha256
 from os import environ, mkdir, path
 
@@ -371,6 +372,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :targettype: <<relationship>> ...
          :splitsourcetype:
          :hidetitle:
+         :stats:
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -384,6 +386,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'targettype': directives.unchanged,
         'splitsourcetype': directives.flag,
         'hidetitle': directives.flag,
+        'stats': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -413,11 +416,16 @@ class ItemPieChartDirective(TraceableBaseDirective):
         self.check_relationships(node['targettype'], env)
         self.check_option_presence(node, 'splitsourcetype')
         self.check_option_presence(node, 'hidetitle')
+        self.check_option_presence(node, 'stats')
 
         if node['splitsourcetype'] and not node['sourcetype']:
             report_warning('item-piechart: The splitsourcetype flag must not be used when the sourcetype option is '
                            'unused; disabling splitsourcetype.', node['document'], node['line'])
             node['splitsourcetype'] = False
+
+        if not node['stats']:
+            warnings.warn('Pie chart statistics will not be displayed in mlx.traceability>=10 unless the stats flag '
+                          'is provided.', FutureWarning)
 
         return [node]
 
