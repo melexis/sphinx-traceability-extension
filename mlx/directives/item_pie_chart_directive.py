@@ -310,7 +310,7 @@ class ItemPieChart(TraceableBaseNode):
         Returns:
             (nodes.image) Image node containing the pie chart image.
         """
-        mpl.rcParams['font.sans-serif'] = 'Lato'
+        mpl.rcParams['font.sans-serif'] = ['Lato', 'DejaVu Sans']
         explode = self._get_explode_values(labels, self['label_set'])
         if not colors:
             colors = None
