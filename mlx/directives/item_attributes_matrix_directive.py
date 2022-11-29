@@ -21,6 +21,14 @@ class ItemAttributesMatrix(TraceableBaseNode):
                                         sortattributes=self['sort'],
                                         reverse=self['reverse'])
         top_node = self.create_top_node(self['title'])
+        if not item_ids or not self['attributes']:
+            message = f"Hiding item-attributes-matrix (title {self['title']!r}) because there are no "
+            message += f"{'source items' if not item_ids else 'attributes'} to display"
+            p_node = nodes.paragraph()
+            p_node += nodes.Text(message)
+            top_node += p_node
+            return self.replace_self(top_node)
+
         table = nodes.table()
         if self.get('classes'):
             table.get('classes').extend(self.get('classes'))
