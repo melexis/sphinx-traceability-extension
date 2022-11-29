@@ -355,8 +355,7 @@ def add_checklist_attribute(checklist_config, attributes_config, attribute_to_st
         checklist_config['configured'] = False
     else:
         checklist_config['configured'] = True
-        if not checklist_config.get('checklist_item_regex'):
-            checklist_config['checklist_item_regex'] = r"\S+"
+        checklist_config['checklist_item_regex'] = checklist_config.get('checklist_item_regex', r"\S+")
 
         attr_values = checklist_config['attribute_values'].split(',')
         if len(attr_values) != 2:
