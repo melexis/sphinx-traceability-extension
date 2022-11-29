@@ -355,17 +355,19 @@ def add_checklist_attribute(checklist_config, attributes_config, attribute_to_st
         checklist_config['configured'] = False
     else:
         checklist_config['configured'] = True
-        if not checklist_config.get('checklist_item_regex'):
-            checklist_config['checklist_item_regex'] = r"\S+"
+        checklist_config['checklist_item_regex'] = checklist_config.get('checklist_item_regex', r"\S+")
 
         attr_values = checklist_config['attribute_values'].split(',')
         if len(attr_values) != 2:
             raise TraceabilityException("Checklist attribute values must be two comma-separated strings; got '{}'."
                                         .format(checklist_config['attribute_values']))
         else:
-            regexp = "({}|{})".format(attr_values[0], attr_values[1])
-            attributes_config[checklist_config['attribute_name']] = regexp
-            attribute_to_string_config[checklist_config['attribute_name']] = checklist_config['attribute_to_str']
+            attribute_name = checklist_config['attribute_name']
+            regexes = list(attr_values)
+            if attributes_config.get(attribute_name):
+                regexes.append(attributes_config[attribute_name])
+            attributes_config[attribute_name] = "({})".format("|".join(regexes))
+            attribute_to_string_config[attribute_name] = checklist_config['attribute_to_str']
             if checklist_config.get('api_host_name') and checklist_config.get('project_id') and \
                     checklist_config.get('merge_request_id'):
                 ChecklistItemDirective.query_results = query_checklist(checklist_config, attr_values)
