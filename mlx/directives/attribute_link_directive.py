@@ -7,7 +7,7 @@ from mlx.traceable_base_node import TraceableBaseNode
 
 class AttributeLink(TraceableBaseNode):
     """Node that adds one or more attributes to one or more items."""
-    order = 1
+    order = 3
 
     def perform_replacement(self, app, collection):
         """ The AttributeLink node has no final representation, so it is removed from the tree.
