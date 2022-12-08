@@ -26,6 +26,11 @@ Other requirements
 .. attribute-sort::
     :sort: aspice nonexistent
 
+.. process attribute-link before rendering matrices
+.. attribute-link::
+    :filter: CL-
+    :asil: A
+
 .. triggers a warning about r003 already having a configuration for attribute-sort
 
 .. item:: r001 First requirement
