@@ -7,7 +7,7 @@ project_url = 'https://github.com/melexis/sphinx-traceability-extension'
 requires = [
     'Sphinx>=2.1,<7.0',
     'docutils',
-    'matplotlib<4.*',
+    'matplotlib<4.0',
     'natsort',
     'python-decouple',
     'requests',
