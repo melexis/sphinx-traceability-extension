@@ -682,8 +682,8 @@ Empty tree
 .. item-tree:: Empty
     :top: this_regex_doesnt_match_anything
 
-Succesfull SYS tree
--------------------
+Successful trees
+----------------
 
 .. item-tree:: SYS
     :top: SYS
