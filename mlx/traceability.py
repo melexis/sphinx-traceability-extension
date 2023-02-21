@@ -471,6 +471,7 @@ def setup(app):
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
     app.add_js_file('traceability.js')
+    app.setup_extension('sphinxcontrib.jquery')
 
     # Configuration for exporting collection to json
     app.add_config_value('traceability_json_export_path', None, 'env')
