@@ -34,7 +34,7 @@ jobs:
     - name: Run test
       run: tox -e py
     - name: Build documentation with different Sphinx versions
-      run: tox -e sphinx2.4,sphinx-latest
+      run: tox -e sphinx2.4.5,sphinx-latest
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov
