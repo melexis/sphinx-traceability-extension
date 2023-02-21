@@ -26,6 +26,11 @@ setup(
     description='Sphinx traceability extension (Melexis fork)',
     long_description=open("README.md").read(),
     long_description_content_type='text/markdown',
+    project_urls={
+        'Documentation': 'https://melexis.github.io/sphinx-traceability-extension',
+        'Source': 'https://github.com/melexis/sphinx-traceability-extension',
+        'Tracker': 'https://github.com/melexis/sphinx-traceability-extension/issues',
+    },
     zip_safe=False,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
