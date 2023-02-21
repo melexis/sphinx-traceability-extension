@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -34,7 +34,7 @@ jobs:
     - name: Run test
       run: tox -e py
     - name: Build documentation with different Sphinx versions
-      run: tox -e sphinx2.1,sphinx-latest
+      run: tox -e sphinx2.4.5,sphinx-latest
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov

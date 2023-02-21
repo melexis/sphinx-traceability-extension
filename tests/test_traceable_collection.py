@@ -1,8 +1,5 @@
 from unittest import TestCase
-try:
-    from unittest.mock import MagicMock, patch, mock_open
-except ImportError:
-    from mock import MagicMock, patch, mock_open
+from unittest.mock import patch, mock_open
 
 import mlx.traceable_item as item
 import mlx.traceable_attribute as attribute
@@ -389,10 +386,7 @@ class TestTraceableCollection(TestCase):
             coll.export(self.mock_export_file)
         open_mock.assert_called_once_with(self.mock_export_file, 'w')
 
-    @patch('mlx.traceable_collection.json', autospec=True)
-    def test_export_single_item(self, json_mock):
-        json_mock_object = MagicMock(spec=dut.json)
-        json_mock.return_value = json_mock_object
+    def test_export_single_item(self):
         open_mock = mock_open()
         coll = dut.TraceableCollection()
         item1 = item.TraceableItem(self.identification_src)

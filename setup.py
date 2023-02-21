@@ -5,7 +5,8 @@ from setuptools import setup, find_packages
 project_url = 'https://github.com/melexis/sphinx-traceability-extension'
 
 requires = [
-    'Sphinx>=2.1,<6.0',
+    'Sphinx>=2.4.5,<7.0',
+    'sphinxcontrib-jquery>=3.0.0',
     'docutils',
     'matplotlib<4.0',
     'natsort',
@@ -26,6 +27,11 @@ setup(
     description='Sphinx traceability extension (Melexis fork)',
     long_description=open("README.md").read(),
     long_description_content_type='text/markdown',
+    project_urls={
+        'Documentation': 'https://melexis.github.io/sphinx-traceability-extension',
+        'Source': 'https://github.com/melexis/sphinx-traceability-extension',
+        'Tracker': 'https://github.com/melexis/sphinx-traceability-extension/issues',
+    },
     zip_safe=False,
     classifiers=[
         'Development Status :: 5 - Production/Stable',

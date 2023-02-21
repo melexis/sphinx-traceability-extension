@@ -21,7 +21,7 @@ def raise_no_uri(*args, **kwargs):
 class TestItemDirective(TestCase):
 
     def setUp(self):
-        self.app = Mock(spec=Sphinx)
+        self.app = MagicMock(autospec=Sphinx)
         self.node = dut('')
         self.node['document'] = 'some_doc'
         self.node['id'] = 'some_id'
@@ -35,7 +35,7 @@ class TestItemDirective(TestCase):
     def test_make_internal_item_ref_no_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
         mock_builder.link_suffix = '.html'
-        mock_builder.env = BuildEnvironment()
+        mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
         self.app.builder.env.traceability_ref_nodes = {}
@@ -56,7 +56,7 @@ class TestItemDirective(TestCase):
     def test_make_internal_item_ref_show_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
         mock_builder.link_suffix = '.html'
-        mock_builder.env = BuildEnvironment()
+        mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
         self.app.builder.env.traceability_ref_nodes = {}
@@ -77,7 +77,7 @@ class TestItemDirective(TestCase):
     def test_make_internal_item_ref_only_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
         mock_builder.link_suffix = '.html'
-        mock_builder.env = BuildEnvironment()
+        mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
         self.app.builder.env.traceability_ref_nodes = {}
@@ -102,7 +102,7 @@ class TestItemDirective(TestCase):
     def test_make_internal_item_ref_hide_caption_html(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
         mock_builder.link_suffix = '.html'
-        mock_builder.env = BuildEnvironment()
+        mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
         self.app.builder.env.traceability_ref_nodes = {}
@@ -126,7 +126,7 @@ class TestItemDirective(TestCase):
     def test_make_internal_item_ref_hide_caption_latex(self):
         mock_builder = MagicMock(spec=LaTeXBuilder)
         mock_builder.get_relative_uri = Mock(side_effect=raise_no_uri)
-        mock_builder.env = BuildEnvironment()
+        mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
         self.app.builder.env.traceability_collection = TraceableCollection()
         self.app.builder.env.traceability_ref_nodes = {}
