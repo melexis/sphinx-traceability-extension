@@ -1,8 +1,5 @@
 from unittest import TestCase
-try:
-    from unittest.mock import patch, mock_open
-except ImportError:
-    from mock import patch, mock_open
+from unittest.mock import patch, mock_open
 
 import mlx.traceable_item as item
 import mlx.traceable_attribute as attribute
