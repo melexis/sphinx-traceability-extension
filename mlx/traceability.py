@@ -11,6 +11,7 @@ from re import fullmatch, match
 from os import path
 
 from requests import Session
+from sphinx import version_info as sphinx_version
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
 from sphinx.errors import NoUri
@@ -471,6 +472,14 @@ def setup(app):
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
     app.add_js_file('traceability.js')
+
+    # Since Sphinx 6, jquery isn't bundled anymore and we need to ensure that
+    # the sphinxcontrib-jquery extension is enabled.
+    # See: https://dev.readthedocs.io/en/latest/design/sphinx-jquery.html
+    if sphinx_version >= (6, 0, 0):
+        # Documentation of Sphinx guarantees that an extension is added and enabled at most once.
+        # See: https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.setup_extension
+        app.setup_extension("sphinxcontrib.jquery")
 
     # Configuration for exporting collection to json
     app.add_config_value('traceability_json_export_path', None, 'env')
