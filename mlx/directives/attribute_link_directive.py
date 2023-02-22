@@ -7,24 +7,31 @@ from mlx.traceable_base_node import TraceableBaseNode
 
 class AttributeLink(TraceableBaseNode):
     """Node that adds one or more attributes to one or more items."""
+    order = 3
 
     def perform_replacement(self, app, collection):
-        """ Processes the attribute-link items.
-
-        The AttributeLink node has no final representation, so it is removed from the tree.
+        """ The AttributeLink node has no final representation, so it is removed from the tree.
 
         Args:
             app: Sphinx application object to use.
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
+        self.replace_self([])
+
+    def apply_effect(self, collection):
+        """ Processes the attribute-link items, which shall be done before converting anything to docutils.
+
+        Args:
+            collection (TraceableCollection): Collection for which to generate the nodes.
+        """
         filtered_items = collection.get_item_objects(self['filter'])
         for attribute, value in self['filter-attributes'].items():
             for item in filtered_items:
-                try:
-                    item.add_attribute(attribute, value)
-                except TraceabilityException as err:
-                    report_warning(err, self['document'], self['line'])
-        self.replace_self([])
+                if not self['nooverwrite'] or not item.get_attribute(attribute):
+                    try:
+                        item.add_attribute(attribute, value)
+                    except TraceabilityException as err:
+                        report_warning(err, self['document'], self['line'])
 
 
 class AttributeLinkDirective(TraceableBaseDirective):
@@ -37,10 +44,12 @@ class AttributeLinkDirective(TraceableBaseDirective):
       .. attribute-link::
          :filter: regex
          :<<attribute>>: attribute_value
+         :nooverwrite:
     """
     # Options
     option_spec = {
         'filter': directives.unchanged,
+        'nooverwrite': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -60,5 +69,7 @@ class AttributeLinkDirective(TraceableBaseDirective):
             },
         )
         self.add_found_attributes(node)
+        self.check_option_presence(node, 'nooverwrite')
 
+        env.traceability_collection.add_intermediate_node(node)
         return [node]

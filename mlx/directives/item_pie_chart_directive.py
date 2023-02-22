@@ -1,4 +1,5 @@
 import re
+import warnings
 from hashlib import sha256
 from os import environ, mkdir, path
 
@@ -309,7 +310,7 @@ class ItemPieChart(TraceableBaseNode):
         Returns:
             (nodes.image) Image node containing the pie chart image.
         """
-        mpl.rcParams['font.sans-serif'] = 'Lato'
+        mpl.rcParams['font.sans-serif'] = ['Lato', 'DejaVu Sans']
         explode = self._get_explode_values(labels, self['label_set'])
         if not colors:
             colors = None
@@ -326,6 +327,7 @@ class ItemPieChart(TraceableBaseNode):
         if rel_file_path not in env.images:
             fig.savefig(path.join(env.app.srcdir, rel_file_path), format=image_format, bbox_inches='tight')
             env.images[rel_file_path] = ['_images', path.split(rel_file_path)[-1]]  # store file name in build env
+        plt.close(fig)
 
         image_node = nodes.image()
         image_node['classes'].append('pie-chart')
@@ -370,6 +372,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :targettype: <<relationship>> ...
          :splitsourcetype:
          :hidetitle:
+         :stats:
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -383,6 +386,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'targettype': directives.unchanged,
         'splitsourcetype': directives.flag,
         'hidetitle': directives.flag,
+        'stats': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -412,11 +416,16 @@ class ItemPieChartDirective(TraceableBaseDirective):
         self.check_relationships(node['targettype'], env)
         self.check_option_presence(node, 'splitsourcetype')
         self.check_option_presence(node, 'hidetitle')
+        self.check_option_presence(node, 'stats')
 
         if node['splitsourcetype'] and not node['sourcetype']:
             report_warning('item-piechart: The splitsourcetype flag must not be used when the sourcetype option is '
                            'unused; disabling splitsourcetype.', node['document'], node['line'])
             node['splitsourcetype'] = False
+
+        if not node['stats']:
+            warnings.warn('Pie chart statistics will not be displayed in mlx.traceability>=10 unless the stats flag '
+                          'is provided.', FutureWarning)
 
         return [node]
 

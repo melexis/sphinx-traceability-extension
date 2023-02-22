@@ -96,6 +96,7 @@ involved. In that case, you can use the ``item-link`` directive as follows:
         :source: RQT\d
         :target: TST[345]
         :type: validates
+        :nooverwrite:
 
 :sources: *multiple arguments*, *mutually exclusive with* ``source``
 
@@ -120,6 +121,10 @@ involved. In that case, you can use the ``item-link`` directive as follows:
     Relationship type, used to link all source items to all target items.
     The value must not be empty.
 
+:nooverwrite: *optional*, *flag*
+
+    Do not report a warning when the relationship to add between the source and target already exists.
+
 .. note::
 
     Exactly **1** of the options ``sources`` *or* ``source`` shall be used with exactly **1** of the options ``targets``
@@ -143,6 +148,7 @@ Example usage of the ``item-relink`` directive:
         :remap: RQT-OLD_PROJECT
         :target: RQT-NEW_PROJECT
         :type: validates
+        :nooverwrite:
 
 :remap: *required*, *single argument*
 
@@ -158,6 +164,10 @@ Example usage of the ``item-relink`` directive:
 
     Relationship type, for which the values for the ``remap`` and ``target`` options are the target.
     The value must not be empty.
+
+:nooverwrite: *optional*, *flag*
+
+    Do not report a warning when the relationship to add between the target and new source already exists.
 
 This directive has no representation in the documentation build output.
 
@@ -179,9 +189,7 @@ involved. In that case, you can use the ``attribute-link`` directive as follows:
         :filter: RQT-
         :asil: D
         :status: Approved
-
-This directive has no representation in the documentation build output. It will
-just add an additional attribute(s) to the items of which their ID.
+        :nooverwrite:
 
 In the above example, the *asil* and *status* attributes with given values get
 added to all items that have an ID that starts with *RQT-*. If your documentation defines
@@ -189,7 +197,20 @@ items *RQT-1* and *RQT-11*, but you only want to add an attribute to item *RQT-1
 should use the ``filter`` option with value *RQT-1$*. If the ``filter`` option is missing,
 all items will be affected. Newline characters in the ``filter`` regex get removed.
 
-.. note:: This directive overwrites any attribute values configured in the ``item`` directive.
+:filter: *required*, *single argument*
+
+    Regular expression to filter items from the traceable collection and give them the provided attributes.
+
+:<<attribute>>: *optional*, *single argument*
+
+    Value of ``<<attribute>>`` to give to the matching items.
+
+:nooverwrite: *optional*, *flag*
+
+    When enabled, do not overwrite existing values of ``<<attribute>>``. It can be used to provide a default value for
+    a given attribute.
+
+This directive has no representation in the documentation build output.
 
 --------------------------------
 Adding description to attributes
@@ -622,6 +643,10 @@ Pie chart of documentation items
 
 A pie chart of documentation items can be generated using:
 
+.. warning::
+
+    Starting from version 10.0.0, pie chart statistics will be hidden unless the *stats* flag is provided.
+
 .. code-block:: rest
 
     .. item-piechart:: Test coverage of requirements with report results
@@ -634,6 +659,7 @@ A pie chart of documentation items can be generated using:
         :splitsourcetype:
         :colors: orange c b darkred #FF0000 g
         :hidetitle:
+        :stats:
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
@@ -698,6 +724,11 @@ are comma-separated lists.
 :hidetitle: *optional*, *flag*
 
     By providing the *hidetitle* flag, the title will be hidden.
+
+:stats: *optional*, *flag*
+
+    By providing the *stats* flag, some statistics (coverage percentage) are calculated and displayed below the
+    pie chart.
 
 .. note::
 

@@ -6,12 +6,12 @@ Traceability plugin
 Sphinx extension for reStructuredText that added traceable documentation items.
 See readme for more details.
 """
-import warnings
 from collections import namedtuple
 from re import fullmatch, match
 from os import path
 
 from requests import Session
+from sphinx import version_info as sphinx_version
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
 from sphinx.errors import NoUri
@@ -192,15 +192,15 @@ class PendingItemXref(TraceableBaseNode):
 # -----------------------------------------------------------------------------
 # Event handlers
 def perform_consistency_check(app, env):
-    """
-    New in sphinx 1.6: consistency checker callback
+    """Called once in between Sphinx' read stage and write stage.
 
-    Used to perform the self-test on the collection of items
+    Used to perform (re)linking of item-link and item-relink and perform the self-test on the collection of items.
 
     If the ``checklist_item_regex`` is configured, a warning is reported
     for each item ID that matches it and is not defined as a checklist-item.
     """
     env.traceability_collection.process_intermediate_nodes()
+    ItemRelink.remove_placeholders(env.traceability_collection)
     try:
         env.traceability_collection.self_test(app.config.traceability_notifications.get('undefined-reference'))
     except TraceabilityException as err:
@@ -216,9 +216,6 @@ def perform_consistency_check(app, env):
     if app.config.traceability_hyperlink_colors:
         app.add_css_file('hyperlink_colors.css')
         generate_color_css(app, app.config.traceability_hyperlink_colors)
-        if [regex for regex in app.config.traceability_hyperlink_colors if not regex.startswith('^')]:
-            warnings.warn('Regexes in traceability_hyperlink_colors will be handled by re.match instead of re.search '
-                          'in mlx.traceability>=9', DeprecationWarning)
 
     regex = app.config.traceability_checklist.get('checklist_item_regex')
     if regex is not None and app.config.traceability_checklist['has_checklist_items']:
@@ -359,17 +356,19 @@ def add_checklist_attribute(checklist_config, attributes_config, attribute_to_st
         checklist_config['configured'] = False
     else:
         checklist_config['configured'] = True
-        if not checklist_config.get('checklist_item_regex'):
-            checklist_config['checklist_item_regex'] = r"\S+"
+        checklist_config['checklist_item_regex'] = checklist_config.get('checklist_item_regex', r"\S+")
 
         attr_values = checklist_config['attribute_values'].split(',')
         if len(attr_values) != 2:
             raise TraceabilityException("Checklist attribute values must be two comma-separated strings; got '{}'."
                                         .format(checklist_config['attribute_values']))
         else:
-            regexp = "({}|{})".format(attr_values[0], attr_values[1])
-            attributes_config[checklist_config['attribute_name']] = regexp
-            attribute_to_string_config[checklist_config['attribute_name']] = checklist_config['attribute_to_str']
+            attribute_name = checklist_config['attribute_name']
+            regexes = list(attr_values)
+            if attributes_config.get(attribute_name):
+                regexes.append(attributes_config[attribute_name])
+            attributes_config[attribute_name] = "({})".format("|".join(regexes))
+            attribute_to_string_config[attribute_name] = checklist_config['attribute_to_str']
             if checklist_config.get('api_host_name') and checklist_config.get('project_id') and \
                     checklist_config.get('merge_request_id'):
                 ChecklistItemDirective.query_results = query_checklist(checklist_config, attr_values)
@@ -469,12 +468,18 @@ def _parse_description(description, attr_values, merge_request_id, regex):
 # Extension setup
 def setup(app):
     """Extension setup"""
-
     # Javascript and stylesheet for the tree-view
-    # app.add_js_file('jquery.js') #note: can only be included once
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
     app.add_js_file('traceability.js')
+
+    # Since Sphinx 6, jquery isn't bundled anymore and we need to ensure that
+    # the sphinxcontrib-jquery extension is enabled.
+    # See: https://dev.readthedocs.io/en/latest/design/sphinx-jquery.html
+    if sphinx_version >= (6, 0, 0):
+        # Documentation of Sphinx guarantees that an extension is added and enabled at most once.
+        # See: https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.setup_extension
+        app.setup_extension("sphinxcontrib.jquery")
 
     # Configuration for exporting collection to json
     app.add_config_value('traceability_json_export_path', None, 'env')
