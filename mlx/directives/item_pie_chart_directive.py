@@ -59,8 +59,8 @@ class ItemPieChart(TraceableBaseNode):
         self.relationship_to_string = app.config.traceability_relationship_to_string
         self._set_priorities()
         if self['colors'] and len(self['colors']) < len(self.priorities):
-            report_warning("item-piechart contains {} slices: {} color(s) will be reused"
-                           .format(len(self.priorities), len(self.priorities) - len(self['colors'])),
+            report_warning("item-piechart can contain up to {} slices but only {} colors have been provided: some "
+                           "colors may be reused".format(len(self.priorities), len(self['colors'])),
                            self['document'], self['line'])
 
         self._set_nested_target_regex()
@@ -328,6 +328,7 @@ class ItemPieChart(TraceableBaseNode):
         if rel_file_path not in env.images:
             fig.savefig(path.join(env.app.srcdir, rel_file_path), format=image_format, bbox_inches='tight')
             env.images[rel_file_path] = ['_images', path.split(rel_file_path)[-1]]  # store file name in build env
+        plt.close(fig)
 
         image_node = nodes.image()
         image_node['classes'].append('pie-chart')
