@@ -1,3 +1,4 @@
+// jQuery is included via the sphinxcontrib-jquery extension that we depend on
 // item-tree
 jQuery(function () {
     $('ul.bonsai').bonsai();

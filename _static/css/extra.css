@@ -1,17 +1,94 @@
-.rst-content .section ul.bonsai li>* {
-    margin-top: auto!important;
-    margin-bottom: 2px!important;
-}
-
-.rst-content .section ul.bonsai li {
-    margin-left: 0!important;
-}
-
 .wy-nav-content {
     max-width: 1250px;
 }
 
+/* Tweaks to layout of item-tree */
+.rst-content ul.bonsai li {
+    margin-left: 0 !important;
+}
 
-.rst-content table.docutils td:first-child  {
+.rst-content ul.bonsai li p {
+    margin-top: 0 !important;
+    line-height: 20px !important;
+}
+
+.rst-content ul.bonsai li>ul {
+    margin-bottom: 0 !important;
+}
+
+/* Prevent border-left to dissapear when rowspan is used with sphinx-rtd-theme */
+.rst-content table.docutils td:first-child {
     border-left-width: 1px;
+}
+
+
+/* override table width restrictions to allow line-wrap inside tables
+ * this avoids tables which are too wide and have horizontal scroll bars
+ */
+.wy-table-responsive table td {
+    /* !important prevents the common CSS stylesheets from overriding
+    this as on RTD they are loaded after this stylesheet */
+    white-space: normal !important;
+}
+
+.wy-table-responsive table th {
+    white-space: normal;
+}
+
+/* Allow wrapping of captions in vertical menu */
+.wy-menu-vertical p.caption {
+    white-space: inherit !important;
+    height: inherit !important;
+    line-height: 20px !important;
+    margin: 12px 0 6px 0 !important;
+}
+
+/* Ensure some whitespace in a collapsed state when item has no content */
+.rst-content div.collapsible_links {
+    margin-top: 24px !important;
+}
+
+/* Treat item admonition like a title bar instead of an admonition with content */
+.rst-content .admonition.item {
+    padding: inherit !important;
+    line-height: inherit !important;
+    margin-top: 24px;
+    margin-bottom: 12px !important;
+    background: inherit !important;
+    clear: left !important;
+}
+
+.rst-content .admonition.item p:last-child {
+    margin-bottom: inherit !important;
+    background: #3a7ca8 !important;
+}
+
+/* Vertical alignment of text in lefthand column of definition list using sphinx-rtd-theme==0.5.0 */
+.rst-content dl.field-list.simple>dt {
+    padding-top: 2px !important;
+}
+
+/* Don't add whitespace after indent in table of contents */
+.section #contents ol.simple li>p,
+.section #contents ul.simple li>p {
+    margin-bottom: 0px !important;
+}
+
+/* Define margin between multiple items (each in a paragraph) in a table cell */
+.rst-content table.docutils td p:not(:last-child) {
+    margin-bottom: 12px !important;
+}
+
+/* Tweaks to layout of item-tree */
+.rst-content ul.bonsai li {
+    margin-left: 0 !important;
+}
+
+.rst-content ul.bonsai li p {
+    margin-top: 0 !important;
+    line-height: 20px !important;
+}
+
+.rst-content ul.bonsai li>ul {
+    margin-bottom: 0 !important;
 }

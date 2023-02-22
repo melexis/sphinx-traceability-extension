@@ -1,104 +1,55 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Integration test report &mdash; Traceability 9.5.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/extra.css" type="text/css" />
-  <link rel="stylesheet" href="_static/hyperlink_colors.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Integration test report &mdash; Traceability 9.6.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/extra.css" type="text/css" />
+      <link rel="stylesheet" href="_static/hyperlink_colors.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
         <script src="_static/traceability.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Software Requirements" href="rqts/SRS.html" />
     <link rel="prev" title="Unit Tests" href="unit_test.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> Traceability
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            Traceability
           </a>
-
-          
-            
-            
               <div class="version">
-                9.5.1
+                9.6.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Sphinx Traceability plugin</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="example_usage.html">Example usage</a><ul class="current">
@@ -163,7 +114,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#item-tree">Item tree</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#empty-tree">Empty tree</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#succesfull-sys-tree">Succesfull SYS tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#successful-trees">Successful trees</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-top-relation-filter-does-not-exist">Another tree that should spawn a warning as the relation in <em>top_relation_filter</em> does not exist.</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist">Another tree that should spawn a warning as the relation in <em>type</em> does not exist</a></li>
 </ul>
@@ -182,76 +133,34 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Traceability</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="example_usage.html">Example usage</a> &raquo;</li>
-        
-      <li>Integration test report</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="example_usage.html">Example usage</a></li>
+      <li class="breadcrumb-item active">Integration test report</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/integration_test_report.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="integration-test-report">
-<h1>Integration test report<a class="headerlink" href="#integration-test-report" title="Permalink to this heading">¶</a></h1>
-<div class="contents local topic" id="contents">
+             
+  <section id="integration-test-report">
+<h1>Integration test report<a class="headerlink" href="#integration-test-report" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <p class="topic-title"><cite>Contents</cite></p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#srs-and-sss" id="id2">SRS and SSS</a></p></li>
@@ -311,7 +220,7 @@
 <li><p><a class="reference internal" href="#item-tree" id="id44">Item tree</a></p>
 <ul>
 <li><p><a class="reference internal" href="#empty-tree" id="id45">Empty tree</a></p></li>
-<li><p><a class="reference internal" href="#succesfull-sys-tree" id="id46">Succesfull SYS tree</a></p></li>
+<li><p><a class="reference internal" href="#successful-trees" id="id46">Successful trees</a></p></li>
 <li><p><a class="reference internal" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-top-relation-filter-does-not-exist" id="id47">Another tree that should spawn a warning as the relation in <em>top_relation_filter</em> does not exist.</a></p></li>
 <li><p><a class="reference internal" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist" id="id48">Another tree that should spawn a warning as the relation in <em>type</em> does not exist</a></p></li>
 </ul>
@@ -324,18 +233,18 @@
 </li>
 <li><p><a class="reference internal" href="#links-and-references" id="id52">Links and references</a></p></li>
 </ul>
-</div>
-<div class="section" id="srs-and-sss">
-<h2><a class="toc-backref" href="#id2">SRS and SSS</a><a class="headerlink" href="#srs-and-sss" title="Permalink to this heading">¶</a></h2>
+</nav>
+<section id="srs-and-sss">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">SRS and SSS</a><a class="headerlink" href="#srs-and-sss" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rqts/SRS.html">Software Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rqts/SSS.html">System Requirements</a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="other-requirements">
-<h2><a class="toc-backref" href="#id3">Other requirements</a><a class="headerlink" href="#other-requirements" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="other-requirements">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Other requirements</a><a class="headerlink" href="#other-requirements" title="Permalink to this heading"></a></h2>
 <div class="collapsible_links functional requirement docutils container" id="r001">
 <div class="item admonition">
 <p class="admonition-title"><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
@@ -381,8 +290,8 @@
 </div>
 <blockquote>
 <div><p>This is one item</p>
-<div class="section" id="id1">
-<h3>Title<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<section id="id1">
+<h3>Title<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>More content</p></li>
 <li><p>More again</p>
@@ -400,7 +309,7 @@
 <p>Yes, a note</p>
 </div>
 <p>This line was added by <code class="docutils literal notranslate"><span class="pre">traceability_callback_per_item</span></code> and is parsed as <abbr title="reStructuredText">RST</abbr> syntax.</p>
-</div>
+</section>
 </div></blockquote>
 <div class="collapsible_links critical docutils container" id="r002">
 <div class="item admonition">
@@ -626,9 +535,9 @@ rst semantics</p>
 <blockquote>
 <div><p>Ai caramba, this should report a broken link to a non-existing requirement.</p>
 </div></blockquote>
-</div>
-<div class="section" id="integration-tests">
-<h2><a class="toc-backref" href="#id4">Integration tests</a><a class="headerlink" href="#integration-tests" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="integration-tests">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Integration tests</a><a class="headerlink" href="#integration-tests" title="Permalink to this heading"></a></h2>
 <div class="collapsible_links docutils container" id="ITEST-CAPTION">
 <div class="item admonition">
 <p class="admonition-title"><a class="goldenrod_hsl43-62p-58p_darkgoldenrod reference external" href="integration_test_report.html#ITEST-CAPTION"><em>ITEST-CAPTION : Tests caption</em></a></p>
@@ -746,9 +655,9 @@ rst semantics</p>
 </dd>
 </dl>
 </div>
-</div>
-<div class="section" id="integration-test-reports">
-<h2><a class="toc-backref" href="#id5">Integration test reports</a><a class="headerlink" href="#integration-test-reports" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="integration-test-reports">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Integration test reports</a><a class="headerlink" href="#integration-test-reports" title="Permalink to this heading"></a></h2>
 <div class="collapsible_links docutils container" id="ITEST_REP-CAPTION">
 <div class="item admonition">
 <p class="admonition-title"><a class="rgba255-0-0-1_rgba255-0-0-0d7_rgb200-0-0 reference external" href="integration_test_report.html#ITEST_REP-CAPTION"><em>ITEST_REP-CAPTION : Report with attribute missing from priority list</em></a></p>
@@ -866,9 +775,9 @@ rst semantics</p>
 </dd>
 </dl>
 </div>
-</div>
-<div class="section" id="waivers">
-<h2><a class="toc-backref" href="#id6">Waivers</a><a class="headerlink" href="#waivers" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="waivers">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Waivers</a><a class="headerlink" href="#waivers" title="Permalink to this heading"></a></h2>
 <div class="collapsible_links docutils container" id="WAIVER-NOT_IMPLEMENTED">
 <div class="item admonition">
 <p class="admonition-title"><a class="reference external" href="integration_test_report.html#WAIVER-NOT_IMPLEMENTED"><em>WAIVER-NOT_IMPLEMENTED : The test case has not been implemented yet.</em></a></p>
@@ -892,9 +801,9 @@ rst semantics</p>
 </dd>
 </dl>
 </div>
-</div>
-<div class="section" id="attribute-details">
-<h2><a class="toc-backref" href="#id7">Attribute details</a><a class="headerlink" href="#attribute-details" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="attribute-details">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Attribute details</a><a class="headerlink" href="#attribute-details" title="Permalink to this heading"></a></h2>
 <div class="docutils container" id="asil">
 <div class="item admonition">
 <p class="admonition-title">ASIL : The level for ASIL</p>
@@ -922,19 +831,19 @@ at A/B/C/D for increasing safety requirements.</p>
 <p class="admonition-title">non_existing_attribute</p>
 </div>
 </div>
-</div>
-<div class="section" id="item-list">
-<h2><a class="toc-backref" href="#id8">Item list</a><a class="headerlink" href="#item-list" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="no-items">
-<h3><a class="toc-backref" href="#id9">No items</a><a class="headerlink" href="#no-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="item-list">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Item list</a><a class="headerlink" href="#item-list" title="Permalink to this heading"></a></h2>
+<section id="no-items">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">No items</a><a class="headerlink" href="#no-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">No items</p>
 </div>
 </div>
-</div>
-<div class="section" id="list-all-items">
-<h3><a class="toc-backref" href="#id10">List all items</a><a class="headerlink" href="#list-all-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="list-all-items">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">List all items</a><a class="headerlink" href="#list-all-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All available items (no captions)</p>
@@ -1042,9 +951,9 @@ at A/B/C/D for increasing safety requirements.</p>
 <li><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r100"><em class="has_hidden_caption">r100<span class="popup_caption">A requirement using the ``requirement`` type</span></em></a></p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="list-all-items-beginning-with-r00-show-contents">
-<h3><a class="toc-backref" href="#id11">List all items beginning with <code class="docutils literal notranslate"><span class="pre">r00</span></code> (show contents)</a><a class="headerlink" href="#list-all-items-beginning-with-r00-show-contents" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="list-all-items-beginning-with-r00-show-contents">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">List all items beginning with <code class="docutils literal notranslate"><span class="pre">r00</span></code> (show contents)</a><a class="headerlink" href="#list-all-items-beginning-with-r00-show-contents" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">List of items</p>
@@ -1053,8 +962,8 @@ at A/B/C/D for increasing safety requirements.</p>
 <li><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
 <blockquote>
 <div><p>This is one item</p>
-<div class="section" id="id1">
-<h4>Title<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
+<section id="id1">
+<h4>Title<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
 <ul>
 <li><p>More content</p></li>
 <li><p>More again</p>
@@ -1068,11 +977,12 @@ at A/B/C/D for increasing safety requirements.</p>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>a note</p>
 <p>Yes, a note</p>
 </div>
 <p>This line was added by <code class="docutils literal notranslate"><span class="pre">traceability_callback_per_item</span></code> and is parsed as <abbr title="reStructuredText">RST</abbr> syntax.</p>
-</div>
+</section>
 </div></blockquote>
 </li>
 <li><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r002"><em>r002</em></a></p>
@@ -1108,9 +1018,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="list-system-requirements-beginning-with-sys">
-<h3><a class="toc-backref" href="#id12">List system requirements (beginning with SYS)</a><a class="headerlink" href="#list-system-requirements-beginning-with-sys" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="list-system-requirements-beginning-with-sys">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">List system requirements (beginning with SYS)</a><a class="headerlink" href="#list-system-requirements-beginning-with-sys" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">System requirements</p>
@@ -1124,9 +1034,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="list-all-well-formed-sys-and-srs-requirements">
-<h3><a class="toc-backref" href="#id13">List all well-formed SYS and SRS requirements</a><a class="headerlink" href="#list-all-well-formed-sys-and-srs-requirements" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="list-all-well-formed-sys-and-srs-requirements">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">List all well-formed SYS and SRS requirements</a><a class="headerlink" href="#list-all-well-formed-sys-and-srs-requirements" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">System and software requirements</p>
@@ -1144,9 +1054,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="list-all-items-with-asil-attribute">
-<h3><a class="toc-backref" href="#id14">List all items with ASIL attribute</a><a class="headerlink" href="#list-all-items-with-asil-attribute" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="list-all-items-with-asil-attribute">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">List all items with ASIL attribute</a><a class="headerlink" href="#list-all-items-with-asil-attribute" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All ASIL items</p>
@@ -1175,9 +1085,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="list-all-items-with-asil-and-draft-approved-attribute">
-<h3><a class="toc-backref" href="#id15">List all items with ASIL and Draft/Approved attribute</a><a class="headerlink" href="#list-all-items-with-asil-and-draft-approved-attribute" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="list-all-items-with-asil-and-draft-approved-attribute">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">List all items with ASIL and Draft/Approved attribute</a><a class="headerlink" href="#list-all-items-with-asil-and-draft-approved-attribute" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All Draft ASIL items</p>
@@ -1189,9 +1099,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="list-all-rqt-items-with-the-non-functional-attribute">
-<h3><a class="toc-backref" href="#id16">List all RQT-items with the non_functional attribute</a><a class="headerlink" href="#list-all-rqt-items-with-the-non-functional-attribute" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="list-all-rqt-items-with-the-non-functional-attribute">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">List all RQT-items with the non_functional attribute</a><a class="headerlink" href="#list-all-rqt-items-with-the-non-functional-attribute" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All non-functional requirements</p>
@@ -1201,19 +1111,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="section" id="item-matrix">
-<h2><a class="toc-backref" href="#id17">Item matrix</a><a class="headerlink" href="#item-matrix" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="no-relationships">
-<h3><a class="toc-backref" href="#id18">No relationships</a><a class="headerlink" href="#no-relationships" title="Permalink to this heading">¶</a></h3>
+</section>
+</section>
+<section id="item-matrix">
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">Item matrix</a><a class="headerlink" href="#item-matrix" title="Permalink to this heading"></a></h2>
+<section id="no-relationships">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">No relationships</a><a class="headerlink" href="#no-relationships" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <p>Statistics: 0 out of 0 covered: 0%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>more of nothing</p></th>
 <th class="head"><p>nothing</p></th>
@@ -1223,19 +1129,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-relationships">
-<h3><a class="toc-backref" href="#id19">All relationships</a><a class="headerlink" href="#all-relationships" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-relationships">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">All relationships</a><a class="headerlink" href="#all-relationships" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All (no captions)</p>
 </div>
 <p>Statistics: 82 out of 93 covered: 88%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Source</p></th>
 <th class="head"><p>Target</p></th>
@@ -1552,19 +1454,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-relationships-with-items-having-asil-c-d-attribute">
-<h3><a class="toc-backref" href="#id20">All relationships with items having ASIL-C/D attribute</a><a class="headerlink" href="#all-relationships-with-items-having-asil-c-d-attribute" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-relationships-with-items-having-asil-c-d-attribute">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">All relationships with items having ASIL-C/D attribute</a><a class="headerlink" href="#all-relationships-with-items-having-asil-c-d-attribute" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All ASIL-C/D (with captions)</p>
 </div>
 <p>Statistics: 4 out of 5 covered: 80%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Source</p></th>
 <th class="head"><p>Target</p></th>
@@ -1655,9 +1553,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 4 out of 5 covered: 80%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Target</p></th>
 </tr>
@@ -1737,19 +1632,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 4 out of 5 covered: 80%</p>
 </div>
-</div>
-<div class="section" id="traceability-from-srs-to-sss">
-<h3><a class="toc-backref" href="#id21">Traceability from SRS to SSS</a><a class="headerlink" href="#traceability-from-srs-to-sss" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceability-from-srs-to-sss">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Traceability from SRS to SSS</a><a class="headerlink" href="#traceability-from-srs-to-sss" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Software requirements fulfilling system requirements</p>
 </div>
 <p>Statistics: 2 out of 2 covered: 100%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>software requirement</p></th>
 <th class="head"><p>system requirement</p></th>
@@ -1769,19 +1660,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="traceability-from-sss-to-srs">
-<h3><a class="toc-backref" href="#id22">Traceability from SSS to SRS</a><a class="headerlink" href="#traceability-from-sss-to-srs" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceability-from-sss-to-srs">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Traceability from SSS to SRS</a><a class="headerlink" href="#traceability-from-sss-to-srs" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">System requirements fulfilled by software requirements</p>
 </div>
 <p>Statistics: 2 out of 3 covered: 66%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>system requirement</p></th>
 <th class="head"><p>software requirement</p></th>
@@ -1811,10 +1698,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 2 out of 3 covered: 66% (uncovered items are hidden)</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>system requirement</p></th>
 <th class="head"><p>software requirement</p></th>
@@ -1840,10 +1723,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 2 out of 3 covered: 66% (covered items are hidden)</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>system requirement</p></th>
 <th class="head"><p>software requirement</p></th>
@@ -1857,18 +1736,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="another-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist">
-<h3><a class="toc-backref" href="#id23">Another matrix that should spawn a warning as the relation in <em>type</em> does not exist</a><a class="headerlink" href="#another-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="another-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Another matrix that should spawn a warning as the relation in <em>type</em> does not exist</a><a class="headerlink" href="#another-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">System requirements traced to software requirements, using a non-existing relationship (=warning)</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>software requirement</p></th>
 <th class="head"><p>system requirement</p></th>
@@ -1890,21 +1765,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="traceability-from-external-sources">
-<h3><a class="toc-backref" href="#id24">Traceability from external sources</a><a class="headerlink" href="#traceability-from-external-sources" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceability-from-external-sources">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Traceability from external sources</a><a class="headerlink" href="#traceability-from-external-sources" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">External sources with all of their internal items</p>
 </div>
 <p>Statistics: 2 out of 2 covered: 100%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>external items</p></th>
 <th class="head"><p>internal items</p></th>
@@ -1936,11 +1805,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 2 out of 2 covered: 100%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>internal items</p></th>
 <th class="head"><p><a class="reference external" href="#asil"><em>ASIL</em></a></p></th>
@@ -1963,19 +1827,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="traceability-from-integration-tests-to-requirements">
-<h3><a class="toc-backref" href="#id25">Traceability from integration tests to requirements</a><a class="headerlink" href="#traceability-from-integration-tests-to-requirements" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceability-from-integration-tests-to-requirements">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Traceability from integration tests to requirements</a><a class="headerlink" href="#traceability-from-integration-tests-to-requirements" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All integration tests</p>
 </div>
 <p>Statistics: 9 out of 9 covered: 100%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>integration tests</p></th>
 <th class="head"><p>requirements</p></th>
@@ -2036,10 +1896,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 3 out of 3 covered: 100%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>integration tests</p></th>
 <th class="head"><p>requirements</p></th>
@@ -2064,20 +1920,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="traceability-via-intermediate-items">
-<h3><a class="toc-backref" href="#id26">Traceability via intermediate items</a><a class="headerlink" href="#traceability-via-intermediate-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceability-via-intermediate-items">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Traceability via intermediate items</a><a class="headerlink" href="#traceability-via-intermediate-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Design to test via hidden requirements</p>
 </div>
 <p>Statistics: 12 out of 14 covered: 85%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>design items</p></th>
 <th class="head"><p>unit tests</p></th>
@@ -2150,12 +2001,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 12 out of 14 covered: 85%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>design items</p></th>
 <th class="head"><p>requirements</p></th>
@@ -2243,12 +2088,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 12 out of 14 covered: 85%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>design items</p></th>
 <th class="head"><p>requirements</p></th>
@@ -2348,12 +2187,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 12 out of 14 covered: 85%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>design items</p></th>
 <th class="head"><p>requirements</p></th>
@@ -2468,12 +2301,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 12 out of 14 covered: 85%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>design items</p></th>
 <th class="head"><p>requirements</p></th>
@@ -2600,12 +2427,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 11 out of 14 covered: 78%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>design items</p></th>
 <th class="head"><p>requirements</p></th>
@@ -2687,26 +2508,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="source-and-target-columns">
-<h3><a class="toc-backref" href="#id27">Source and target columns</a><a class="headerlink" href="#source-and-target-columns" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="source-and-target-columns">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">Source and target columns</a><a class="headerlink" href="#source-and-target-columns" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Basic item matrix with attributes of source and target</p>
 </div>
 <p>Statistics: 10 out of 93 covered: 10% (uncovered items are hidden)</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>requirements</p></th>
 <th class="head"><p><a class="reference external" href="#asil"><em>ASIL</em></a></p></th>
@@ -2920,11 +2730,6 @@ at A/B/C/D for increasing safety requirements.</p>
 </div>
 <p>Statistics: 6 out of 16 covered: 37% (uncovered items are hidden)</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head">requirements</th>
 <th class="head"><p>integration tests</p></th>
@@ -2962,21 +2767,17 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-</div>
-<div class="section" id="item-attribute-matrix">
-<h2><a class="toc-backref" href="#id28">Item attribute matrix</a><a class="headerlink" href="#item-attribute-matrix" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="asil-attribute-for-all-r-items">
-<h3><a class="toc-backref" href="#id29">ASIL attribute for all r-items</a><a class="headerlink" href="#asil-attribute-for-all-r-items" title="Permalink to this heading">¶</a></h3>
+</section>
+</section>
+<section id="item-attribute-matrix">
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">Item attribute matrix</a><a class="headerlink" href="#item-attribute-matrix" title="Permalink to this heading"></a></h2>
+<section id="asil-attribute-for-all-r-items">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">ASIL attribute for all r-items</a><a class="headerlink" href="#asil-attribute-for-all-r-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">ASIL attribute for all r-items, reverse sorted on item-ID</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="reference external" href="#asil"><em>ASIL</em></a></p></th>
@@ -3018,18 +2819,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="asil-attribute-for-all-r-items-having-asil-b-c">
-<h3><a class="toc-backref" href="#id30">ASIL attribute for all r-items having ASIL-B/C</a><a class="headerlink" href="#asil-attribute-for-all-r-items-having-asil-b-c" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="asil-attribute-for-all-r-items-having-asil-b-c">
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">ASIL attribute for all r-items having ASIL-B/C</a><a class="headerlink" href="#asil-attribute-for-all-r-items-having-asil-b-c" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">ASIL attribute for all r-items, having ASIL-C/D</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="reference external" href="#asil"><em>ASIL</em></a></p></th>
@@ -3059,19 +2856,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="some-attributes-for-all-items">
-<h3><a class="toc-backref" href="#id31">Some attributes for all items</a><a class="headerlink" href="#some-attributes-for-all-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="some-attributes-for-all-items">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">Some attributes for all items</a><a class="headerlink" href="#some-attributes-for-all-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">ASIL and status attribute for all items</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="reference external" href="#asil"><em>ASIL</em></a></p></th>
@@ -3534,28 +3326,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-attributes-for-all-r-items">
-<h3><a class="toc-backref" href="#id32">All attributes for all r-items</a><a class="headerlink" href="#all-attributes-for-all-r-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-attributes-for-all-r-items">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">All attributes for all r-items</a><a class="headerlink" href="#all-attributes-for-all-r-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All attributes for all r-items</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>Value</p></th>
@@ -3683,28 +3461,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-attributes-for-all-items">
-<h3><a class="toc-backref" href="#id33">All attributes for all items</a><a class="headerlink" href="#all-attributes-for-all-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-attributes-for-all-items">
+<h3><a class="toc-backref" href="#id33" role="doc-backlink">All attributes for all items</a><a class="headerlink" href="#all-attributes-for-all-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All attributes for all items</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>Value</p></th>
@@ -5013,28 +4777,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-attributes-for-all-items-sorted">
-<h3><a class="toc-backref" href="#id34">All attributes for all items, sorted</a><a class="headerlink" href="#all-attributes-for-all-items-sorted" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-attributes-for-all-items-sorted">
+<h3><a class="toc-backref" href="#id34" role="doc-backlink">All attributes for all items, sorted</a><a class="headerlink" href="#all-attributes-for-all-items-sorted" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All attributes for all items, sorted on ASIL level</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>Value</p></th>
@@ -6270,19 +6020,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-attributes-for-all-items-reverse-sorted-on-2-attributes">
-<h3><a class="toc-backref" href="#id35">All attributes for all items, reverse sorted on 2 attributes</a><a class="headerlink" href="#all-attributes-for-all-items-reverse-sorted-on-2-attributes" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-attributes-for-all-items-reverse-sorted-on-2-attributes">
+<h3><a class="toc-backref" href="#id35" role="doc-backlink">All attributes for all items, reverse sorted on 2 attributes</a><a class="headerlink" href="#all-attributes-for-all-items-reverse-sorted-on-2-attributes" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All attributes for all items, reverse sorted on ASIL level and value</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="reference external" href="#asil"><em>ASIL</em></a></p></th>
@@ -6329,28 +6074,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-attributes-for-items-having-a-non-empty-attribute">
-<h3><a class="toc-backref" href="#id36">All attributes for items having a non-empty attribute</a><a class="headerlink" href="#all-attributes-for-items-having-a-non-empty-attribute" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-attributes-for-items-having-a-non-empty-attribute">
+<h3><a class="toc-backref" href="#id36" role="doc-backlink">All attributes for items having a non-empty attribute</a><a class="headerlink" href="#all-attributes-for-items-having-a-non-empty-attribute" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">All attributes for items having a non-empty asil attribute</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>Value</p></th>
@@ -6528,20 +6259,6 @@ at A/B/C/D for increasing safety requirements.</p>
 <p class="admonition-title">All attributes for items having a non-empty asil+aspice attribute</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>Value</p></th>
@@ -6606,12 +6323,6 @@ at A/B/C/D for increasing safety requirements.</p>
 <p class="admonition-title">Transposed version of the previous matrix</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r005"><em class="has_hidden_caption">r005<span class="popup_caption">Another (does not show captions on the related items)</span></em></a></p></th>
@@ -6679,28 +6390,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="all-attributes-for-non-matching-filter">
-<h3><a class="toc-backref" href="#id37">All attributes for non-matching-filter</a><a class="headerlink" href="#all-attributes-for-non-matching-filter" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="all-attributes-for-non-matching-filter">
+<h3><a class="toc-backref" href="#id37" role="doc-backlink">All attributes for non-matching-filter</a><a class="headerlink" href="#all-attributes-for-non-matching-filter" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Non-matching filter: empty table</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>Value</p></th>
@@ -6720,18 +6417,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="invalid-attribute-for-all-items">
-<h3><a class="toc-backref" href="#id38">Invalid attribute for all items</a><a class="headerlink" href="#invalid-attribute-for-all-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="invalid-attribute-for-all-items">
+<h3><a class="toc-backref" href="#id38" role="doc-backlink">Invalid attribute for all items</a><a class="headerlink" href="#invalid-attribute-for-all-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Invalid attribute</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="reference external" href="#asil"><em>ASIL</em></a></p></th>
@@ -7100,28 +6793,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="invalid-sort-attributes-for-all-items">
-<h3><a class="toc-backref" href="#id39">Invalid sort attributes for all items</a><a class="headerlink" href="#invalid-sort-attributes-for-all-items" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="invalid-sort-attributes-for-all-items">
+<h3><a class="toc-backref" href="#id39" role="doc-backlink">Invalid sort attributes for all items</a><a class="headerlink" href="#invalid-sort-attributes-for-all-items" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Invalid sort attribute</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p>Value</p></th>
@@ -8430,23 +8109,17 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-</div>
-<div class="section" id="item-2d-matrix">
-<h2><a class="toc-backref" href="#id40">Item 2D matrix</a><a class="headerlink" href="#item-2d-matrix" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="srs-to-sss">
-<h3><a class="toc-backref" href="#id41">SRS to SSS</a><a class="headerlink" href="#srs-to-sss" title="Permalink to this heading">¶</a></h3>
+</section>
+</section>
+<section id="item-2d-matrix">
+<h2><a class="toc-backref" href="#id40" role="doc-backlink">Item 2D matrix</a><a class="headerlink" href="#item-2d-matrix" title="Permalink to this heading"></a></h2>
+<section id="srs-to-sss">
+<h3><a class="toc-backref" href="#id41" role="doc-backlink">SRS to SSS</a><a class="headerlink" href="#srs-to-sss" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">System requirements fulfilled by software requirements</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0001"><em>SYS_0001 : Saying hello</em></a></p>
@@ -8478,12 +8151,6 @@ at A/B/C/D for increasing safety requirements.</p>
 <p class="admonition-title">System requirements fulfilled by software requirements</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0001"><em>SYS_0001 : Saying hello</em></a></p>
@@ -8515,14 +8182,6 @@ at A/B/C/D for increasing safety requirements.</p>
 <p class="admonition-title">all to all with ASIL-C/D attribute</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
@@ -9277,17 +8936,6 @@ at A/B/C/D for increasing safety requirements.</p>
 <p class="admonition-title">r-items to all with ASIL-A/B attribute</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="h7f00ff_hb369ff reference external" href="integration_test_report.html#r001"><em>r001 : First requirement</em></a></p>
@@ -9366,19 +9014,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="sss-to-srs">
-<h3><a class="toc-backref" href="#id42">SSS to SRS</a><a class="headerlink" href="#sss-to-srs" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="sss-to-srs">
+<h3><a class="toc-backref" href="#id42" role="doc-backlink">SSS to SRS</a><a class="headerlink" href="#sss-to-srs" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Software requirements fulfilling system requirements</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="_orange_ reference external" href="rqts/SRS.html#SRS_0001"><em>SRS_0001 : Software saying hello</em></a></p>
@@ -9406,20 +9049,14 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="another-2d-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist">
-<h3><a class="toc-backref" href="#id43">Another 2D matrix that should spawn a warning as the relation in <em>type</em> does not exist</a><a class="headerlink" href="#another-2d-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="another-2d-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist">
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">Another 2D matrix that should spawn a warning as the relation in <em>type</em> does not exist</a><a class="headerlink" href="#another-2d-matrix-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">System requirements traced to software requirements, using a non-existing relationship (=warning)</p>
 </div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><a class="_springgreen_ reference external" href="rqts/SSS.html#SYS_0001"><em>SYS_0001 : Saying hello</em></a></p>
@@ -9446,12 +9083,12 @@ at A/B/C/D for increasing safety requirements.</p>
 </tbody>
 </table>
 </div>
-</div>
-</div>
-<div class="section" id="item-tree">
-<h2><a class="toc-backref" href="#id44">Item tree</a><a class="headerlink" href="#item-tree" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="empty-tree">
-<h3><a class="toc-backref" href="#id45">Empty tree</a><a class="headerlink" href="#empty-tree" title="Permalink to this heading">¶</a></h3>
+</section>
+</section>
+<section id="item-tree">
+<h2><a class="toc-backref" href="#id44" role="doc-backlink">Item tree</a><a class="headerlink" href="#item-tree" title="Permalink to this heading"></a></h2>
+<section id="empty-tree">
+<h3><a class="toc-backref" href="#id45" role="doc-backlink">Empty tree</a><a class="headerlink" href="#empty-tree" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Empty</p>
@@ -9459,9 +9096,9 @@ at A/B/C/D for increasing safety requirements.</p>
 <ul class="bonsai simple">
 </ul>
 </div>
-</div>
-<div class="section" id="succesfull-sys-tree">
-<h3><a class="toc-backref" href="#id46">Succesfull SYS tree</a><a class="headerlink" href="#succesfull-sys-tree" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="successful-trees">
+<h3><a class="toc-backref" href="#id46" role="doc-backlink">Successful trees</a><a class="headerlink" href="#successful-trees" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">SYS</p>
@@ -9634,9 +9271,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="another-tree-that-should-spawn-a-warning-as-the-relation-in-top-relation-filter-does-not-exist">
-<h3><a class="toc-backref" href="#id47">Another tree that should spawn a warning as the relation in <em>top_relation_filter</em> does not exist.</a><a class="headerlink" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-top-relation-filter-does-not-exist" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="another-tree-that-should-spawn-a-warning-as-the-relation-in-top-relation-filter-does-not-exist">
+<h3><a class="toc-backref" href="#id47" role="doc-backlink">Another tree that should spawn a warning as the relation in <em>top_relation_filter</em> does not exist.</a><a class="headerlink" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-top-relation-filter-does-not-exist" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">warning for unknown relation</p>
@@ -9663,9 +9300,9 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="another-tree-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist">
-<h3><a class="toc-backref" href="#id48">Another tree that should spawn a warning as the relation in <em>type</em> does not exist</a><a class="headerlink" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="another-tree-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist">
+<h3><a class="toc-backref" href="#id48" role="doc-backlink">Another tree that should spawn a warning as the relation in <em>type</em> does not exist</a><a class="headerlink" href="#another-tree-that-should-spawn-a-warning-as-the-relation-in-type-does-not-exist" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">warning for unknown relation</p>
@@ -9679,15 +9316,15 @@ at A/B/C/D for increasing safety requirements.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="section" id="item-link">
-<h2><a class="toc-backref" href="#id49">Item link</a><a class="headerlink" href="#item-link" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="this-is-a-subtitle-that-has-a-item-link-item-under-it-you-shouldn-t-see-anything-in-the-rendering-though">
-<h3><a class="toc-backref" href="#id50">This is a subtitle that has a <code class="docutils literal notranslate"><span class="pre">item-link</span></code> item under it. You shouldn’t see anything in the rendering, though</a><a class="headerlink" href="#this-is-a-subtitle-that-has-a-item-link-item-under-it-you-shouldn-t-see-anything-in-the-rendering-though" title="Permalink to this heading">¶</a></h3>
-</div>
-<div class="section" id="extra-late-requirements">
-<h3><a class="toc-backref" href="#id51">Extra late requirements</a><a class="headerlink" href="#extra-late-requirements" title="Permalink to this heading">¶</a></h3>
+</section>
+</section>
+<section id="item-link">
+<h2><a class="toc-backref" href="#id49" role="doc-backlink">Item link</a><a class="headerlink" href="#item-link" title="Permalink to this heading"></a></h2>
+<section id="this-is-a-subtitle-that-has-a-item-link-item-under-it-you-shouldn-t-see-anything-in-the-rendering-though">
+<h3><a class="toc-backref" href="#id50" role="doc-backlink">This is a subtitle that has a <code class="docutils literal notranslate"><span class="pre">item-link</span></code> item under it. You shouldn’t see anything in the rendering, though</a><a class="headerlink" href="#this-is-a-subtitle-that-has-a-item-link-item-under-it-you-shouldn-t-see-anything-in-the-rendering-though" title="Permalink to this heading"></a></h3>
+</section>
+<section id="extra-late-requirements">
+<h3><a class="toc-backref" href="#id51" role="doc-backlink">Extra late requirements</a><a class="headerlink" href="#extra-late-requirements" title="Permalink to this heading"></a></h3>
 <div class="collapsible_links docutils container" id="late001">
 <div class="item admonition">
 <p class="admonition-title"><a class="reference external" href="integration_test_report.html#late001"><em>late001</em></a></p>
@@ -9701,61 +9338,44 @@ at A/B/C/D for increasing safety requirements.</p>
 <blockquote>
 <div><p>Item is added after adding links from it using item-link above. This shouldn’t give a warning.</p>
 </div></blockquote>
-</div>
-</div>
-<div class="section" id="links-and-references">
-<h2><a class="toc-backref" href="#id52">Links and references</a><a class="headerlink" href="#links-and-references" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+<section id="links-and-references">
+<h2><a class="toc-backref" href="#id52" role="doc-backlink">Links and references</a><a class="headerlink" href="#links-and-references" title="Permalink to this heading"></a></h2>
 <p>Item reference: <a class="reference internal" href="#r001" title="r001"><em class="xref item">r001</em></a></p>
 <p><a class="reference internal" href="#r001" title="r001"><em class="xref item">Item reference with alternative text</em></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="rqts/SRS.html" class="btn btn-neutral float-right" title="Software Requirements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="unit_test.html" class="btn btn-neutral float-left" title="Unit Tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rqts/SRS.html" class="btn btn-neutral float-right" title="Software Requirements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2017, Melexis.
-
-    </p>
+    <p>&#169; Copyright 2017, Melexis.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

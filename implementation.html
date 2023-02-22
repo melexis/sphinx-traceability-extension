@@ -1,104 +1,55 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Software Implementation &mdash; Traceability 9.5.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/extra.css" type="text/css" />
-  <link rel="stylesheet" href="_static/hyperlink_colors.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Software Implementation &mdash; Traceability 9.6.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/extra.css" type="text/css" />
+      <link rel="stylesheet" href="_static/hyperlink_colors.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
         <script src="_static/traceability.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Unit Tests" href="unit_test.html" />
     <link rel="prev" title="Software Design" href="design.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> Traceability
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            Traceability
           </a>
-
-          
-            
-            
               <div class="version">
-                9.5.1
+                9.6.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Sphinx Traceability plugin</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="example_usage.html">Example usage</a><ul class="current">
@@ -122,76 +73,34 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Traceability</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="example_usage.html">Example usage</a> &raquo;</li>
-        
-      <li>Software Implementation</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="example_usage.html">Example usage</a></li>
+      <li class="breadcrumb-item active">Software Implementation</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/implementation.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="software-implementation">
-<h1>Software Implementation<a class="headerlink" href="#software-implementation" title="Permalink to this heading">¶</a></h1>
-<div class="contents local topic" id="contents">
+             
+  <section id="software-implementation">
+<h1>Software Implementation<a class="headerlink" href="#software-implementation" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <p class="topic-title"><cite>Contents</cite></p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#implementation-for-mlx-traceability" id="id1">Implementation for mlx.traceability</a></p>
@@ -203,11 +112,11 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="implementation-for-mlx-traceability">
-<h2><a class="toc-backref" href="#id1">Implementation for mlx.traceability</a><a class="headerlink" href="#implementation-for-mlx-traceability" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="traceableitem">
-<h3><a class="toc-backref" href="#id2">TraceableItem</a><a class="headerlink" href="#traceableitem" title="Permalink to this heading">¶</a></h3>
+</nav>
+<section id="implementation-for-mlx-traceability">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Implementation for mlx.traceability</a><a class="headerlink" href="#implementation-for-mlx-traceability" title="Permalink to this heading"></a></h2>
+<section id="traceableitem">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">TraceableItem</a><a class="headerlink" href="#traceableitem" title="Permalink to this heading"></a></h3>
 <div class="collapsible_links docutils container" id="IMPL-TRACEABLE_ITEM">
 <div class="item admonition">
 <p class="admonition-title"><a class="reference external" href="implementation.html#IMPL-TRACEABLE_ITEM"><em>IMPL-TRACEABLE_ITEM</em></a></p>
@@ -222,12 +131,12 @@
 <div><span class="target" id="module-mlx.traceable_item"></span><p>Storage classes for traceable item</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceable_item.</span></span><span class="sig-name descname"><span class="pre">TraceableItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceable_item.</span></span><span class="sig-name descname"><span class="pre">TraceableItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TraceableBaseClass</span></code></p>
 <p>Storage for a traceable documentation item</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.add_attribute">
-<span class="sig-name descname"><span class="pre">add_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.add_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.add_attribute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.add_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.add_attribute" title="Permalink to this definition"></a></dt>
 <dd><p>Adds an attribute key-value pair to the traceable item.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -235,7 +144,7 @@
 the attribute value doesn’t match the defined regex.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>attr</strong> (<em>str</em>) – Name of the attribute.</p></li>
 <li><p><strong>value</strong> (<em>str</em>) – Value of the attribute.</p></li>
@@ -247,13 +156,13 @@ the attribute value doesn’t match the defined regex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.add_target">
-<span class="sig-name descname"><span class="pre">add_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.add_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.add_target" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.add_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.add_target" title="Permalink to this definition"></a></dt>
 <dd><p>Adds a relation to another traceable item.</p>
 <p>Note: using this API, the automatic reverse relation is not created. Adding the relation
 through the TraceableItemCollection class performs the adding of automatic reverse
 relations.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>relation</strong> (<em>str</em>) – Name of the relation.</p></li>
 <li><p><strong>target</strong> (<em>str</em>) – Item identification of the targeted traceable item.</p></li>
@@ -266,10 +175,10 @@ relations.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.all_relations">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_relations</span></span><a class="headerlink" href="#mlx.traceable_item.TraceableItem.all_relations" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_relations</span></span><a class="headerlink" href="#mlx.traceable_item.TraceableItem.all_relations" title="Permalink to this definition"></a></dt>
 <dd><p>Yields a relationship and the corresponding targets, both naturally sorted.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>generator</p>
 </dd>
 </dl>
@@ -277,16 +186,16 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.attributes_match">
-<span class="sig-name descname"><span class="pre">attributes_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.attributes_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.attributes_match" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">attributes_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.attributes_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.attributes_match" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if item matches a given set of attributes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>attributes</strong> (<em>dict</em>) – Dictionary with attribute-regex pairs to match the given item against.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the given attributes match the item attributes.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -294,10 +203,10 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.define_attribute">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">define_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.define_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.define_attribute" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">define_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.define_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.define_attribute" title="Permalink to this definition"></a></dt>
 <dd><p>Defines an attribute that can be assigned to traceable items.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>attr</strong> (<em>TraceableAttribute</em>) – Attribute to be assigned.</p>
 </dd>
 </dl>
@@ -305,16 +214,16 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.get_attribute">
-<span class="sig-name descname"><span class="pre">get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.get_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.get_attribute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.get_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.get_attribute" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the value of an attribute from the traceable item.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>attr</strong> (<em>str</em>) – Name of the attribute.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Value matching the given attribute key, or ‘’ if attribute does not exist.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -322,16 +231,16 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.get_attributes">
-<span class="sig-name descname"><span class="pre">get_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.get_attributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.get_attributes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.get_attributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.get_attributes" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the values of a list of attributes from the traceable item.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>attr</strong> (<em>list</em>) – List of names of the attribute</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of values of the given attributes, ‘’ is used as value for each attribute that does not exist</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
@@ -339,16 +248,16 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.has_relations">
-<span class="sig-name descname"><span class="pre">has_relations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.has_relations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.has_relations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">has_relations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.has_relations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.has_relations" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if the item has every relationship in given list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>relations</strong> (<em>list</em>) – List of relations.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the item has every relationship in given list of list is empty, False otherwise.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -356,19 +265,19 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.is_linked">
-<span class="sig-name descname"><span class="pre">is_linked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relationships</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_regex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_linked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_linked" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_linked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relationships</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_regex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_linked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_linked" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if item is linked with any of the forwards relationships to a target matching the regex pattern</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>relationships</strong> (<em>iterable</em>) – Forward relationships (str)</p></li>
 <li><p><strong>target_regex</strong> (<em>str/re.Pattern</em>) – Regular expression pattern or object</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if linked; False otherwise</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -376,16 +285,16 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.is_match">
-<span class="sig-name descname"><span class="pre">is_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_match" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_match" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if the item matches a given regular expression.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>regex</strong> (<em>str/re.Pattern</em>) – Regular expression pattern or object to match the given item against.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the given regex matches the item identification.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -393,10 +302,10 @@ relations.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.is_placeholder">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_placeholder</span></span><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_placeholder" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_placeholder</span></span><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_placeholder" title="Permalink to this definition"></a></dt>
 <dd><p>True if this item is a placeholder; False otherwise</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -404,19 +313,19 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.is_related">
-<span class="sig-name descname"><span class="pre">is_related</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_related"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_related" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_related</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.is_related"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.is_related" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if a given item is related using a list of relationships.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>relations</strong> (<em>list</em>) – List of relations.</p></li>
 <li><p><strong>target_id</strong> (<em>str</em>) – Identifier of the target item.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if given item is related through the given relationships, False otherwise.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -424,14 +333,14 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.iter_attributes">
-<span class="sig-name descname"><span class="pre">iter_attributes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.iter_attributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.iter_attributes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iter_attributes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.iter_attributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.iter_attributes" title="Permalink to this definition"></a></dt>
 <dd><p>Iterates over available attributes.</p>
 <p>Sorted as configured by an attribute-sort directive, with the remaining attributes naturally sorted.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Sorted list containing available attributes in the item.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>list</p>
 </dd>
 </dl>
@@ -439,16 +348,16 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.iter_relations">
-<span class="sig-name descname"><span class="pre">iter_relations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.iter_relations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.iter_relations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iter_relations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.iter_relations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.iter_relations" title="Permalink to this definition"></a></dt>
 <dd><p>Iterates over available relations: naturally sorted by default.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>sort</strong> (<em>bool</em>) – True if the relations should be sorted naturally, False if no sorting is needed</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List containing available relations in the item, naturally sorted by default</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
@@ -456,10 +365,10 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.iter_targets">
-<span class="sig-name descname"><span class="pre">iter_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.iter_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.iter_targets" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iter_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.iter_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.iter_targets" title="Permalink to this definition"></a></dt>
 <dd><p>Gets a list of targets to other traceable item(s), naturally sorted by default.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>relation</strong> (<em>str</em>) – Name of the relation.</p></li>
 <li><p><strong>explicit</strong> (<em>bool</em>) – If True, explicitly expressed relations are included in the returned list.</p></li>
@@ -467,10 +376,10 @@ relations.</p>
 <li><p><strong>sort</strong> (<em>bool</em>) – True if the relations should be sorted naturally, False if no sorting is needed</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of targets to other traceable item(s), naturally sorted by default</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
@@ -478,10 +387,10 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.remove_attribute">
-<span class="sig-name descname"><span class="pre">remove_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.remove_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.remove_attribute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.remove_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.remove_attribute" title="Permalink to this definition"></a></dt>
 <dd><p>Removes an attribute key-value pair from the traceable item.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>attr</strong> (<em>str</em>) – Name of the attribute.</p>
 </dd>
 </dl>
@@ -489,10 +398,10 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.remove_targets">
-<span class="sig-name descname"><span class="pre">remove_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.remove_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.remove_targets" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.remove_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.remove_targets" title="Permalink to this definition"></a></dt>
 <dd><p>Removes any relation to given target item.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>target_id</strong> (<em>str</em>) – Identification of the target items to remove.</p></li>
 <li><p><strong>explicit</strong> (<em>bool</em>) – If True, explicitly expressed relations to given target are removed.</p></li>
@@ -505,10 +414,10 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.self_test">
-<span class="sig-name descname"><span class="pre">self_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.self_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.self_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">self_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.self_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.self_test" title="Permalink to this definition"></a></dt>
 <dd><p>Performs self-test on collection content.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><a class="reference internal" href="#mlx.traceability_exception.TraceabilityException" title="mlx.traceability_exception.TraceabilityException"><strong>TraceabilityException</strong></a> – Item is not defined.</p></li>
 <li><p><a class="reference internal" href="#mlx.traceability_exception.TraceabilityException" title="mlx.traceability_exception.TraceabilityException"><strong>TraceabilityException</strong></a> – Item has an invalid attribute value.</p></li>
@@ -520,13 +429,13 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.to_dict" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.to_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Exports item to a dictionary.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dictionary representation of the object.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict</p>
 </dd>
 </dl>
@@ -534,10 +443,10 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.update" title="Permalink to this definition"></a></dt>
 <dd><p>Updates item with other object. Stores the sum of both objects.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#mlx.traceable_item.TraceableItem" title="mlx.traceable_item.TraceableItem"><em>TraceableItem</em></a>) – Other TraceableItem which is the source for the update.</p>
 </dd>
 </dl>
@@ -545,20 +454,20 @@ relations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_item.TraceableItem.yield_targets">
-<span class="sig-name descname"><span class="pre">yield_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.yield_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.yield_targets" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">yield_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implicit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_item.html#TraceableItem.yield_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_item.TraceableItem.yield_targets" title="Permalink to this definition"></a></dt>
 <dd><p>Gets an iterable of targets to other traceable items.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>relation</strong> (<em>str</em>) – Name of the relation.</p></li>
 <li><p><strong>explicit</strong> (<em>bool</em>) – If True, explicitly expressed relations are included.</p></li>
 <li><p><strong>implicit</strong> (<em>bool</em>) – If True, implicitly expressed relations are included.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Targets to other traceable items, unsorted</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>generator</p>
 </dd>
 </dl>
@@ -567,9 +476,9 @@ relations.</p>
 </dd></dl>
 
 </div></blockquote>
-</div>
-<div class="section" id="traceablecollection">
-<h3><a class="toc-backref" href="#id3">TraceableCollection</a><a class="headerlink" href="#traceablecollection" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceablecollection">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">TraceableCollection</a><a class="headerlink" href="#traceablecollection" title="Permalink to this heading"></a></h3>
 <div class="collapsible_links docutils container" id="IMPL-TRACEABLE_COLLECTION">
 <div class="item admonition">
 <p class="admonition-title"><a class="reference external" href="implementation.html#IMPL-TRACEABLE_COLLECTION"><em>IMPL-TRACEABLE_COLLECTION</em></a></p>
@@ -579,26 +488,26 @@ relations.</p>
 <div><span class="target" id="module-mlx.traceable_collection"></span><p>Storage classes for collection of traceable items</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceable_collection.</span></span><span class="sig-name descname"><span class="pre">TraceableCollection</span></span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceable_collection.</span></span><span class="sig-name descname"><span class="pre">TraceableCollection</span></span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Storage for a collection of TraceableItems</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.add_attribute_sorting_rule">
-<span class="sig-name descname"><span class="pre">add_attribute_sorting_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_attribute_sorting_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_attribute_sorting_rule" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_attribute_sorting_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_attribute_sorting_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_attribute_sorting_rule" title="Permalink to this definition"></a></dt>
 <dd><p>Configures how the attributes of matching items should be sorted.</p>
 <p>The attributes that are missing from the given list will be sorted alphabetically underneath. The items that
 already have their attributes sorted will be returned as a list; used to report a warning.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filter_regex</strong> (<em>str</em>) – Regular expression used to match items to apply the attribute sorting to.</p></li>
 <li><p><strong>attributes</strong> (<em>list</em>) – List of attributes (str) in the order they should be sorted on.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Items that already have the order of their attributes configured.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
@@ -606,10 +515,10 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.add_item">
-<span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_item" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_item" title="Permalink to this definition"></a></dt>
 <dd><p>Add a TraceableItem to the list</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>item</strong> (<a class="reference internal" href="#mlx.traceable_item.TraceableItem" title="mlx.traceable_item.TraceableItem"><em>TraceableItem</em></a>) – Traceable item to add</p>
 </dd>
 </dl>
@@ -617,11 +526,11 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.add_relation">
-<span class="sig-name descname"><span class="pre">add_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_relation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_relation" title="Permalink to this definition"></a></dt>
 <dd><p>Add relation between two items</p>
 <p>The function adds the forward and the automatic reverse relation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>source_id</strong> (<em>str</em>) – ID of the source item</p></li>
 <li><p><strong>relation</strong> (<em>str</em>) – Relation between source and target item</p></li>
@@ -633,10 +542,10 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.add_relation_pair">
-<span class="sig-name descname"><span class="pre">add_relation_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_relation_pair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_relation_pair" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_relation_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.add_relation_pair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.add_relation_pair" title="Permalink to this definition"></a></dt>
 <dd><p>Add a relation pair to the collection</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>forward</strong> (<em>str</em>) – Keyword for the forward relation</p></li>
 <li><p><strong>reverse</strong> (<em>str</em>) – Keyword for the reverse relation, or NO_RELATION_STR for external relations</p></li>
@@ -647,21 +556,21 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.are_related">
-<span class="sig-name descname"><span class="pre">are_related</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.are_related"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.are_related" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">are_related</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.are_related"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.are_related" title="Permalink to this definition"></a></dt>
 <dd><p>Check if 2 items are related using a list of relationships</p>
 <p>Placeholders are excluded</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>source_id</strong> (<em>str</em>) – id of the source item</p></li>
 <li><p><strong>relations</strong> (<em>list</em>) – list of relations, empty list for wildcard</p></li>
 <li><p><strong>target_id</strong> (<em>str</em>) – id of the target item</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if both items are related through the given relationships, false otherwise</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -669,10 +578,10 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.export"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.export" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.export"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.export" title="Permalink to this definition"></a></dt>
 <dd><p>Exports collection content. The target location of the json file gets created if it doesn’t exist yet.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – Path to the json file to export</p>
 </dd>
 </dl>
@@ -680,19 +589,19 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.get_external_targets">
-<span class="sig-name descname"><span class="pre">get_external_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_external_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_external_targets" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_external_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_external_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_external_targets" title="Permalink to this definition"></a></dt>
 <dd><p>Get all external targets for a given external relation with the IDs of their linked internal items</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>regex</strong> (<em>str/re.Pattern</em>) – Regex pattern or object to match the external target</p></li>
 <li><p><strong>relation</strong> (<em>str</em>) – External relation</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary mapping external targets to the IDs of their linked internal items</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
@@ -700,16 +609,16 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.get_item">
-<span class="sig-name descname"><span class="pre">get_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">itemid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_item" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">itemid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_item" title="Permalink to this definition"></a></dt>
 <dd><p>Get a TraceableItem from the list</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>itemid</strong> (<em>str</em>) – Identification of traceable item to get</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Object for traceable item; None if the item was not found</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>TraceableItem/None</p>
 </dd>
 </dl>
@@ -717,20 +626,20 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.get_item_objects">
-<span class="sig-name descname"><span class="pre">get_item_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_item_objects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_item_objects" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_item_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_item_objects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_item_objects" title="Permalink to this definition"></a></dt>
 <dd><p>Get all items that match a given regular expression as TraceableItem instances.</p>
 <p>Placeholders are excluded.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>regex</strong> (<em>str</em>) – Regex to match the items in this collection against</p></li>
 <li><p><strong>attributes</strong> (<em>dict</em>) – Dictionary with attribute-regex pairs to match the items in this collection against</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An iterable of items matching the given regex.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>generator</p>
 </dd>
 </dl>
@@ -738,11 +647,11 @@ already have their attributes sorted will be returned as a list; used to report 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.get_items">
-<span class="sig-name descname"><span class="pre">get_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sortattributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_items" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sortattributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_items" title="Permalink to this definition"></a></dt>
 <dd><p>Get all items that match a given regular expression</p>
 <p>Placeholders are excluded</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>regex</strong> (<em>str/re.Pattern</em>) – Regex pattern or object to match the items in this collection against</p></li>
 <li><p><strong>attributes</strong> (<em>dict</em>) – Dictionary with attribute-regex pairs to match the items in this collection against</p></li>
@@ -751,11 +660,11 @@ already have their attributes sorted will be returned as a list; used to report 
 <li><p><strong>sort</strong> (<em>bool</em>) – When sortattributes is falsy: True to enable natural sorting, False to disable sorting</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A sorted list of item-id’s matching the given regex. Sorting is done naturally when sortattributes is
 unused.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
@@ -763,16 +672,16 @@ unused.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.get_reverse_relation">
-<span class="sig-name descname"><span class="pre">get_reverse_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forward</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_reverse_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_reverse_relation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_reverse_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forward</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.get_reverse_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.get_reverse_relation" title="Permalink to this definition"></a></dt>
 <dd><p>Get the matching reverse relation</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>forward</strong> (<em>str</em>) – Keyword for the forward relation</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Keyword for the matching reverse relation, or None</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -780,16 +689,16 @@ unused.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.has_item">
-<span class="sig-name descname"><span class="pre">has_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">itemid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.has_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.has_item" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">has_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">itemid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.has_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.has_item" title="Permalink to this definition"></a></dt>
 <dd><p>Verify if a item with given id is in the collection</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>itemid</strong> (<em>str</em>) – Identification of item to look for</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if the given itemid is in the collection, false otherwise</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -797,10 +706,10 @@ unused.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.iter_items">
-<span class="sig-name descname"><span class="pre">iter_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.iter_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.iter_items" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iter_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.iter_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.iter_items" title="Permalink to this definition"></a></dt>
 <dd><p>Iterate over items: naturally sorted identification</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Sorted iterator over identification of the items in the collection</p>
 </dd>
 </dl>
@@ -808,10 +717,10 @@ unused.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.iter_relations">
-<span class="sig-name descname"><span class="pre">iter_relations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.iter_relations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.iter_relations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iter_relations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.iter_relations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.iter_relations" title="Permalink to this definition"></a></dt>
 <dd><p>Iterate over available relations: naturally sorted</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Naturally sorted list over available relations in the collection</p>
 </dd>
 </dl>
@@ -819,10 +728,10 @@ unused.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceable_collection.TraceableCollection.self_test">
-<span class="sig-name descname"><span class="pre">self_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notification_item_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.self_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.self_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">self_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notification_item_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceable_collection.html#TraceableCollection.self_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceable_collection.TraceableCollection.self_test" title="Permalink to this definition"></a></dt>
 <dd><p>Perform self test on collection content</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>notification_item_id</strong> (<em>str/None</em>) – ID of the configured notification item, None if not configured.</p></li>
 <li><p><strong>docname</strong> (<em>str</em>) – Document on which to run the self test, None for all.</p></li>
@@ -834,9 +743,9 @@ unused.</p>
 </dd></dl>
 
 </div></blockquote>
-</div>
-<div class="section" id="traceabilityexception">
-<h3><a class="toc-backref" href="#id4">TraceabilityException</a><a class="headerlink" href="#traceabilityexception" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceabilityexception">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">TraceabilityException</a><a class="headerlink" href="#traceabilityexception" title="Permalink to this heading"></a></h3>
 <div class="collapsible_links docutils container" id="IMPL-TRACEABILITY_EXCEPTION">
 <div class="item admonition">
 <p class="admonition-title"><a class="reference external" href="implementation.html#IMPL-TRACEABILITY_EXCEPTION"><em>IMPL-TRACEABILITY_EXCEPTION</em></a></p>
@@ -846,12 +755,12 @@ unused.</p>
 <div><span class="target" id="module-mlx.traceability_exception"></span><p>Exception classes for traceability</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="mlx.traceability_exception.MultipleTraceabilityExceptions">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceability_exception.</span></span><span class="sig-name descname"><span class="pre">MultipleTraceabilityExceptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#MultipleTraceabilityExceptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.MultipleTraceabilityExceptions" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceability_exception.</span></span><span class="sig-name descname"><span class="pre">MultipleTraceabilityExceptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#MultipleTraceabilityExceptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.MultipleTraceabilityExceptions" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Multiple exceptions for traceability plugin</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceability_exception.MultipleTraceabilityExceptions.iter">
-<span class="sig-name descname"><span class="pre">iter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#MultipleTraceabilityExceptions.iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.MultipleTraceabilityExceptions.iter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#MultipleTraceabilityExceptions.iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.MultipleTraceabilityExceptions.iter" title="Permalink to this definition"></a></dt>
 <dd><p>Iterator for multiple exceptions</p>
 </dd></dl>
 
@@ -859,18 +768,18 @@ unused.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="mlx.traceability_exception.TraceabilityException">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceability_exception.</span></span><span class="sig-name descname"><span class="pre">TraceabilityException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#TraceabilityException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.TraceabilityException" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlx.traceability_exception.</span></span><span class="sig-name descname"><span class="pre">TraceabilityException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#TraceabilityException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.TraceabilityException" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception for traceability plugin</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mlx.traceability_exception.TraceabilityException.get_document">
-<span class="sig-name descname"><span class="pre">get_document</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#TraceabilityException.get_document"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.TraceabilityException.get_document" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_document</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#TraceabilityException.get_document"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.TraceabilityException.get_document" title="Permalink to this definition"></a></dt>
 <dd><p>Get document in which error occurred</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The name of the document in which the error occurred</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
@@ -880,10 +789,10 @@ unused.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mlx.traceability_exception.report_warning">
-<span class="sig-prename descclassname"><span class="pre">mlx.traceability_exception.</span></span><span class="sig-name descname"><span class="pre">report_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#report_warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.report_warning" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mlx.traceability_exception.</span></span><span class="sig-name descname"><span class="pre">report_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineno</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlx/traceability_exception.html#report_warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlx.traceability_exception.report_warning" title="Permalink to this definition"></a></dt>
 <dd><p>Convenience function for logging a warning</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>msg</strong> (<em>any __str__</em>) – Message of the warning, gets converted to str.</p></li>
 <li><p><strong>docname</strong> (<em>str</em>) – Relative path to the document on which the error occurred, without extension.</p></li>
@@ -894,19 +803,15 @@ unused.</p>
 </dd></dl>
 
 </div></blockquote>
-</div>
-<div class="section" id="design-coverage">
-<h3><a class="toc-backref" href="#id5">Design coverage</a><a class="headerlink" href="#design-coverage" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="design-coverage">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Design coverage</a><a class="headerlink" href="#design-coverage" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Trace implementation to design</p>
 </div>
 <p>Statistics: 1 out of 3 covered: 33%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Implementation</p></th>
 <th class="head"><p>Design</p></th>
@@ -925,56 +830,39 @@ unused.</p>
 </tbody>
 </table>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="unit_test.html" class="btn btn-neutral float-right" title="Unit Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="design.html" class="btn btn-neutral float-left" title="Software Design" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="unit_test.html" class="btn btn-neutral float-right" title="Unit Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2017, Melexis.
-
-    </p>
+    <p>&#169; Copyright 2017, Melexis.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

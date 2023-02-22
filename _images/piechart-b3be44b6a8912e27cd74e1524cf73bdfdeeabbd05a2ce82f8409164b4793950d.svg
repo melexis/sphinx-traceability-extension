@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2022-11-29T22:11:40.373814</dc:date>
+    <dc:date>2023-02-22T13:22:52.520965</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.6.2, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.7.0, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -48,7 +48,6 @@ C 193.904837 238.571185 205.639758 230.730162 215.52384 220.84608
 C 225.407922 210.961998 233.248945 199.227077 238.598172 186.312901 
 C 243.947399 173.398726 246.7008 159.556443 246.7008 145.57824 
 M 140.256 145.57824 
-M 246.7008 145.57824 
 z
 " style="fill: #ffa500"/>
    </g>

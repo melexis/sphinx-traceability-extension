@@ -1,104 +1,55 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Software Design &mdash; Traceability 9.5.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/extra.css" type="text/css" />
-  <link rel="stylesheet" href="_static/hyperlink_colors.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Software Design &mdash; Traceability 9.6.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/extra.css" type="text/css" />
+      <link rel="stylesheet" href="_static/hyperlink_colors.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
         <script src="_static/traceability.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Software Implementation" href="implementation.html" />
     <link rel="prev" title="Software Requirements" href="requirements.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> Traceability
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            Traceability
           </a>
-
-          
-            
-            
               <div class="version">
-                9.5.1
+                9.6.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Sphinx Traceability plugin</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="example_usage.html">Example usage</a><ul class="current">
@@ -123,76 +74,34 @@
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Traceability</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="example_usage.html">Example usage</a> &raquo;</li>
-        
-      <li>Software Design</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="example_usage.html">Example usage</a></li>
+      <li class="breadcrumb-item active">Software Design</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/design.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="software-design">
-<h1>Software Design<a class="headerlink" href="#software-design" title="Permalink to this heading">¶</a></h1>
-<div class="contents local topic" id="contents">
+             
+  <section id="software-design">
+<h1>Software Design<a class="headerlink" href="#software-design" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <p class="topic-title"><cite>Contents</cite></p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#design-for-mlx-traceability" id="id1">Design for mlx.traceability</a></p></li>
@@ -205,9 +114,9 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="design-for-mlx-traceability">
-<h2><a class="toc-backref" href="#id1">Design for mlx.traceability</a><a class="headerlink" href="#design-for-mlx-traceability" title="Permalink to this heading">¶</a></h2>
+</nav>
+<section id="design-for-mlx-traceability">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Design for mlx.traceability</a><a class="headerlink" href="#design-for-mlx-traceability" title="Permalink to this heading"></a></h2>
 <div class="collapsible_links docutils container" id="DESIGN-TRACEABILITY">
 <div class="item admonition">
 <p class="admonition-title"><a class="reference external" href="design.html#DESIGN-TRACEABILITY"><em>DESIGN-TRACEABILITY : Top level design for mlx.traceability</em></a></p>
@@ -224,7 +133,7 @@
 <blockquote>
 <div><p>Since the sphinx documentation system is python based, and it allows for plugin development in seperate
 python packages, python was chosen. No limit should exist on the version of python or sphinx.</p>
-<div class="figure align-center">
+<figure class="align-center">
 <p class="plantuml">
 <img src="_images/plantuml-3155d27c836263ae34b0448b4b4ad9a0acf1f089.png" alt="&#64;startuml
 class TraceableBaseClass {
@@ -484,7 +393,7 @@ Exception &lt;|-- TraceabilityException
 Exception &lt;|-- MultipleTraceabilityExceptions
 &#64;enduml"/>
 </p>
-</div>
+</figure>
 </div></blockquote>
 <div class="collapsible_links docutils container" id="DESIGN-ITEMIZE">
 <div class="item admonition">
@@ -757,11 +666,11 @@ documentation parts.</p>
 <blockquote>
 <div><p>The plugin has a directive that allows configurability of the order of items’ attributes.</p>
 </div></blockquote>
-</div>
-<div class="section" id="traceability-matrix">
-<h2><a class="toc-backref" href="#id2">Traceability matrix</a><a class="headerlink" href="#traceability-matrix" title="Permalink to this heading">¶</a></h2>
-<div class="section" id="tree-of-design">
-<h3><a class="toc-backref" href="#id3">Tree of design</a><a class="headerlink" href="#tree-of-design" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="traceability-matrix">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Traceability matrix</a><a class="headerlink" href="#traceability-matrix" title="Permalink to this heading"></a></h2>
+<section id="tree-of-design">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Tree of design</a><a class="headerlink" href="#tree-of-design" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Design tree</p>
@@ -819,20 +728,15 @@ documentation parts.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="coverage-to-requirements-and-implementation">
-<h3><a class="toc-backref" href="#id4">Coverage to requirements and implementation</a><a class="headerlink" href="#coverage-to-requirements-and-implementation" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="coverage-to-requirements-and-implementation">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Coverage to requirements and implementation</a><a class="headerlink" href="#coverage-to-requirements-and-implementation" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Trace design to requirements</p>
 </div>
 <p>Statistics: 14 out of 14 covered: 100%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Design</p></th>
 <th class="head"><p>Linked Requirements</p></th>
@@ -899,19 +803,15 @@ documentation parts.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="design-reverse-coverage">
-<h3><a class="toc-backref" href="#id5">Design reverse coverage</a><a class="headerlink" href="#design-reverse-coverage" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="design-reverse-coverage">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Design reverse coverage</a><a class="headerlink" href="#design-reverse-coverage" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Trace design to requirements</p>
 </div>
 <p>Statistics: 14 out of 14 covered: 100%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Design</p></th>
 <th class="head"><p>Linked Requirements</p></th>
@@ -963,19 +863,15 @@ documentation parts.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section" id="implementation-coverage">
-<h3><a class="toc-backref" href="#id6">Implementation coverage</a><a class="headerlink" href="#implementation-coverage" title="Permalink to this heading">¶</a></h3>
+</section>
+<section id="implementation-coverage">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Implementation coverage</a><a class="headerlink" href="#implementation-coverage" title="Permalink to this heading"></a></h3>
 <div class="docutils container">
 <div class="item admonition">
 <p class="admonition-title">Trace design to implementation</p>
 </div>
 <p>Statistics: 1 out of 14 covered: 7%</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Design</p></th>
 <th class="head"><p>Implementation</p></th>
@@ -1027,56 +923,39 @@ documentation parts.</p>
 </tbody>
 </table>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="implementation.html" class="btn btn-neutral float-right" title="Software Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="requirements.html" class="btn btn-neutral float-left" title="Software Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="implementation.html" class="btn btn-neutral float-right" title="Software Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2017, Melexis.
-
-    </p>
+    <p>&#169; Copyright 2017, Melexis.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
