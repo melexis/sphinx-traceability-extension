@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-
+    environment: doc-build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
