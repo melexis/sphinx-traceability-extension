@@ -96,6 +96,7 @@ involved. In that case, you can use the ``item-link`` directive as follows:
         :source: RQT\d
         :target: TST[345]
         :type: validates
+        :nooverwrite:
 
 :sources: *multiple arguments*, *mutually exclusive with* ``source``
 
@@ -120,6 +121,10 @@ involved. In that case, you can use the ``item-link`` directive as follows:
     Relationship type, used to link all source items to all target items.
     The value must not be empty.
 
+:nooverwrite: *optional*, *flag*
+
+    Do not report a warning when the relationship to add between the source and target already exists.
+
 .. note::
 
     Exactly **1** of the options ``sources`` *or* ``source`` shall be used with exactly **1** of the options ``targets``
@@ -143,6 +148,7 @@ Example usage of the ``item-relink`` directive:
         :remap: RQT-OLD_PROJECT
         :target: RQT-NEW_PROJECT
         :type: validates
+        :nooverwrite:
 
 :remap: *required*, *single argument*
 
@@ -158,6 +164,10 @@ Example usage of the ``item-relink`` directive:
 
     Relationship type, for which the values for the ``remap`` and ``target`` options are the target.
     The value must not be empty.
+
+:nooverwrite: *optional*, *flag*
+
+    Do not report a warning when the relationship to add between the target and new source already exists.
 
 This directive has no representation in the documentation build output.
 

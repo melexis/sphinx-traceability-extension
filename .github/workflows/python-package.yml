@@ -16,11 +16,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -34,7 +34,7 @@ jobs:
     - name: Run test
       run: tox -e py
     - name: Build documentation with different Sphinx versions
-      run: tox -e sphinx2.1,sphinx-latest
+      run: tox -e sphinx2.4.5,sphinx-latest
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov
@@ -43,7 +43,7 @@ jobs:
       run: tox -e check
     - name: Upload HTML documentation
       if: matrix.python-version == 3.9
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: html-doc
         path: doc/_build/html
@@ -54,21 +54,21 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Download HTML documentation from job 'test'
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: html-doc
         path: doc/_build/html
     - name: Disable jekyll
       run: touch doc/_build/html/.nojekyll
     - name: Deploy documentation
-      uses: JamesIves/github-pages-deploy-action@4.1.3
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
         branch: gh-pages
         folder: doc/_build/html
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.7'
     - name: Install dependencies

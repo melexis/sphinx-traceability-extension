@@ -1,7 +1,7 @@
 """Module for the item-relink directive"""
 from docutils.parsers.rst import directives
 
-from mlx.traceability import report_warning
+from mlx.traceability import TraceabilityException, report_warning
 from mlx.traceable_base_directive import TraceableBaseDirective
 from mlx.traceable_base_node import TraceableBaseNode
 
@@ -33,12 +33,13 @@ class ItemRelink(TraceableBaseNode):
         reverse_type = collection.get_reverse_relation(forward_type)
 
         if source is None:
-            report_warning("Could not find item {!r} specified in item-relink directive".format(source_id),
-                           self['document'], self['line'])
+            report_warning("Could not find item {!r} with type {!r} specified in item-relink directive"
+                           .format(source_id, forward_type), self['document'], self['line'])
             return
         if not reverse_type:
-            report_warning("Could not find reverse relationship type for type {!r} specified in item-relink directive"
-                           .format(forward_type), self['document'], self['line'])
+            report_warning(("Could not find reverse relationship type for type {!r} specified in "
+                            "{!r} item-relink directive").format(forward_type, source_id),
+                           self['document'], self['line'])
             return
 
         affected_items = set()
@@ -49,7 +50,12 @@ class ItemRelink(TraceableBaseNode):
             item.remove_targets(source_id, explicit=True, implicit=True, relations={forward_type})
             source.remove_targets(item_id, explicit=True, implicit=True, relations={reverse_type})
             if target_id:
-                collection.add_relation(item_id, forward_type, target_id)
+                try:
+                    collection.add_relation(item_id, forward_type, target_id)
+                except TraceabilityException as err:
+                    if not self['nooverwrite']:
+                        report_warning(err, self['document'], self['line'])
+
         self.source_ids.add(source_id)
 
     @staticmethod
@@ -65,7 +71,6 @@ class ItemRelink(TraceableBaseNode):
         for source_id in ItemRelink.source_ids:
             source = collection.get_item(source_id)
             if source.is_placeholder and not [targets for _, targets in source.all_relations if targets]:
-                print(f'poppingg {source_id}')
                 collection.items.pop(source_id)
 
 
@@ -78,12 +83,14 @@ class ItemRelinkDirective(TraceableBaseDirective):
          :remap: item
          :target: item
          :type: relationship_type
+         :nooverwrite: flag
     """
     # Options
     option_spec = {
         'remap': directives.unchanged,
         'target': directives.unchanged,
         'type': directives.unchanged,
+        'nooverwrite': directives.flag,
     }
     # Content disallowed
     has_content = False
@@ -105,6 +112,8 @@ class ItemRelinkDirective(TraceableBaseDirective):
             },
             docname=env.docname
         )
+        self.check_option_presence(node, 'nooverwrite')
+
         if not process_options_success:
             return []
         env.traceability_collection.add_intermediate_node(node)
