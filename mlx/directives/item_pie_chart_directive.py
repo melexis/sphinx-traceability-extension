@@ -1,4 +1,5 @@
 import re
+import warnings
 from hashlib import sha256
 from os import environ, mkdir, path
 
@@ -78,8 +79,7 @@ class ItemPieChart(TraceableBaseNode):
                                                            list(self.linked_labels.values()),
                                                            self['colors'])
         p_node = nodes.paragraph()
-        if self['stats']:
-            p_node += nodes.Text(statistics)
+        p_node += nodes.Text(statistics)
         if data['labels']:
             top_node += self.build_pie_chart(data['sizes'], data['labels'], data['colors'], env)
         top_node += p_node
@@ -423,6 +423,10 @@ class ItemPieChartDirective(TraceableBaseDirective):
             report_warning('item-piechart: The splitsourcetype flag must not be used when the sourcetype option is '
                            'unused; disabling splitsourcetype.', node['document'], node['line'])
             node['splitsourcetype'] = False
+
+        if not node['stats']:
+            warnings.warn('Pie chart statistics will not be displayed in mlx.traceability>=10 unless the stats flag '
+                          'is provided.', FutureWarning)
 
         return [node]
 
