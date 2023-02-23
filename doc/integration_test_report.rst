@@ -77,6 +77,8 @@ This text is not part of any item
     Clean up all this again
 
 .. item:: r005 Duplicate: should trigger warning
+    :aspice: 998
+    :trace: non_existing_requirement
 
     As this one is the second one, this should **not** appear in the generated documentation.
 
