@@ -155,18 +155,21 @@ Test coverage
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: not covered, covered
     :colors: orange c b
+    :stats:
 
 .. item-piechart:: Test coverage chart targeting UTEST and ITEST
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: not covered, covered
     :colors: orange c b darkred green yellow
     :targettype: failed_by passed_by skipped_by
+    :stats:
 
 .. item-piechart:: Test coverage chart targeting ITEST only
     :id_set: RQT ITEST ITEST_REP
     :label_set: not covered, covered
     :colors: orange c b darkred green yellow
     :targettype: failed_by passed_by skipped_by
+    :stats:
 
 .. item-piechart:: Test coverage chart with test results, based on the :result: attribute
     :id_set: RQT [IU]TEST [IU]TEST_REP
@@ -175,11 +178,12 @@ Test coverage
     :label_set: uncovered, covered, has report
     :result: ERROR, fail, pass
     :colors: orange c b darkred #FF0000 g pink
+    :stats:
 
 ..
     uncovered: orange (orange)
     covered: c (cyan)
-    ran test: b (blue)
+    has report: b (blue)
     ERROR: darkred (dark red)
     fail: #FF0000 (red)
     pass: g (green)
@@ -190,6 +194,7 @@ Test coverage
     :sourcetype: validated_by
     :targettype: failed_by passed_by skipped_by
     :colors: orange c b r g y
+    :stats:
 
 .. item-piechart:: Test coverage chart with test results, based on the :targettype: option (in bad order)
     :id_set: RQT [IU]TEST [IU]TEST_REP
@@ -197,6 +202,7 @@ Test coverage
     :sourcetype: validated_by
     :targettype: skipped_by passed_by failed_by
     :colors: orange c b y g r
+    :stats:
 
 .. item-piechart:: Test cases as source using sourcetype to label with the :splitsourcetype: flag
     :id_set: [IU]TEST [IU]TEST_REP WAIVER
@@ -205,6 +211,7 @@ Test coverage
     :status: not implemented,
     :colors: orange black cyan r g y slategrey
     :splitsourcetype:
+    :stats:
 
 .. item-piechart:: All uncovered as the bad sourcetype results in 0 links
     :id_set: RQT [IU]TEST
@@ -222,3 +229,4 @@ Test coverage
 
 .. item-piechart:: Chart without any items: no image or warning shall be generated
     :id_set: NONEXISTENT [IU]TEST
+    :stats:
