@@ -34,6 +34,8 @@ jobs:
     - name: Run test
       run: tox -e py
     - name: Build documentation with different Sphinx versions
+      env:
+        PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       run: tox -e sphinx2.4.5,sphinx-latest
     - name: Codecov
       if: matrix.python-version == 3.9
