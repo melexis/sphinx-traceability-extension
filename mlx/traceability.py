@@ -418,7 +418,7 @@ def query_checklist(settings, attr_values):
         return {}
     query_results = {}
     with Session() as session:
-        for merge_request_id in str(settings['merge_request_id']).split(','):
+        for merge_request_id in [id_ for id_ in str(settings['merge_request_id']).split(',') if id_]:
             url = base_url + merge_request_id.strip()
             try:
                 with session.get(url, headers=headers) as response:
