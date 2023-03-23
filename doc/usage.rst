@@ -834,6 +834,7 @@ GitLab
 - *GIT_PLATFORM* shall be 'gitlab' if API_HOST_NAME does not contain this string
 - *PROJECT_ID* is the ID or `URL-encoded path of the project`_.
 - *MERGE_REQUEST_ID* are one or more internal IDs of merge requests (comma-separated) ordered from low to high priority. The data gets aggregated.
+  Can be an empty string to avoid sending any query.
 
 
 GitHub
@@ -843,6 +844,7 @@ GitHub
 - *GIT_PLATFORM* shall be 'github' if API_HOST_NAME does not contain this string
 - *PROJECT_ID* defines the repository by specifying *owner* and *repo* separated by a forward slash, e.g. *melexis/sphinx-traceability-extension*.
 - *MERGE_REQUEST_ID* are one or more pull request numbers (comma-separated) ordered from low to high priority. The data gets aggregated.
+  Can be an empty string to avoid sending any query.
 
 .. _`URL-encoded path of the project`: https://docs.gitlab.com/ee/api/index.html#namespaced-path-encoding
 .. _`personal access token`: https://github.blog/2013-05-16-personal-api-tokens/
