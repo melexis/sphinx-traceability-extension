@@ -317,13 +317,17 @@ def initialize_environment(app):
     env.traceability_collection = TraceableCollection()
     env.traceability_ref_nodes = {}
 
-    relationships_missing_keys = set(app.config.traceability_relationships.keys()).difference(set(app.config.traceability_relationship_to_string.keys()))
+    relationships_missing_keys = set(app.config.traceability_relationships.keys()). \
+                                     difference(set(app.config.traceability_relationship_to_string.keys()))
     if relationships_missing_keys:
-        report_warning("Keys from traceability_relationships missing in traceability_relationship_to_string: {!r}".format(relationships_missing_keys))
+        report_warning("Keys from traceability_relationships missing in traceability_relationship_to_string: {!r}"
+                       .format(relationships_missing_keys))
 
-    relationships_missing_values = set(app.config.traceability_relationships.values()).difference(set(app.config.traceability_relationship_to_string.keys()))
+    relationships_missing_values = set(app.config.traceability_relationships.values()). \
+                                       difference(set(app.config.traceability_relationship_to_string.keys()))
     if relationships_missing_values:
-        report_warning("Values from traceability_relationships missing in traceability_relationship_to_string: {!r}".format(relationships_missing_values))
+        report_warning("Values from traceability_relationships missing in traceability_relationship_to_string: {!r}"
+                       .format(relationships_missing_values))
 
     app.config.traceability_checklist['has_checklist_items'] = False
     add_checklist_attribute(app.config.traceability_checklist,
