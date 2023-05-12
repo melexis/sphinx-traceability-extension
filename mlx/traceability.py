@@ -317,6 +317,12 @@ def initialize_environment(app):
     env.traceability_collection = TraceableCollection()
     env.traceability_ref_nodes = {}
 
+    for rel1, rel2 in app.config.traceability_relationships.items():
+        for rel in (rel1, rel2):
+            if rel and rel not in app.config.traceability_relationship_to_string:
+                raise TraceabilityException(f"Relationship {rel!r} is missing from configuration variable "
+                                            "`traceability_relationships`")
+
     app.config.traceability_checklist['has_checklist_items'] = False
     add_checklist_attribute(app.config.traceability_checklist,
                             app.config.traceability_attributes,
