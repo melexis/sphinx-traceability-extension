@@ -346,7 +346,8 @@ traceability_relationship_to_string = {
     'failed_by': 'Failed by',
     'skipped': 'Skipped',
     'skipped_by': 'Skipped by',
-    'ext_toolname': 'Reference to toolname'
+    'ext_toolname': 'Reference to toolname',
+    '': ''
 }
 
 traceability_external_relationship_to_url = {
