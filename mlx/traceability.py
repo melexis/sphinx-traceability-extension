@@ -317,6 +317,13 @@ def initialize_environment(app):
     env.traceability_collection = TraceableCollection()
     env.traceability_ref_nodes = {}
 
+    all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
+    all_relationships.discard('')
+    undefined_stringifications = all_relationships.difference(app.config.traceability_relationship_to_string)
+    if undefined_stringifications:
+        raise TraceabilityException(f"Relationships {undefined_stringifications!r} are missing from configuration "
+                                    "variable `traceability_relationships`")
+
     app.config.traceability_checklist['has_checklist_items'] = False
     add_checklist_attribute(app.config.traceability_checklist,
                             app.config.traceability_attributes,
