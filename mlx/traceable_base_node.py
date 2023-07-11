@@ -7,7 +7,7 @@ from sphinx.errors import NoUri
 from sphinx.builders.latex import LaTeXBuilder
 from sphinx.util.osutil import SEP
 
-from mlx.traceability_exception import report_warning
+from mlx.traceability_exception import report_warning, TraceabilityException
 from mlx.traceable_item import TraceableItem
 
 EXTERNAL_LINK_FIELDNAME = 'field'
@@ -118,7 +118,8 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
     def make_external_item_ref(app, target_text, relationship):
         '''Generates a reference to an external item.'''
         if relationship not in app.config.traceability_external_relationship_to_url:
-            return
+            raise TraceabilityException(f"Failed to find relationship {relationship!r} in configuration variable "
+                                        "'traceability_external_relationship_to_url'")
         p_node = nodes.paragraph()
         link = nodes.reference()
         txt = nodes.Text(target_text)
