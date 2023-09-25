@@ -315,6 +315,7 @@ def initialize_environment(app):
     # generates placeholders when parsing the reverse relationships, the
     # database of items needs to be empty on every re-build.
     env.traceability_collection = TraceableCollection()
+    env.traceability_collection.attributes_natsort = app.config.traceability_attributes_natsort
     env.traceability_ref_nodes = {}
 
     all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
@@ -529,6 +530,15 @@ def setup(app):
             'effort': 'Effort estimation',
             'non_functional': 'Non-functional',
             'functional': 'Functional',
+        },
+        'env',
+    )
+
+    # Configuration for defining which attributes to sort naturally instead of alphabetically in item-attributes-matrix
+    app.add_config_value(
+        'traceability_attributes_natsort',
+        {
+            'effort',
         },
         'env',
     )
