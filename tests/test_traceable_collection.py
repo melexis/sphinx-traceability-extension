@@ -323,15 +323,12 @@ class TestTraceableCollection(TestCase):
         item1.add_attribute(self.attribute_key, '0x0029')
         item2.add_attribute(self.attribute_key, '0x003A')
         # Alphabetical sorting on attributes: 0x0029 before 0x003A
-        self.assertEqual(item1.get_id(), coll.get_items('', sortattributes=[self.attribute_key])[0])
-        self.assertEqual(item2.get_id(), coll.get_items('', sortattributes=[self.attribute_key])[1])
+        self.assertEqual([name1, name2], coll.get_items('', sortattributes=[self.attribute_key]))
         # Natural sorting: 0x003A before 0x0029
         coll.attributes_natsort.add(self.attribute_key)
-        self.assertEqual(item1.get_id(), coll.get_items('', sortattributes=[self.attribute_key])[1])
-        self.assertEqual(item2.get_id(), coll.get_items('', sortattributes=[self.attribute_key])[0])
+        self.assertEqual([name2, name1], coll.get_items('', sortattributes=[self.attribute_key]))
         # Natural sorting on items: z2 before z11
-        self.assertEqual(item2.get_id(), coll.get_items('')[0])
-        self.assertEqual(item1.get_id(), coll.get_items('')[1])
+        self.assertEqual([name2, name1], coll.get_items(''))
 
     def test_related(self):
         coll = dut.TraceableCollection()
