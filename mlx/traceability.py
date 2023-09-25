@@ -534,7 +534,7 @@ def setup(app):
         'env',
     )
 
-    # Configuration for defining which attributes to sort naturally instead of alphabetically in item-attributes-matrix
+    # Set of attributes to sort naturally on instead of alphabetically in item-attributes-matrix
     app.add_config_value(
         'traceability_attributes_natsort',
         {
