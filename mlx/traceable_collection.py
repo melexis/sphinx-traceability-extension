@@ -298,7 +298,7 @@ class TraceableCollection:
         Args:
             regex (str/re.Pattern): Regex pattern or object to match the items in this collection against
             attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against
-            sortattributes (list): List of attributes on which to alphabetically sort the items
+            sortattributes (list): List of attributes on which to naturally sort the items
             reverse (bool): True for reverse sorting
             sort (bool): When sortattributes is falsy: True to enable natural sorting, False to disable sorting
 
@@ -313,8 +313,8 @@ class TraceableCollection:
             if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
         if sortattributes:
-            return sorted(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
-                          reverse=reverse)
+            return natsorted(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
+                             reverse=reverse)
         elif sort:
             return natsorted(matches, reverse=reverse)
         return matches
