@@ -326,7 +326,9 @@ to hide the item IDs, set the *onlycaptions* flag instead.
 
 By default, items are sorted naturally based on their name. With the *sort* argument it is possible to sort on one
 or more attribute values alphabetically. When providing multiple attributes to sort on, the attribute keys are
-space-separated. With the *reverse* argument, the sorting is reversed.
+space-separated. With the *reverse* argument, the sorting is reversed. If you want natural instead of alphabetical
+sorting on attribute values, add one or more attribute keys to the configuration value
+*traceability_attributes_natsort* (see :ref:`traceability_default_config`).
 
 By default, the attribute names are listed the header row and every item takes up a row. Depending on the number of
 items and attributes it could be better to transpose the generated matrix (swap columns for row) by providing the
