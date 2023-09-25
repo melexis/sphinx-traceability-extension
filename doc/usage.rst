@@ -324,8 +324,8 @@ By default, the caption for every item in the table is shown. By providing the *
 caption can be omitted. This gives a smaller table, but also less details. If you only care about the captions and want
 to hide the item IDs, set the *onlycaptions* flag instead.
 
-By default, items are sorted naturally based on their name. With the *sort* argument it is possible to naturally sort
-on one or more attribute values. When providing multiple attributes to sort on, the attribute keys are
+By default, items are sorted naturally based on their name. With the *sort* argument it is possible to sort on one
+or more attribute values alphabetically. When providing multiple attributes to sort on, the attribute keys are
 space-separated. With the *reverse* argument, the sorting is reversed.
 
 By default, the attribute names are listed the header row and every item takes up a row. Depending on the number of
