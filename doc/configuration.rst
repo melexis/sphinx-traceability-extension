@@ -73,7 +73,7 @@ Example of attribute stringification:
 Valid relationships
 -------------------
 
-Python variable *traceability_relationsips* can be defined in order to override the
+Python variable *traceability_relationships* can be defined in order to override the
 default configuration of the traceability plugin.
 It is a *dictionary* of relationship pairs: the *key* is the name of the forward relationship, while the *value* holds
 the name of the corresponding reverse relationship. Both can only be lowercase.
