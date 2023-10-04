@@ -16,7 +16,7 @@ TraceableItem
 .. item:: IMPL-TRACEABLE_ITEM
     :fulfills: DESIGN-ITEMIZE
 
-    .. automodule:: mlx.traceable_item
+    .. automodule:: mlx.traceability.traceable_item
         :members:
         :show-inheritance:
 
@@ -25,7 +25,7 @@ TraceableCollection
 
 .. item:: IMPL-TRACEABLE_COLLECTION
 
-    .. automodule:: mlx.traceable_collection
+    .. automodule:: mlx.traceability.traceable_collection
         :members:
         :show-inheritance:
 
@@ -34,7 +34,7 @@ TraceabilityException
 
 .. item:: IMPL-TRACEABILITY_EXCEPTION
 
-    .. automodule:: mlx.traceability_exception
+    .. automodule:: mlx.traceability.traceability_exception
         :members:
         :show-inheritance:
 

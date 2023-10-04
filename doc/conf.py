@@ -17,10 +17,9 @@ import subprocess
 import sys
 
 import mlx.traceability
-from mlx.traceability import report_warning
-from pkg_resources import get_distribution
+from mlx.traceability import report_warning, __version__
 
-pkg_version = get_distribution('mlx.traceability').version
+pkg_version = __version__
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -452,7 +451,7 @@ else:
 
 def setup(app):
 
-    from traceability import ItemDirective
+    from mlx.traceability import ItemDirective
     # New directive types: treated exactly as ``item`` directive, but
     # using a different name. Item template can be customized for
     # these types
