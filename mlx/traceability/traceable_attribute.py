@@ -3,7 +3,7 @@ Storage class for traceable item attribute
 '''
 
 import re
-from mlx.traceable_base_class import TraceableBaseClass
+from .traceable_base_class import TraceableBaseClass
 
 
 class TraceableAttribute(TraceableBaseClass):

@@ -1,9 +1,9 @@
 """Module for the item-relink directive"""
 from docutils.parsers.rst import directives
 
-from mlx.traceability import TraceabilityException, report_warning
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
+from ..traceability_exception import TraceabilityException, report_warning
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
 
 
 class ItemRelink(TraceableBaseNode):

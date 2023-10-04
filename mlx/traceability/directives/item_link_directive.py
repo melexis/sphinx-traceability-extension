@@ -1,8 +1,8 @@
 from docutils.parsers.rst import directives
 
-from mlx.traceability_exception import report_warning, TraceabilityException
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
+from ..traceability_exception import report_warning, TraceabilityException
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
 
 
 class ItemLink(TraceableBaseNode):

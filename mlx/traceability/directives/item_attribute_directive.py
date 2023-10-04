@@ -1,10 +1,10 @@
 from docutils import nodes
 
-from mlx.traceability import report_warning
-from mlx.traceable_attribute import TraceableAttribute
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
-from mlx.traceable_item import TraceableItem
+from ..traceability_exception import report_warning
+from ..traceable_attribute import TraceableAttribute
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
+from ..traceable_item import TraceableItem
 
 
 class ItemAttribute(TraceableBaseNode):

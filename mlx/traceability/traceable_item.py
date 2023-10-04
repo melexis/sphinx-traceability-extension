@@ -3,9 +3,11 @@ Storage classes for traceable item
 '''
 
 import re
+
 from natsort import natsorted
-from mlx.traceable_base_class import TraceableBaseClass
-from mlx.traceability_exception import TraceabilityException
+
+from .traceability_exception import TraceabilityException
+from .traceable_base_class import TraceableBaseClass
 
 
 class TraceableItem(TraceableBaseClass):

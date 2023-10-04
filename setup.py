@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 project_url = 'https://github.com/melexis/sphinx-traceability-extension'
 
@@ -17,7 +17,7 @@ requires = [
 setup(
     name='mlx.traceability',
     use_scm_version={
-        'write_to': 'mlx/__traceability_version__.py'
+        'write_to': 'mlx/traceability/__traceability_version__.py'
     },
     setup_requires=['setuptools_scm'],
     url=project_url,
@@ -52,7 +52,7 @@ setup(
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_packages(exclude=['tests', 'doc']),
+    packages=find_namespace_packages(include=['mlx.*']),
     include_package_data=True,
     install_requires=requires,
     namespace_packages=['mlx'],

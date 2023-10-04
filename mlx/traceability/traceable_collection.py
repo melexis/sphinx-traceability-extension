@@ -8,8 +8,8 @@ from pathlib import Path
 
 from natsort import natsorted
 
-from mlx.traceability_exception import MultipleTraceabilityExceptions, TraceabilityException
-from mlx.traceable_item import TraceableItem
+from .traceability_exception import MultipleTraceabilityExceptions, TraceabilityException
+from .traceable_item import TraceableItem
 
 
 class TraceableCollection:

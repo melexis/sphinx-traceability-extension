@@ -1,9 +1,9 @@
 from docutils import nodes
 from docutils.parsers.rst import directives
 
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
-from mlx.traceable_item import TraceableItem
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
+from ..traceable_item import TraceableItem
 
 
 class ItemAttributesMatrix(TraceableBaseNode):

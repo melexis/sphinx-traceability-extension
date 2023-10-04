@@ -18,26 +18,26 @@ from sphinx.errors import NoUri
 from docutils import nodes
 from docutils.parsers.rst import directives
 
-from mlx.__traceability_version__ import version
-from mlx.traceable_attribute import TraceableAttribute
-from mlx.traceable_base_node import TraceableBaseNode
-from mlx.traceable_item import TraceableItem
-from mlx.traceable_collection import TraceableCollection
-from mlx.traceability_exception import TraceabilityException, MultipleTraceabilityExceptions, report_warning
-from mlx.directives.attribute_link_directive import AttributeLink, AttributeLinkDirective
-from mlx.directives.attribute_sort_directive import AttributeSort, AttributeSortDirective
-from mlx.directives.checkbox_result_directive import CheckboxResultDirective
-from mlx.directives.checklist_item_directive import ChecklistItemDirective
-from mlx.directives.item_directive import Item, ItemDirective
-from mlx.directives.item_2d_matrix_directive import Item2DMatrix, Item2DMatrixDirective
-from mlx.directives.item_attribute_directive import ItemAttribute, ItemAttributeDirective
-from mlx.directives.item_attributes_matrix_directive import ItemAttributesMatrix, ItemAttributesMatrixDirective
-from mlx.directives.item_link_directive import ItemLink, ItemLinkDirective
-from mlx.directives.item_list_directive import ItemList, ItemListDirective
-from mlx.directives.item_matrix_directive import ItemMatrix, ItemMatrixDirective
-from mlx.directives.item_pie_chart_directive import ItemPieChart, ItemPieChartDirective
-from mlx.directives.item_relink_directive import ItemRelink, ItemRelinkDirective
-from mlx.directives.item_tree_directive import ItemTree, ItemTreeDirective
+from .__traceability_version__ import __version__ as version
+from .traceable_attribute import TraceableAttribute
+from .traceable_base_node import TraceableBaseNode
+from .traceable_item import TraceableItem
+from .traceable_collection import TraceableCollection
+from .traceability_exception import TraceabilityException, MultipleTraceabilityExceptions, report_warning
+from .directives.attribute_link_directive import AttributeLink, AttributeLinkDirective
+from .directives.attribute_sort_directive import AttributeSort, AttributeSortDirective
+from .directives.checkbox_result_directive import CheckboxResultDirective
+from .directives.checklist_item_directive import ChecklistItemDirective
+from .directives.item_directive import Item, ItemDirective
+from .directives.item_2d_matrix_directive import Item2DMatrix, Item2DMatrixDirective
+from .directives.item_attribute_directive import ItemAttribute, ItemAttributeDirective
+from .directives.item_attributes_matrix_directive import ItemAttributesMatrix, ItemAttributesMatrixDirective
+from .directives.item_link_directive import ItemLink, ItemLinkDirective
+from .directives.item_list_directive import ItemList, ItemListDirective
+from .directives.item_matrix_directive import ItemMatrix, ItemMatrixDirective
+from .directives.item_pie_chart_directive import ItemPieChart, ItemPieChartDirective
+from .directives.item_relink_directive import ItemRelink, ItemRelinkDirective
+from .directives.item_tree_directive import ItemTree, ItemTreeDirective
 
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
 

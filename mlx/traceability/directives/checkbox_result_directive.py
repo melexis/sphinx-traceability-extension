@@ -1,8 +1,8 @@
 """ Module for the directive used to set the checklist attribute. """
 from re import match
 
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceability_exception import report_warning, TraceabilityException
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceability_exception import report_warning, TraceabilityException
 
 
 class CheckboxResultDirective(TraceableBaseDirective):

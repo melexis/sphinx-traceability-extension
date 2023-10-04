@@ -7,8 +7,8 @@ from sphinx.errors import NoUri
 from sphinx.builders.latex import LaTeXBuilder
 from sphinx.util.osutil import SEP
 
-from mlx.traceability_exception import report_warning, TraceabilityException
-from mlx.traceable_item import TraceableItem
+from .traceability_exception import report_warning, TraceabilityException
+from .traceable_item import TraceableItem
 
 EXTERNAL_LINK_FIELDNAME = 'field'
 

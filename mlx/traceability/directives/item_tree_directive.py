@@ -3,9 +3,9 @@ from docutils.parsers.rst import directives
 from natsort import natsorted, natsort_keygen
 from sphinx.builders.latex import LaTeXBuilder
 
-from mlx.traceability import report_warning, TraceabilityException
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
+from ..traceability_exception import report_warning, TraceabilityException
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
 
 natsort_key = natsort_keygen()
 
