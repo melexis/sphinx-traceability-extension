@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from mlx.directives.item_pie_chart_directive import ItemPieChart
+from mlx.traceability.directives.item_pie_chart_directive import ItemPieChart
 
 
 class TestItemPieChart(TestCase):

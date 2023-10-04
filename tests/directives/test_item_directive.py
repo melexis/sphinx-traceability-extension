@@ -7,9 +7,9 @@ from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.environment import BuildEnvironment
 from sphinx.errors import NoUri
 
-from mlx.directives.item_directive import Item as dut
-from mlx.traceable_collection import TraceableCollection
-from mlx.traceable_item import TraceableItem
+from mlx.traceability.directives.item_directive import Item as dut
+from mlx.traceability.traceable_collection import TraceableCollection
+from mlx.traceability.traceable_item import TraceableItem
 
 from parameterized import parameterized
 

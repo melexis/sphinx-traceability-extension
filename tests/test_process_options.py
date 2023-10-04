@@ -2,8 +2,8 @@ from unittest import TestCase
 from unittest.mock import Mock
 from sphinx.application import Sphinx
 
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
+from mlx.traceability.traceable_base_directive import TraceableBaseDirective
+from mlx.traceability.traceable_base_node import TraceableBaseNode
 from docutils.parsers.rst import directives
 
 

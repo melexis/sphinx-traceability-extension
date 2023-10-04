@@ -1,10 +1,10 @@
 from unittest import TestCase
 from unittest.mock import patch, mock_open
 
-import mlx.traceable_item as item
-import mlx.traceable_attribute as attribute
-import mlx.traceability_exception as exception
-import mlx.traceable_collection as dut
+from mlx.traceability import traceable_item as item
+from mlx.traceability import traceable_attribute as attribute
+from mlx.traceability import traceability_exception as exception
+from mlx.traceability import traceable_collection as dut
 
 
 class TestTraceableCollection(TestCase):
@@ -382,7 +382,7 @@ class TestTraceableCollection(TestCase):
     def test_export_no_items(self):
         open_mock = mock_open()
         coll = dut.TraceableCollection()
-        with patch('mlx.traceable_collection.open', open_mock, create=True):
+        with patch('mlx.traceability.traceable_collection.open', open_mock, create=True):
             coll.export(self.mock_export_file)
         open_mock.assert_called_once_with(self.mock_export_file, 'w')
 
@@ -391,7 +391,7 @@ class TestTraceableCollection(TestCase):
         coll = dut.TraceableCollection()
         item1 = item.TraceableItem(self.identification_src)
         coll.add_item(item1)
-        with patch('mlx.traceable_collection.open', open_mock, create=True):
+        with patch('mlx.traceability.traceable_collection.open', open_mock, create=True):
             coll.export(self.mock_export_file)
         open_mock.assert_called_once_with(self.mock_export_file, 'w')
 

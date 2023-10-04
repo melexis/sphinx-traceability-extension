@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-import mlx.traceability_exception as exception
-import mlx.traceable_base_class as dut
+from mlx.traceability import traceability_exception as exception
+from mlx.traceability import traceable_base_class as dut
 
 
 class TestTraceableBaseClass(TestCase):

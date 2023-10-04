@@ -2,7 +2,7 @@ from collections import namedtuple
 from unittest import TestCase
 
 from docutils import nodes
-from mlx.directives.item_matrix_directive import ItemMatrix
+from mlx.traceability.directives.item_matrix_directive import ItemMatrix
 
 from parameterized import parameterized
 
