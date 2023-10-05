@@ -27,6 +27,7 @@ __all__ = [
     'ItemRelinkDirective',
     'ItemTree',
     'ItemTreeDirective',
+    'report_warning',
     'TraceabilityException',
     'TraceableAttribute',
     'TraceableCollection',
@@ -56,4 +57,4 @@ from .directives.item_relink_directive import ItemRelink, ItemRelinkDirective
 from .directives.item_tree_directive import ItemTree, ItemTreeDirective
 
 # provide setup function here for Sphinx
-from .traceability import setup
+from .traceability import setup  # noqa: unused-import
