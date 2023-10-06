@@ -7,16 +7,17 @@ Sphinx extension for reStructuredText that added traceable documentation items.
 See readme for more details.
 """
 from collections import namedtuple
-from re import fullmatch, match
 from os import path
+from re import fullmatch, match
 
-from requests import Session
-from sphinx import version_info as sphinx_version
-from sphinx.roles import XRefRole
-from sphinx.util.nodes import make_refnode
-from sphinx.errors import NoUri
+import natsort
 from docutils import nodes
 from docutils.parsers.rst import directives
+from requests import Session
+from sphinx import version_info as sphinx_version
+from sphinx.errors import NoUri
+from sphinx.roles import XRefRole
+from sphinx.util.nodes import make_refnode
 
 from mlx.__traceability_version__ import version
 from mlx.traceable_attribute import TraceableAttribute
@@ -315,7 +316,7 @@ def initialize_environment(app):
     # generates placeholders when parsing the reverse relationships, the
     # database of items needs to be empty on every re-build.
     env.traceability_collection = TraceableCollection()
-    env.traceability_collection.attributes_natsort = app.config.traceability_attributes_natsort
+    env.traceability_collection.attributes_sort = app.config.traceability_attributes_sort
     env.traceability_ref_nodes = {}
 
     all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
@@ -534,11 +535,11 @@ def setup(app):
         'env',
     )
 
-    # Set of attributes to sort naturally on instead of alphabetically in item-attributes-matrix
+    # Configuration for custom sort orders for sorting on attribute in item-attributes-matrix (default is alphabetical)
     app.add_config_value(
-        'traceability_attributes_natsort',
+        'traceability_attributes_sort',
         {
-            'effort',
+            'effort': natsort.natsorted,
         },
         'env',
     )

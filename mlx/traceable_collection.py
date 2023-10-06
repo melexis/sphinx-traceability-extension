@@ -25,7 +25,7 @@ class TraceableCollection:
         self.items = {}
         self.relations_sorted = {}
         self._intermediate_nodes = []
-        self.attributes_natsort = set()
+        self.attributes_sort = {}
 
     def add_relation_pair(self, forward, reverse=NO_RELATION_STR):
         '''
@@ -299,8 +299,8 @@ class TraceableCollection:
         Args:
             regex (str/re.Pattern): Regex pattern or object to match the items in this collection against
             attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against
-            sortattributes (list): List of attributes on which to sort the items alphabetically, or naturally if
-                at least one attribute is in ``attributes_natsort``
+            sortattributes (list): List of attributes on which to sort the items alphabetically, or using a custom
+                sort order if at least one attribute is in ``attributes_sort``
             reverse (bool): True for reverse sorting
             sort (bool): When sortattributes is falsy: True to enable natural sorting, False to disable sorting
 
@@ -315,8 +315,10 @@ class TraceableCollection:
             if item.is_match(regex) and (not attributes or item.attributes_match(attributes)):
                 matches.append(itemid)
         if sortattributes:
-            if set(sortattributes).intersection(self.attributes_natsort):
-                sorted_func = natsorted
+            for attr in sortattributes:
+                if attr in self.attributes_sort:
+                    sorted_func = self.attributes_sort[attr]
+                    break
             else:
                 sorted_func = sorted
             return sorted_func(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
