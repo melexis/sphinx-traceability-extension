@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import patch, mock_open
 
+from natsort import natsorted
+
 import mlx.traceable_item as item
 import mlx.traceable_attribute as attribute
 import mlx.traceability_exception as exception
@@ -325,7 +327,7 @@ class TestTraceableCollection(TestCase):
         # Alphabetical sorting on attributes: 0x0029 before 0x003A
         self.assertEqual([name1, name2], coll.get_items('', sortattributes=[self.attribute_key]))
         # Natural sorting: 0x003A before 0x0029
-        coll.attributes_natsort.add(self.attribute_key)
+        coll.attributes_sort.update({self.attribute_key: natsorted})
         self.assertEqual([name2, name1], coll.get_items('', sortattributes=[self.attribute_key]))
         # Natural sorting on items: z2 before z11
         self.assertEqual([name2, name1], coll.get_items(''))
