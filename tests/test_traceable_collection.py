@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import patch, mock_open
 
+from natsort import natsorted
+
 import mlx.traceable_item as item
 import mlx.traceable_attribute as attribute
 import mlx.traceability_exception as exception
@@ -322,12 +324,13 @@ class TestTraceableCollection(TestCase):
         dut.TraceableItem.define_attribute(attr)
         item1.add_attribute(self.attribute_key, '0x0029')
         item2.add_attribute(self.attribute_key, '0x003A')
-        # Alphabetical sorting: 0x0029 before 0x003A
-        self.assertEqual(item1.get_id(), coll.get_items('', sortattributes=[self.attribute_key])[0])
-        self.assertEqual(item2.get_id(), coll.get_items('', sortattributes=[self.attribute_key])[1])
-        # Natural sorting: z2 before z11
-        self.assertEqual(item2.get_id(), coll.get_items('')[0])
-        self.assertEqual(item1.get_id(), coll.get_items('')[1])
+        # Alphabetical sorting on attributes: 0x0029 before 0x003A
+        self.assertEqual([name1, name2], coll.get_items('', sortattributes=[self.attribute_key]))
+        # Natural sorting: 0x003A before 0x0029
+        coll.attributes_sort.update({self.attribute_key: natsorted})
+        self.assertEqual([name2, name1], coll.get_items('', sortattributes=[self.attribute_key]))
+        # Natural sorting on items: z2 before z11
+        self.assertEqual([name2, name1], coll.get_items(''))
 
     def test_related(self):
         coll = dut.TraceableCollection()
