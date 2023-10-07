@@ -2,7 +2,6 @@ from unittest import TestCase
 
 from docutils import nodes
 
-import mlx.traceability_exception as exception
 import mlx.traceable_base_class as dut
 
 

@@ -47,7 +47,6 @@ class TestTraceableItem(TestCase):
         # Verify dict
         self.assertEqual({}, item.to_dict())
 
-
     def test_to_dict(self):
         txt = 'some short description'
         item = dut.TraceableItem(self.identification)
