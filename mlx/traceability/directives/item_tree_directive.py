@@ -1,3 +1,4 @@
+"""Module for the item-tree directive"""
 from docutils import nodes
 from docutils.parsers.rst import directives
 from natsort import natsorted, natsort_keygen

@@ -1,3 +1,4 @@
+"""Module for the item-matrix directive"""
 import re
 from collections import namedtuple
 from copy import copy, deepcopy

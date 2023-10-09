@@ -1,3 +1,4 @@
+"""Module for the item-attributes-matrix directive"""
 from docutils import nodes
 from docutils.parsers.rst import directives
 

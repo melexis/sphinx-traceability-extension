@@ -1,3 +1,4 @@
+"""Module for the attribute-sort directive"""
 from docutils.parsers.rst import directives
 
 from ..traceability_exception import report_warning

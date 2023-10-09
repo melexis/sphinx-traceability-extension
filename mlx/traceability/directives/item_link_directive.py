@@ -1,3 +1,4 @@
+"""Module for the item-link directive"""
 from docutils.parsers.rst import directives
 
 from ..traceability_exception import report_warning, TraceabilityException

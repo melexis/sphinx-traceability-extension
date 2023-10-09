@@ -1,3 +1,4 @@
+"""Module for the item-attribute directive"""
 from docutils import nodes
 
 from ..traceability_exception import report_warning

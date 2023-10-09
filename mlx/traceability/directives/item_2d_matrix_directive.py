@@ -1,3 +1,4 @@
+"""Module for the item-2d-matrix directive"""
 from docutils import nodes
 from docutils.parsers.rst import directives
 

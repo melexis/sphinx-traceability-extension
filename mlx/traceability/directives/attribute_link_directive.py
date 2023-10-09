@@ -1,3 +1,4 @@
+"""Module for the attribute-link directive"""
 from docutils.parsers.rst import directives
 
 from ..traceability_exception import TraceabilityException, report_warning

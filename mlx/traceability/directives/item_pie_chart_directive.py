@@ -1,3 +1,4 @@
+"""Module for the item-piechart directive"""
 import re
 from hashlib import sha256
 from os import environ, mkdir, path
