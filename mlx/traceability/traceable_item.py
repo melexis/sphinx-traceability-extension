@@ -439,7 +439,7 @@ class TraceableItem(TraceableBaseClass):
             TraceabilityException: Item has an invalid attribute value.
             TraceabilityException: Duplicate target found for item.
         '''
-        super(TraceableItem, self).self_test()
+        super().self_test()
         # Item should not be a placeholder
         if self.is_placeholder:
             raise TraceabilityException('item {item} is not defined'.format(item=self.identifier), self.docname)
