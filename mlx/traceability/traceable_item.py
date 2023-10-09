@@ -220,6 +220,7 @@ class TraceableItem(TraceableBaseClass):
                 yield target
 
     def yield_targets_sorted(self, *args, **kwargs):
+        ''' Gets an iterable of targets to other traceable items, with natural sorting applied. '''
         gen = self.yield_targets(*args, **kwargs)
         return natsorted(gen)
 

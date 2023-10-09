@@ -47,6 +47,7 @@ class TraceableAttribute(TraceableBaseClass):
 
     @property
     def value(self):
+        ''' str: Pattern string to which the attribute values should match '''
         return self._value
 
     @value.setter

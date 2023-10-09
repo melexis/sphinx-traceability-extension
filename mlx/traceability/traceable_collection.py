@@ -170,9 +170,11 @@ class TraceableCollection:
         return ignored_items
 
     def add_intermediate_node(self, node):
+        """ Adds an intermediate node """
         self._intermediate_nodes.append(node)
 
     def process_intermediate_nodes(self):
+        """ Processes all intermediate nodes in order by calling its ``apply_effect`` """
         for node in sorted(self._intermediate_nodes, key=attrgetter('order')):
             node.apply_effect(self)
 
