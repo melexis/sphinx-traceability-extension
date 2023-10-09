@@ -217,8 +217,8 @@ class TraceableCollection:
             # On item level
             try:
                 item.self_test()
-            except TraceabilityException as e:
-                errors.append(e)
+            except TraceabilityException as err:
+                errors.append(err)
             # targetted items shall exist, with automatic reverse relation
             for relation in self.relations:
                 # Exception: no reverse relation (external links)
