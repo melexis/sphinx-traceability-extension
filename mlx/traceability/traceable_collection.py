@@ -79,8 +79,7 @@ class TraceableCollection:
             if not olditem.is_placeholder:
                 raise TraceabilityException('duplicating {itemid}'.format(itemid=item.identifier), item.docname)
             # ... otherwise, update the item with new content
-            else:
-                item.update(olditem)
+            item.update(olditem)
         # add it
         self.items[item.identifier] = item
 
@@ -325,7 +324,7 @@ class TraceableCollection:
                 sorted_func = sorted
             return sorted_func(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
                                reverse=reverse)
-        elif sort:
+        if sort:
             return natsorted(matches, reverse=reverse)
         return matches
 
