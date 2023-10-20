@@ -246,7 +246,7 @@ class TraceableCollection:
                     for target_of_target in target.yield_targets(relation):
                         if target_of_target in item.yield_targets(rev_relation):
                             errors.append(TraceabilityException(
-                                "Circular relationship found: {src} {rel} {tgt} {rel} {nested} {rel} {source}"
+                                "Circular relationship found: {src} {rel} {tgt} {rel} {nested} {rel} {src}"
                                 .format(src=itemid, rel=relation, tgt=tgt, nested=target_of_target),
                                 item.docname))
         if errors:
