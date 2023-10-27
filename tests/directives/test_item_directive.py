@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock
+import logging
 
+from docutils import nodes
 from sphinx.application import Sphinx
 from sphinx.builders.latex import LaTeXBuilder
 from sphinx.builders.html import StandaloneHTMLBuilder
@@ -12,6 +14,8 @@ from mlx.traceable_collection import TraceableCollection
 from mlx.traceable_item import TraceableItem
 
 from parameterized import parameterized
+
+LOGGER = logging.getLogger()
 
 
 def raise_no_uri(*args, **kwargs):
@@ -31,15 +35,22 @@ class TestItemDirective(TestCase):
         self.item.node = self.node
         self.app.config = Mock()
         self.app.config.traceability_hyperlink_colors = {}
+        self.collection = TraceableCollection()
+        self.collection.add_item(self.item)
 
-    def test_make_internal_item_ref_no_caption(self):
-        mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
-        mock_builder.link_suffix = '.html'
+    def init_builder(self, spec=StandaloneHTMLBuilder):
+        mock_builder = MagicMock(spec=spec)
+        if spec == StandaloneHTMLBuilder:
+            mock_builder.link_suffix = '.html'
+        else:
+            mock_builder.get_relative_uri = Mock(side_effect=raise_no_uri)
         mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
+        self.app.builder.env.traceability_collection = self.collection
         self.app.builder.env.traceability_ref_nodes = {}
-        self.app.builder.env.traceability_collection.add_item(self.item)
+
+    def test_make_internal_item_ref_no_caption(self):
+        self.init_builder()
         p_node = self.node.make_internal_item_ref(self.app, self.node['id'])
         ref_node = p_node.children[0]
         em_node = ref_node.children[0]
@@ -54,13 +65,7 @@ class TestItemDirective(TestCase):
         self.assertNotIn('onlycaptions', cache)
 
     def test_make_internal_item_ref_show_caption(self):
-        mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
-        mock_builder.link_suffix = '.html'
-        mock_builder.env = BuildEnvironment(self.app)
-        self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
-        self.app.builder.env.traceability_ref_nodes = {}
-        self.app.builder.env.traceability_collection.add_item(self.item)
+        self.init_builder()
         self.item.caption = 'caption text'
         p_node = self.node.make_internal_item_ref(self.app, self.node['id'])
         ref_node = p_node.children[0]
@@ -75,13 +80,7 @@ class TestItemDirective(TestCase):
         self.assertEqual(p_node, cache['default'][f'{self.node["document"]}.html'])
 
     def test_make_internal_item_ref_only_caption(self):
-        mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
-        mock_builder.link_suffix = '.html'
-        mock_builder.env = BuildEnvironment(self.app)
-        self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
-        self.app.builder.env.traceability_ref_nodes = {}
-        self.app.builder.env.traceability_collection.add_item(self.item)
+        self.init_builder()
         self.item.caption = 'caption text'
         self.node['nocaptions'] = True
         self.node['onlycaptions'] = True
@@ -100,13 +99,7 @@ class TestItemDirective(TestCase):
         self.assertEqual(p_node, cache['onlycaptions'][f'{self.node["document"]}.html'])
 
     def test_make_internal_item_ref_hide_caption_html(self):
-        mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
-        mock_builder.link_suffix = '.html'
-        mock_builder.env = BuildEnvironment(self.app)
-        self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
-        self.app.builder.env.traceability_ref_nodes = {}
-        self.app.builder.env.traceability_collection.add_item(self.item)
+        self.init_builder()
         self.item.caption = 'caption text'
         self.node['nocaptions'] = True
         p_node = self.node.make_internal_item_ref(self.app, self.node['id'])
@@ -124,13 +117,7 @@ class TestItemDirective(TestCase):
         self.assertEqual(p_node, cache['nocaptions'][f'{self.node["document"]}.html'])
 
     def test_make_internal_item_ref_hide_caption_latex(self):
-        mock_builder = MagicMock(spec=LaTeXBuilder)
-        mock_builder.get_relative_uri = Mock(side_effect=raise_no_uri)
-        mock_builder.env = BuildEnvironment(self.app)
-        self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
-        self.app.builder.env.traceability_ref_nodes = {}
-        self.app.builder.env.traceability_collection.add_item(self.item)
+        self.init_builder(spec=LaTeXBuilder)
         self.item.caption = 'caption text'
         self.node['nocaptions'] = True
         p_node = self.node.make_internal_item_ref(self.app, self.node['id'])
@@ -154,3 +141,21 @@ class TestItemDirective(TestCase):
     def test_is_relation_external(self, relation_name, expected):
         external = self.node.is_relation_external(relation_name)
         self.assertEqual(external, expected)
+
+    def test_item_node_replacement(self):
+        self.collection.add_relation_pair('depends_on', 'impacts_on')
+        # leaving out depends_on to test warning
+        self.app.config.traceability_relationship_to_string = {'impacts_on': 'Impacts on'}
+
+        target_item = TraceableItem('target_id')
+        self.collection.add_item(target_item)
+        self.collection.add_relation(self.item.identifier, 'depends_on', target_item.identifier)
+
+        with self.assertLogs(LOGGER, logging.DEBUG) as c_m:
+            self.node.parent = nodes.container()
+            self.node.parent.append(self.node)
+            self.node.perform_replacement(self.app, self.collection)
+
+        warning = "WARNING:sphinx.mlx.traceability_exception:Traceability: relation depends_on cannot be translated "\
+            "to string"
+        self.assertEqual(c_m.output, [warning])
