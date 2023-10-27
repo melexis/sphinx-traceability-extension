@@ -148,7 +148,6 @@ class TestItemDirective(TestCase):
 
         target_item = TraceableItem('target_id')
         self.collection.add_item(target_item)
-
         self.collection.add_relation(self.item.identifier, 'depends_on', target_item.identifier)
 
         with self.assertLogs(LOGGER, logging.DEBUG) as c_m:
