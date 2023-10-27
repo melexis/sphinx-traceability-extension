@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock
+import logging
 
+from docutils import nodes
 from sphinx.application import Sphinx
 from sphinx.builders.latex import LaTeXBuilder
 from sphinx.builders.html import StandaloneHTMLBuilder
@@ -13,6 +15,7 @@ from mlx.traceable_item import TraceableItem
 
 from parameterized import parameterized
 
+LOGGER = logging.getLogger()
 
 def raise_no_uri(*args, **kwargs):
     raise NoUri
@@ -31,13 +34,14 @@ class TestItemDirective(TestCase):
         self.item.node = self.node
         self.app.config = Mock()
         self.app.config.traceability_hyperlink_colors = {}
+        self.collection =  TraceableCollection()
 
     def test_make_internal_item_ref_no_caption(self):
         mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
         mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
+        self.app.builder.env.traceability_collection = self.collection
         self.app.builder.env.traceability_ref_nodes = {}
         self.app.builder.env.traceability_collection.add_item(self.item)
         p_node = self.node.make_internal_item_ref(self.app, self.node['id'])
@@ -58,7 +62,7 @@ class TestItemDirective(TestCase):
         mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
+        self.app.builder.env.traceability_collection = self.collection
         self.app.builder.env.traceability_ref_nodes = {}
         self.app.builder.env.traceability_collection.add_item(self.item)
         self.item.caption = 'caption text'
@@ -79,7 +83,7 @@ class TestItemDirective(TestCase):
         mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
+        self.app.builder.env.traceability_collection = self.collection
         self.app.builder.env.traceability_ref_nodes = {}
         self.app.builder.env.traceability_collection.add_item(self.item)
         self.item.caption = 'caption text'
@@ -104,7 +108,7 @@ class TestItemDirective(TestCase):
         mock_builder.link_suffix = '.html'
         mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
+        self.app.builder.env.traceability_collection = self.collection
         self.app.builder.env.traceability_ref_nodes = {}
         self.app.builder.env.traceability_collection.add_item(self.item)
         self.item.caption = 'caption text'
@@ -128,7 +132,7 @@ class TestItemDirective(TestCase):
         mock_builder.get_relative_uri = Mock(side_effect=raise_no_uri)
         mock_builder.env = BuildEnvironment(self.app)
         self.app.builder = mock_builder
-        self.app.builder.env.traceability_collection = TraceableCollection()
+        self.app.builder.env.traceability_collection = self.collection
         self.app.builder.env.traceability_ref_nodes = {}
         self.app.builder.env.traceability_collection.add_item(self.item)
         self.item.caption = 'caption text'
@@ -154,3 +158,29 @@ class TestItemDirective(TestCase):
     def test_is_relation_external(self, relation_name, expected):
         external = self.node.is_relation_external(relation_name)
         self.assertEqual(external, expected)
+
+    def test_item_node_replacement(self):
+        mock_builder = MagicMock(spec=StandaloneHTMLBuilder)
+        mock_builder.link_suffix = '.html'
+        mock_builder.env = BuildEnvironment(self.app)
+        self.app.builder = mock_builder
+        self.app.builder.env.traceability_collection = self.collection
+        self.app.builder.env.traceability_ref_nodes = {}
+        self.app.builder.env.traceability_collection.add_item(self.item)
+        self.collection.add_relation_pair('depends_on', 'impacts_on')
+        # leaving out depends_on to test warning
+        self.app.config.traceability_relationship_to_string = {'impacts_on': 'Impacts on'}
+
+        target_item = TraceableItem('target_id')
+        self.collection.add_item(target_item)
+
+        self.collection.add_relation(self.item.identifier, 'depends_on', target_item.identifier)
+
+        with self.assertLogs(LOGGER, logging.DEBUG) as c_m:
+            self.node.parent = nodes.container()
+            self.node.parent.append(self.node)
+            self.node.perform_replacement(self.app, self.collection)
+
+        warning = "WARNING:sphinx.mlx.traceability_exception:Traceability: relation depends_on cannot be translated "\
+            "to string"
+        self.assertEqual(c_m.output, [warning])
