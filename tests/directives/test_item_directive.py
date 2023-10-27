@@ -17,6 +17,7 @@ from parameterized import parameterized
 
 LOGGER = logging.getLogger()
 
+
 def raise_no_uri(*args, **kwargs):
     raise NoUri
 
@@ -34,7 +35,7 @@ class TestItemDirective(TestCase):
         self.item.node = self.node
         self.app.config = Mock()
         self.app.config.traceability_hyperlink_colors = {}
-        self.collection =  TraceableCollection()
+        self.collection = TraceableCollection()
         self.collection.add_item(self.item)
 
     def init_builder(self, spec=StandaloneHTMLBuilder):
