@@ -73,7 +73,6 @@ class Item(TraceableBaseNode):
             dl_node (nodes.definition_list): Definition list of the item.
             app: Sphinx's application object to use.
         """
-        env = app.builder.env
         li_node = nodes.definition_list_item()
         dt_node = nodes.term()
         if relation in app.config.traceability_relationship_to_string:
