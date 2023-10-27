@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; Traceability 10.0.0 documentation</title>
+  <title>Usage &mdash; Traceability 10.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -15,7 +15,8 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
@@ -40,7 +41,7 @@
             Traceability
           </a>
               <div class="version">
-                10.0.0
+                10.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -421,7 +422,8 @@ caption can be omitted. This gives a smaller table, but also less details. If yo
 to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
 <p>By default, items are sorted naturally based on their name. With the <em>sort</em> argument it is possible to sort on one
 or more attribute values alphabetically. When providing multiple attributes to sort on, the attribute keys are
-space-separated. With the <em>reverse</em> argument, the sorting is reversed.</p>
+space-separated. With the <em>reverse</em> argument, the sorting is reversed. Instead of the default sort order (alphabetical),
+you can configure a custom sort order per attribute, (see <a class="reference internal" href="configuration.html#traceability-default-config"><span class="std std-ref">Default config</span></a>).</p>
 <p>By default, the attribute names are listed the header row and every item takes up a row. Depending on the number of
 items and attributes it could be better to transpose the generated matrix (swap columns for row) by providing the
 <em>transpose</em> flag.</p>
@@ -880,7 +882,8 @@ cp<span class="w"> </span>doc/.env.example<span class="w"> </span>.env
 <li><p><em>API_HOST_NAME</em> is the host name of the API, e.g. <em>https://gitlab.example.com/api/v4</em></p></li>
 <li><p><em>GIT_PLATFORM</em> shall be ‘gitlab’ if API_HOST_NAME does not contain this string</p></li>
 <li><p><em>PROJECT_ID</em> is the ID or <a class="reference external" href="https://docs.gitlab.com/ee/api/index.html#namespaced-path-encoding">URL-encoded path of the project</a>.</p></li>
-<li><p><em>MERGE_REQUEST_ID</em> are one or more internal IDs of merge requests (comma-separated) ordered from low to high priority. The data gets aggregated.</p></li>
+<li><p><em>MERGE_REQUEST_ID</em> are one or more internal IDs of merge requests (comma-separated) ordered from low to high priority. The data gets aggregated.
+Can be an empty string to avoid sending any query.</p></li>
 </ul>
 </section>
 <section id="github">
@@ -890,7 +893,8 @@ cp<span class="w"> </span>doc/.env.example<span class="w"> </span>.env
 <li><p><em>API_HOST_NAME</em> is the host name of the GitHub REST API v3: <em>https://api.github.com</em></p></li>
 <li><p><em>GIT_PLATFORM</em> shall be ‘github’ if API_HOST_NAME does not contain this string</p></li>
 <li><p><em>PROJECT_ID</em> defines the repository by specifying <em>owner</em> and <em>repo</em> separated by a forward slash, e.g. <em>melexis/sphinx-traceability-extension</em>.</p></li>
-<li><p><em>MERGE_REQUEST_ID</em> are one or more pull request numbers (comma-separated) ordered from low to high priority. The data gets aggregated.</p></li>
+<li><p><em>MERGE_REQUEST_ID</em> are one or more pull request numbers (comma-separated) ordered from low to high priority. The data gets aggregated.
+Can be an empty string to avoid sending any query.</p></li>
 </ul>
 </section>
 </section>

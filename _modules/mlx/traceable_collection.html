@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mlx.traceable_collection &mdash; Traceability 10.0.0 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>mlx.traceable_collection &mdash; Traceability 10.1.0 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
@@ -36,7 +36,7 @@
             Traceability
           </a>
               <div class="version">
-                10.0.0
+                10.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -103,6 +103,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relations_sorted</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_intermediate_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributes_sort</span> <span class="o">=</span> <span class="p">{}</span>
 
 <div class="viewcode-block" id="TraceableCollection.add_relation_pair"><a class="viewcode-back" href="../../implementation.html#mlx.traceable_collection.TraceableCollection.add_relation_pair">[docs]</a>    <span class="k">def</span> <span class="nf">add_relation_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forward</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">NO_RELATION_STR</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
@@ -376,7 +377,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            regex (str/re.Pattern): Regex pattern or object to match the items in this collection against</span>
 <span class="sd">            attributes (dict): Dictionary with attribute-regex pairs to match the items in this collection against</span>
-<span class="sd">            sortattributes (list): List of attributes on which to alphabetically sort the items</span>
+<span class="sd">            sortattributes (list): List of attributes on which to sort the items alphabetically, or using a custom</span>
+<span class="sd">                sort order if at least one attribute is in ``attributes_sort``</span>
 <span class="sd">            reverse (bool): True for reverse sorting</span>
 <span class="sd">            sort (bool): When sortattributes is falsy: True to enable natural sorting, False to disable sorting</span>
 
@@ -391,8 +393,14 @@
             <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_match</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes_match</span><span class="p">(</span><span class="n">attributes</span><span class="p">)):</span>
                 <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">sortattributes</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">itemid</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">sortattributes</span><span class="p">),</span>
-                          <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">sortattributes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes_sort</span><span class="p">:</span>
+                    <span class="n">sorted_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes_sort</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sorted_func</span> <span class="o">=</span> <span class="nb">sorted</span>
+            <span class="k">return</span> <span class="n">sorted_func</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">itemid</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">sortattributes</span><span class="p">),</span>
+                               <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">sort</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">matches</span></div>

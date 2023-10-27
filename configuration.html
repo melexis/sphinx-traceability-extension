@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; Traceability 10.0.0 documentation</title>
+  <title>Configuration &mdash; Traceability 10.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -15,7 +15,8 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
@@ -40,7 +41,7 @@
             Traceability
           </a>
               <div class="version">
-                10.0.0
+                10.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -171,7 +172,7 @@ the <em>value</em> holds the string representation (as to be rendered in html) o
 </section>
 <section id="valid-relationships">
 <span id="traceability-config-relations"></span><h2>Valid relationships<a class="headerlink" href="#valid-relationships" title="Permalink to this heading"></a></h2>
-<p>Python variable <em>traceability_relationsips</em> can be defined in order to override the
+<p>Python variable <em>traceability_relationships</em> can be defined in order to override the
 default configuration of the traceability plugin.
 It is a <em>dictionary</em> of relationship pairs: the <em>key</em> is the name of the forward relationship, while the <em>value</em> holds
 the name of the corresponding reverse relationship. Both can only be lowercase.</p>
@@ -391,15 +392,14 @@ when the item doesn’t have either the <cite>functional</cite> or <cite>non-fun
 linked to. A dictionary in the configuration file defines the regexp, which is used to <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">match</a> item IDs, as key and a
 tuple of 1-3 color defining strings as value. The first color is used for the default hyperlink state, the second color
 is used for the hover and active states, and the third color is used to override the default color of the visited state.
-Leaving a color empty results in the use of the default html style. The top regexp has the highest priority. To support
-Python versions lower than 3.7, we use an <code class="code docutils literal notranslate"><span class="pre">OrderedDict</span></code> to have a deterministic order for prioritizing regexes.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_hyperlink_colors</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([</span>
-    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(RQT|r[\d]+&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;#7F00FF&#39;</span><span class="p">,</span> <span class="s1">&#39;#b369ff&#39;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[IU]TEST_REP&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;rgba(255, 0, 0, 1)&#39;</span><span class="p">,</span> <span class="s1">&#39;rgba(255, 0, 0, 0.7)&#39;</span><span class="p">,</span> <span class="s1">&#39;rgb(200, 0, 0)&#39;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[IU]TEST&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;goldenrod&#39;</span><span class="p">,</span> <span class="s1">&#39;hsl(43, 62%, 58%)&#39;</span><span class="p">,</span> <span class="s1">&#39;darkgoldenrod&#39;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;SYS_&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;springgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;SRS_&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)),</span>
-<span class="p">])</span>
+Leaving a color empty results in the use of the default html style. The top regexp has the highest priority.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_hyperlink_colors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">r</span><span class="s1">&#39;RQT|r[\d]+&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;#7F00FF&#39;</span><span class="p">,</span> <span class="s1">&#39;#b369ff&#39;</span><span class="p">),</span>
+    <span class="sa">r</span><span class="s1">&#39;[IU]TEST_REP&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;rgba(255, 0, 0, 1)&#39;</span><span class="p">,</span> <span class="s1">&#39;rgba(255, 0, 0, 0.7)&#39;</span><span class="p">,</span> <span class="s1">&#39;rgb(200, 0, 0)&#39;</span><span class="p">),</span>
+    <span class="sa">r</span><span class="s1">&#39;[IU]TEST&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;goldenrod&#39;</span><span class="p">,</span> <span class="s1">&#39;hsl(43, 62%, 58%)&#39;</span><span class="p">,</span> <span class="s1">&#39;darkgoldenrod&#39;</span><span class="p">),</span>
+    <span class="sa">r</span><span class="s1">&#39;SYS_&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;springgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+    <span class="sa">r</span><span class="s1">&#39;SRS_&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -436,6 +436,9 @@ In the example below the special item has ID <em>DOC-NOTIFICATION</em>.</p>
     <span class="s1">&#39;attendees&#39;</span><span class="p">:</span> <span class="s1">&#39;Attendees&#39;</span><span class="p">,</span>
     <span class="s1">&#39;assignee&#39;</span><span class="p">:</span> <span class="s1">&#39;Assignee&#39;</span><span class="p">,</span>
     <span class="s1">&#39;effort&#39;</span><span class="p">:</span> <span class="s1">&#39;Effort estimation&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">traceability_attributes_sort</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;effort&#39;</span><span class="p">:</span> <span class="n">natsort</span><span class="o">.</span><span class="n">natsorted</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">traceability_relationships</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;fulfills&#39;</span><span class="p">:</span> <span class="s1">&#39;fulfilled_by&#39;</span><span class="p">,</span>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Software Implementation &mdash; Traceability 10.0.0 documentation</title>
+  <title>Software Implementation &mdash; Traceability 10.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -15,7 +15,8 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
@@ -40,7 +41,7 @@
             Traceability
           </a>
               <div class="version">
-                10.0.0
+                10.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -655,7 +656,8 @@ already have their attributes sorted will be returned as a list; used to report 
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>regex</strong> (<em>str/re.Pattern</em>) – Regex pattern or object to match the items in this collection against</p></li>
 <li><p><strong>attributes</strong> (<em>dict</em>) – Dictionary with attribute-regex pairs to match the items in this collection against</p></li>
-<li><p><strong>sortattributes</strong> (<em>list</em>) – List of attributes on which to alphabetically sort the items</p></li>
+<li><p><strong>sortattributes</strong> (<em>list</em>) – List of attributes on which to sort the items alphabetically, or using a custom
+sort order if at least one attribute is in <code class="docutils literal notranslate"><span class="pre">attributes_sort</span></code></p></li>
 <li><p><strong>reverse</strong> (<em>bool</em>) – True for reverse sorting</p></li>
 <li><p><strong>sort</strong> (<em>bool</em>) – When sortattributes is falsy: True to enable natural sorting, False to disable sorting</p></li>
 </ul>
