@@ -78,7 +78,8 @@ class Item(TraceableBaseNode):
         if relation in app.config.traceability_relationship_to_string:
             relstr = app.config.traceability_relationship_to_string[relation]
         else:
-            report_warning(f'Traceability: relation {relation} cannot be translated to string')
+            report_warning(f'Traceability: relation {relation} cannot be translated to string',
+                           docname=self['document'], lineno=self['line'])
             relstr = relation
         dt_node.append(nodes.Text(relstr))
         li_node.append(dt_node)
