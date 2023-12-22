@@ -72,7 +72,7 @@ class TestTraceableCollection(TestCase):
         self.assertNotIn(self.identification_tgt, item_iterator)
         # Add an item
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         coll.add_item(item1)
         self.assertTrue(coll.has_item(self.identification_src))
         self.assertEqual(item1, coll.get_item(self.identification_src))
@@ -85,7 +85,7 @@ class TestTraceableCollection(TestCase):
         # Add a second item, make sure first one is still there
         self.assertFalse(coll.has_item(self.identification_tgt))
         item2 = item.TraceableItem(self.identification_tgt)
-        item2.set_document(self.docname)
+        item2.set_location(self.docname)
         coll.add_item(item2)
         self.assertTrue(coll.has_item(self.identification_tgt))
         self.assertEqual(item2, coll.get_item(self.identification_tgt))
@@ -101,7 +101,7 @@ class TestTraceableCollection(TestCase):
     def test_add_item_overwrite(self):
         coll = dut.TraceableCollection()
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         coll.add_item(item1)
         coll.add_relation_pair(self.fwd_relation, self.rev_relation)
         coll.add_relation(self.identification_src,
@@ -109,7 +109,7 @@ class TestTraceableCollection(TestCase):
                           self.identification_tgt)
         # Add target item: should update existing one (keeping relations)
         item2 = item.TraceableItem(self.identification_tgt)
-        item2.set_document(self.docname)
+        item2.set_location(self.docname)
         coll.add_item(item2)
         # Assert old relations are still there
         item1_out = coll.get_item(self.identification_src)
@@ -128,7 +128,7 @@ class TestTraceableCollection(TestCase):
         # with unknown source item, the generation of a placeholder is expected
         coll = dut.TraceableCollection()
         item2 = item.TraceableItem(self.identification_tgt)
-        item2.set_document(self.docname)
+        item2.set_location(self.docname)
         coll.add_item(item2)
         coll.add_relation_pair(self.fwd_relation, self.rev_relation)
         coll.add_relation(self.identification_src,
@@ -137,7 +137,7 @@ class TestTraceableCollection(TestCase):
         # Assert placeholder item is created
         item1 = coll.get_item(self.identification_src)
         self.assertIsNotNone(item1)
-        self.assertEqual(self.identification_src, item1.get_id())
+        self.assertEqual(self.identification_src, item1.identifier)
         self.assertTrue(item1.is_placeholder)
         # Assert explicit forward relation is created
         relations = item1.iter_targets(self.fwd_relation, explicit=True, implicit=False)
@@ -158,9 +158,9 @@ class TestTraceableCollection(TestCase):
         # with unknown relation, warning is expected
         coll = dut.TraceableCollection()
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         item2 = item.TraceableItem(self.identification_tgt)
-        item2.set_document(self.docname)
+        item2.set_location(self.docname)
         coll.add_item(item1)
         coll.add_item(item2)
         with self.assertRaises(exception.TraceabilityException):
@@ -179,7 +179,7 @@ class TestTraceableCollection(TestCase):
         # With unknown target item, the generation of a placeholder is expected
         coll = dut.TraceableCollection()
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         coll.add_item(item1)
         coll.add_relation_pair(self.fwd_relation, self.rev_relation)
         coll.add_relation(self.identification_src,
@@ -194,7 +194,7 @@ class TestTraceableCollection(TestCase):
         # Assert placeholder item is created
         item2 = coll.get_item(self.identification_tgt)
         self.assertIsNotNone(item2)
-        self.assertEqual(self.identification_tgt, item2.get_id())
+        self.assertEqual(self.identification_tgt, item2.identifier)
         self.assertTrue(item2.is_placeholder)
         # Assert implicit reverse relation is created
         relations = item2.iter_targets(self.rev_relation, explicit=False, implicit=True)
@@ -210,9 +210,9 @@ class TestTraceableCollection(TestCase):
         # Normal addition of relation, everything is there
         coll = dut.TraceableCollection()
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         item2 = item.TraceableItem(self.identification_tgt)
-        item2.set_document(self.docname)
+        item2.set_location(self.docname)
         coll.add_item(item1)
         coll.add_item(item2)
         coll.add_relation_pair(self.fwd_relation, self.rev_relation)
@@ -242,7 +242,7 @@ class TestTraceableCollection(TestCase):
         # Normal addition of uni-directional relation
         coll = dut.TraceableCollection()
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         coll.add_item(item1)
         coll.add_relation_pair(self.unidir_relation)
         coll.add_relation(self.identification_src,
@@ -268,7 +268,7 @@ class TestTraceableCollection(TestCase):
         self.assertIn(self.rev_relation, collstr)
         # Add some items and relations, assert they are in the string
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         coll.add_item(item1)
         coll.add_relation(self.identification_src,
                           self.fwd_relation,
@@ -360,7 +360,7 @@ class TestTraceableCollection(TestCase):
         coll.self_test(None)
         # Create first item
         item1 = item.TraceableItem(self.identification_src)
-        item1.set_document(self.docname)
+        item1.set_location(self.docname)
         # Improper use: add target on item level (no sanity check and no automatic reverse link)
         item1.add_target(self.fwd_relation, self.identification_tgt)
         # Improper use is not detected at level of item-level
@@ -374,7 +374,7 @@ class TestTraceableCollection(TestCase):
         coll.self_test(None, docname='document-does-not-exist.rst')
         # Creating and adding second item, self test should still fail as no automatic reverse relation
         item2 = item.TraceableItem(self.identification_tgt)
-        item2.set_document(self.docname)
+        item2.set_location(self.docname)
         coll.add_item(item2)
         with self.assertRaises(dut.MultipleTraceabilityExceptions):
             coll.self_test(None)

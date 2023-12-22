@@ -8,7 +8,7 @@ from docutils import nodes
 from docutils.statemachine import ViewList
 from sphinx.util.nodes import nested_parse_with_titles
 
-from .traceability_exception import report_warning, TraceabilityException
+from .traceability_exception import TraceabilityException
 
 
 class TraceableBaseClass:
@@ -33,12 +33,6 @@ class TraceableBaseClass:
         self._content = None
         self.content_node = nodes.block_quote()
         self._state = state
-
-    @property
-    def id(self):
-        report_warning("TraceableBaseClass.id will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.identifier", docname=self.docname, lineno=self.lineno)
-        return self.identifier
 
     @staticmethod
     def to_id(identifier):
@@ -73,61 +67,6 @@ class TraceableBaseClass:
         if other.content is not None:
             self.content = other.content
 
-    def get_id(self):
-        '''
-        Getter for identification
-
-        Returns:
-            str: identification
-        '''
-        report_warning("TraceableBaseClass.get_id() will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.identifier", docname=self.docname, lineno=self.lineno)
-        return self.identifier
-
-    def set_name(self, name):
-        '''
-        Set readable name
-
-        Args:
-            name (str): Short name
-        '''
-        report_warning("TraceableBaseClass.set_name() will be removed in version 10.x: "
-                       "set TraceableBaseClass.name directly instead", docname=self.docname, lineno=self.lineno)
-        self.name = name
-
-    def get_name(self):
-        '''
-        Get readable name
-
-        Returns:
-            str: Short name
-        '''
-        report_warning("TraceableBaseClass.get_name() will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.name", docname=self.docname, lineno=self.lineno)
-        return self.name
-
-    def set_caption(self, caption):
-        '''
-        Set caption
-
-        Args:
-            caption (str): Short caption
-        '''
-        report_warning("TraceableBaseClass.set_caption() will be removed in version 10.x: "
-                       "set TraceableBaseClass.caption directly instead", docname=self.docname, lineno=self.lineno)
-        self.caption = caption
-
-    def get_caption(self):
-        '''
-        Get caption
-
-        Returns:
-            str: Short caption
-        '''
-        report_warning("TraceableBaseClass.get_caption() will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.caption", docname=self.docname, lineno=self.lineno)
-        return self.caption
-
     def set_location(self, docname, lineno=0):
         '''
         Set location in document
@@ -138,40 +77,6 @@ class TraceableBaseClass:
         '''
         self.docname = docname
         self.lineno = lineno
-
-    def set_document(self, docname, lineno=0):
-        '''
-        Set location in document
-
-        Args:
-            docname (str): Path to docname
-            lineno (int): Line number in given document
-        '''
-        self.set_location(docname, lineno=lineno)
-        report_warning("TraceableBaseClass.set_document() will be removed in version 10.x: "
-                       "use TraceableBaseClass.set_location() instead", docname=self.docname, lineno=self.lineno)
-
-    def get_document(self):
-        '''
-        Get location in document
-
-        Returns:
-            str: Path to docname
-        '''
-        report_warning("TraceableBaseClass.get_document() will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.docname", docname=self.docname, lineno=self.lineno)
-        return self.docname
-
-    def get_line_number(self):
-        '''
-        Get line number in document
-
-        Returns:
-            int: Line number in given document
-        '''
-        report_warning("TraceableBaseClass.get_line_number() will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.lineno", docname=self.docname, lineno=self.lineno)
-        return self.lineno
 
     @property
     def content(self):
@@ -186,50 +91,6 @@ class TraceableBaseClass:
                 template.append(line, self.docname, idx)
             self.content_node = nodes.block_quote()  # reset
             nested_parse_with_titles(self._state, template, self.content_node)
-
-    def set_content(self, content):
-        '''
-        Set content of the item
-
-        Args:
-            content (str): Content of the item
-        '''
-        self.content = content
-        report_warning("TraceableBaseClass.set_content() will be removed in version 10.x: "
-                       "set TraceableBaseClass.content directly instead", docname=self.docname, lineno=self.lineno)
-
-    def get_content(self):
-        '''
-        Get content of the item
-
-        Returns:
-            str: Content of the item
-        '''
-        report_warning("TraceableBaseClass.get_content() will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.content", docname=self.docname, lineno=self.lineno)
-        return self.content
-
-    def bind_node(self, node):
-        '''
-        Bind to node
-
-        Args:
-            node (node): Docutils node object
-        '''
-        report_warning("TraceableBaseClass.bind_node() will be removed in version 10.x: "
-                       "set TraceableBaseClass.node directly instead", docname=self.docname, lineno=self.lineno)
-        self.node = node
-
-    def get_node(self):
-        '''
-        Get the node to which the object is bound
-
-        Returns:
-            node: Docutils node object
-        '''
-        report_warning("TraceableBaseClass.get_node() will be removed in version 10.x in favor of "
-                       "TraceableBaseClass.node", docname=self.docname, lineno=self.lineno)
-        return self.node
 
     def clear_state(self):
         '''
