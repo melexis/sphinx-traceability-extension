@@ -156,6 +156,6 @@ class TestItemDirective(TestCase):
             self.node.parent.append(self.node)
             self.node.perform_replacement(self.app, self.collection)
 
-        warning = "WARNING:sphinx.mlx.traceability_exception:Traceability: relation depends_on cannot be translated "\
-            "to string"
+        warning = "WARNING:sphinx.mlx.traceability.traceability_exception:Traceability: relation depends_on cannot be "\
+            "translated to string"
         self.assertEqual(c_m.output, [warning])
