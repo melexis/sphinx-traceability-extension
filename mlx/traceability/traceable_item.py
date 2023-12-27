@@ -3,9 +3,11 @@ Storage classes for traceable item
 '''
 
 import re
+
 from natsort import natsorted
-from mlx.traceable_base_class import TraceableBaseClass
-from mlx.traceability_exception import TraceabilityException
+
+from .traceability_exception import TraceabilityException
+from .traceable_base_class import TraceableBaseClass
 
 
 class TraceableItem(TraceableBaseClass):
@@ -218,6 +220,7 @@ class TraceableItem(TraceableBaseClass):
                 yield target
 
     def yield_targets_sorted(self, *args, **kwargs):
+        ''' Gets an iterable of targets to other traceable items, with natural sorting applied. '''
         gen = self.yield_targets(*args, **kwargs)
         return natsorted(gen)
 
@@ -436,7 +439,7 @@ class TraceableItem(TraceableBaseClass):
             TraceabilityException: Item has an invalid attribute value.
             TraceabilityException: Duplicate target found for item.
         '''
-        super(TraceableItem, self).self_test()
+        super().self_test()
         # Item should not be a placeholder
         if self.is_placeholder:
             raise TraceabilityException('item {item} is not defined'.format(item=self.identifier), self.docname)

@@ -21,10 +21,10 @@ coverage.xml
 .env
 
 # Offline version file
-mlx/__traceability_version__.py
+mlx/traceability/__traceability_version__.py
 
 # Pie chart images
 doc/_images
 
 # Custom hyperlink colors
-mlx/assets/hyperlink_colors.css
+mlx/traceability/assets/hyperlink_colors.css

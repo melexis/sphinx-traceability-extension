@@ -1,3 +1,4 @@
+"""Module for the item-piechart directive"""
 import re
 from hashlib import sha256
 from os import environ, mkdir, path
@@ -10,10 +11,10 @@ if not environ.get('DISPLAY'):
 import matplotlib.pyplot as plt  # pylint: disable=wrong-import-order
 from sphinx.builders.latex import LaTeXBuilder
 
-from mlx.traceability_exception import report_warning
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
-from mlx.traceable_item import TraceableItem
+from ..traceability_exception import report_warning
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
+from ..traceable_item import TraceableItem
 
 
 def pct_wrapper(sizes):

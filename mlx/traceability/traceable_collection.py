@@ -8,8 +8,8 @@ from pathlib import Path
 
 from natsort import natsorted
 
-from mlx.traceability_exception import MultipleTraceabilityExceptions, TraceabilityException
-from mlx.traceable_item import TraceableItem
+from .traceability_exception import MultipleTraceabilityExceptions, TraceabilityException
+from .traceable_item import TraceableItem
 
 
 class TraceableCollection:
@@ -79,8 +79,7 @@ class TraceableCollection:
             if not olditem.is_placeholder:
                 raise TraceabilityException('duplicating {itemid}'.format(itemid=item.identifier), item.docname)
             # ... otherwise, update the item with new content
-            else:
-                item.update(olditem)
+            item.update(olditem)
         # add it
         self.items[item.identifier] = item
 
@@ -170,9 +169,11 @@ class TraceableCollection:
         return ignored_items
 
     def add_intermediate_node(self, node):
+        """ Adds an intermediate node """
         self._intermediate_nodes.append(node)
 
     def process_intermediate_nodes(self):
+        """ Processes all intermediate nodes in order by calling its ``apply_effect`` """
         for node in sorted(self._intermediate_nodes, key=attrgetter('order')):
             node.apply_effect(self)
 
@@ -216,8 +217,8 @@ class TraceableCollection:
             # On item level
             try:
                 item.self_test()
-            except TraceabilityException as e:
-                errors.append(e)
+            except TraceabilityException as err:
+                errors.append(err)
             # targetted items shall exist, with automatic reverse relation
             for relation in self.relations:
                 # Exception: no reverse relation (external links)
@@ -245,8 +246,8 @@ class TraceableCollection:
                     for target_of_target in target.yield_targets(relation):
                         if target_of_target in item.yield_targets(rev_relation):
                             errors.append(TraceabilityException(
-                                "Circular relationship found: {} {} {} {} {} {} {}"
-                                .format(itemid, relation, tgt, relation, target_of_target, relation, itemid),
+                                "Circular relationship found: {src} {rel} {tgt} {rel} {nested} {rel} {src}"
+                                .format(src=itemid, rel=relation, tgt=tgt, nested=target_of_target),
                                 item.docname))
         if errors:
             raise MultipleTraceabilityExceptions(errors)
@@ -323,7 +324,7 @@ class TraceableCollection:
                 sorted_func = sorted
             return sorted_func(matches, key=lambda itemid: self.get_item(itemid).get_attributes(sortattributes),
                                reverse=reverse)
-        elif sort:
+        if sort:
             return natsorted(matches, reverse=reverse)
         return matches
 

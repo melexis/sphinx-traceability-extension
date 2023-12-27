@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from mlx.directives.item_2d_matrix_directive import Item2DMatrix as dut
-from mlx.traceable_collection import TraceableCollection
-from mlx.traceable_attribute import TraceableAttribute
-from mlx.traceable_item import TraceableItem
+from mlx.traceability.directives.item_2d_matrix_directive import Item2DMatrix as dut
+from mlx.traceability.traceable_collection import TraceableCollection
+from mlx.traceability.traceable_attribute import TraceableAttribute
+from mlx.traceability.traceable_item import TraceableItem
 
 from parameterized import parameterized
 

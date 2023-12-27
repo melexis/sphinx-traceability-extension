@@ -8,7 +8,7 @@ from docutils import nodes
 from docutils.statemachine import ViewList
 from sphinx.util.nodes import nested_parse_with_titles
 
-from mlx.traceability_exception import TraceabilityException
+from .traceability_exception import TraceabilityException
 
 
 class TraceableBaseClass:

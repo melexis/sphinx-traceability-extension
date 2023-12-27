@@ -1,8 +1,9 @@
+"""Module for the attribute-link directive"""
 from docutils.parsers.rst import directives
 
-from mlx.traceability_exception import TraceabilityException, report_warning
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
+from ..traceability_exception import TraceabilityException, report_warning
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
 
 
 class AttributeLink(TraceableBaseNode):

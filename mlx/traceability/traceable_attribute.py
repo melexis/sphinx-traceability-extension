@@ -3,7 +3,7 @@ Storage class for traceable item attribute
 '''
 
 import re
-from mlx.traceable_base_class import TraceableBaseClass
+from .traceable_base_class import TraceableBaseClass
 
 
 class TraceableAttribute(TraceableBaseClass):
@@ -47,6 +47,7 @@ class TraceableAttribute(TraceableBaseClass):
 
     @property
     def value(self):
+        ''' str: Pattern string to which the attribute values should match '''
         return self._value
 
     @value.setter

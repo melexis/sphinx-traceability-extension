@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from docutils import nodes
 
-import mlx.traceable_base_class as dut
+from mlx.traceability import traceable_base_class as dut
 
 
 class TestTraceableBaseClass(TestCase):

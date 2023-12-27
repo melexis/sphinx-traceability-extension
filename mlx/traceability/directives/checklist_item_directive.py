@@ -1,6 +1,6 @@
 """ Module for the directive for declaring checklist items. """
-from mlx.directives.item_directive import ItemDirective
-from mlx.traceability_exception import report_warning, TraceabilityException
+from .item_directive import ItemDirective
+from ..traceability_exception import report_warning, TraceabilityException
 
 
 class ChecklistItemDirective(ItemDirective):

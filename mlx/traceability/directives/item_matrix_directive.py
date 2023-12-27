@@ -1,3 +1,4 @@
+"""Module for the item-matrix directive"""
 import re
 from collections import namedtuple
 from copy import copy, deepcopy
@@ -6,10 +7,10 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from natsort import natsorted, natsort_keygen
 
-from mlx.traceability_exception import TraceabilityException, report_warning
-from mlx.traceable_base_directive import TraceableBaseDirective
-from mlx.traceable_base_node import TraceableBaseNode
-from mlx.traceable_item import TraceableItem
+from ..traceability_exception import TraceabilityException, report_warning
+from ..traceable_base_directive import TraceableBaseDirective
+from ..traceable_base_node import TraceableBaseNode
+from ..traceable_item import TraceableItem
 
 natsort_key = natsort_keygen(key=lambda item: getattr(item, 'identifier', ''))
 

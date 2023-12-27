@@ -9,9 +9,9 @@ from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.environment import BuildEnvironment
 from sphinx.errors import NoUri
 
-from mlx.directives.item_directive import Item as dut
-from mlx.traceable_collection import TraceableCollection
-from mlx.traceable_item import TraceableItem
+from mlx.traceability.directives.item_directive import Item as dut
+from mlx.traceability.traceable_collection import TraceableCollection
+from mlx.traceability.traceable_item import TraceableItem
 
 from parameterized import parameterized
 
@@ -156,6 +156,6 @@ class TestItemDirective(TestCase):
             self.node.parent.append(self.node)
             self.node.perform_replacement(self.app, self.collection)
 
-        warning = "WARNING:sphinx.mlx.traceability_exception:Traceability: relation depends_on cannot be translated "\
-            "to string"
+        warning = "WARNING:sphinx.mlx.traceability.traceability_exception:Traceability: relation depends_on cannot be "\
+            "translated to string"
         self.assertEqual(c_m.output, [warning])

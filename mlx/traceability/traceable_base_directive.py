@@ -3,8 +3,8 @@ import re
 from abc import ABC, abstractmethod
 from docutils.parsers.rst import Directive
 
-from mlx.traceability_exception import report_warning
-from mlx.traceable_item import TraceableItem
+from .traceability_exception import report_warning
+from .traceable_item import TraceableItem
 
 
 class TraceableBaseDirective(Directive, ABC):
