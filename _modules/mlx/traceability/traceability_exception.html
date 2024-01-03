@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mlx.traceability_exception &mdash; Traceability 10.1.0 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <title>mlx.traceability.traceability_exception &mdash; Traceability 11.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/extra.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/hyperlink_colors.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/extra.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/hyperlink_colors.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
-        <script src="../../_static/traceability.js"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+        <script src="../../../_static/traceability.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,14 +32,14 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
+          <a href="../../../index.html" class="icon icon-home">
             Traceability
           </a>
               <div class="version">
-                10.1.0
+                11.0.0
               </div>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -47,8 +47,8 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Sphinx Traceability plugin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../example_usage.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Sphinx Traceability plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example usage</a></li>
 </ul>
 
         </div>
@@ -57,16 +57,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Traceability</a>
+          <a href="../../../index.html">Traceability</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">mlx.traceability_exception</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mlx.traceability.traceability_exception</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -75,14 +75,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for mlx.traceability_exception</h1><div class="highlight"><pre>
+  <h1>Source code for mlx.traceability.traceability_exception</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Exception classes for traceability</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">sphinx.util.logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 
 
-<div class="viewcode-block" id="report_warning"><a class="viewcode-back" href="../../implementation.html#mlx.traceability_exception.report_warning">[docs]</a><span class="k">def</span> <span class="nf">report_warning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">docname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="report_warning"><a class="viewcode-back" href="../../../implementation.html#mlx.traceability.traceability_exception.report_warning">[docs]</a><span class="k">def</span> <span class="nf">report_warning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">docname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Convenience function for logging a warning</span>
 
 <span class="sd">    Args:</span>
@@ -98,7 +98,7 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">docname</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MultipleTraceabilityExceptions"><a class="viewcode-back" href="../../implementation.html#mlx.traceability_exception.MultipleTraceabilityExceptions">[docs]</a><span class="k">class</span> <span class="nc">MultipleTraceabilityExceptions</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="MultipleTraceabilityExceptions"><a class="viewcode-back" href="../../../implementation.html#mlx.traceability.traceability_exception.MultipleTraceabilityExceptions">[docs]</a><span class="k">class</span> <span class="nc">MultipleTraceabilityExceptions</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Multiple exceptions for traceability plugin</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -110,16 +110,10 @@
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Iterate over multiple exceptions&#39;&#39;&#39;</span>
-        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span>
-
-<div class="viewcode-block" id="MultipleTraceabilityExceptions.iter"><a class="viewcode-back" href="../../implementation.html#mlx.traceability_exception.MultipleTraceabilityExceptions.iter">[docs]</a>    <span class="k">def</span> <span class="nf">iter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Iterator for multiple exceptions&#39;&#39;&#39;</span>
-        <span class="n">report_warning</span><span class="p">(</span><span class="s2">&quot;MultipleTraceabilityExceptions.iter() will be removed in version 10.x: &quot;</span>
-                       <span class="s2">&quot;you can now loop over an instance of this class directly&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span></div></div>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span></div>
 
 
-<div class="viewcode-block" id="TraceabilityException"><a class="viewcode-back" href="../../implementation.html#mlx.traceability_exception.TraceabilityException">[docs]</a><span class="k">class</span> <span class="nc">TraceabilityException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="TraceabilityException"><a class="viewcode-back" href="../../../implementation.html#mlx.traceability.traceability_exception.TraceabilityException">[docs]</a><span class="k">class</span> <span class="nc">TraceabilityException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Exception for traceability plugin</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -132,18 +126,7 @@
 <span class="sd">            docname (str): Name of the document triggering the exception</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">docname</span> <span class="o">=</span> <span class="n">docname</span>
-
-<div class="viewcode-block" id="TraceabilityException.get_document"><a class="viewcode-back" href="../../implementation.html#mlx.traceability_exception.TraceabilityException.get_document">[docs]</a>    <span class="k">def</span> <span class="nf">get_document</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Get document in which error occurred</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str: The name of the document in which the error occurred</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">report_warning</span><span class="p">(</span><span class="s2">&quot;TraceabilityException.get_document() will be removed in version 10.x in favor of &quot;</span>
-                       <span class="s2">&quot;TraceabilityException.docname&quot;</span><span class="p">,</span> <span class="n">docname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">docname</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">docname</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">docname</span> <span class="o">=</span> <span class="n">docname</span></div>
 </pre></div>
 
            </div>
