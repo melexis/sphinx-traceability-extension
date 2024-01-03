@@ -94,7 +94,8 @@ jQuery.fn.extend({
                     'font-size': '135%',
                     'color': linkColor,
                     'float': 'right',
-                    'padding': '1px ' + paddingX
+                    'padding': '1px ' + paddingX,
+                    'cursor': 'pointer',
                 },
                 click: function () {
                     relations.toggle('fold');
