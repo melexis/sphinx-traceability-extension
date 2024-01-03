@@ -113,3 +113,19 @@ jQuery.fn.extend({
         $(this).children('em').first().css("font-style", admonition.css("font-style"));
     }
 });
+
+window.addEventListener(
+    "hashchange",
+    () => {
+        const anchorId = location.hash.slice(1);
+        const element = document.getElementById(anchorId);
+        if (element.classList.contains('collapse')) {
+            for (const child of element.children) {
+                if (child.localName == 'i' && child.classList.contains('fa-angle-down')) {
+                    child.click();
+                    break;
+                }
+            }
+        }
+    },
+);
