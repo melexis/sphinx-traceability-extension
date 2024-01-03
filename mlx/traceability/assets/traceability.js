@@ -58,6 +58,15 @@ $(document).ready(function () {
     $('p.admonition-title').each(function (i) {
         $(this).children('a').first().denyPermalinkStyling($(this));
     });
+
+    // if an item was selected, ensure it's displayed at the top of the viewport
+    if (location.hash) {
+        const anchorId = location.hash.slice(1);
+        const element = document.getElementById(anchorId);
+        if (element) {
+            element.scrollIntoView(true, { block: "start", inline: "nearest" });
+        }
+    }
 });
 
 // item
