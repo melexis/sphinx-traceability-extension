@@ -121,7 +121,7 @@ window.addEventListener(
         const element = document.getElementById(anchorId);
         if (element.classList.contains('collapse')) {
             for (const child of element.children) {
-                if (child.localName == 'i' && child.classList.contains('fa-angle-down')) {
+                if ((child.localName == 'i') && child.classList.contains('fa-angle-down')) {
                     child.click();
                     break;
                 }
