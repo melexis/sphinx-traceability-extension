@@ -5,8 +5,9 @@ jQuery(function () {
 });
 
 $(document).ready(function () {
+    const anchorId = location.hash.slice(1);
     $('div.collapsible_links div.admonition.item').each(function (i) {
-        $(this).siblings('dl').first().addCollapseButton($(this));
+        $(this).siblings('dl').first().addCollapseButton($(this), anchorId);
         $(this).css('clear', 'left');  // sphinx-rtd-theme==0.5.0 sets `clear: both` which pushes button out of bar
     });
 
@@ -60,8 +61,7 @@ $(document).ready(function () {
     });
 
     // if an item was selected, ensure it's displayed at the top of the viewport
-    if (location.hash) {
-        const anchorId = location.hash.slice(1);
+    if (anchorId) {
         const element = document.getElementById(anchorId);
         if (element) {
             element.scrollIntoView(true, { block: "start", inline: "nearest" });
@@ -71,11 +71,12 @@ $(document).ready(function () {
 
 // item
 jQuery.fn.extend({
-    addCollapseButton: function (admonition) {
+    addCollapseButton: function (admonition, anchorId) {
         var relations = $(this);
 
         if (relations.children().length > 0) {
-            if (admonition.parent().hasClass('collapse')) {
+            const itemDiv = admonition.parent()
+            if (itemDiv.hasClass('collapse') && (itemDiv.attr('id') != anchorId)) {
                 // collapse relations and attributes list for each item on page load
                 relations.toggle();
                 arrowDirection = 'down';
@@ -94,7 +95,8 @@ jQuery.fn.extend({
                     'font-size': '135%',
                     'color': linkColor,
                     'float': 'right',
-                    'padding': '1px ' + paddingX
+                    'padding': '1px ' + paddingX,
+                    'cursor': 'pointer',
                 },
                 click: function () {
                     relations.toggle('fold');
@@ -111,3 +113,19 @@ jQuery.fn.extend({
         $(this).children('em').first().css("font-style", admonition.css("font-style"));
     }
 });
+
+window.addEventListener(
+    "hashchange",
+    () => {
+        const anchorId = location.hash.slice(1);
+        const element = document.getElementById(anchorId);
+        if (element.classList.contains('collapse')) {
+            for (const child of element.children) {
+                if ((child.localName == 'i') && child.classList.contains('fa-angle-down')) {
+                    child.click();
+                    break;
+                }
+            }
+        }
+    },
+);

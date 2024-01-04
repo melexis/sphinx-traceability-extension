@@ -4,7 +4,6 @@
 [![Documentation](https://img.shields.io/badge/Documentation-published-brightgreen.svg)](https://melexis.github.io/sphinx-traceability-extension/)
 [![Code Coverage](https://codecov.io/gh/melexis/sphinx-traceability-extension/coverage.svg)](https://codecov.io/gh/melexis/sphinx-traceability-extension)
 [![Code Climate Status](https://codeclimate.com/github/melexis/sphinx-traceability-extension/badges/gpa.svg)](https://codeclimate.com/github/melexis/sphinx-traceability-extension)
-[![Requirements Status](https://requires.io/github/melexis/sphinx-traceability-extension/requirements.svg?branch=master)](https://requires.io/github/melexis/sphinx-traceability-extension/requirements/?branch=master)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/melexis/sphinx-traceability-extension/issues)
 
 
