@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; Traceability 11.0.0 documentation</title>
+  <title>Configuration &mdash; Traceability 11.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -41,7 +41,7 @@
             Traceability
           </a>
               <div class="version">
-                11.0.0
+                11.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -240,8 +240,8 @@ while a value of <code class="docutils literal notranslate"><span class="pre">Fa
 <p>A button is added to each documentation object that has rendered relationships and/or attributes to be able to show and
 hide these traceability links. The <em>boolean</em> configuration variable <em>traceability_collapse_links</em> allows selecting
 between hiding and showing the list of links for all items on page load: setting its value to <code class="docutils literal notranslate"><span class="pre">True</span></code> results in the
-list of links being hidden (collapsed) on page load, while a value of <code class="docutils literal notranslate"><span class="pre">False</span></code> results in the list being shown
-(uncollapsed)(the default).</p>
+list of links being hidden (collapsed) on page load, while the default value of <code class="docutils literal notranslate"><span class="pre">False</span></code> results in the list being
+shown (uncollapsed). When an item is selected, its list will always be shown.</p>
 <p>Example configuration of hiding the traceability links on page load:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_collapse_links</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>

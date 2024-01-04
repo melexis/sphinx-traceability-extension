@@ -168,8 +168,8 @@ Ability to collapse the list of relationships and attributes per documentation o
 A button is added to each documentation object that has rendered relationships and/or attributes to be able to show and
 hide these traceability links. The *boolean* configuration variable *traceability_collapse_links* allows selecting
 between hiding and showing the list of links for all items on page load: setting its value to ``True`` results in the
-list of links being hidden (collapsed) on page load, while a value of ``False`` results in the list being shown
-(uncollapsed)(the default).
+list of links being hidden (collapsed) on page load, while the default value of ``False`` results in the list being
+shown (uncollapsed). When an item is selected, its list will always be shown.
 
 Example configuration of hiding the traceability links on page load:
 
