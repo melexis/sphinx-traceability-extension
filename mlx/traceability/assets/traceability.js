@@ -76,7 +76,7 @@ jQuery.fn.extend({
 
         if (relations.children().length > 0) {
             const itemDiv = admonition.parent()
-            if (itemDiv.hasClass('collapse') && itemDiv.attr('id') != anchorId) {
+            if (itemDiv.hasClass('collapse') && (itemDiv.attr('id') != anchorId)) {
                 // collapse relations and attributes list for each item on page load
                 relations.toggle();
                 arrowDirection = 'down';
