@@ -1,6 +1,5 @@
 """Module for the item-piechart directive"""
 import re
-from collections import namedtuple
 from hashlib import sha256
 from os import environ, mkdir, path
 
@@ -30,7 +29,21 @@ def pct_wrapper(sizes):
     return make_pct
 
 
-Match = namedtuple("Match", "label target")
+class Match:
+    def __init__(self, label):
+        self.label = label
+        self.targets = []
+        self.nested_targets = []
+
+    def add_target(self, target):
+        if target is None:
+            raise ValueError()
+        self.targets.append(target)
+
+    def add_nested_target(self, target):
+        if target is None:
+            raise ValueError()
+        self.nested_targets.append(target)
 
 
 class ItemPieChart(TraceableBaseNode):
@@ -44,7 +57,7 @@ class ItemPieChart(TraceableBaseNode):
         self.relationship_to_string = {}
         self.priorities = []  # default priority order is 'uncovered', 'covered', 'executed'
         self.nested_target_regex = re.compile('')
-        self.matches = {}  # source_id (str): Match (tuple(label, target))
+        self.matches = {}  # source_id (str): Match
 
     def perform_replacement(self, app, collection):
         """
@@ -70,7 +83,7 @@ class ItemPieChart(TraceableBaseNode):
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder:
                 continue
-            self.matches[source_id] = Match(self.priorities[0], None)  # default is "uncovered"
+            self.matches[source_id] = Match(self.priorities[0])  # default is "uncovered"
             self.loop_relationships(source_id, source_item, self.source_relationships, target_regex,
                                     self._match_covered)
 
@@ -88,6 +101,33 @@ class ItemPieChart(TraceableBaseNode):
             p_node = nodes.paragraph()
             p_node += nodes.Text(statistics)
             top_node += p_node
+
+        if self['matrix']:
+            self['nocaptions'] = True
+            table = nodes.table()
+            if self.get('classes'):
+                table.get('classes').extend(self.get('classes'))
+
+            # Column and heading setup
+            titles = [nodes.paragraph('', title) for title in self['id_set'] + ['TODO: attr_repr/rel_str']]
+            headings = [nodes.entry('', title) for title in titles]
+            number_of_columns = len(titles)
+            tgroup = nodes.tgroup()
+            tgroup += [nodes.colspec(colwidth=5) for _ in range(number_of_columns)]
+            tgroup += nodes.thead('', nodes.row('', *headings))
+            table += tgroup
+            tbody = nodes.tbody()
+            for source_id, match in self.matches.items():
+                row = nodes.row()
+                source = self.collection.get_item(source_id)
+                row += self._create_cell_for_items([source], app)
+                row += self._create_cell_for_items(match.targets, app)
+                if self.nested_target_regex.pattern:
+                    row += self._create_cell_for_items(match.nested_targets, app)
+                row += self._create_cell_for_items(nodes.paragraph('', match.label), app)
+                tbody += row
+            tgroup += tbody
+            top_node += table
 
         self.replace_self(top_node)
 
@@ -138,7 +178,7 @@ class ItemPieChart(TraceableBaseNode):
             stored_priority = self.priorities.index(self.matches[top_source_id].label)
             latest_priority = self.priorities.index(label)
             if latest_priority > stored_priority:
-                self.matches[top_source_id] = Match(label, target_item)
+                self.matches[top_source_id].label = label
 
     def loop_relationships(self, top_source_id, source_item, relationships, regex, match_function):
         """
@@ -168,6 +208,10 @@ class ItemPieChart(TraceableBaseNode):
                     continue
                 if regex.match(target_id):
                     has_valid_target = True
+                    if source_item.identifier == top_source_id:
+                        self.matches[top_source_id].add_target(target_item)
+                    else:
+                        self.matches[top_source_id].add_nested_target(target_item)
                     if consider_nested_targets is False:  # at least one target doesn't have a nested target
                         _ = match_function(top_source_id, None, relationship)
                     else:
@@ -202,7 +246,7 @@ class ItemPieChart(TraceableBaseNode):
             if self['splitsourcetype'] and self['sourcetype']:
                 self._match_by_type(top_source_id, None, relationship)
             else:
-                self.matches[top_source_id] = Match(self.priorities[1], nested_source_item)  # default is "covered"
+                self.matches[top_source_id].label = self.priorities[1]  # default is "covered"
         return has_nested_target
 
     def _match_by_type(self, top_source_id, nested_target_item, relationship):
@@ -381,6 +425,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :splitsourcetype:
          :hidetitle:
          :stats:
+         :matrix: uncovered, covered, executed, error,fail,pass
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -395,6 +440,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'splitsourcetype': directives.flag,
         'hidetitle': directives.flag,
         'stats': directives.flag,
+        'matrix': directives.unchanged,
     }
     # Content disallowed
     has_content = False
@@ -418,8 +464,11 @@ class ItemPieChartDirective(TraceableBaseDirective):
                 'colors': {'default': []},
                 'sourcetype': {'default': []},
                 'targettype': {'default': []},
+                'matrix': {'default': [], 'delimiter': ','},
             }
         )
+        if self.options.get('matrix', ''):
+            node['matrix'] = node['label_set']
         self.check_relationships(node['sourcetype'], env)
         self.check_relationships(node['targettype'], env)
         self.check_option_presence(node, 'splitsourcetype')
