@@ -102,14 +102,17 @@ class ItemPieChart(TraceableBaseNode):
             p_node += nodes.Text(statistics)
             top_node += p_node
 
+
         if self['matrix']:
+            if self['matrix'] == ['']:
+                self['matrix'] = self.priorities
             self['nocaptions'] = True
             table = nodes.table()
             if self.get('classes'):
                 table.get('classes').extend(self.get('classes'))
 
             # Column and heading setup
-            titles = [nodes.paragraph('', title) for title in self['id_set'] + ['TODO: attr_repr/rel_str']]
+            titles = [nodes.paragraph('', title) for title in self['id_set']]
             headings = [nodes.entry('', title) for title in titles]
             number_of_columns = len(titles)
             tgroup = nodes.tgroup()
@@ -117,16 +120,21 @@ class ItemPieChart(TraceableBaseNode):
             tgroup += nodes.thead('', nodes.row('', *headings))
             table += tgroup
             tbody = nodes.tbody()
-            for source_id, match in self.matches.items():
-                row = nodes.row()
-                source = self.collection.get_item(source_id)
-                row += self._create_cell_for_items([source], app)
-                row += self._create_cell_for_items(match.targets, app)
-                if self.nested_target_regex.pattern:
-                    row += self._create_cell_for_items(match.nested_targets, app)
-                row += self._create_cell_for_items(nodes.paragraph('', match.label), app)
-                tbody += row
             tgroup += tbody
+            for label in self['matrix']:
+                row = nodes.row()
+                row += nodes.entry('', nodes.paragraph('', label), morecols=number_of_columns-1)
+                tbody += row
+                for source_id, match in {key: value for key, value in self.matches.items() if value.label == label}.items():
+                    row = nodes.row()
+                    source = self.collection.get_item(source_id)
+                    row += self._create_cell_for_items([source], app)
+                    row += self._create_cell_for_items(match.targets, app)
+                    if self.nested_target_regex.pattern:
+                        row += self._create_cell_for_items(match.nested_targets, app)
+                    #row += self._create_cell_for_items(nodes.paragraph('', match.label), app)
+                    tbody += row
+
             top_node += table
 
         self.replace_self(top_node)
@@ -467,8 +475,6 @@ class ItemPieChartDirective(TraceableBaseDirective):
                 'matrix': {'default': [], 'delimiter': ','},
             }
         )
-        if self.options.get('matrix', ''):
-            node['matrix'] = node['label_set']
         self.check_relationships(node['sourcetype'], env)
         self.check_relationships(node['targettype'], env)
         self.check_option_presence(node, 'splitsourcetype')
