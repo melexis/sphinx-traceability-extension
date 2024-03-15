@@ -149,7 +149,7 @@ class ItemPieChart(TraceableBaseNode):
         return labels
 
     def _set_priorities(self):
-        """ Initializes the priorities dictionary with labels as keys and priority numbers as values. """
+        """ Initializes the priorities list with labels, sort by priority from low to high. """
         self.priorities = list(self['label_set'])
 
         if self['splitsourcetype'] and self['sourcetype']:
