@@ -126,6 +126,7 @@ Design coverage
     :label_set: Uncovered, Covered
     :functional: .*
     :sourcetype: fulfilled_by
+    :matrix:
 
 Test coverage
 =============
@@ -156,6 +157,7 @@ Test coverage
     :label_set: not covered, covered
     :colors: orange c b
     :stats:
+    :matrix:
 
 .. item-piechart:: Test coverage chart targeting UTEST and ITEST
     :id_set: RQT [IU]TEST [IU]TEST_REP
@@ -163,6 +165,7 @@ Test coverage
     :colors: orange c b darkred green yellow
     :targettype: failed_by passed_by skipped_by
     :stats:
+    :matrix:
 
 .. item-piechart:: Test coverage chart targeting ITEST only
     :id_set: RQT ITEST ITEST_REP
@@ -195,6 +198,9 @@ Test coverage
     :targettype: failed_by passed_by skipped_by
     :colors: orange c b r g y
     :stats:
+    :matrix: fails, passes, ran test, skipped
+
+.. matrix contains only a subset: filtered on labels
 
 .. item-piechart:: Test coverage chart with test results, based on the :targettype: option (in bad order)
     :id_set: RQT [IU]TEST [IU]TEST_REP
