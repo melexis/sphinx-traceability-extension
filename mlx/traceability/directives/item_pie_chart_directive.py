@@ -32,18 +32,14 @@ def pct_wrapper(sizes):
 class Match:
     def __init__(self, label):
         self.label = label
-        self.targets = []
-        self.nested_targets = []
+        self.targets = {}
 
     def add_target(self, target):
-        if target is None:
-            raise ValueError()
-        self.targets.append(target)
+        if target not in self.targets:
+            self.targets[target] = []
 
-    def add_nested_target(self, target):
-        if target is None:
-            raise ValueError()
-        self.nested_targets.append(target)
+    def add_nested_target(self, target, nested_target):
+        self.targets[target].append(nested_target)
 
 
 class ItemPieChart(TraceableBaseNode):
@@ -122,18 +118,27 @@ class ItemPieChart(TraceableBaseNode):
             tgroup += tbody
             for label in self['matrix']:
                 row = nodes.row()
-                subheader = nodes.entry('', nodes.strong('', label), morecols=number_of_columns-1)
+                subheader = nodes.entry('', nodes.strong('', label), morecols=max(0, number_of_columns-1))
                 subheader.get('classes').append('centered')
                 row += subheader
                 tbody += row
                 for source_id, match in {k: v for k, v in self.matches.items() if v.label == label}.items():
-                    row = nodes.row()
+                    source_row = nodes.row()
                     source = self.collection.get_item(source_id)
-                    row += self._create_cell_for_items([source], app)
-                    row += self._create_cell_for_items(match.targets, app)
-                    if self.nested_target_regex.pattern:
-                        row += self._create_cell_for_items(match.nested_targets, app)
-                    tbody += row
+                    source_row += self._create_cell_for_items([source], app, morerows=max(0, len(match.targets)-1))
+                    if match.targets:
+                        row_without_targets = source_row
+                        for target, nested_targets in match.targets.items():
+                            row_without_targets += self._create_cell_for_items([target], app)
+                            if self.nested_target_regex.pattern:
+                                row_without_targets += self._create_cell_for_items(nested_targets, app)
+                            tbody += row_without_targets
+                            row_without_targets = nodes.row()
+                    else:
+                        source_row += nodes.entry('')  # TODO: remove?
+                        if self.nested_target_regex.pattern:
+                            source_row += nodes.entry('')
+                        tbody += source_row
 
             top_node += table
 
@@ -219,7 +224,7 @@ class ItemPieChart(TraceableBaseNode):
                     if source_item.identifier == top_source_id:
                         self.matches[top_source_id].add_target(target_item)
                     else:
-                        self.matches[top_source_id].add_nested_target(target_item)
+                        self.matches[top_source_id].add_nested_target(source_item, target_item)
                     if consider_nested_targets is False:  # at least one target doesn't have a nested target
                         _ = match_function(top_source_id, None, relationship)
                     else:

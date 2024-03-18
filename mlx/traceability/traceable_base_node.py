@@ -180,7 +180,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
 
         return p_node
 
-    def _create_cell_for_items(self, cell_data, app):
+    def _create_cell_for_items(self, cell_data, app, morerows=0):
         """ Creates a cell with one or more links, creating the link first in case a traceable item is given.
 
         Args:
@@ -190,7 +190,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         Returns:
             nodes.entry: Cell filled with one or more links to items
         """
-        cell = nodes.entry('')
+        cell = nodes.entry('', morerows=morerows)
         for entry in cell_data:
             if isinstance(entry, nodes.Node):
                 cell += entry
