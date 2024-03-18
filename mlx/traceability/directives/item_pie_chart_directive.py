@@ -105,7 +105,6 @@ class ItemPieChart(TraceableBaseNode):
             table = nodes.table()
             if self.get('classes'):
                 table.get('classes').extend(self.get('classes'))
-
             # Column and heading setup
             titles = [nodes.paragraph('', title) for title in self['id_set']]
             headings = [nodes.entry('', title) for title in titles]
@@ -114,6 +113,7 @@ class ItemPieChart(TraceableBaseNode):
             tgroup += [nodes.colspec(colwidth=5) for _ in range(number_of_columns)]
             tgroup += nodes.thead('', nodes.row('', *headings))
             table += tgroup
+            # Table body
             tbody = nodes.tbody()
             tgroup += tbody
             for label in self['matrix']:
@@ -135,13 +135,11 @@ class ItemPieChart(TraceableBaseNode):
                             tbody += row_without_targets
                             row_without_targets = nodes.row()
                     else:
-                        source_row += nodes.entry('')  # TODO: remove?
+                        source_row += nodes.entry('')
                         if self.nested_target_regex.pattern:
                             source_row += nodes.entry('')
                         tbody += source_row
-
             top_node += table
-
         self.replace_self(top_node)
 
     def _relationships_to_labels(self, relationships):
