@@ -184,12 +184,12 @@ class ItemPieChart(TraceableBaseNode):
                     else:
                         self.matches[top_source_id].add_nested_target(source_item, target_item)
                     if consider_nested_targets is False:  # at least one target doesn't have a nested target
-                        _ = match_function(top_source_id, None, relationship)
+                        _ = match_function(top_source_id, target_item, relationship, consider_nested_targets=False)
                     else:
                         consider_nested_targets = match_function(top_source_id, target_item, relationship)
         return has_valid_target and consider_nested_targets
 
-    def _match_covered(self, top_source_id, nested_source_item, relationship):
+    def _match_covered(self, top_source_id, nested_source_item, relationship, consider_nested_targets=True):
         """
         Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
         used for labeling, it loops through the target relationships, this time with the matched item as the source.
@@ -199,8 +199,9 @@ class ItemPieChart(TraceableBaseNode):
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             nested_source_item (None/TraceableItem): Nested traceable item to be used as a source for looping through
-                its relationships, e.g. a test item. If None, only the given `relationship` is taken into account.
+                its relationships, e.g. a test item.
             relationship (str): Relationship from top-level source item to the target item
+            consider_nested_targets (bool): False to ignore any nested targets that are found for labeling/statistics.
 
         Returns:
             bool: False if no valid target could be found for `nested_source_item` or it was None; True otherwise
@@ -213,14 +214,14 @@ class ItemPieChart(TraceableBaseNode):
                 match_function = self._match_attribute_values
             has_nested_target = self.loop_relationships(
                 top_source_id, nested_source_item, self.target_relationships, self.nested_target_regex, match_function)
-        if not has_nested_target:
+        if not has_nested_target or not consider_nested_targets:
             if self['splitsourcetype'] and self['sourcetype']:
                 self._match_by_type(top_source_id, None, relationship)
             else:
                 self.matches[top_source_id].label = self.priorities[1]  # default is "covered"
-        return has_nested_target
+        return has_nested_target and consider_nested_targets
 
-    def _match_by_type(self, top_source_id, nested_target_item, relationship):
+    def _match_by_type(self, top_source_id, nested_target_item, relationship, **_):
         """ Links the reverse of the highest priority relationship of nested relations to the top source id.
 
         Args:
@@ -234,7 +235,7 @@ class ItemPieChart(TraceableBaseNode):
         self._store_linked_label(top_source_id, reverse_relationship_str, nested_target_item)
         return True
 
-    def _match_attribute_values(self, top_source_id, nested_target_item, *_):
+    def _match_attribute_values(self, top_source_id, nested_target_item, *_, **__):
         """ Links the highest priority attribute value of nested relations to the top source id.
 
         This function is only called when the <<attribute>> option is used. It gets the attribute value from the nested
