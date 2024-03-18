@@ -126,14 +126,13 @@ class ItemPieChart(TraceableBaseNode):
                 subheader.get('classes').append('centered')
                 row += subheader
                 tbody += row
-                for source_id, match in {key: value for key, value in self.matches.items() if value.label == label}.items():
+                for source_id, match in {k: v for k, v in self.matches.items() if v.label == label}.items():
                     row = nodes.row()
                     source = self.collection.get_item(source_id)
                     row += self._create_cell_for_items([source], app)
                     row += self._create_cell_for_items(match.targets, app)
                     if self.nested_target_regex.pattern:
                         row += self._create_cell_for_items(match.nested_targets, app)
-                    #row += self._create_cell_for_items(nodes.paragraph('', match.label), app)
                     tbody += row
 
             top_node += table
