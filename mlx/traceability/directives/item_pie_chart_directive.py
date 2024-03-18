@@ -102,7 +102,6 @@ class ItemPieChart(TraceableBaseNode):
             p_node += nodes.Text(statistics)
             top_node += p_node
 
-
         if self['matrix']:
             if self['matrix'] == ['']:
                 self['matrix'] = self.priorities
@@ -123,7 +122,9 @@ class ItemPieChart(TraceableBaseNode):
             tgroup += tbody
             for label in self['matrix']:
                 row = nodes.row()
-                row += nodes.entry('', nodes.paragraph('', label), morecols=number_of_columns-1)
+                subheader = nodes.entry('', nodes.strong('', label), morecols=number_of_columns-1)
+                subheader.get('classes').append('centered')
+                row += subheader
                 tbody += row
                 for source_id, match in {key: value for key, value in self.matches.items() if value.label == label}.items():
                     row = nodes.row()
