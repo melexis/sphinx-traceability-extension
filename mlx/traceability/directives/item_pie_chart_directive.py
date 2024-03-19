@@ -143,13 +143,12 @@ class ItemPieChart(TraceableBaseNode):
         if len(self['id_set']) > 2:
             self.nested_target_regex = re.compile(self['id_set'][2])
 
-    def _store_linked_label(self, top_source_id, label, target_item):
+    def _store_linked_label(self, top_source_id, label):
         """ Stores the label with the given item ID as key in ``linked_labels`` if it has a higher priority.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             label (str): Label to store if it has a higher priority than the one that has been stored.
-            target_item (TraceableItem): Target item
         """
         if label != self.matches[top_source_id].label:
             # store different label if it has a higher priority
@@ -239,7 +238,7 @@ class ItemPieChart(TraceableBaseNode):
         """
         reverse_relationship = self.collection.get_reverse_relation(relationship)
         reverse_relationship_str = self.relationship_to_string[reverse_relationship].lower()
-        self._store_linked_label(top_source_id, reverse_relationship_str, nested_target_item)
+        self._store_linked_label(top_source_id, reverse_relationship_str)
         return True
 
     def _match_attribute_values(self, top_source_id, nested_target_item, *_, **__):
@@ -258,7 +257,7 @@ class ItemPieChart(TraceableBaseNode):
         attribute_value = nested_target_item.get_attribute(self['attribute']).lower()
         if attribute_value not in self.priorities:
             attribute_value = self.priorities[2]  # default is "executed"
-        self._store_linked_label(top_source_id, attribute_value, nested_target_item)
+        self._store_linked_label(top_source_id, attribute_value)
         return True
 
     def _prepare_labels_and_values(self, ordered_labels, discovered_labels, colors):
