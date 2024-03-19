@@ -32,20 +32,33 @@ def pct_wrapper(sizes):
 
 
 class Match:
+    """ Class for storing the label and targets for a single source item """
     def __init__(self, label):
         self.label = label
         self.targets = {}
 
     @property
     def targets_iter(self):
+        """ iter(tuple): generator that yields a target and corresponding nested targets, natural sorting order """
         for target in natsorted(self.targets, key=operator.attrgetter('identifier')):
             yield target, natsorted(self.targets[target], key=operator.attrgetter('identifier'))
 
     def add_target(self, target):
+        """ Add a target item
+
+        Args:
+            target (TraceableItem): Target item
+        """
         if target not in self.targets:
             self.targets[target] = []
 
     def add_nested_target(self, target, nested_target):
+        """ Add a nested target item belonging to a target item
+
+        Args:
+            target (TraceableItem): Target item
+            target (TraceableItem): Nested target item
+        """
         self.targets[target].append(nested_target)
 
 
@@ -386,6 +399,17 @@ class ItemPieChart(TraceableBaseNode):
         return explode
 
     def build_table(self, app):
+        """ Builds a table node for the 'matrix' option
+
+        The labels of the pie chart (or a subset) are used as subheaders and a way to group the source items.
+        Besides that, the table is similar to the item-matrix directive with the 'splitintermediates' flag enabled.
+
+        Args:
+            app (sphinx.application.Sphinx): Sphinx application object
+
+        Returns:
+            nodes.table: Table node
+        """
         table = nodes.table()
         if self['matrix'] == ['']:
             self['matrix'] = self.priorities
