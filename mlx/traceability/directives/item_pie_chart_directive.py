@@ -1,4 +1,5 @@
 """Module for the item-piechart directive"""
+import operator
 import re
 from hashlib import sha256
 from os import environ, mkdir, path
@@ -9,6 +10,7 @@ import matplotlib as mpl
 if not environ.get('DISPLAY'):
     mpl.use('Agg')
 import matplotlib.pyplot as plt  # pylint: disable=wrong-import-order
+from natsort import natsorted
 from sphinx.builders.latex import LaTeXBuilder
 
 from ..traceability_exception import report_warning
@@ -33,6 +35,11 @@ class Match:
     def __init__(self, label):
         self.label = label
         self.targets = {}
+
+    @property
+    def targets_iter(self):
+        for target in natsorted(self.targets, key=operator.attrgetter('identifier')):
+            yield target, natsorted(self.targets[target], key=operator.attrgetter('identifier'))
 
     def add_target(self, target):
         if target not in self.targets:
@@ -410,7 +417,7 @@ class ItemPieChart(TraceableBaseNode):
                 source_row += self._create_cell_for_items([source], app, morerows=max(0, len(match.targets)-1))
                 if match.targets:
                     row_without_targets = source_row
-                    for target, nested_targets in match.targets.items():
+                    for target, nested_targets in match.targets_iter:
                         row_without_targets += self._create_cell_for_items([target], app)
                         if self.nested_target_regex.pattern:
                             row_without_targets += self._create_cell_for_items(nested_targets, app)
