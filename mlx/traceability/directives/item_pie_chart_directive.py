@@ -435,23 +435,38 @@ class ItemPieChart(TraceableBaseNode):
             row += subheader
             tbody += row
             for source_id, match in {k: v for k, v in self.matches.items() if v.label == label}.items():
-                source_row = nodes.row()
                 source = self.collection.get_item(source_id)
-                source_row += self._create_cell_for_items([source], app, morerows=max(0, len(match.targets)-1))
-                if match.targets:
-                    row_without_targets = source_row
-                    for target, nested_targets in match.targets_iter:
-                        row_without_targets += self._create_cell_for_items([target], app)
-                        if self.nested_target_regex.pattern:
-                            row_without_targets += self._create_cell_for_items(nested_targets, app)
-                        tbody += row_without_targets
-                        row_without_targets = nodes.row()
-                else:
-                    source_row += nodes.entry('')
-                    if self.nested_target_regex.pattern:
-                        source_row += nodes.entry('')
-                    tbody += source_row
+                tbody += self._rows_per_source(source, match, app)
         return table
+
+    def _rows_per_source(self, source, match, app):
+        """ Builds a list of rows for the given source item
+
+        Args:
+            source (TraceableItem): Source item
+            match (Match): The corresponding Match instance
+            app (sphinx.application.Sphinx): Sphinx application object
+
+        Returns:
+            list: List of rows to add to the table body
+        """
+        rows = []
+        source_row = nodes.row()
+        source_row += self._create_cell_for_items([source], app, morerows=max(0, len(match.targets)-1))
+        if match.targets:
+            row_without_targets = source_row
+            for target, nested_targets in match.targets_iter:
+                row_without_targets += self._create_cell_for_items([target], app)
+                if self.nested_target_regex.pattern:
+                    row_without_targets += self._create_cell_for_items(nested_targets, app)
+                rows.append(row_without_targets)
+                row_without_targets = nodes.row()
+        else:
+            source_row += nodes.entry('')
+            if self.nested_target_regex.pattern:
+                source_row += nodes.entry('')
+            rows.append(source_row)
+        return rows
 
 
 class ItemPieChartDirective(TraceableBaseDirective):
