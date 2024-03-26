@@ -159,20 +159,13 @@ Test coverage
     :stats:
     :matrix:
 
-.. item-piechart:: Test coverage chart targeting UTEST and ITEST
+.. item-piechart:: Test coverage chart with test results, based on the :targettype: option
     :id_set: RQT [IU]TEST [IU]TEST_REP
     :label_set: not covered, covered
     :colors: orange c b darkred green yellow
     :targettype: failed_by passed_by skipped_by
     :stats:
     :matrix:
-
-.. item-piechart:: Test coverage chart targeting ITEST only
-    :id_set: RQT ITEST ITEST_REP
-    :label_set: not covered, covered
-    :colors: orange c b darkred green yellow
-    :targettype: failed_by passed_by skipped_by
-    :stats:
 
 .. item-piechart:: Test coverage chart with test results, based on the :result: attribute
     :id_set: RQT [IU]TEST [IU]TEST_REP
@@ -182,6 +175,7 @@ Test coverage
     :result: ERROR, fail, pass
     :colors: orange c b darkred #FF0000 g pink
     :stats:
+    :matrix:
 
 ..
     uncovered: orange (orange)
@@ -190,17 +184,6 @@ Test coverage
     ERROR: darkred (dark red)
     fail: #FF0000 (red)
     pass: g (green)
-
-.. item-piechart:: Test coverage chart with test results, based on the :targettype: option
-    :id_set: RQT [IU]TEST [IU]TEST_REP
-    :label_set: uncovered, covered, ran test
-    :sourcetype: validated_by
-    :targettype: failed_by passed_by skipped_by
-    :colors: orange c b r g y
-    :stats:
-    :matrix: fails, passes, ran test, skipped
-
-.. matrix contains only a subset: filtered on labels
 
 .. item-piechart:: Test coverage chart with test results, based on the :targettype: option (in bad order)
     :id_set: RQT [IU]TEST [IU]TEST_REP
@@ -218,6 +201,16 @@ Test coverage
     :colors: orange black cyan r g y slategrey
     :splitsourcetype:
     :stats:
+
+.. item-piechart:: Test coverage chart targeting ITEST only
+    :id_set: RQT ITEST ITEST_REP
+    :label_set: not covered, covered
+    :colors: orange c b darkred green yellow
+    :targettype: failed_by passed_by skipped_by
+    :stats:
+    :matrix: fails, passes, ran test, skipped
+
+.. matrix contains only a subset: filtered on labels
 
 .. item-piechart:: All uncovered as the bad sourcetype results in 0 links
     :id_set: RQT [IU]TEST
