@@ -72,7 +72,10 @@ Unit Tests for mlx.traceability
     :result: pass
 
 .. item:: UTEST_REP_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
-    :passes: UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
+    :skipped: UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
+..
+    due to the lack of an attribute (value) 'result' above, RQT-CAPTION will be labeled as 'executed' instead of 'skipped'
+    in an item-piechart with ``::result: ERROR, fail, pass, skip``
 
 .. test item-relink defined after item-link and item definitions: item-link shall always be processed first
 
