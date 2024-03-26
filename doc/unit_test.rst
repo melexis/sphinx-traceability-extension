@@ -67,6 +67,13 @@ Unit Tests for mlx.traceability
 
 .. item:: UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
 
+.. item:: UTEST_REP_TRACEABLE_ITEM-SET_CAPTION
+    :passes: UTEST_TRACEABLE_ITEM-SET_CAPTION
+    :result: pass
+
+.. item:: UTEST_REP_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
+    :passes: UTEST_ITEM_DIRECTIVE-MAKE_INTERNAL_ITEM_REF_SHOW_CAPTION
+
 .. test item-relink defined after item-link and item definitions: item-link shall always be processed first
 
 .. item-link::
