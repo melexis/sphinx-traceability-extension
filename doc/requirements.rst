@@ -172,7 +172,7 @@ Test coverage
     :sourcetype: validated_by
     :targettype: failed_by passed_by skipped_by
     :label_set: uncovered, covered, has report
-    :result: ERROR, fail, pass
+    :result: ERROR, fail, pass, skip
     :colors: orange c b darkred #FF0000 g pink
     :stats:
     :matrix:
