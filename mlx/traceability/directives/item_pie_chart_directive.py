@@ -34,7 +34,7 @@ def pct_wrapper(sizes):
 class Match:
     """ Class for storing the label and targets for a single source item """
     def __init__(self, label):
-        self.label = label.lower()
+        self.label = label
         self.targets = {}
 
     @property
@@ -432,7 +432,7 @@ class ItemPieChart(TraceableBaseNode):
             subheader.get('classes').append('centered')
             row += subheader
             tbody += row
-            for source_id, match in {k: v for k, v in self.matches.items() if v.label == label.lower()}.items():
+            for source_id, match in {k: v for k, v in self.matches.items() if v.label.lower() == label.lower()}.items():
                 source = self.collection.get_item(source_id)
                 tbody += self._rows_per_source(source, match, app)
         return table
