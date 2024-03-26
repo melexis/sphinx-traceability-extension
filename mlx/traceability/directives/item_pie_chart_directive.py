@@ -240,13 +240,11 @@ class ItemPieChart(TraceableBaseNode):
                 self.matches[top_source_id].label = self.priorities[1]  # default is "covered"
         return has_nested_target and consider_nested_targets
 
-    def _match_by_type(self, top_source_id, nested_target_item, relationship, **_):
+    def _match_by_type(self, top_source_id, _, relationship, **__):
         """ Links the reverse of the highest priority relationship of nested relations to the top source id.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
-            nested_target_item (TraceableItem): Nested traceable item used as a target while looping through
-                relationships, e.g. a test report item.
             relationship (str): Relationship with ``nested_target_item`` as target
         """
         reverse_relationship = self.collection.get_reverse_relation(relationship)
