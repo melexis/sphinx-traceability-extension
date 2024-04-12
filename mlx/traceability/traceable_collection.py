@@ -206,8 +206,7 @@ class TraceableCollection:
         if not self.relations:
             raise TraceabilityException('No relations configured', 'configuration')
         # Validate each item
-        for itemid in self.items:
-            item = self.get_item(itemid)
+        for itemid, item in self.items.items():
             # Only for relevant items, filtered on document name
             if docname is not None and item.docname != docname and item.docname is not None:
                 continue
