@@ -39,6 +39,7 @@ class ItemPieChart(TraceableBaseNode):
         self.target_relationships = []
         self.relationship_to_string = {}
         self.priorities = []  # default priority order is 'uncovered', 'covered', 'executed'
+        self.labels = []
         self.nested_target_regex = re.compile('')
         self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
 
@@ -58,7 +59,7 @@ class ItemPieChart(TraceableBaseNode):
         self.source_relationships = self['sourcetype'] if self['sourcetype'] else self.collection.iter_relations()
         self.target_relationships = self['targettype'] if self['targettype'] else self.collection.iter_relations()
         self.relationship_to_string = app.config.traceability_relationship_to_string
-        self._set_priorities()
+        self._store_labels()
         self._set_nested_target_regex()
         target_regex = re.compile(self['id_set'][1])
         for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
@@ -74,8 +75,7 @@ class ItemPieChart(TraceableBaseNode):
             report_warning("item-piechart can contain up to {} slices but only {} colors have been provided: some "
                            "colors may be reused".format(len(self.priorities), len(self['colors'])),
                            self['document'], self['line'])
-        data, statistics = self._prepare_labels_and_values(self.priorities,
-                                                           list(self.linked_labels.values()),
+        data, statistics = self._prepare_labels_and_values(list(self.linked_labels.values()),
                                                            self['colors'])
         if data['labels']:
             top_node += self.build_pie_chart(data['sizes'], data['labels'], data['colors'], env)
@@ -104,17 +104,23 @@ class ItemPieChart(TraceableBaseNode):
             labels.append(self.relationship_to_string[reverse_relationship].lower())
         return labels
 
-    def _set_priorities(self):
-        """ Initializes the priorities dictionary with labels as keys and priority numbers as values. """
+    def _store_labels(self):
+        """ Stores all labels """
         self.priorities = list(self['label_set'])
+        self.labels = list(self['label_set'])
 
         if self['splitsourcetype'] and self['sourcetype']:
-            self.priorities.extend(reversed(self._relationships_to_labels(self['sourcetype'])))
+            sourcetype_labels = self._relationships_to_labels(self['sourcetype'])
+            self.priorities.extend(sourcetype_labels)
+            self.labels.extend(sourcetype_labels)
 
+        custom_labels = []
         if self['attr_values']:
-            self.priorities.extend(reversed([val.lower() for val in self['attr_values']]))
+            custom_labels.extend([val.lower() for val in self['attr_values']])
         elif self['targettype']:
-            self.priorities.extend(reversed(self._relationships_to_labels(self['targettype'])))
+            custom_labels.extend(self._relationships_to_labels(self['targettype']))
+        self.priorities.extend(reversed(custom_labels))
+        self.labels.extend(custom_labels)
 
     def _set_nested_target_regex(self):
         """ Sets the ``nested_target_regex`` if a third item ID in the id_set option is given. """
@@ -233,12 +239,11 @@ class ItemPieChart(TraceableBaseNode):
         self._store_linked_label(top_source_id, attribute_value)
         return True
 
-    def _prepare_labels_and_values(self, ordered_labels, discovered_labels, colors):
+    def _prepare_labels_and_values(self, discovered_labels, colors):
         """ Keeps case-sensitivity of :<<attribute>>: arguments in labels and calculates slice size based on the
         highest-priority label for each relevant item.
 
         Args:
-            ordered_labels (list): List of unique labels (str), ordered by priority from low to high.
             discovered_labels (list): List of labels with the highest priority for each relevant item.
             colors (list): List of colors in the order as they are defined
 
@@ -247,16 +252,10 @@ class ItemPieChart(TraceableBaseNode):
             (str) Coverage statistics.
         """
         # initialize dictionary for each possible value, and count label occurences
-        ordered_colors = colors[:len(ordered_labels)]
-        if len(colors) > 3:
-            # reverse order for labels specified by :sourcetype: or :<<attribute>>: or :targettype:
-            sourcetypes = len(self['sourcetype']) if self['splitsourcetype'] else 0
-            ordered_colors[3:3+sourcetypes] = reversed(ordered_colors[3:3+sourcetypes])
-            ordered_colors[3+sourcetypes:] = reversed(ordered_colors[3+sourcetypes:])
-
+        ordered_colors = colors[:len(self.labels)]
         pie_data = {
-            'labels': ordered_labels,
-            'sizes': [0] * len(ordered_labels),
+            'labels': self.labels,
+            'sizes': [0] * len(self.labels),
             'colors': ordered_colors,
         }
         labels = pie_data['labels']
