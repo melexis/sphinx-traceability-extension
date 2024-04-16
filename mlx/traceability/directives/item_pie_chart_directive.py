@@ -157,15 +157,17 @@ class ItemPieChart(TraceableBaseNode):
             self.nested_target_regex = re.compile(self['id_set'][2])
 
     def _store_linked_label(self, top_source_id, label):
-        """ Stores the label with the given item ID as key in ``linked_labels`` if it has a higher priority.
+        """ Stores the label in ``matches`` for the given item ID if it has a higher priority and the currently stored
+        label is different from 'executed'.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             label (str): Label to store if it has a higher priority than the one that has been stored.
         """
-        if label != self.matches[top_source_id].label:
+        stored_label = self.matches[top_source_id].label
+        if stored_label not in (label, self.priorities[2]):
             # store different label if it has a higher priority
-            stored_priority = self.priorities.index(self.matches[top_source_id].label)
+            stored_priority = self.priorities.index(stored_label)
             latest_priority = self.priorities.index(label)
             if latest_priority > stored_priority:
                 self.matches[top_source_id].label = label
