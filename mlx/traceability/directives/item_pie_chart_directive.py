@@ -411,7 +411,7 @@ class ItemPieChart(TraceableBaseNode):
         """
         table = nodes.table()
         if self['matrix'] == ['']:
-            self['matrix'] = self.priorities
+            self['matrix'] = self.labels
         self['nocaptions'] = True
         table = nodes.table()
         if self.get('classes'):
