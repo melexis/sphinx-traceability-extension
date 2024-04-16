@@ -202,7 +202,7 @@ Test coverage
     :splitsourcetype:
     :stats:
 
-.. item-piechart:: Test coverage chart targeting ITEST only
+.. item-piechart:: Test coverage chart targeting ITEST only with a matrix that contains a subset of the data, filtered by labels
     :id_set: RQT ITEST ITEST_REP
     :label_set: not covered, covered
     :colors: orange c b darkred green yellow
@@ -210,7 +210,7 @@ Test coverage
     :stats:
     :matrix: fails, passes, ran test, skipped
 
-.. matrix contains only a subset: filtered on labels
+.. matrix contains only a subset: filtered by labels
 
 .. item-piechart:: All uncovered as the bad sourcetype results in 0 links
     :id_set: RQT [IU]TEST
