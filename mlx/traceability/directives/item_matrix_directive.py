@@ -488,24 +488,6 @@ class ItemMatrix(TraceableBaseNode):
                     covered = True
         return covered
 
-    def _create_cell_for_items(self, cell_data, app):
-        """ Creates a cell with one or more links, creating the link first in case a traceable item is given.
-
-        Args:
-            cell_data (list): List of nodes and/or TraceableItems to add as links to the cell
-            app (sphinx.application.Sphinx): Sphinx application object
-
-        Returns:
-            nodes.entry: Cell filled with one or more links to items
-        """
-        cell = nodes.entry('')
-        for entry in cell_data:
-            if isinstance(entry, nodes.Node):
-                cell += entry
-            else:
-                cell += self.make_internal_item_ref(app, entry.identifier)
-        return cell
-
     def _create_cells_for_info_cols(self, item, values, app):
         """ Creates a cell with the item's attribute value for each attribute in the given list.
 

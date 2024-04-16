@@ -180,6 +180,24 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
 
         return p_node
 
+    def _create_cell_for_items(self, cell_data, app, morerows=0):
+        """ Creates a cell with one or more links, creating the link first in case a traceable item is given.
+
+        Args:
+            cell_data (list): List of nodes and/or TraceableItems to add as links to the cell
+            app (sphinx.application.Sphinx): Sphinx application object
+
+        Returns:
+            nodes.entry: Cell filled with one or more links to items
+        """
+        cell = nodes.entry('', morerows=morerows)
+        for entry in cell_data:
+            if isinstance(entry, nodes.Node):
+                cell += entry
+            else:
+                cell += self.make_internal_item_ref(app, entry.identifier)
+        return cell
+
     @staticmethod
     def _find_colors_for_class(hyperlink_colors, item_id):
         """

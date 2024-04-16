@@ -657,6 +657,7 @@ A pie chart of documentation items can be generated using:
         :colors: orange c b darkred #FF0000 g
         :hidetitle:
         :stats:
+        :matrix: uncovered, covered, executed, error,fail,pass
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
@@ -726,6 +727,11 @@ are comma-separated lists.
 
     By providing the *stats* flag, some statistics (coverage percentage) are calculated and displayed below the
     pie chart.
+
+:matrix: *optional*, *multiple arguments (comma-separated)*
+
+    The *matrix* option renders a table with all items, grouped by pie chart label. By default, all labels, and thus,
+    all items are included in the table. You can customize the order and filter by providing a custom set of labels.
 
 .. note::
 

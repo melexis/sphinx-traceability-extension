@@ -1,4 +1,5 @@
 """Module for the item-piechart directive"""
+import operator
 import re
 from hashlib import sha256
 from os import environ, mkdir, path
@@ -9,6 +10,7 @@ import matplotlib as mpl
 if not environ.get('DISPLAY'):
     mpl.use('Agg')
 import matplotlib.pyplot as plt  # pylint: disable=wrong-import-order
+from natsort import natsorted
 from sphinx.builders.latex import LaTeXBuilder
 
 from ..traceability_exception import report_warning
@@ -29,6 +31,37 @@ def pct_wrapper(sizes):
     return make_pct
 
 
+class Match:
+    """ Class for storing the label and targets for a single source item """
+    def __init__(self, label):
+        self.label = label
+        self.targets = {}
+
+    @property
+    def targets_iter(self):
+        """ iter(tuple): generator that yields a target and corresponding nested targets, natural sorting order """
+        for target in natsorted(self.targets, key=operator.attrgetter('identifier')):
+            yield target, natsorted(self.targets[target], key=operator.attrgetter('identifier'))
+
+    def add_target(self, target):
+        """ Add a target item
+
+        Args:
+            target (TraceableItem): Target item
+        """
+        if target not in self.targets:
+            self.targets[target] = []
+
+    def add_nested_target(self, target, nested_target):
+        """ Add a nested target item belonging to a target item
+
+        Args:
+            target (TraceableItem): Target item
+            target (TraceableItem): Nested target item
+        """
+        self.targets[target].append(nested_target)
+
+
 class ItemPieChart(TraceableBaseNode):
     '''Pie chart on documentation items'''
 
@@ -40,7 +73,7 @@ class ItemPieChart(TraceableBaseNode):
         self.relationship_to_string = {}
         self.priorities = []  # default priority order is 'uncovered', 'covered', 'executed'
         self.nested_target_regex = re.compile('')
-        self.linked_labels = {}  # source_id (str): attr_value/relationship_str (str)
+        self.matches = {}  # source_id (str): Match
 
     def perform_replacement(self, app, collection):
         """
@@ -66,7 +99,7 @@ class ItemPieChart(TraceableBaseNode):
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder:
                 continue
-            self.linked_labels[source_id] = self.priorities[0]  # default is "uncovered"
+            self.matches[source_id] = Match(self.priorities[0])  # default is "uncovered"
             self.loop_relationships(source_id, source_item, self.source_relationships, target_regex,
                                     self._match_covered)
 
@@ -75,7 +108,7 @@ class ItemPieChart(TraceableBaseNode):
                            "colors may be reused".format(len(self.priorities), len(self['colors'])),
                            self['document'], self['line'])
         data, statistics = self._prepare_labels_and_values(self.priorities,
-                                                           list(self.linked_labels.values()),
+                                                           [x.label for x in self.matches.values()],
                                                            self['colors'])
         if data['labels']:
             top_node += self.build_pie_chart(data['sizes'], data['labels'], data['colors'], env)
@@ -85,6 +118,8 @@ class ItemPieChart(TraceableBaseNode):
             p_node += nodes.Text(statistics)
             top_node += p_node
 
+        if self['matrix'] and data['labels']:
+            top_node += self.build_table(app)
         self.replace_self(top_node)
 
     def _relationships_to_labels(self, relationships):
@@ -105,7 +140,7 @@ class ItemPieChart(TraceableBaseNode):
         return labels
 
     def _set_priorities(self):
-        """ Initializes the priorities dictionary with labels as keys and priority numbers as values. """
+        """ Initializes the priorities list with labels, sort by priority from low to high. """
         self.priorities = list(self['label_set'])
 
         if self['splitsourcetype'] and self['sourcetype']:
@@ -122,18 +157,20 @@ class ItemPieChart(TraceableBaseNode):
             self.nested_target_regex = re.compile(self['id_set'][2])
 
     def _store_linked_label(self, top_source_id, label):
-        """ Stores the label with the given item ID as key in ``linked_labels`` if it has a higher priority.
+        """ Stores the label in ``matches`` for the given item ID if it has a higher priority and the currently stored
+        label is different from 'executed'.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             label (str): Label to store if it has a higher priority than the one that has been stored.
         """
-        if label != self.linked_labels[top_source_id]:
+        stored_label = self.matches[top_source_id].label
+        if stored_label not in (label, self.priorities[2]):
             # store different label if it has a higher priority
-            stored_priority = self.priorities.index(self.linked_labels[top_source_id])
+            stored_priority = self.priorities.index(stored_label)
             latest_priority = self.priorities.index(label)
             if latest_priority > stored_priority:
-                self.linked_labels[top_source_id] = label
+                self.matches[top_source_id].label = label
 
     def loop_relationships(self, top_source_id, source_item, relationships, regex, match_function):
         """
@@ -163,13 +200,17 @@ class ItemPieChart(TraceableBaseNode):
                     continue
                 if regex.match(target_id):
                     has_valid_target = True
+                    if source_item.identifier == top_source_id:
+                        self.matches[top_source_id].add_target(target_item)
+                    else:
+                        self.matches[top_source_id].add_nested_target(source_item, target_item)
                     if consider_nested_targets is False:  # at least one target doesn't have a nested target
-                        _ = match_function(top_source_id, None, relationship)
+                        _ = match_function(top_source_id, target_item, relationship, consider_nested_targets=False)
                     else:
                         consider_nested_targets = match_function(top_source_id, target_item, relationship)
         return has_valid_target and consider_nested_targets
 
-    def _match_covered(self, top_source_id, nested_source_item, relationship):
+    def _match_covered(self, top_source_id, nested_source_item, relationship, consider_nested_targets=True):
         """
         Sets the appropriate label when the top-level relationship is accounted for. If the <<attribute>> option is
         used for labeling, it loops through the target relationships, this time with the matched item as the source.
@@ -179,8 +220,9 @@ class ItemPieChart(TraceableBaseNode):
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             nested_source_item (None/TraceableItem): Nested traceable item to be used as a source for looping through
-                its relationships, e.g. a test item. If None, only the given `relationship` is taken into account.
+                its relationships, e.g. a test item.
             relationship (str): Relationship from top-level source item to the target item
+            consider_nested_targets (bool): False to ignore any nested targets that are found for labeling/statistics.
 
         Returns:
             bool: False if no valid target could be found for `nested_source_item` or it was None; True otherwise
@@ -193,20 +235,18 @@ class ItemPieChart(TraceableBaseNode):
                 match_function = self._match_attribute_values
             has_nested_target = self.loop_relationships(
                 top_source_id, nested_source_item, self.target_relationships, self.nested_target_regex, match_function)
-        if not has_nested_target:
+        if not has_nested_target or not consider_nested_targets:
             if self['splitsourcetype'] and self['sourcetype']:
                 self._match_by_type(top_source_id, None, relationship)
             else:
-                self.linked_labels[top_source_id] = self.priorities[1]  # default is "covered"
-        return has_nested_target
+                self.matches[top_source_id].label = self.priorities[1]  # default is "covered"
+        return has_nested_target and consider_nested_targets
 
-    def _match_by_type(self, top_source_id, _, relationship):
+    def _match_by_type(self, top_source_id, _, relationship, **__):
         """ Links the reverse of the highest priority relationship of nested relations to the top source id.
 
         Args:
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
-            nested_target_item (TraceableItem): Nested traceable item used as a target while looping through
-                relationships, e.g. a test report item.
             relationship (str): Relationship with ``nested_target_item`` as target
         """
         reverse_relationship = self.collection.get_reverse_relation(relationship)
@@ -214,7 +254,7 @@ class ItemPieChart(TraceableBaseNode):
         self._store_linked_label(top_source_id, reverse_relationship_str)
         return True
 
-    def _match_attribute_values(self, top_source_id, nested_target_item, *_):
+    def _match_attribute_values(self, top_source_id, nested_target_item, *_, **__):
         """ Links the highest priority attribute value of nested relations to the top source id.
 
         This function is only called when the <<attribute>> option is used. It gets the attribute value from the nested
@@ -358,6 +398,76 @@ class ItemPieChart(TraceableBaseNode):
             explode[uncovered_index] = 0.05
         return explode
 
+    def build_table(self, app):
+        """ Builds a table node for the 'matrix' option
+
+        The labels of the pie chart (or a subset) are used as subheaders and a way to group the source items.
+        Besides that, the table is similar to the item-matrix directive with the 'splitintermediates' flag enabled.
+
+        Args:
+            app (sphinx.application.Sphinx): Sphinx application object
+
+        Returns:
+            nodes.table: Table node
+        """
+        table = nodes.table()
+        if self['matrix'] == ['']:
+            self['matrix'] = self.priorities
+        self['nocaptions'] = True
+        table = nodes.table()
+        if self.get('classes'):
+            table.get('classes').extend(self.get('classes'))
+        # Column and heading setup
+        titles = [nodes.paragraph('', title) for title in self['id_set']]
+        headings = [nodes.entry('', title) for title in titles]
+        number_of_columns = len(titles)
+        tgroup = nodes.tgroup()
+        tgroup += [nodes.colspec(colwidth=5) for _ in range(number_of_columns)]
+        tgroup += nodes.thead('', nodes.row('', *headings))
+        table += tgroup
+        # Table body
+        tbody = nodes.tbody()
+        tgroup += tbody
+        for label in self['matrix']:
+            row = nodes.row()
+            subheader = nodes.entry('', nodes.strong('', label), morecols=max(0, number_of_columns-1))
+            subheader.get('classes').append('centered')
+            row += subheader
+            tbody += row
+            for source_id, match in {k: v for k, v in self.matches.items() if v.label.lower() == label.lower()}.items():
+                source = self.collection.get_item(source_id)
+                tbody += self._rows_per_source(source, match, app)
+        return table
+
+    def _rows_per_source(self, source, match, app):
+        """ Builds a list of rows for the given source item
+
+        Args:
+            source (TraceableItem): Source item
+            match (Match): The corresponding Match instance
+            app (sphinx.application.Sphinx): Sphinx application object
+
+        Returns:
+            list: List of rows to add to the table body
+        """
+        rows = []
+        source_row = nodes.row()
+        source_row += self._create_cell_for_items([source], app, morerows=max(0, len(match.targets)-1))
+        if match.targets:
+            row_without_targets = source_row
+            for target, nested_targets in match.targets_iter:
+                row_without_targets += self._create_cell_for_items([target], app)
+                if self.nested_target_regex.pattern:
+                    row_without_targets += self._create_cell_for_items(nested_targets, app)
+                rows.append(row_without_targets)
+                row_without_targets = nodes.row()
+        else:
+            source_row += nodes.entry('')
+            if self.nested_target_regex.pattern:
+                source_row += nodes.entry('')
+            rows.append(source_row)
+        return rows
+
 
 class ItemPieChartDirective(TraceableBaseDirective):
     """
@@ -376,6 +486,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
          :splitsourcetype:
          :hidetitle:
          :stats:
+         :matrix: uncovered, covered, executed, error,fail,pass
     """
     # Optional argument: title (whitespace allowed)
     optional_arguments = 1
@@ -390,6 +501,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'splitsourcetype': directives.flag,
         'hidetitle': directives.flag,
         'stats': directives.flag,
+        'matrix': directives.unchanged,
     }
     # Content disallowed
     has_content = False
@@ -413,6 +525,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
                 'colors': {'default': []},
                 'sourcetype': {'default': []},
                 'targettype': {'default': []},
+                'matrix': {'default': [], 'delimiter': ','},
             }
         )
         self.check_relationships(node['sourcetype'], env)
