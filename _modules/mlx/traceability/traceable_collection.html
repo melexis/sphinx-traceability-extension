@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mlx.traceability.traceable_collection &mdash; Traceability 11.1.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>mlx.traceability.traceable_collection &mdash; Traceability 11.2.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
@@ -36,7 +36,7 @@
             Traceability
           </a>
               <div class="version">
-                11.1.0
+                11.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -284,8 +284,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">TraceabilityException</span><span class="p">(</span><span class="s1">&#39;No relations configured&#39;</span><span class="p">,</span> <span class="s1">&#39;configuration&#39;</span><span class="p">)</span>
         <span class="c1"># Validate each item</span>
-        <span class="k">for</span> <span class="n">itemid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
-            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">itemid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">itemid</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="c1"># Only for relevant items, filtered on document name</span>
             <span class="k">if</span> <span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span> <span class="o">!=</span> <span class="n">docname</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">docname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
