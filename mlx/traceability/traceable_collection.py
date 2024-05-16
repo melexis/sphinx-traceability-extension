@@ -188,8 +188,10 @@ class TraceableCollection:
         with open(fname, 'w') as outfile:
             data = []
             for itemid in self.iter_items():
-                item = self.get_item(itemid)
-                data.append(item.to_dict())
+                item = self.items[itemid]
+                entry = item.to_dict()
+                if entry:
+                    data.append(entry)
             json.dump(data, outfile, indent=4, sort_keys=True)
 
     def self_test(self, notification_item_id, docname=None):
