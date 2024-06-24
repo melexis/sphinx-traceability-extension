@@ -682,7 +682,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
             raise TraceabilityException(
                 "Item-matrix directive should have the same number of values for the options 'target' and "
                 "'targettitle'. Got target: {targets!r} and targettitle: {titles!r}"
-                .format(targets=self.options['target'], titles=self.options['targettitle']),
+                .format(targets=self.options.get('target', ''), titles=self.options.get('targettitle', '')),
                 docname=env.docname)
 
         if node['type']:
