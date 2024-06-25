@@ -417,7 +417,17 @@ class ItemPieChart(TraceableBaseNode):
         if self.get('classes'):
             table.get('classes').extend(self.get('classes'))
         # Column and heading setup
-        titles = [nodes.paragraph('', title) for title in self['id_set']]
+        add_result_column = bool(self.nested_target_regex.pattern) and \
+            (bool(self['attribute']) or bool(self['targettype']))
+        if self['matrixtitles']:
+            titles = [nodes.paragraph('', title) for title in self['matrixtitles']]
+        else:
+            titles = [nodes.paragraph('', title) for title in self['id_set']]
+        if add_result_column and len(titles) < 4:
+            if self['attribute']:
+                titles.append(self.make_attribute_ref(app, self['attribute']))
+            else:
+                titles.append(nodes.paragraph('', ''))  # only targettype option used; cannot assume a suitable title
         headings = [nodes.entry('', title) for title in titles]
         number_of_columns = len(titles)
         tgroup = nodes.tgroup()
@@ -435,15 +445,17 @@ class ItemPieChart(TraceableBaseNode):
             tbody += row
             for source_id, match in {k: v for k, v in self.matches.items() if v.label.lower() == label.lower()}.items():
                 source = self.collection.get_item(source_id)
-                tbody += self._rows_per_source(source, match, app)
+                tbody += self._rows_per_source(source, match, add_result_column, app)
         return table
 
-    def _rows_per_source(self, source, match, app):
+    def _rows_per_source(self, source, match, add_result_column, app):
         """ Builds a list of rows for the given source item
 
         Args:
             source (TraceableItem): Source item
             match (Match): The corresponding Match instance
+            add_result_column (bool): True to display the used attribute value or relationship to the right of each
+                nested target
             app (sphinx.application.Sphinx): Sphinx application object
 
         Returns:
@@ -458,12 +470,28 @@ class ItemPieChart(TraceableBaseNode):
                 row_without_targets += self._create_cell_for_items([target], app)
                 if self.nested_target_regex.pattern:
                     row_without_targets += self._create_cell_for_items(nested_targets, app)
+                    if add_result_column:
+                        result_cell = nodes.entry('')
+                        for nested_target in nested_targets:
+                            if self['attribute']:
+                                entry_node = self._create_cell_for_attribute(nested_target, self['attribute'])
+                                p_node = entry_node.children[0]
+                                result_cell += p_node
+                            elif self['targettype']:  # TODO can be multiple
+                                labels = self._relationships_to_labels(self['targettype'])
+                                for targettype, label in zip(self['targettype'], labels):
+                                    if nested_target.identifier in target.iter_targets(targettype, sort=False):
+                                        result_cell += nodes.paragraph('', nodes.Text(label))
+                                        break
+                        row_without_targets += result_cell
                 rows.append(row_without_targets)
                 row_without_targets = nodes.row()
         else:
             source_row += nodes.entry('')
             if self.nested_target_regex.pattern:
                 source_row += nodes.entry('')
+                if add_result_column:
+                    source_row += nodes.entry('')
             rows.append(source_row)
         return rows
 
@@ -501,6 +529,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'hidetitle': directives.flag,
         'stats': directives.flag,
         'matrix': directives.unchanged,
+        'matrixtitles':  directives.unchanged,
     }
     # Content disallowed
     has_content = False
@@ -525,6 +554,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
                 'sourcetype': {'default': []},
                 'targettype': {'default': []},
                 'matrix': {'default': [], 'delimiter': ','},
+                'matrixtitles': {'default': [], 'delimiter': ','},
             }
         )
         self.check_relationships(node['sourcetype'], env)
