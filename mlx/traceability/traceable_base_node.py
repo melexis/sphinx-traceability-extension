@@ -199,6 +199,23 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         return cell
 
     @staticmethod
+    def _create_cell_for_attribute(item, attribute):
+        """ Creates a cell with the item's attribute value for the given attribute.
+
+        Args:
+            item (TraceableItem): TraceableItem instance
+            attribute (str): Attribute for which to get the value from the given item
+
+        Returns:
+            nodes.entry: Cell filled with attribute value for the given item
+        """
+        cell = nodes.entry('')
+        if not isinstance(item, nodes.paragraph):
+            attribute_value = item.get_attribute(attribute)
+            cell += nodes.paragraph('', attribute_value)
+        return cell
+
+    @staticmethod
     def _find_colors_for_class(hyperlink_colors, item_id):
         """
         Returns CSS class identifier to change a node's text color if the item ID matches a regexp in hyperlink_colors.
