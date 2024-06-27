@@ -463,27 +463,36 @@ class ItemPieChart(TraceableBaseNode):
         """
         rows = []
         source_row = nodes.row()
-        source_row += self._create_cell_for_items([source], app, morerows=max(0, len(match.targets)-1))
+        morerows = max(0, sum([max(1, len(nested_targets)) for nested_targets in match.targets.values()])-1)
+        source_row += self._create_cell_for_items([source], app, morerows=morerows)
         if match.targets:
             row_without_targets = source_row
             for target, nested_targets in match.targets_iter:
-                row_without_targets += self._create_cell_for_items([target], app)
+                morerows = max(0, len(nested_targets)-1)
+                row_without_targets += self._create_cell_for_items([target], app, morerows=morerows)
                 if self.nested_target_regex.pattern:
-                    row_without_targets += self._create_cell_for_items(nested_targets, app)
-                    if add_result_column:
-                        result_cell = nodes.entry('')
-                        for nested_target in nested_targets:
+                    for nested_target in nested_targets:
+                        row_without_targets += self._create_cell_for_items([nested_target], app)
+                        if add_result_column:
+                            result_cell = nodes.entry('')
                             if self['attribute']:
                                 entry_node = self._create_cell_for_attribute(nested_target, self['attribute'])
                                 p_node = entry_node.children[0]
                                 result_cell += p_node
-                            elif self['targettype']:  # TODO can be multiple
+                            elif self['targettype']:
                                 labels = self._relationships_to_labels(self['targettype'])
                                 for targettype, label in zip(self['targettype'], labels):
                                     if nested_target.identifier in target.iter_targets(targettype, sort=False):
                                         result_cell += nodes.paragraph('', nodes.Text(label))
                                         break
-                        row_without_targets += result_cell
+                            row_without_targets += result_cell
+                        if nested_target != nested_targets[-1]:
+                            rows.append(row_without_targets)
+                            row_without_targets = nodes.row()
+                    if not nested_targets:
+                        row_without_targets += nodes.entry('')
+                        if add_result_column:
+                            row_without_targets += nodes.entry('')
                 rows.append(row_without_targets)
                 row_without_targets = nodes.row()
         else:
