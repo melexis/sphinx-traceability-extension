@@ -467,7 +467,8 @@ class ItemPieChart(TraceableBaseNode):
         """
         rows = []
         source_row = nodes.row()
-        morerows = max(0, sum([max(1, len(nested_targets)) for nested_targets in match.targets.values()])-1)
+        nr_rows_per_target = (max(1, len(nested_targets)) for nested_targets in match.targets.values())
+        morerows = max(0, sum(nr_rows_per_target)-1)
         source_row += self._create_cell_for_items([source], app, morerows=morerows)
         if match.targets:
             row_without_targets = source_row
