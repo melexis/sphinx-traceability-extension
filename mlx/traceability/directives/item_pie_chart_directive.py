@@ -368,7 +368,8 @@ class ItemPieChart(TraceableBaseNode):
         image_format = 'pdf' if isinstance(env.app.builder, LaTeXBuilder) else 'svg'
         rel_file_path = path.join('_images', 'piechart-{}.{}'.format(hash_value, image_format))
         if rel_file_path not in env.images:
-            fig.savefig(path.join(env.app.srcdir, rel_file_path), format=image_format, bbox_inches='tight')
+            out_path = path.join(env.app.srcdir, rel_file_path)
+            fig.savefig(out_path, format=image_format, bbox_inches='tight', transparent=True)
             env.images[rel_file_path] = ['_images', path.split(rel_file_path)[-1]]  # store file name in build env
         plt.close(fig)
 
