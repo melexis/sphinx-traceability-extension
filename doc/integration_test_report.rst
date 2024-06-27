@@ -178,6 +178,10 @@ Integration test reports
     :fails: ITEST-COVERAGE
     :result: error
 
+.. item:: ITEST_REP-COVERAGE2
+    :passes: ITEST-COVERAGE
+    :result: pass
+
 .. item:: ITEST_REP-MATRIX
     :passes: ITEST-MATRIX
     :result: pass
