@@ -2,6 +2,7 @@
 import operator
 import re
 from hashlib import sha256
+from itertools import zip_longest
 from os import environ, mkdir, path
 
 from docutils import nodes
@@ -419,10 +420,12 @@ class ItemPieChart(TraceableBaseNode):
         # Column and heading setup
         add_result_column = bool(self.nested_target_regex.pattern) and \
             (bool(self['attribute']) or bool(self['targettype']))
-        if self['matrixtitles']:
-            titles = [nodes.paragraph('', title) for title in self['matrixtitles']]
-        else:
-            titles = [nodes.paragraph('', title) for title in self['id_set']]
+        titles = []
+        for title, pattern in zip_longest(self['matrixtitles'], self['id_set'], fillvalue=None):
+            if title is not None:
+                titles.append(nodes.paragraph('', title))
+            else:
+                titles.append(nodes.paragraph('', pattern))
         if add_result_column and len(titles) < 4:
             if self['attribute']:
                 titles.append(self.make_attribute_ref(app, self['attribute']))
