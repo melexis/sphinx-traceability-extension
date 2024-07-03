@@ -16,10 +16,6 @@ requires = [
 
 setup(
     name='mlx.traceability',
-    use_scm_version={
-        'write_to': 'mlx/traceability/__traceability_version__.py'
-    },
-    setup_requires=['setuptools_scm'],
     url=project_url,
     license='GNU General Public License v3 (GPLv3)',
     author='Melexis',
@@ -47,15 +43,16 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: Documentation',
         'Topic :: Documentation :: Sphinx',
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_namespace_packages(include=['mlx.*']),
+    packages=find_namespace_packages(where="."),
+    package_dir={"": "."},
     include_package_data=True,
     install_requires=requires,
-    namespace_packages=['mlx'],
     keywords=[
         'traceability',
         'requirements engineering',
