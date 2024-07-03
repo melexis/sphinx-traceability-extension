@@ -399,6 +399,31 @@ class ItemPieChart(TraceableBaseNode):
             explode[uncovered_index] = 0.05
         return explode
 
+    def _determine_headings(self, app):
+        """Determine the table headings with either custom titles and/or the regexp patterns from id_set.
+
+        Note: If not enough custom titles are provided, regexp patterns are used instead.
+
+        Return:
+            list[nodes.entry]: Header cells
+            bools: True to add a fourth column with relevant info about each nested target item, False otherwise
+        """
+        add_result_column = bool(self.nested_target_regex.pattern) and \
+            (bool(self['attribute']) or bool(self['targettype']))
+        titles = []
+        for title, pattern in zip_longest(self['matrixtitles'], self['id_set'], fillvalue=None):
+            if title is not None:
+                titles.append(nodes.paragraph('', title))
+            else:
+                titles.append(nodes.paragraph('', pattern))
+        if add_result_column and len(titles) < 4:
+            if self['attribute']:
+                titles.append(self.make_attribute_ref(app, self['attribute']))
+            else:
+                titles.append(nodes.paragraph('', ''))  # only targettype option used; cannot assume a suitable title
+        headings = [nodes.entry('', title) for title in titles]
+        return headings, add_result_column
+
     def build_table(self, app):
         """ Builds a table node for the 'matrix' option
 
@@ -419,21 +444,8 @@ class ItemPieChart(TraceableBaseNode):
         if self.get('classes'):
             table.get('classes').extend(self.get('classes'))
         # Column and heading setup
-        add_result_column = bool(self.nested_target_regex.pattern) and \
-            (bool(self['attribute']) or bool(self['targettype']))
-        titles = []
-        for title, pattern in zip_longest(self['matrixtitles'], self['id_set'], fillvalue=None):
-            if title is not None:
-                titles.append(nodes.paragraph('', title))
-            else:
-                titles.append(nodes.paragraph('', pattern))
-        if add_result_column and len(titles) < 4:
-            if self['attribute']:
-                titles.append(self.make_attribute_ref(app, self['attribute']))
-            else:
-                titles.append(nodes.paragraph('', ''))  # only targettype option used; cannot assume a suitable title
-        headings = [nodes.entry('', title) for title in titles]
-        number_of_columns = len(titles)
+        headings, add_result_column = self._determine_headings(app)
+        number_of_columns = len(headings)
         tgroup = nodes.tgroup()
         tgroup += [nodes.colspec(colwidth=5) for _ in range(number_of_columns)]
         tgroup += nodes.thead('', nodes.row('', *headings))
