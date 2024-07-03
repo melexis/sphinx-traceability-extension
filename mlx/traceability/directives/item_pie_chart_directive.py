@@ -479,18 +479,7 @@ class ItemPieChart(TraceableBaseNode):
                     for nested_target in nested_targets:
                         row_without_targets += self._create_cell_for_items([nested_target], app)
                         if add_result_column:
-                            result_cell = nodes.entry('')
-                            if self['attribute']:
-                                entry_node = self._create_cell_for_attribute(nested_target, self['attribute'])
-                                p_node = entry_node.children[0]
-                                result_cell += p_node
-                            elif self['targettype']:
-                                labels = self._relationships_to_labels(self['targettype'])
-                                for targettype, label in zip(self['targettype'], labels):
-                                    if nested_target.identifier in target.iter_targets(targettype, sort=False):
-                                        result_cell += nodes.paragraph('', nodes.Text(label))
-                                        break
-                            row_without_targets += result_cell
+                            row_without_targets += self.generate_result_cell(target, nested_target)
                         if nested_target != nested_targets[-1]:
                             rows.append(row_without_targets)
                             row_without_targets = nodes.row()
@@ -509,6 +498,28 @@ class ItemPieChart(TraceableBaseNode):
             rows.append(source_row)
         return rows
 
+    def generate_result_cell(self, target, nested_target):
+        """Generate the cell for the fourth column.
+
+        It should contain either the relevant attribute value of the nested target item,
+        or the pie chart label associated with the relationship from the nested target to the target item.
+
+        Args:
+            target (TraceableItem): The target item
+            nested_target (TraceableItem): The nested target item
+        """
+        result_cell = nodes.entry('')
+        if self['attribute']:
+            entry_node = self._create_cell_for_attribute(nested_target, self['attribute'])
+            p_node = entry_node.children[0]
+            result_cell += p_node
+        elif self['targettype']:
+            labels = self._relationships_to_labels(self['targettype'])
+            for targettype, label in zip(self['targettype'], labels):
+                if nested_target.identifier in target.iter_targets(targettype, sort=False):
+                    result_cell += nodes.paragraph('', nodes.Text(label))
+                    break
+        return result_cell
 
 class ItemPieChartDirective(TraceableBaseDirective):
     """
