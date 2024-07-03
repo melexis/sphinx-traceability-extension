@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; Traceability 11.2.0 documentation</title>
+  <title>Usage &mdash; Traceability 11.3.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -41,7 +41,7 @@
             Traceability
           </a>
               <div class="version">
-                11.2.0
+                11.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -719,6 +719,7 @@ to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
     <span class="nc">:hidetitle:</span>
     <span class="nc">:stats:</span>
     <span class="nc">:matrix:</span> uncovered, covered, executed, error,fail,pass
+    <span class="nc">:matrixtitles:</span> Requirement, Test case, Test case result
 </pre></div>
 </div>
 <p>where the <em>id_set</em> arguments can be replaced by any Python regular expression. The <em>label_set</em> and <em>result</em> arguments
@@ -794,6 +795,10 @@ pie chart.</p>
 <dd class="field-odd"><p><em>optional</em>, <em>multiple arguments (comma-separated)</em></p>
 <p>The <em>matrix</em> option renders a table with all items, grouped by pie chart label. By default, all labels, and thus,
 all items are included in the table. You can customize the order and filter by providing a custom set of labels.</p>
+</dd>
+<dt class="field-even">matrixtitles<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>optional</em>, <em>multiple arguments (comma-separated)</em></p>
+<p>Custom titles for the table of the <em>matrix</em> option.</p>
 </dd>
 </dl>
 <div class="admonition note">

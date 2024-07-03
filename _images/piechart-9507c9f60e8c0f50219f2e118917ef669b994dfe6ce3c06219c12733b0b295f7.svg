@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2024-04-17T07:42:39.288491</dc:date>
+    <dc:date>2024-07-03T13:34:38.521389</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.8.4, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.9.0, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -25,8 +25,9 @@
 L 280.512 280.512 
 L 280.512 0 
 L 0 0 
+L 0 280.512 
 z
-" style="fill: #ffffff"/>
+" style="fill: none"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
@@ -49,13 +50,13 @@ C 225.407922 210.961998 233.248945 199.227077 238.598172 186.312901
 C 243.947399 173.398726 246.7008 159.556443 246.7008 145.57824 
 M 140.256 145.57824 
 z
-" style="fill: #ffa500"/>
+" style="fill: #1f77b4"/>
    </g>
    <g id="matplotlib.axis_1"/>
    <g id="matplotlib.axis_2"/>
    <g id="text_1">
     <!-- uncovered -->
-    <g transform="translate(94.259125 265.49252) scale(0.1 -0.1)">
+    <g transform="translate(140.256001 265.49252) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-75" d="M 989 3242 
 L 989 1174 
@@ -299,7 +300,7 @@ z
    </g>
    <g id="text_2">
     <!-- 100% -->
-    <g transform="translate(127.548187 206.909495) scale(0.1 -0.1)">
+    <g transform="translate(127.548188 206.909495) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-31" d="M 800 435 
 L 1782 435 
@@ -446,8 +447,8 @@ z
      <use xlink:href="#Lato-Regular-30" x="116"/>
      <use xlink:href="#Lato-Regular-25" x="174"/>
     </g>
-    <!-- (11) -->
-    <g transform="translate(131.785687 217.630745) scale(0.1 -0.1)">
+    <!-- (16) -->
+    <g transform="translate(131.785688 217.630745) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-28" d="M 784 2013 
 Q 784 1328 958 681 
@@ -468,6 +469,50 @@ Q 1469 4774 1494 4721
 Q 1520 4669 1469 4573 
 Q 1133 3990 958 3344 
 Q 784 2698 784 2013 
+z
+" transform="scale(0.015625)"/>
+      <path id="Lato-Regular-36" d="M 1517 2867 
+Q 1453 2790 1398 2716 
+Q 1344 2643 1290 2573 
+Q 1453 2685 1649 2747 
+Q 1846 2810 2077 2810 
+Q 2355 2810 2601 2718 
+Q 2848 2627 3032 2452 
+Q 3216 2278 3325 2024 
+Q 3434 1770 3434 1443 
+Q 3434 1126 3318 854 
+Q 3203 582 2996 380 
+Q 2790 179 2500 64 
+Q 2211 -51 1862 -51 
+Q 1517 -51 1235 59 
+Q 954 170 757 373 
+Q 560 576 453 865 
+Q 346 1155 346 1514 
+Q 346 1814 478 2155 
+Q 611 2496 902 2883 
+L 2067 4448 
+Q 2112 4506 2190 4546 
+Q 2269 4586 2371 4586 
+L 2877 4586 
+L 1517 2867 
+z
+M 893 1414 
+Q 893 1194 957 1011 
+Q 1021 829 1144 697 
+Q 1267 566 1444 494 
+Q 1622 422 1850 422 
+Q 2080 422 2267 496 
+Q 2454 570 2587 701 
+Q 2720 832 2792 1011 
+Q 2864 1190 2864 1402 
+Q 2864 1626 2793 1806 
+Q 2723 1987 2593 2113 
+Q 2464 2240 2285 2307 
+Q 2106 2374 1891 2374 
+Q 1661 2374 1475 2296 
+Q 1290 2218 1160 2085 
+Q 1030 1952 961 1777 
+Q 893 1603 893 1414 
 z
 " transform="scale(0.015625)"/>
       <path id="Lato-Regular-29" d="M 925 2013 
@@ -498,7 +543,7 @@ z
      </defs>
      <use xlink:href="#Lato-Regular-28"/>
      <use xlink:href="#Lato-Regular-31" x="26.699997"/>
-     <use xlink:href="#Lato-Regular-31" x="84.699997"/>
+     <use xlink:href="#Lato-Regular-36" x="84.699997"/>
      <use xlink:href="#Lato-Regular-29" x="142.699997"/>
     </g>
    </g>
