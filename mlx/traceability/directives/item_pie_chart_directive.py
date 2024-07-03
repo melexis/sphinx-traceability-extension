@@ -2,6 +2,7 @@
 import operator
 import re
 from hashlib import sha256
+from itertools import zip_longest
 from os import environ, mkdir, path
 
 from docutils import nodes
@@ -367,7 +368,8 @@ class ItemPieChart(TraceableBaseNode):
         image_format = 'pdf' if isinstance(env.app.builder, LaTeXBuilder) else 'svg'
         rel_file_path = path.join('_images', 'piechart-{}.{}'.format(hash_value, image_format))
         if rel_file_path not in env.images:
-            fig.savefig(path.join(env.app.srcdir, rel_file_path), format=image_format, bbox_inches='tight')
+            out_path = path.join(env.app.srcdir, rel_file_path)
+            fig.savefig(out_path, format=image_format, bbox_inches='tight', transparent=True)
             env.images[rel_file_path] = ['_images', path.split(rel_file_path)[-1]]  # store file name in build env
         plt.close(fig)
 
@@ -417,7 +419,19 @@ class ItemPieChart(TraceableBaseNode):
         if self.get('classes'):
             table.get('classes').extend(self.get('classes'))
         # Column and heading setup
-        titles = [nodes.paragraph('', title) for title in self['id_set']]
+        add_result_column = bool(self.nested_target_regex.pattern) and \
+            (bool(self['attribute']) or bool(self['targettype']))
+        titles = []
+        for title, pattern in zip_longest(self['matrixtitles'], self['id_set'], fillvalue=None):
+            if title is not None:
+                titles.append(nodes.paragraph('', title))
+            else:
+                titles.append(nodes.paragraph('', pattern))
+        if add_result_column and len(titles) < 4:
+            if self['attribute']:
+                titles.append(self.make_attribute_ref(app, self['attribute']))
+            else:
+                titles.append(nodes.paragraph('', ''))  # only targettype option used; cannot assume a suitable title
         headings = [nodes.entry('', title) for title in titles]
         number_of_columns = len(titles)
         tgroup = nodes.tgroup()
@@ -435,15 +449,17 @@ class ItemPieChart(TraceableBaseNode):
             tbody += row
             for source_id, match in {k: v for k, v in self.matches.items() if v.label.lower() == label.lower()}.items():
                 source = self.collection.get_item(source_id)
-                tbody += self._rows_per_source(source, match, app)
+                tbody += self._rows_per_source(source, match, add_result_column, app)
         return table
 
-    def _rows_per_source(self, source, match, app):
+    def _rows_per_source(self, source, match, add_result_column, app):
         """ Builds a list of rows for the given source item
 
         Args:
             source (TraceableItem): Source item
             match (Match): The corresponding Match instance
+            add_result_column (bool): True to display the used attribute value or relationship to the right of each
+                nested target
             app (sphinx.application.Sphinx): Sphinx application object
 
         Returns:
@@ -451,21 +467,59 @@ class ItemPieChart(TraceableBaseNode):
         """
         rows = []
         source_row = nodes.row()
-        source_row += self._create_cell_for_items([source], app, morerows=max(0, len(match.targets)-1))
+        nr_rows_per_target = (max(1, len(nested_targets)) for nested_targets in match.targets.values())
+        morerows = max(0, sum(nr_rows_per_target)-1)
+        source_row += self._create_cell_for_items([source], app, morerows=morerows)
         if match.targets:
             row_without_targets = source_row
             for target, nested_targets in match.targets_iter:
-                row_without_targets += self._create_cell_for_items([target], app)
+                morerows = max(0, len(nested_targets)-1)
+                row_without_targets += self._create_cell_for_items([target], app, morerows=morerows)
                 if self.nested_target_regex.pattern:
-                    row_without_targets += self._create_cell_for_items(nested_targets, app)
+                    for nested_target in nested_targets:
+                        row_without_targets += self._create_cell_for_items([nested_target], app)
+                        if add_result_column:
+                            row_without_targets += self.generate_result_cell(target, nested_target)
+                        if nested_target != nested_targets[-1]:
+                            rows.append(row_without_targets)
+                            row_without_targets = nodes.row()
+                    if not nested_targets:
+                        row_without_targets += nodes.entry('')
+                        if add_result_column:
+                            row_without_targets += nodes.entry('')
                 rows.append(row_without_targets)
                 row_without_targets = nodes.row()
         else:
             source_row += nodes.entry('')
             if self.nested_target_regex.pattern:
                 source_row += nodes.entry('')
+                if add_result_column:
+                    source_row += nodes.entry('')
             rows.append(source_row)
         return rows
+
+    def generate_result_cell(self, target, nested_target):
+        """Generate the cell for the fourth column.
+
+        It should contain either the relevant attribute value of the nested target item,
+        or the pie chart label associated with the relationship from the nested target to the target item.
+
+        Args:
+            target (TraceableItem): The target item
+            nested_target (TraceableItem): The nested target item
+        """
+        result_cell = nodes.entry('')
+        if self['attribute']:
+            entry_node = self._create_cell_for_attribute(nested_target, self['attribute'])
+            p_node = entry_node.children[0]
+            result_cell += p_node
+        elif self['targettype']:
+            labels = self._relationships_to_labels(self['targettype'])
+            for targettype, label in zip(self['targettype'], labels):
+                if nested_target.identifier in target.iter_targets(targettype, sort=False):
+                    result_cell += nodes.paragraph('', nodes.Text(label))
+                    break
+        return result_cell
 
 
 class ItemPieChartDirective(TraceableBaseDirective):
@@ -501,6 +555,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
         'hidetitle': directives.flag,
         'stats': directives.flag,
         'matrix': directives.unchanged,
+        'matrixtitles':  directives.unchanged,
     }
     # Content disallowed
     has_content = False
@@ -525,6 +580,7 @@ class ItemPieChartDirective(TraceableBaseDirective):
                 'sourcetype': {'default': []},
                 'targettype': {'default': []},
                 'matrix': {'default': [], 'delimiter': ','},
+                'matrixtitles': {'default': [], 'delimiter': ','},
             }
         )
         self.check_relationships(node['sourcetype'], env)

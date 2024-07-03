@@ -166,6 +166,7 @@ Test coverage
     :targettype: failed_by passed_by skipped_by
     :stats:
     :matrix:
+    :matrixtitles: Requirement, Test case, Test case report, Result (relationship)
 
 .. item-piechart:: Test coverage chart with test results, based on the :result: attribute
     :id_set: RQT [IU]TEST [IU]TEST_REP
@@ -176,6 +177,7 @@ Test coverage
     :colors: orange c b darkred #FF0000 g pink
     :stats:
     :matrix:
+    :matrixtitles: Requirement, Test case, Test case report
 
 ..
     uncovered: orange (orange)

@@ -507,23 +507,6 @@ class ItemMatrix(TraceableBaseNode):
                 cells.append(self._create_cell_for_relation(item, value, app))
         return cells
 
-    @staticmethod
-    def _create_cell_for_attribute(item, attribute):
-        """ Creates a cell with the item's attribute value for the given attribute.
-
-        Args:
-            item (TraceableItem): TraceableItem instance
-            attribute (str): Attribute for which to get the value from the given item
-
-        Returns:
-            nodes.entry: Cell filled with attribute value for the given item
-        """
-        cell = nodes.entry('')
-        if not isinstance(item, nodes.paragraph):
-            attribute_value = item.get_attribute(attribute)
-            cell += nodes.paragraph('', attribute_value)
-        return cell
-
     def _create_cell_for_relation(self, item, relation, app):
         """ Creates a cell with linked items via the given relation.
 

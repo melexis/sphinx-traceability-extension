@@ -658,6 +658,7 @@ A pie chart of documentation items can be generated using:
         :hidetitle:
         :stats:
         :matrix: uncovered, covered, executed, error,fail,pass
+        :matrixtitles: Requirement, Test case, Test case result
 
 where the *id_set* arguments can be replaced by any Python regular expression. The *label_set* and *result* arguments
 are comma-separated lists.
@@ -732,6 +733,10 @@ are comma-separated lists.
 
     The *matrix* option renders a table with all items, grouped by pie chart label. By default, all labels, and thus,
     all items are included in the table. You can customize the order and filter by providing a custom set of labels.
+
+:matrixtitles: *optional*, *multiple arguments (comma-separated)*
+
+    Custom titles for the table of the *matrix* option.
 
 .. note::
 
