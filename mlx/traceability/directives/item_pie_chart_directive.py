@@ -521,6 +521,7 @@ class ItemPieChart(TraceableBaseNode):
                     break
         return result_cell
 
+
 class ItemPieChartDirective(TraceableBaseDirective):
     """
     Directive to generate a pie chart for coverage of item cross-references.
