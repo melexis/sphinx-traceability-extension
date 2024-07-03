@@ -16,10 +16,6 @@ requires = [
 
 setup(
     name='mlx.traceability',
-    use_scm_version={
-        'write_to': 'mlx/traceability/__traceability_version__.py'
-    },
-    setup_requires=['setuptools_scm'],
     url=project_url,
     license='GNU General Public License v3 (GPLv3)',
     author='Melexis',
