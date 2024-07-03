@@ -402,7 +402,7 @@ class ItemPieChart(TraceableBaseNode):
     def _determine_headings(self, app):
         """Determine the table headings with either custom titles and/or the regexp patterns from id_set.
 
-        Note: If not enough custom titles are provided, regexp patterns are used instead.
+        Note: If not enough custom titles are provided, the regexp patterns are used for completion.
 
         Return:
             list[nodes.entry]: Header cells
