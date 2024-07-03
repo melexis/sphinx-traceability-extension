@@ -49,7 +49,8 @@ setup(
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_namespace_packages(include=['mlx.traceability']),
+    packages=find_namespace_packages(where="."),
+    package_dir={"": "."},
     include_package_data=True,
     install_requires=requires,
     keywords=[
