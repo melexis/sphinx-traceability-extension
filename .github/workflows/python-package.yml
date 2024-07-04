@@ -45,7 +45,7 @@ jobs:
       run: tox -e check
     - name: Upload HTML documentation
       if: matrix.python-version == 3.9
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: html-doc
         path: doc/_build/html
@@ -58,7 +58,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Download HTML documentation from job 'test'
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: html-doc
         path: doc/_build/html
@@ -72,15 +72,14 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.7'
+        python-version: '3.12'
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install setuptools wheel twine
+        python -m pip install --upgrade build twine
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        python setup.py sdist bdist_wheel
+        python -m build
         twine upload dist/*
