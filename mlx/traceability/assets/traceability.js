@@ -56,6 +56,26 @@ $(document).ready(function () {
         );
     });
 
+    $('table > tbody > tr[class^=item-group-]').each(function (i) {
+        $(this).on("contextmenu",
+            function (event) {
+                var groupName = /item-group-\d+/.exec($(this).attr('class'))[0];
+                $(this).parent().find(`tr.${groupName} > td > p.item-link`).each(function (j) {
+                    const content = $(this).children('div.content').first();
+                    if (content.length) {
+                        content.toggle();
+                    } else {
+                        var link = $(this).children('a').first();
+                        var container = $('<div>', {class: 'content'});
+                        container.load(link.attr('href').replace('#', ' #content-'));
+                        $(this).append(container)
+                    }
+
+                });
+            }
+        );
+    });
+
     $('p.admonition-title').each(function (i) {
         $(this).children('a').first().denyPermalinkStyling($(this));
     });
