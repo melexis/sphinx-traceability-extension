@@ -34,7 +34,7 @@ $(document).ready(function () {
             'white-space': 'pre'  // prevents adding newlines
         });
         $(this).hover(
-            function() {
+            function () {
                 // entering hover state
                 caption.show();
                 var captionRight = caption.offset().left + caption.outerWidth();
@@ -48,7 +48,7 @@ $(document).ready(function () {
                     // lines up the caption behind the item ID
                     caption.css('transform', 'translate(0.3rem, -3px)');
                 }
-            }, function() {
+            }, function () {
                 // leaving hover state
                 caption.css('transform', 'none');  // resets the transformations
                 caption.hide();
@@ -66,11 +66,10 @@ $(document).ready(function () {
                         content.toggle();
                     } else {
                         var link = $(this).children('a').first();
-                        var container = $('<div>', {class: 'content'});
+                        var container = $('<div>', { class: 'content' });
                         container.load(link.attr('href').replace('#', ' #content-'));
                         $(this).append(container)
                     }
-
                 });
             }
         );
