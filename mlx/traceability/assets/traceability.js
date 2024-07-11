@@ -59,6 +59,7 @@ $(document).ready(function () {
     $('table > tbody > tr[class^=item-group-]').each(function (i) {
         $(this).on("contextmenu",
             function (event) {
+                event.preventDefault()
                 var groupName = /item-group-\d+/.exec($(this).attr('class'))[0];
                 $(this).parent().find(`tr.${groupName} > td > p.item-link`).each(function (j) {
                     const content = $(this).children('div.content').first();
