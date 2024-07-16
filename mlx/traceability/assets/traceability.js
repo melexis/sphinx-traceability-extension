@@ -62,14 +62,20 @@ $(document).ready(function () {
                 event.preventDefault()
                 var groupName = /item-group-\d+/.exec($(this).attr('class'))[0];
                 $(this).parent().find(`tr.${groupName} > td > p.item-link`).each(function (j) {
+                    const cell = $(this).parent();
+                    const maxWidth = Math.max(cell.width(), ($("div.rst-content").width() / 2));
+                    cell.css("maxWidth", maxWidth);
                     const content = $(this).children('div.content').first();
                     if (content.length) {
                         content.toggle();
                     } else {
                         var link = $(this).children('a').first();
                         var container = $('<div>', { class: 'content' });
-                        container.load(link.attr('href').replace('#', ' #content-'));
-                        $(this).append(container)
+                        var paragraph = $(this)
+                        container.load(link.attr('href').replace('#', ' #content-'), function () {
+                            container.find('*').css("width", "inherit");
+                            paragraph.append(container);
+                        });
                     }
                 });
             }
