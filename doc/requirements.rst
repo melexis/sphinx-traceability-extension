@@ -99,6 +99,10 @@ Requirements for mlx.traceability
 .. item:: RQT-DUMMY Dummy requirement that is not covered by a test
     :fulfilled_by: DESIGN-ATTRIBUTES DESIGN-ITEMIZE
 
+.. item:: RQT-DUMMY_CHILD Child of the dummy requirement that is not covered by a test
+    :depends_on: RQT-DUMMY
+.. :validated_by: ITEST-DUMMY_CHILD
+
 -------------------
 Traceability matrix
 -------------------
