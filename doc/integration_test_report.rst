@@ -522,6 +522,7 @@ Traceability via intermediate items
     :nocaptions:
     :stats:
     :coveredintermediates:
+    :splitintermediates:
     :recursiveintermediates: impacts_on
     :coverage: ==100
 
