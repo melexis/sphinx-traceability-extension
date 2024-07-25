@@ -31,8 +31,11 @@ class TraceableBaseClass:
         self.lineno = None
         self.node = None
         self._content = None
-        self.content_node = nodes.block_quote()
+        self.content_node = nodes.container()
+        self.content_node['ids'].append(f'content-{self.identifier}')
         self._state = state
+        if state is not None:
+            state.document.ids[f'content-{self.identifier}'] = self.content_node
 
     @staticmethod
     def to_id(identifier):
@@ -89,7 +92,7 @@ class TraceableBaseClass:
             template = ViewList(source=self.docname, parent_offset=self.lineno)
             for idx, line in enumerate(content.split('\n')):
                 template.append(line, self.docname, idx)
-            self.content_node = nodes.block_quote()  # reset
+            self.content_node.children = []  # reset
             nested_parse_with_titles(self._state, template, self.content_node)
 
     def clear_state(self):
