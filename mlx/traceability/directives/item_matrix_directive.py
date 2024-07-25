@@ -376,7 +376,7 @@ class ItemMatrix(TraceableBaseNode):
         """ Determines all potential targets of a given intermediate item and forward relationship.
 
         Note: This function is recursively called when the option 'recursiveintermediates' is used and a suitable
-        intermediate item was found via the specified relationship for recursion.
+        nested intermediate item was found via the specified relationship for recursion.
         """
         potential_target_ids = set(item.yield_targets(relationship))
         if self['recursiveintermediates']:
