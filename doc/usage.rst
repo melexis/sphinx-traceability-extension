@@ -552,6 +552,12 @@ linked via the ``:intermediate:`` RQT-items:
     as the source item. In addition, all intermediates will be listed, regardless of their coverage status. This can be
     useful if you want to group target items per intermediate item *instead of per source item*.
 
+:recursiveintermediates: *optional, *single argument*
+
+    Expects a forward relation to recursively take nested intermediate items into account. The source item is only
+    covered if every single intermediate item in the chain is covered. This option is not compatible with the option
+    *intermediatetitle*.
+
 .. _traceability_usage_2d_matrix:
 
 --------------------------------
