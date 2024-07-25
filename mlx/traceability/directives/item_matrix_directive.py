@@ -361,8 +361,9 @@ class ItemMatrix(TraceableBaseNode):
                 continue
 
             potential_target_ids = set()
-            for forward_rel in links_with_relationships[1]:
-                potential_target_ids.update(self._determine_targets(intermediate_item, forward_rel, collection))
+            target_ids, uncovered_items = self._determine_targets(intermediate_item, links_with_relationships[1],
+                                                                  collection)
+            potential_target_ids.update(target_ids)
             # apply :target: filter
             actual_targets = []
             for target_ids in targets_with_ids:
@@ -370,21 +371,27 @@ class ItemMatrix(TraceableBaseNode):
                 actual_targets.append(set(collection.get_item(id_) for id_ in linked_target_ids))
 
             self._store_targets(source_to_links_map, potential_source_ids, actual_targets, intermediate_item)
+            for item in uncovered_items:
+                self._store_targets(source_to_links_map, potential_source_ids, [], item)
         return source_to_links_map
 
-    def _determine_targets(self, item, relationship, collection):
-        """ Determines all potential targets of a given intermediate item and forward relationship.
+    def _determine_targets(self, item, relationships, collection):
+        """ Determines all potential targets of a given intermediate item and forward relationships.
 
         Note: This function is recursively called when the option 'recursiveintermediates' is used and a suitable
         nested intermediate item was found via the specified relationship for recursion.
         """
-        potential_target_ids = set(item.yield_targets(relationship))
+        all_uncovered_items = set()
+        potential_target_ids = set(item.yield_targets(*relationships))
         if self['recursiveintermediates']:
             for nested_item_id in item.yield_targets(self['recursiveintermediates']):
                 nested_item = collection.items[nested_item_id]
                 if nested_item.is_match(self['intermediate']):
-                    potential_target_ids.update(self._determine_targets(nested_item, relationship, collection))
-        return potential_target_ids
+                    new_target_ids, _ = self._determine_targets(nested_item, relationships, collection)
+                    potential_target_ids.update(new_target_ids)
+                    if not new_target_ids:
+                        all_uncovered_items.add(nested_item)
+        return potential_target_ids, all_uncovered_items
 
     @staticmethod
     def _store_targets(source_to_links_map, source_ids, targets, intermediate_item):
