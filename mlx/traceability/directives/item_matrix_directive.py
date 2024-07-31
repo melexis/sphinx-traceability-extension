@@ -231,6 +231,8 @@ class ItemMatrix(TraceableBaseNode):
     def _set_rowspan(tbody, indexes):
         """ Sets the 'rowspan' attribute of cells that should span multiple rows to avoid duplication
 
+        Also groups all rows that belong to a single source item by assigning them to the same CSS class.
+
         Args:
             tbody (nodes.tbody): Table body
             indexes (iterable): Range object with indexes of columns to take into account
@@ -241,10 +243,12 @@ class ItemMatrix(TraceableBaseNode):
         prev_row = None
         cells_to_remove = {}
         original_cells = {idx: None for idx in indexes}
+        group_class_nr = 0
         for row_idx, row in enumerate(tbody):
             cells_to_remove[row_idx] = []
             if prev_row is None:
                 prev_row = row
+                row['classes'].append(f'item-group-{group_class_nr}')
                 continue
 
             for col_idx, cell in original_cells.items():
@@ -255,11 +259,13 @@ class ItemMatrix(TraceableBaseNode):
                     cells_to_remove[row_idx].append(col_idx)
                 elif col_idx == 0:  # new source so reset and move on to next row
                     original_cells = {idx: None for idx in indexes}
+                    group_class_nr += 1
                     break
                 else:
                     original_cells[col_idx] = None
 
             prev_row = row
+            row['classes'].append(f'item-group-{group_class_nr}')
         return cells_to_remove
 
     @staticmethod

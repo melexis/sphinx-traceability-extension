@@ -66,6 +66,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         link_item = item_info
         notification_item = None
         p_node = nodes.paragraph()
+        p_node['classes'].append('item-link')
 
         # Only create link when target item (or notification item) exists, warn otherwise (in html and terminal)
         if item_info.is_placeholder:

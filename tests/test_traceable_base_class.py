@@ -1,7 +1,5 @@
 from unittest import TestCase
 
-from docutils import nodes
-
 from mlx.traceability import traceable_base_class as dut
 
 
@@ -20,7 +18,8 @@ class TestTraceableBaseClass(TestCase):
         self.assertIsNone(item.node)
         self.assertIsNone(item.caption)
         self.assertIsNone(item.content)
-        self.assertEqual(str(nodes.block_quote()), str(item.content_node))
+        self.assertEqual("<container ids=\"['content-some-random$name\\'with<\"weird@symbols']\"/>",
+                         str(item.content_node))
 
     def test_to_dict(self):
         txt = 'some description, with\n newlines and other stuff'
