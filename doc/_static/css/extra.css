@@ -92,3 +92,8 @@
 .rst-content ul.bonsai li>ul {
     margin-bottom: 0 !important;
 }
+
+/* Don't add exclamation point icon in admonition bar of items */
+.rst-content div.item p.admonition-title:before {
+    content: None !important;
+}

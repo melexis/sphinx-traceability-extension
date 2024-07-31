@@ -497,6 +497,9 @@ limitations in doing so:
     Normally the *longtable* class is used when the number of rows is greater than 30 which allows long tables to
     span multiple pages. By setting *class* to *longtable* manually, you can force the use of this environment.
 
+In HTML, when you right-click a row, the content of all internal items in the row are fetched and displayed.
+Successive right-clicks toggle the visibility of the items' content.
+
 Link targets via intermediate items (advanced)
 ==============================================
 
