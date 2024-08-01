@@ -344,30 +344,32 @@ class ItemMatrix(TraceableBaseNode):
             dict: Mapping of source IDs as key with as value a mapping of intermediate items to
                 the list of sets of target items per target
         """
-        links_with_relationships = []
+        links_with_relations = []
         for relationships_str in self['type'].split(' | '):
-            links_with_relationships.append(relationships_str.split(' '))
-        if len(links_with_relationships) > 2:
+            links_with_relations.append(relationships_str.split(' '))
+        if len(links_with_relations) > 2:
             raise TraceabilityException("Type option of item-matrix must not contain more than one '|' "
                                         "character; got {}".format(self['type']),
                                         docname=self["document"])
         # reverse relationship(s) specified for linking source to intermediate
-        for idx, rel in enumerate(links_with_relationships[0]):
-            links_with_relationships[0][idx] = collection.get_reverse_relation(rel)
+        for idx, rel in enumerate(links_with_relations[0]):
+            links_with_relations[0][idx] = collection.get_reverse_relation(rel)
 
         source_to_links_map = {source_id: {} for source_id in source_ids}
         for intermediate_id in collection.get_items(self['intermediate'], sort=bool(self['intermediatetitle'])):
             intermediate_item = collection.get_item(intermediate_id)
-
             potential_source_ids = set()
-            for reverse_rel in links_with_relationships[0]:
+            for reverse_rel in links_with_relations[0]:
                 potential_source_ids.update(intermediate_item.yield_targets(reverse_rel))
             # apply :source: filter
             potential_source_ids = potential_source_ids.intersection(source_ids)
+            if not potential_source_ids:  # move to the next intermediate candidate to save resources
+                continue
 
             potential_target_ids = set()
-            for forward_rel in links_with_relationships[1]:
-                potential_target_ids.update(intermediate_item.yield_targets(forward_rel))
+            target_ids, uncovered_items = self._determine_targets(intermediate_item, links_with_relations[1],
+                                                                  collection)
+            potential_target_ids.update(target_ids)
             # apply :target: filter
             actual_targets = []
             for target_ids in targets_with_ids:
@@ -375,7 +377,27 @@ class ItemMatrix(TraceableBaseNode):
                 actual_targets.append(set(collection.get_item(id_) for id_ in linked_target_ids))
 
             self._store_targets(source_to_links_map, potential_source_ids, actual_targets, intermediate_item)
+            for item in uncovered_items:
+                self._store_targets(source_to_links_map, potential_source_ids, [], item)
         return source_to_links_map
+
+    def _determine_targets(self, item, relations, collection):
+        """ Determines all potential targets of a given intermediate item and forward relations.
+
+        Note: This function is recursively called when the option 'recursiveintermediates' is used and a suitable
+        nested intermediate item was found via the specified relation for recursion.
+        """
+        all_uncovered_items = set()
+        potential_target_ids = set(item.yield_targets(*relations))
+        if self['recursiveintermediates']:
+            for nested_item_id in item.yield_targets(self['recursiveintermediates']):
+                nested_item = collection.items[nested_item_id]
+                if nested_item.is_match(self['intermediate']):
+                    new_target_ids, _ = self._determine_targets(nested_item, relations, collection)
+                    potential_target_ids.update(new_target_ids)
+                    if not new_target_ids:
+                        all_uncovered_items.add(nested_item)
+        return potential_target_ids, all_uncovered_items
 
     @staticmethod
     def _store_targets(source_to_links_map, source_ids, targets, intermediate_item):
@@ -613,6 +635,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
         'onlycovered': directives.flag,
         'onlyuncovered': directives.flag,
         'coveredintermediates': directives.flag,
+        'recursiveintermediates': directives.unchanged,
         'stats': directives.flag,
         'coverage': directives.unchanged,
         'nocaptions': directives.flag,
@@ -649,6 +672,7 @@ class ItemMatrixDirective(TraceableBaseDirective):
                 'intermediatetitle': {'default': ''},
                 'type':              {'default': ''},
                 'sourcetype':        {'default': []},
+                'recursiveintermediates': {'default': ''},
                 'coverage':          {'default': ''},
             },
         )
@@ -700,6 +724,10 @@ class ItemMatrixDirective(TraceableBaseDirective):
         if node['onlycovered'] and node['onlyuncovered']:
             raise TraceabilityException(
                 "Item-matrix directive cannot combine 'onlycovered' with 'onlyuncovered' flag",
+                docname=env.docname)
+        if node['intermediatetitle'] and node['recursiveintermediates']:
+            raise TraceabilityException(
+                "Item-matrix directive cannot combine 'intermediatetitle' with 'recursiveintermediates' flag",
                 docname=env.docname)
 
         if node['targetcolumns']:

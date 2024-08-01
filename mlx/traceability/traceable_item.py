@@ -201,23 +201,24 @@ class TraceableItem(TraceableBaseClass):
             return natsorted(targets)
         return targets
 
-    def yield_targets(self, relation, explicit=True, implicit=True):
+    def yield_targets(self, *relations, explicit=True, implicit=True):
         ''' Gets an iterable of targets to other traceable items.
 
         Args:
-            relation (str): Name of the relation.
+            relations (iter[str]): One or more names of relations.
             explicit (bool): If True, explicitly expressed relations are included.
             implicit (bool): If True, implicitly expressed relations are included.
 
         Returns:
             generator: Targets to other traceable items, unsorted
         '''
-        if explicit and relation in self.explicit_relations:
-            for target in self.explicit_relations[relation]:
-                yield target
-        if implicit and relation in self.implicit_relations:
-            for target in self.implicit_relations[relation]:
-                yield target
+        for relation in relations:
+            if explicit and relation in self.explicit_relations:
+                for target in self.explicit_relations[relation]:
+                    yield target
+            if implicit and relation in self.implicit_relations:
+                for target in self.implicit_relations[relation]:
+                    yield target
 
     def yield_targets_sorted(self, *args, **kwargs):
         ''' Gets an iterable of targets to other traceable items, with natural sorting applied. '''
