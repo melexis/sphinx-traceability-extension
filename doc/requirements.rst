@@ -96,12 +96,12 @@ Requirements for mlx.traceability
     The plugin shall be optimized for performance to minimize its impact on the documentation's build time.
     For example, unneeded sorting should be avoided.
 
-.. item:: RQT-DUMMY Dummy requirement that is not covered by a test
+.. item:: RQT-DUMMY_PARENT Dummy requirement that is not covered by a test
     :fulfilled_by: DESIGN-ATTRIBUTES DESIGN-ITEMIZE
 
-.. item:: RQT-DUMMY_CHILD Child of the dummy requirement that is not covered by a test
-    :depends_on: RQT-DUMMY
-.. :validated_by: ITEST-DUMMY_CHILD
+.. item:: RQT-DUMMY_CHILD Child of the uncovered dummy requirement
+    :depends_on: RQT-DUMMY_PARENT
+    :validated_by: ITEST-DUMMY_CHILD
 
 -------------------
 Traceability matrix

@@ -163,8 +163,7 @@ Integration tests
 .. item:: ITEST-r100 Test a requirement using the ``requirement`` type
     :validates: r100
 
-.. item:: ITEST-DUMMY_CHILD Test of dummy requirement
-    :validates: RQT-DUMMY_CHILD
+.. item:: ITEST-DUMMY_CHILD Test of a child dummy requirement
 
 Integration test reports
 ========================
