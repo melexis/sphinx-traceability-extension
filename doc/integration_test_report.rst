@@ -510,7 +510,7 @@ Traceability via intermediate items
     :coveredintermediates:
     :coverage: <79
 
-.. warning due to below item-matrix: coverage is not 100% due to child RQT not covered
+.. warning in below item-matrix: coverage is not 100% due to child RQT not covered
 
 .. item-matrix:: Design to test via requirements recursively
     :source: DESIGN-
