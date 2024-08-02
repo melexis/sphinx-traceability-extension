@@ -479,7 +479,7 @@ def setup(app):
     # Javascript and stylesheet for the tree-view
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
-    app.add_js_file('traceability.js')
+    app.add_js_file(f'traceability-{version}.min.js')
 
     # Since Sphinx 6, jquery isn't bundled anymore and we need to ensure that
     # the sphinxcontrib-jquery extension is enabled.

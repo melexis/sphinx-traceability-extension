@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from css_html_js_minify import process_single_js_file
 from setuptools import setup, find_namespace_packages
+
+from setuptools_scm import get_version
+version = get_version()
 
 project_url = 'https://github.com/melexis/sphinx-traceability-extension'
 
@@ -13,6 +17,8 @@ requires = [
     'python-decouple',
     'requests',
 ]
+js_file_path = 'mlx/traceability/assets/traceability.js'
+process_single_js_file(js_file_path, output_path=js_file_path.replace('.js', f'-{version}.min.js'))
 
 setup(
     name='mlx.traceability',
@@ -65,5 +71,5 @@ setup(
         'ISO26262',
         'ASIL',
     ],
-    package_data={'mlx.traceability': ['assets/*.js']},
+    package_data={'mlx.traceability': ['assets/traceability-*.js']},
 )
