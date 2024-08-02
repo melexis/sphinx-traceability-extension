@@ -28,3 +28,6 @@ doc/_images
 
 # Custom hyperlink colors
 mlx/traceability/assets/hyperlink_colors.css
+
+# Minified JS file
+mlx/traceability/assets/traceability-*.min.js
