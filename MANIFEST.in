@@ -2,7 +2,8 @@
 include *.md
 
 # Include the assets - javascript
-include mlx/traceability/assets/*.js
+include mlx/traceability/assets/traceability.js
+exclude mlx/traceability/assets/traceability-*.min.js
 
 
 exclude mlx/traceability/__traceability_version__.py
