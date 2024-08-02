@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mlx.traceability.traceable_item &mdash; Traceability 11.4.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>mlx.traceability.traceable_item &mdash; Traceability 11.5.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
@@ -18,7 +18,7 @@
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/language_data.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
-        <script src="../../../_static/traceability.js"></script>
+        <script src="../../../_static/traceability-11.5.0.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -36,7 +36,7 @@
             Traceability
           </a>
               <div class="version">
-                11.4.0
+                11.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -279,23 +279,24 @@
             <span class="k">return</span> <span class="n">natsorted</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">targets</span></div>
 
-<div class="viewcode-block" id="TraceableItem.yield_targets"><a class="viewcode-back" href="../../../implementation.html#mlx.traceability.traceable_item.TraceableItem.yield_targets">[docs]</a>    <span class="k">def</span> <span class="nf">yield_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relation</span><span class="p">,</span> <span class="n">explicit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="TraceableItem.yield_targets"><a class="viewcode-back" href="../../../implementation.html#mlx.traceability.traceable_item.TraceableItem.yield_targets">[docs]</a>    <span class="k">def</span> <span class="nf">yield_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">relations</span><span class="p">,</span> <span class="n">explicit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">implicit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Gets an iterable of targets to other traceable items.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            relation (str): Name of the relation.</span>
+<span class="sd">            relations (iter[str]): One or more names of relations.</span>
 <span class="sd">            explicit (bool): If True, explicitly expressed relations are included.</span>
 <span class="sd">            implicit (bool): If True, implicitly expressed relations are included.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            generator: Targets to other traceable items, unsorted</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">explicit</span> <span class="ow">and</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
-                <span class="k">yield</span> <span class="n">target</span>
-        <span class="k">if</span> <span class="n">implicit</span> <span class="ow">and</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
-                <span class="k">yield</span> <span class="n">target</span></div>
+        <span class="k">for</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">relations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">explicit</span> <span class="ow">and</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">explicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+                    <span class="k">yield</span> <span class="n">target</span>
+            <span class="k">if</span> <span class="n">implicit</span> <span class="ow">and</span> <span class="n">relation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implicit_relations</span><span class="p">[</span><span class="n">relation</span><span class="p">]:</span>
+                    <span class="k">yield</span> <span class="n">target</span></div>
 
 <div class="viewcode-block" id="TraceableItem.yield_targets_sorted"><a class="viewcode-back" href="../../../implementation.html#mlx.traceability.traceable_item.TraceableItem.yield_targets_sorted">[docs]</a>    <span class="k">def</span> <span class="nf">yield_targets_sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Gets an iterable of targets to other traceable items, with natural sorting applied. &#39;&#39;&#39;</span>

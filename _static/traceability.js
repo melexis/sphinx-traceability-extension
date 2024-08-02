@@ -57,8 +57,15 @@ $(document).ready(function () {
     });
 
     $('table > tbody > tr[class^=item-group-]').each(function (i) {
+        var row = $(this);
+        const titleOnHidden = 'Ctrl+RMB to expand';
+        const titleOnVisible = 'Ctrl+RMB to collapse';
+        row.attr('title', titleOnHidden);
         $(this).on("contextmenu",
             function (event) {
+                if (!event.ctrlKey) {
+                    return;
+                }
                 event.preventDefault()
                 var groupName = /item-group-\d+/.exec($(this).attr('class'))[0];
                 $(this).parent().find(`tr.${groupName} > td > p.item-link`).each(function (j) {
@@ -67,7 +74,13 @@ $(document).ready(function () {
                     cell.css("maxWidth", maxWidth);
                     const content = $(this).children('div.content').first();
                     if (content.length) {
-                        content.toggle();
+                        if (content.is(":visible")) {
+                            content.hide();
+                            row.attr('title', titleOnHidden);
+                        } else {
+                            row.attr('title', titleOnVisible);
+                            content.show();
+                        }
                     } else {
                         var link = $(this).children('a').first();
                         var container = $('<div>', { class: 'content' });
@@ -76,6 +89,7 @@ $(document).ready(function () {
                             container.find('*').css("width", "inherit");
                             paragraph.append(container);
                         });
+                        row.attr('title', titleOnVisible);
                     }
                 });
             }

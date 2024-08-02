@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; Traceability 11.4.0 documentation</title>
+  <title>Usage &mdash; Traceability 11.5.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -21,7 +21,7 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
         <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
-        <script src="_static/traceability.js"></script>
+        <script src="_static/traceability-11.5.0.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,7 +41,7 @@
             Traceability
           </a>
               <div class="version">
-                11.4.0
+                11.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -640,6 +640,12 @@ linked source to be covered.</p>
 <p>When enabled, a row will be created for every intermediate item instead of grouping them together in the same row
 as the source item. In addition, all intermediates will be listed, regardless of their coverage status. This can be
 useful if you want to group target items per intermediate item <em>instead of per source item</em>.</p>
+</dd>
+<dt class="field-even">recursiveintermediates<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>optional, *single argument</em></p>
+<p>Expects a forward relation to recursively take nested intermediate items into account. The source item is only
+covered if every single intermediate item in the chain is covered. This option is not compatible with the option
+<em>intermediatetitle</em>.</p>
 </dd>
 </dl>
 </section>

@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2024-07-31T20:42:58.835783</dc:date>
+    <dc:date>2024-08-02T11:27:37.835582</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -447,7 +447,7 @@ z
      <use xlink:href="#Lato-Regular-30" x="116"/>
      <use xlink:href="#Lato-Regular-25" x="174"/>
     </g>
-    <!-- (16) -->
+    <!-- (17) -->
     <g transform="translate(131.785688 217.630745) scale(0.1 -0.1)">
      <defs>
       <path id="Lato-Regular-28" d="M 784 2013 
@@ -471,48 +471,22 @@ Q 1133 3990 958 3344
 Q 784 2698 784 2013 
 z
 " transform="scale(0.015625)"/>
-      <path id="Lato-Regular-36" d="M 1517 2867 
-Q 1453 2790 1398 2716 
-Q 1344 2643 1290 2573 
-Q 1453 2685 1649 2747 
-Q 1846 2810 2077 2810 
-Q 2355 2810 2601 2718 
-Q 2848 2627 3032 2452 
-Q 3216 2278 3325 2024 
-Q 3434 1770 3434 1443 
-Q 3434 1126 3318 854 
-Q 3203 582 2996 380 
-Q 2790 179 2500 64 
-Q 2211 -51 1862 -51 
-Q 1517 -51 1235 59 
-Q 954 170 757 373 
-Q 560 576 453 865 
-Q 346 1155 346 1514 
-Q 346 1814 478 2155 
-Q 611 2496 902 2883 
-L 2067 4448 
-Q 2112 4506 2190 4546 
-Q 2269 4586 2371 4586 
-L 2877 4586 
-L 1517 2867 
-z
-M 893 1414 
-Q 893 1194 957 1011 
-Q 1021 829 1144 697 
-Q 1267 566 1444 494 
-Q 1622 422 1850 422 
-Q 2080 422 2267 496 
-Q 2454 570 2587 701 
-Q 2720 832 2792 1011 
-Q 2864 1190 2864 1402 
-Q 2864 1626 2793 1806 
-Q 2723 1987 2593 2113 
-Q 2464 2240 2285 2307 
-Q 2106 2374 1891 2374 
-Q 1661 2374 1475 2296 
-Q 1290 2218 1160 2085 
-Q 1030 1952 961 1777 
-Q 893 1603 893 1414 
+      <path id="Lato-Regular-37" d="M 3459 4586 
+L 3459 4330 
+Q 3459 4221 3435 4150 
+Q 3411 4080 3389 4032 
+L 1488 202 
+Q 1446 118 1372 59 
+Q 1299 0 1178 0 
+L 768 0 
+L 2694 3782 
+Q 2736 3862 2779 3929 
+Q 2822 3997 2877 4058 
+L 483 4058 
+Q 429 4058 387 4101 
+Q 346 4144 346 4198 
+L 346 4586 
+L 3459 4586 
 z
 " transform="scale(0.015625)"/>
       <path id="Lato-Regular-29" d="M 925 2013 
@@ -543,7 +517,7 @@ z
      </defs>
      <use xlink:href="#Lato-Regular-28"/>
      <use xlink:href="#Lato-Regular-31" x="26.699997"/>
-     <use xlink:href="#Lato-Regular-36" x="84.699997"/>
+     <use xlink:href="#Lato-Regular-37" x="84.699997"/>
      <use xlink:href="#Lato-Regular-29" x="142.699997"/>
     </g>
    </g>

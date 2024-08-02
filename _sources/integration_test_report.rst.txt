@@ -163,6 +163,8 @@ Integration tests
 .. item:: ITEST-r100 Test a requirement using the ``requirement`` type
     :validates: r100
 
+.. item:: ITEST-DUMMY_CHILD Test of a child dummy requirement
+
 Integration test reports
 ========================
 
@@ -506,6 +508,24 @@ Traceability via intermediate items
     :nocaptions:
     :stats:
     :coveredintermediates:
+    :coverage: <79
+
+.. warning in below item-matrix: coverage is not 100% due to child RQT not covered
+
+.. item-matrix:: Design to test via requirements recursively
+    :source: DESIGN-
+    :intermediate: RQT-
+    :target: UTEST ITEST
+    :sourcetitle: design items
+    :targettitle: unit tests, integration tests
+    :type: fulfills | validated_by
+    :group: top
+    :nocaptions:
+    :stats:
+    :coveredintermediates:
+    :splitintermediates:
+    :recursiveintermediates: impacts_on
+    :coverage: ==100
 
 Source and target columns
 -------------------------
