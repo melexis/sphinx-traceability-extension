@@ -4,30 +4,23 @@ include *.md
 # Include the assets - javascript
 include mlx/traceability/assets/traceability.js
 exclude mlx/traceability/assets/traceability-*.min.js
-
-
 exclude mlx/traceability/__traceability_version__.py
-exclude .pylintrc
 
-# added by check_manifest.py
+include *.md
 include LICENSE.txt
 include NOTICE
-include tox.ini
-include tools/doc-warnings.json
-include doc/.env.example
-recursive-include doc *.bat
-recursive-include doc *.py
-recursive-include doc *.rst
-recursive-include doc *.css
-recursive-include doc Makefile
-recursive-include tests *.py
-recursive-include tests *.rst
-recursive-include tests *.txt
+exclude .codeclimate.yml
+exclude .coveragerc
+exclude .gitignore
+exclude .pylintrc
+exclude codecov.yml
+exclude requirements.txt
+exclude tox.ini
+exclude tools/doc-warnings.json
 
-# added by check_manifest.py
-include .coveragerc
+recursive-exclude .github *
+recursive-exclude build *
+recursive-exclude doc *
+recursive-exclude tests *
 
-# added by check_manifest.py
-include *.txt
-
-recursive-exclude doc/_build *
+global-exclude *.py[co]
