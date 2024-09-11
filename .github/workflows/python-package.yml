@@ -33,10 +33,15 @@ jobs:
         sudo apt-get install -y plantuml
     - name: Run test
       run: tox -e py
-    - name: Build documentation with different Sphinx versions
+    - name: Build documentation with Sphinx version 2.4.5
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
-      run: tox -e sphinx2.4.5,sphinx-latest
+      run: tox -e sphinx2.4.5
+    - name: Build documentation with Sphinx-latest
+      env:
+        PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      if: matrix.python-version > 3.9
+      run: tox -e sphinx-latest
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov
