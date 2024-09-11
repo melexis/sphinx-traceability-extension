@@ -37,11 +37,15 @@ jobs:
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       run: tox -e sphinx2.4.5
-    - name: Build documentation with Sphinx-latest
+    - name: Build documentation with Sphinx < 8.0 and >= 6.0
+      env:
+        PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      run: tox -e sphinx<8
+    - name: Build documentation with Sphinx >= 8.0
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       if: matrix.python-version > 3.9
-      run: tox -e sphinx-latest
+      run: tox -e sphinx>=8
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov
