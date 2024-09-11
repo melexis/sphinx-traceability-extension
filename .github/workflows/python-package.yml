@@ -45,7 +45,7 @@ jobs:
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       if: matrix.python-version > 3.9
-      run: tox -e sphinx>=8
+      run: tox -e sphinx-latest
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov
