@@ -241,7 +241,12 @@ class ItemPieChart(TraceableBaseNode):
             else:
                 match_function = self._match_attribute_values
             has_nested_target = self.loop_relationships(
-                top_source_id, nested_source_item, self["target_relationships"], self["nested_target_regex"], match_function)
+                top_source_id,
+                nested_source_item,
+                self["target_relationships"],
+                self["nested_target_regex"],
+                match_function
+            )
         if not has_nested_target or not consider_nested_targets:
             if self['splitsourcetype'] and self['sourcetype']:
                 self._match_by_type(top_source_id, None, relationship)
@@ -459,7 +464,8 @@ class ItemPieChart(TraceableBaseNode):
             subheader.get('classes').append('centered')
             row += subheader
             tbody += row
-            for source_id, match in {k: v for k, v in self["matches"].items() if v.label.lower() == label.lower()}.items():
+            filtered_matches = {k: v for k, v in self["matches"].items() if v.label.lower() == label.lower()}
+            for source_id, match in filtered_matches.items():
                 source = self["collection"].get_item(source_id)
                 tbody += self._rows_per_source(source, match, add_result_column, app)
         return table
