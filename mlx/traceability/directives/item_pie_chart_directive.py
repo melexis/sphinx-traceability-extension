@@ -68,14 +68,14 @@ class ItemPieChart(TraceableBaseNode):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.collection = None
-        self.source_relationships = []
-        self.target_relationships = []
-        self.relationship_to_string = {}
-        self.priorities = []  # default priority order is 'uncovered', 'covered', 'executed'
-        self.labels = []
-        self.nested_target_regex = re.compile('')
-        self.matches = {}  # source_id (str): Match
+        self["collection"] = None
+        self["source_relationships"] = []
+        self["target_relationships"] = []
+        self["relationship_to_string"] = {}
+        self["priorities"] = []  # default priority order is 'uncovered', 'covered', 'executed'
+        self["labels"] = []
+        self["nested_target_regex"] = re.compile('')
+        self["matches"] = {}  # source_id (str): Match
 
     def perform_replacement(self, app, collection):
         """
@@ -89,27 +89,27 @@ class ItemPieChart(TraceableBaseNode):
         """
         env = app.builder.env
         top_node = self.create_top_node(self['title'], hide_title=self['hidetitle'])
-        self.collection = collection
-        self.source_relationships = self['sourcetype'] if self['sourcetype'] else self.collection.iter_relations()
-        self.target_relationships = self['targettype'] if self['targettype'] else self.collection.iter_relations()
-        self.relationship_to_string = app.config.traceability_relationship_to_string
+        self["collection"] = collection
+        self["source_relationships"] = self['sourcetype'] if self['sourcetype'] else self["collection"].iter_relations()
+        self["target_relationships"] = self['targettype'] if self['targettype'] else self["collection"].iter_relations()
+        self["relationship_to_string"] = app.config.traceability_relationship_to_string
         self._store_labels()
         self._set_nested_target_regex()
         target_regex = re.compile(self['id_set'][1])
-        for source_id in self.collection.get_items(self['id_set'][0], self['filter-attributes']):
-            source_item = self.collection.get_item(source_id)
+        for source_id in self["collection"].get_items(self['id_set'][0], self['filter-attributes']):
+            source_item = self["collection"].get_item(source_id)
             # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
             if source_item.is_placeholder:
                 continue
-            self.matches[source_id] = Match(self.priorities[0])  # default is "uncovered"
-            self.loop_relationships(source_id, source_item, self.source_relationships, target_regex,
+            self["matches"][source_id] = Match(self["priorities"][0])  # default is "uncovered"
+            self.loop_relationships(source_id, source_item, self["source_relationships"], target_regex,
                                     self._match_covered)
 
-        if self['colors'] and len(self['colors']) < len(self.priorities):
+        if self['colors'] and len(self['colors']) < len(self["priorities"]):
             report_warning("item-piechart can contain up to {} slices but only {} colors have been provided: some "
-                           "colors may be reused".format(len(self.priorities), len(self['colors'])),
+                           "colors may be reused".format(len(self["priorities"]), len(self['colors'])),
                            self['document'], self['line'])
-        data, statistics = self._prepare_labels_and_values([x.label for x in self.matches.values()],
+        data, statistics = self._prepare_labels_and_values([x.label for x in self["matches"].values()],
                                                            self['colors'])
         if data['labels']:
             top_node += self.build_pie_chart(data['sizes'], data['labels'], data['colors'], env)
@@ -136,32 +136,32 @@ class ItemPieChart(TraceableBaseNode):
         """
         labels = []
         for relationship in relationships:
-            reverse_relationship = self.collection.get_reverse_relation(relationship)
-            labels.append(self.relationship_to_string[reverse_relationship].lower())
+            reverse_relationship = self["collection"].get_reverse_relation(relationship)
+            labels.append(self["relationship_to_string"][reverse_relationship].lower())
         return labels
 
     def _store_labels(self):
         """ Stores all labels """
-        self.priorities = list(self['label_set'])
-        self.labels = list(self['label_set'])
+        self["priorities"] = list(self['label_set'])
+        self["labels"] = list(self['label_set'])
 
         if self['splitsourcetype'] and self['sourcetype']:
             sourcetype_labels = self._relationships_to_labels(self['sourcetype'])
-            self.priorities.extend(sourcetype_labels)
-            self.labels.extend(sourcetype_labels)
+            self["priorities"].extend(sourcetype_labels)
+            self["labels"].extend(sourcetype_labels)
 
         custom_labels = []
         if self['attr_values']:
             custom_labels.extend([val.lower() for val in self['attr_values']])
         elif self['targettype']:
             custom_labels.extend(self._relationships_to_labels(self['targettype']))
-        self.priorities.extend(reversed(custom_labels))
-        self.labels.extend(custom_labels)
+        self["priorities"].extend(reversed(custom_labels))
+        self["labels"].extend(custom_labels)
 
     def _set_nested_target_regex(self):
         """ Sets the ``nested_target_regex`` if a third item ID in the id_set option is given. """
         if len(self['id_set']) > 2:
-            self.nested_target_regex = re.compile(self['id_set'][2])
+            self["nested_target_regex"] = re.compile(self['id_set'][2])
 
     def _store_linked_label(self, top_source_id, label):
         """ Stores the label in ``matches`` for the given item ID if it has a higher priority and the currently stored
@@ -171,13 +171,13 @@ class ItemPieChart(TraceableBaseNode):
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             label (str): Label to store if it has a higher priority than the one that has been stored.
         """
-        stored_label = self.matches[top_source_id].label
-        if stored_label not in (label, self.priorities[2]):
+        stored_label = self["matches"][top_source_id].label
+        if stored_label not in (label, self["priorities"][2]):
             # store different label if it has a higher priority
-            stored_priority = self.priorities.index(stored_label)
-            latest_priority = self.priorities.index(label)
+            stored_priority = self["priorities"].index(stored_label)
+            latest_priority = self["priorities"].index(label)
             if latest_priority > stored_priority:
-                self.matches[top_source_id].label = label
+                self["matches"][top_source_id].label = label
 
     def loop_relationships(self, top_source_id, source_item, relationships, regex, match_function):
         """
@@ -201,16 +201,16 @@ class ItemPieChart(TraceableBaseNode):
         consider_nested_targets = True
         for relationship in relationships:
             for target_id in source_item.yield_targets(relationship):
-                target_item = self.collection.get_item(target_id)
+                target_item = self["collection"].get_item(target_id)
                 # placeholders don't end up in any item-piechart (less duplicate warnings for missing items)
                 if not target_item or target_item.is_placeholder:
                     continue
                 if regex.match(target_id):
                     has_valid_target = True
                     if source_item.identifier == top_source_id:
-                        self.matches[top_source_id].add_target(target_item)
+                        self["matches"][top_source_id].add_target(target_item)
                     else:
-                        self.matches[top_source_id].add_nested_target(source_item, target_item)
+                        self["matches"][top_source_id].add_nested_target(source_item, target_item)
                     if consider_nested_targets is False:  # at least one target doesn't have a nested target
                         _ = match_function(top_source_id, target_item, relationship, consider_nested_targets=False)
                     else:
@@ -235,18 +235,18 @@ class ItemPieChart(TraceableBaseNode):
             bool: False if no valid target could be found for `nested_source_item` or it was None; True otherwise
         """
         has_nested_target = False
-        if nested_source_item and self.nested_target_regex.pattern:
+        if nested_source_item and self["nested_target_regex"].pattern:
             if self['targettype'] and not self['attr_values']:
                 match_function = self._match_by_type
             else:
                 match_function = self._match_attribute_values
             has_nested_target = self.loop_relationships(
-                top_source_id, nested_source_item, self.target_relationships, self.nested_target_regex, match_function)
+                top_source_id, nested_source_item, self["target_relationships"], self["nested_target_regex"], match_function)
         if not has_nested_target or not consider_nested_targets:
             if self['splitsourcetype'] and self['sourcetype']:
                 self._match_by_type(top_source_id, None, relationship)
             else:
-                self.matches[top_source_id].label = self.priorities[1]  # default is "covered"
+                self["matches"][top_source_id].label = self["priorities"][1]  # default is "covered"
         return has_nested_target and consider_nested_targets
 
     def _match_by_type(self, top_source_id, _, relationship, **__):
@@ -256,8 +256,8 @@ class ItemPieChart(TraceableBaseNode):
             top_source_id (str): Identifier of the top source item, e.g. requirement identifier.
             relationship (str): Relationship with ``nested_target_item`` as target
         """
-        reverse_relationship = self.collection.get_reverse_relation(relationship)
-        reverse_relationship_str = self.relationship_to_string[reverse_relationship].lower()
+        reverse_relationship = self["collection"].get_reverse_relation(relationship)
+        reverse_relationship_str = self["relationship_to_string"][reverse_relationship].lower()
         self._store_linked_label(top_source_id, reverse_relationship_str)
         return True
 
@@ -275,8 +275,8 @@ class ItemPieChart(TraceableBaseNode):
         """
         # case-insensitivity
         attribute_value = nested_target_item.get_attribute(self['attribute']).lower()
-        if attribute_value not in self.priorities:
-            attribute_value = self.priorities[2]  # default is "executed"
+        if attribute_value not in self["priorities"]:
+            attribute_value = self["priorities"][2]  # default is "executed"
         self._store_linked_label(top_source_id, attribute_value)
         return True
 
@@ -293,10 +293,10 @@ class ItemPieChart(TraceableBaseNode):
             (str) Coverage statistics.
         """
         # initialize dictionary for each possible value, and count label occurences
-        ordered_colors = colors[:len(self.labels)]
+        ordered_colors = colors[:len(self["labels"])]
         pie_data = {
-            'labels': self.labels,
-            'sizes': [0] * len(self.labels),
+            'labels': self["labels"],
+            'sizes': [0] * len(self["labels"]),
             'colors': ordered_colors,
         }
         labels = pie_data['labels']
@@ -408,7 +408,7 @@ class ItemPieChart(TraceableBaseNode):
             list[nodes.entry]: Header cells
             bools: True to add a fourth column with relevant info about each nested target item, False otherwise
         """
-        add_result_column = bool(self.nested_target_regex.pattern) and \
+        add_result_column = bool(self["nested_target_regex"].pattern) and \
             (bool(self['attribute']) or bool(self['targettype']))
         titles = []
         for title, pattern in zip_longest(self['matrixtitles'], self['id_set'], fillvalue=None):
@@ -438,7 +438,7 @@ class ItemPieChart(TraceableBaseNode):
         """
         table = nodes.table()
         if self['matrix'] == ['']:
-            self['matrix'] = self.labels
+            self['matrix'] = self["labels"]
         self['nocaptions'] = True
         table = nodes.table()
         if self.get('classes'):
@@ -459,8 +459,8 @@ class ItemPieChart(TraceableBaseNode):
             subheader.get('classes').append('centered')
             row += subheader
             tbody += row
-            for source_id, match in {k: v for k, v in self.matches.items() if v.label.lower() == label.lower()}.items():
-                source = self.collection.get_item(source_id)
+            for source_id, match in {k: v for k, v in self["matches"].items() if v.label.lower() == label.lower()}.items():
+                source = self["collection"].get_item(source_id)
                 tbody += self._rows_per_source(source, match, add_result_column, app)
         return table
 
@@ -487,7 +487,7 @@ class ItemPieChart(TraceableBaseNode):
             for target, nested_targets in match.targets_iter:
                 morerows = max(0, len(nested_targets)-1)
                 row_without_targets += self._create_cell_for_items([target], app, morerows=morerows)
-                if self.nested_target_regex.pattern:
+                if self["nested_target_regex"].pattern:
                     for nested_target in nested_targets:
                         row_without_targets += self._create_cell_for_items([nested_target], app)
                         if add_result_column:
@@ -503,7 +503,7 @@ class ItemPieChart(TraceableBaseNode):
                 row_without_targets = nodes.row()
         else:
             source_row += nodes.entry('')
-            if self.nested_target_regex.pattern:
+            if self["nested_target_regex"].pattern:
                 source_row += nodes.entry('')
                 if add_result_column:
                     source_row += nodes.entry('')
