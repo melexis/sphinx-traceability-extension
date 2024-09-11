@@ -37,10 +37,10 @@ jobs:
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       run: tox -e sphinx2.4.5
-    - name: Build documentation with Sphinx < 8.0 and >= 6.0
+    - name: Build documentation with Sphinx version 6.2.1
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
-      run: tox -e sphinx<8
+      run: tox -e sphinx6.2.1
     - name: Build documentation with Sphinx >= 8.0
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
