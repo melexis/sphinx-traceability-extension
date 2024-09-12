@@ -49,7 +49,7 @@ class TestTraceableBaseClass(TestCase):
                                        content_offset=0,
                                        block_text='',
                                        state=None,
-                                       state_machine=None)
+                                       state_machine=Mock())
 
         self.assertNotIn('commalist_arg', fake_node)
         self.assertNotIn('string_arg', fake_node)
@@ -77,7 +77,7 @@ class TestTraceableBaseClass(TestCase):
                                        content_offset=0,
                                        block_text='',
                                        state=None,
-                                       state_machine=None)
+                                       state_machine=Mock())
 
         self.assertNotIn('commalist_arg', fake_node)
         self.assertNotIn('string_arg', fake_node)
@@ -102,7 +102,7 @@ class TestTraceableBaseClass(TestCase):
                                        content_offset=0,
                                        block_text='',
                                        state=None,
-                                       state_machine=None)
+                                       state_machine=Mock())
 
         self.assertNotIn('commalist_arg', fake_node)
         self.assertNotIn('string_arg', fake_node)
