@@ -56,6 +56,7 @@ setup(
     platforms='any',
     packages=find_namespace_packages(where=".", exclude=("doc.*", "doc", "tests.*", "tests", "build*")),
     package_dir={"": "."},
+    python_requires='>=3.8',
     include_package_data=True,
     install_requires=requires,
     keywords=[
