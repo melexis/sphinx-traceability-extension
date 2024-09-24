@@ -254,7 +254,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
                 hidden_node = nodes.inline('', item_info.identifier)
                 hidden_node['classes'].append('popup_caption')
             elif not self.get('nocaptions'):
-                display_text = '{0.identifier} : {0.caption}'.format(item_info)
+                display_text = '{0.identifier}: {0.caption}'.format(item_info)
             else:
                 hidden_node = nodes.inline('', item_info.caption)
                 hidden_node['classes'].append('popup_caption')
