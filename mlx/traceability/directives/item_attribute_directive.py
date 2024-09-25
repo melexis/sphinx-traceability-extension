@@ -22,7 +22,7 @@ class ItemAttribute(TraceableBaseNode):
             attr = TraceableItem.defined_attributes[self['id']]
             header = attr.name
             if attr.caption:
-                header += ' : ' + attr.caption
+                header += ': ' + attr.caption
         else:
             header = self['id']
         top_node = self.create_top_node(header)

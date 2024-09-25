@@ -73,9 +73,9 @@ class TestItemDirective(TestCase):
 
         self.assertEqual(len(em_node.children), 1)
         self.assertEqual(len(em_node.children), 1)
-        self.assertEqual(str(em_node), '<emphasis>some_id : caption text</emphasis>')
+        self.assertEqual(str(em_node), '<emphasis>some_id: caption text</emphasis>')
         self.assertEqual(ref_node.tagname, 'reference')
-        self.assertEqual(em_node.rawsource, 'some_id : caption text')
+        self.assertEqual(em_node.rawsource, 'some_id: caption text')
         cache = self.app.builder.env.traceability_ref_nodes[self.node['id']]
         self.assertEqual(p_node, cache['default'][f'{self.node["document"]}.html'])
 
