@@ -54,7 +54,7 @@ Documentation items can be defined using the *item* directive, specifying:
         :validated_by: ITEST-MY_FIRST_INTEGRATION_TEST
         :ext_polarion_reference: project_x:workitem_y
         :nocaptions:
-        :noshow: validated_by
+        :hidelinks: validated_by
 
         According to the Polarion reference, the software **shall** implement my first requirement.
 
@@ -62,7 +62,7 @@ Attributes can be added to the item, using the configured attribute keys in :ref
 (e.g. *value* in the above example). The content of the attribute is treated as a single string and should
 match_ the regular expression in configuration.
 
-The *noshow* is a space-seperated list of relation types. The relations to other items will not be shown for the
+The *hidelinks* is a space-seperated list of relation types. The relations to other items will not be shown for the
 mentioned relation types.
 
 The relations to other documentation items can be specified as:
