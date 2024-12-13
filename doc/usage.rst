@@ -63,7 +63,7 @@ Attributes can be added to the item, using the configured attribute keys in :ref
 match_ the regular expression in configuration.
 
 The *hidelinks* is a space-seperated list of relation types. The relations to other items will not be shown for the
-mentioned relation types.
+mentioned relation types below the item. The links will still be used and displayed in traceability matrixes and other directives.
 
 The relations to other documentation items can be specified as:
 
