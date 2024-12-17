@@ -58,66 +58,57 @@ class TestSphinx(unittest.TestCase):
         ])
         self.assertEqual(retcode, 0)
 
-    def test_item_relation(self):
+    def make_doc_with_rst(self, rst_content, **build_options):
         with open(self.index_rst_path, "w") as f:
-            f.write(textwrap.dedent(r"""
-            .. item:: ITEM-A Description of item-a
-
-            .. item:: ITEM-B Description of item-b
-                :my_relation: ITEM-A
-            """))
-
-        self.build(builder="html")
+            f.write(textwrap.dedent(rst_content))
+        self.build(**build_options)
         with open(self.html_file, "r") as f:
-            content = f.read()
-            assert 'My relation' in content
-            assert 'My reverse relation' in content
+            return f.read()
+
+    def test_item_relation(self):
+        rst_content = r"""
+        .. item:: ITEM-A Description of item-a
+
+        .. item:: ITEM-B Description of item-b
+            :my_relation: ITEM-A
+        """
+        content = self.make_doc_with_rst(rst_content)
+        assert 'My relation' in content
+        assert 'My reverse relation' in content
 
     def test_item_relation_hide_forward(self):
-        with open(self.index_rst_path, "w") as f:
-            f.write(textwrap.dedent(r"""
-            .. item:: ITEM-A Description of item-a
+        rst_content = r"""
+        .. item:: ITEM-A Description of item-a
 
-            .. item:: ITEM-B Description of item-b
-                :my_relation: ITEM-A
-                :hidetype: my_relation
-            """))
-
-        self.build(builder="html")
-        with open(self.html_file, "r") as f:
-            content = f.read()
-            assert 'My relation' not in content
-            assert 'My reverse relation' in content
+        .. item:: ITEM-B Description of item-b
+            :my_relation: ITEM-A
+            :hidetype: my_relation
+        """
+        content = self.make_doc_with_rst(rst_content)
+        assert 'My relation' not in content
+        assert 'My reverse relation' in content
 
     def test_item_relation_hide_reverse(self):
-        with open(self.index_rst_path, "w") as f:
-            f.write(textwrap.dedent(r"""
-            .. item:: ITEM-A Description of item-a
-                :hidetype: my_reverse_relation
+        rst_content = r"""
+        .. item:: ITEM-A Description of item-a
+            :hidetype: my_reverse_relation
 
-            .. item:: ITEM-B Description of item-b
-                :my_relation: ITEM-A
-            """))
-
-        self.build(builder="html")
-        with open(self.html_file, "r") as f:
-            content = f.read()
-            assert 'My relation' in content
-            assert 'My reverse relation' not in content
+        .. item:: ITEM-B Description of item-b
+            :my_relation: ITEM-A
+        """
+        content = self.make_doc_with_rst(rst_content)
+        assert 'My relation' in content
+        assert 'My reverse relation' not in content
 
     def test_item_relation_hide_both(self):
-        with open(self.index_rst_path, "w") as f:
-            f.write(textwrap.dedent(r"""
-            .. item:: ITEM-A Description of item-a
-                :hidetype: my_reverse_relation
+        rst_content = r"""
+        .. item:: ITEM-A Description of item-a
+            :hidetype: my_reverse_relation
 
-            .. item:: ITEM-B Description of item-b
-                :my_relation: ITEM-A
-                :hidetype: my_relation
-            """))
-
-        self.build(builder="html")
-        with open(self.html_file, "r") as f:
-            content = f.read()
-            assert 'My relation' not in content
-            assert 'My reverse relation' not in content
+        .. item:: ITEM-B Description of item-b
+            :my_relation: ITEM-A
+            :hidetype: my_relation
+        """
+        content = self.make_doc_with_rst(rst_content)
+        assert 'My relation' not in content
+        assert 'My reverse relation' not in content
