@@ -5,17 +5,19 @@ import textwrap
 import unittest
 import sphinx.cmd.build
 import sphinx.cmd.quickstart
+from pathlib import Path
 
 
 class TestSphinx(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.docs_folder = tempfile.mkdtemp()
-        cls.rst_file = os.path.join(cls.docs_folder, "index.rst")
-        cls.html_file = os.path.join(cls.docs_folder, "_build", "index.html")
+        cls.doc_dir = Path(tempfile.mkdtemp())
+        cls.build_dir = cls.doc_dir / "_build"
+        cls.index_rst_path = cls.doc_dir / "index.rst"
+        cls.html_file = cls.build_dir / "index.html"
         sphinx.cmd.quickstart.generate({
-            "path": cls.docs_folder,
+            "path": cls.doc_dir,
             "sep": False,
             "project": "testdoc",
             "author": "mlx.traceability contributors",
@@ -39,25 +41,25 @@ class TestSphinx(unittest.TestCase):
             traceability_attributes_sort = {}
             """
 
-        with open(f'{cls.docs_folder}/conf.py', 'a') as f:
+        with open(cls.doc_dir / 'conf.py', 'a') as f:
             f.write(textwrap.dedent(cfg))
 
     @classmethod
     def tearDownClass(cls):
-        shutil.rmtree(cls.docs_folder)
+        shutil.rmtree(cls.doc_dir)
 
     def build(self, builder="html"):
         retcode = sphinx.cmd.build.main([
             "-q",
             "-b",
             builder,
-            self.docs_folder,
-            os.path.join(self.docs_folder, "_build"),
+            str(self.doc_dir),
+            str(self.build_dir),
         ])
         self.assertEqual(retcode, 0)
 
     def test_item_relation(self):
-        with open(os.path.join(self.docs_folder, self.rst_file), "w") as f:
+        with open(self.index_rst_path, "w") as f:
             f.write(textwrap.dedent(r"""
             .. item:: ITEM-A Description of item-a
 
@@ -72,7 +74,7 @@ class TestSphinx(unittest.TestCase):
             assert 'My reverse relation' in content
 
     def test_item_relation_hide_forward(self):
-        with open(os.path.join(self.docs_folder, self.rst_file), "w") as f:
+        with open(self.index_rst_path, "w") as f:
             f.write(textwrap.dedent(r"""
             .. item:: ITEM-A Description of item-a
 
@@ -88,7 +90,7 @@ class TestSphinx(unittest.TestCase):
             assert 'My reverse relation' in content
 
     def test_item_relation_hide_reverse(self):
-        with open(os.path.join(self.docs_folder, self.rst_file), "w") as f:
+        with open(self.index_rst_path, "w") as f:
             f.write(textwrap.dedent(r"""
             .. item:: ITEM-A Description of item-a
                 :hidetype: my_reverse_relation
@@ -104,7 +106,7 @@ class TestSphinx(unittest.TestCase):
             assert 'My reverse relation' not in content
 
     def test_item_relation_hide_both(self):
-        with open(os.path.join(self.docs_folder, self.rst_file), "w") as f:
+        with open(self.index_rst_path, "w") as f:
             f.write(textwrap.dedent(r"""
             .. item:: ITEM-A Description of item-a
                 :hidetype: my_reverse_relation
