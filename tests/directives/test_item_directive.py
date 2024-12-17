@@ -30,7 +30,7 @@ class TestItemDirective(TestCase):
         self.node['document'] = 'some_doc'
         self.node['id'] = 'some_id'
         self.node['line'] = 1
-        self.node['hidelinks'] = []
+        self.node['hidetype'] = []
         self.item = TraceableItem(self.node['id'])
         self.item.set_location(self.node['document'], self.node['line'])
         self.item.node = self.node

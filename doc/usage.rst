@@ -53,17 +53,14 @@ Documentation items can be defined using the *item* directive, specifying:
         :status: Approved
         :validated_by: ITEST-MY_FIRST_INTEGRATION_TEST
         :ext_polarion_reference: project_x:workitem_y
+        :hidetype: validated_by
         :nocaptions:
-        :hidelinks: validated_by
 
         According to the Polarion reference, the software **shall** implement my first requirement.
 
 Attributes can be added to the item, using the configured attribute keys in :ref:`traceability_default_config`
 (e.g. *value* in the above example). The content of the attribute is treated as a single string and should
 match_ the regular expression in configuration.
-
-The *hidelinks* is a space-seperated list of relation types. The relations to other items will not be shown for the
-mentioned relation types below the item. The links will still be used and displayed in traceability matrixes and other directives.
 
 The relations to other documentation items can be specified as:
 
@@ -78,7 +75,17 @@ The relations to other documentation items can be specified as:
             ITEST-MY_SECOND_INTEGRATION_TEST
 
 The output will contain hyperlinks to all related items. By default, the caption for the target item is displayed for
-each of these related items. With the option *nocaptions* these captions can be omitted.
+each of these related items.
+
+:hidetype: *optional*, *multiple arguments (space-separated)*
+
+    A space-separated list of relation types. By default, the rendered item definition displays all relations to other items
+    in a list below the item name (id). The relation types given to this option will be omitted from this list.
+    It does not affect how the item is rendered in other directives, e.g. item-matrix.
+
+:nocaptions: *optional*, *flag*
+
+    Omits the caption from the rendered item definition.
 
 .. _adding_relations:
 

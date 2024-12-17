@@ -63,7 +63,7 @@ class Item(TraceableBaseNode):
         All targets get naturally sorted per relationship.
         """
         for rel, targets in self._item.all_relations:
-            if rel not in self['hidelinks']:
+            if rel not in self['hidetype']:
                 self._list_targets_for_relation(rel, targets, *args)
 
     def _list_targets_for_relation(self, relation, targets, dl_node, app):
@@ -130,7 +130,7 @@ class ItemDirective(TraceableBaseDirective):
     option_spec = {
         'class': directives.class_option,
         'nocaptions': directives.flag,
-        'hidelinks': directives.unchanged,
+        'hidetype': directives.unchanged,
     }
     # Content allowed
     has_content = True
@@ -154,7 +154,7 @@ class ItemDirective(TraceableBaseDirective):
         self.process_options(
             item_node,
             {
-                'hidelinks': {'default': []},
+                'hidetype': {'default': []},
             },
         )
         item = self._store_item_info(target_id, env)
