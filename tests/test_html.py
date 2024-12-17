@@ -6,6 +6,7 @@ import unittest
 import sphinx.cmd.build
 import sphinx.cmd.quickstart
 
+
 class TestSphinx(unittest.TestCase):
 
     @classmethod
@@ -29,12 +30,17 @@ class TestSphinx(unittest.TestCase):
             "extensions": ["mlx.traceability"],
         }, silent=True)
 
-        with open(f'{cls.docs_folder}/conf.py', 'a') as cfg:
-            cfg.write("traceability_render_relationship_per_item = True\n")
-            cfg.write("traceability_relationships = {'my_relation': 'my_reverse_relation'}\n")
-            cfg.write("traceability_relationship_to_string = {'my_relation': 'My relation', 'my_reverse_relation': 'My reverse relation'}\n")
-            cfg.write("traceability_attributes = {}\n")
-            cfg.write("traceability_attributes_sort = {}\n")
+        cfg = r"""
+            traceability_render_relationship_per_item = True
+            traceability_relationships = {'my_relation': 'my_reverse_relation'}
+            traceability_relationship_to_string = {'my_relation': 'My relation',
+                                                   'my_reverse_relation': 'My reverse relation'}
+            traceability_attributes = {}
+            traceability_attributes_sort = {}
+            """
+
+        with open(f'{cls.docs_folder}/conf.py', 'a') as f:
+            f.write(textwrap.dedent(cfg))
 
     @classmethod
     def tearDownClass(cls):
@@ -113,4 +119,3 @@ class TestSphinx(unittest.TestCase):
             content = f.read()
             assert 'My relation' not in content
             assert 'My reverse relation' not in content
-
