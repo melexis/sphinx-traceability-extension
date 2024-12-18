@@ -161,6 +161,8 @@ class ItemDirective(TraceableBaseDirective):
         if item is None:
             return []
 
+        self.check_relationships(item_node['hidetype'], env)
+
         # Custom callback for modifying items
         if app.config.traceability_callback_per_item:
             app.config.traceability_callback_per_item(target_id, env.traceability_collection)
