@@ -53,6 +53,7 @@ Documentation items can be defined using the *item* directive, specifying:
         :status: Approved
         :validated_by: ITEST-MY_FIRST_INTEGRATION_TEST
         :ext_polarion_reference: project_x:workitem_y
+        :hidetype: validated_by
         :nocaptions:
 
         According to the Polarion reference, the software **shall** implement my first requirement.
@@ -74,7 +75,17 @@ The relations to other documentation items can be specified as:
             ITEST-MY_SECOND_INTEGRATION_TEST
 
 The output will contain hyperlinks to all related items. By default, the caption for the target item is displayed for
-each of these related items. With the option *nocaptions* these captions can be omitted.
+each of these related items.
+
+:hidetype: *optional*, *multiple arguments (space-separated)*
+
+    A space-separated list of relation types. By default, the rendered item definition displays all relations to other items
+    in a list below the item name (id). The relation types given to this option will be omitted from this list.
+    It does not affect how the item is rendered in other directives, e.g. item-matrix.
+
+:nocaptions: *optional*, *flag*
+
+    Omits the caption from the rendered item definition.
 
 .. _adding_relations:
 
