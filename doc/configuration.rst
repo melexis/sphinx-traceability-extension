@@ -4,27 +4,14 @@
 Configuration
 =============
 
-The *conf.py* file contains the documentation configuration for your project. This file needs to be equipped in order
-to configure the traceability plugin.
+In your Sphinx project's ``conf.py`` file, add ``mlx.traceability`` to the list of enabled extensions:
 
-First the plugin needs to be enabled in the *extensions* variable:
-
-.. code-block:: bash
+.. code-block:: python
 
     extensions = [
-        'mlx.traceability',
         ...
+        'mlx.traceability',
     ]
-
-Second the path to the static javascript assets needs to be added to the sphinx ``html_static_path``
-variable.
-
-.. code-block:: bash
-
-    import os
-    import mlx.traceability
-
-    html_static_path = [os.path.join(os.path.dirname(mlx.traceability.__file__), 'assets')]
 
 .. _traceability_config_attributes:
 

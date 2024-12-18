@@ -11,6 +11,7 @@ from os import path
 from re import fullmatch, match
 
 import natsort
+import shutil
 from docutils import nodes
 from docutils.parsers.rst import directives
 from requests import Session
@@ -479,7 +480,19 @@ def setup(app):
     # Javascript and stylesheet for the tree-view
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
-    app.add_js_file(f'traceability-{version}.min.js')
+
+    # Source local resources and register them for copying
+    filename = f'traceability-{version}.min.js'
+    app.add_js_file(filename)
+
+    def copy_js_file(app, exception):
+        if app.builder.format == 'html' and not exception:
+            shutil.copyfile(
+                path.join(path.dirname(__file__), 'assets', filename),
+                path.join(app.outdir, '_static', filename)
+            )
+
+    app.connect('build-finished', copy_js_file)
 
     # Since Sphinx 6, jquery isn't bundled anymore and we need to ensure that
     # the sphinxcontrib-jquery extension is enabled.
