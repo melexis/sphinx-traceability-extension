@@ -11,6 +11,7 @@ from os import path
 from re import fullmatch, match
 
 import natsort
+import shutil
 from docutils import nodes
 from docutils.parsers.rst import directives
 from requests import Session
@@ -18,6 +19,7 @@ from sphinx import version_info as sphinx_version
 from sphinx.errors import NoUri
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
+from sphinx.util.osutil import ensuredir
 
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
@@ -43,15 +45,15 @@ from .directives.item_tree_directive import ItemTree, ItemTreeDirective
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
 
 
-def generate_color_css(app, hyperlink_colors):
+def generate_color_css(class_names, hyperlink_colors, css_path):
     """ Generates CSS file that defines the colors for each hyperlink state for each configured regex.
 
     Args:
-        app: Sphinx application object to use.
+        class_names (dict): Mapping of colors to CSS class identifiers.
         hyperlink_colors (dict): Dictionary with regex strings as keys and list/tuple of strings as values.
+        css_path (str): Location of the CSS file to create
     """
-    class_names = app.config.traceability_class_names
-    with open(path.join(path.dirname(__file__), 'assets', 'hyperlink_colors.css'), 'w') as css_file:
+    with open(css_path, 'w') as css_file:
         for regex, colors in hyperlink_colors.items():
             colors = tuple(colors)
             if len(colors) > 3:
@@ -214,9 +216,14 @@ def perform_consistency_check(app, env):
         fname = app.config.traceability_json_export_path
         env.traceability_collection.export(fname)
 
-    if app.config.traceability_hyperlink_colors:
-        app.add_css_file('hyperlink_colors.css')
-        generate_color_css(app, app.config.traceability_hyperlink_colors)
+    if app.config.traceability_hyperlink_colors and app.builder.format == "html":
+        colors_filename = 'hyperlink_colors.css'
+        assets_dir = path.join(app.outdir, '_static')
+        ensuredir(assets_dir)
+        app.add_css_file(colors_filename)
+        generate_color_css(app.config.traceability_class_names,
+                           app.config.traceability_hyperlink_colors,
+                           path.join(assets_dir, colors_filename))
 
     regex = app.config.traceability_checklist.get('checklist_item_regex')
     if regex is not None and app.config.traceability_checklist['has_checklist_items']:
@@ -479,7 +486,19 @@ def setup(app):
     # Javascript and stylesheet for the tree-view
     app.add_js_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js')
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
-    app.add_js_file(f'traceability-{version}.min.js')
+
+    # Source local resources and register them for copying
+    js_filename = f'traceability-{version}.min.js'
+    app.add_js_file(js_filename)
+
+    def copy_html_assets(app, exception):
+        if app.builder.format == 'html' and not exception:
+            shutil.copyfile(
+                path.join(path.dirname(__file__), 'assets', js_filename),
+                path.join(app.outdir, '_static', js_filename)
+            )
+
+    app.connect('build-finished', copy_html_assets)
 
     # Since Sphinx 6, jquery isn't bundled anymore and we need to ensure that
     # the sphinxcontrib-jquery extension is enabled.
