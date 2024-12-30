@@ -19,6 +19,7 @@ from sphinx import version_info as sphinx_version
 from sphinx.errors import NoUri
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
+from sphinx.util.osutil import ensuredir
 
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
@@ -217,10 +218,12 @@ def perform_consistency_check(app, env):
 
     if app.config.traceability_hyperlink_colors and app.builder.format == "html":
         colors_filename = 'hyperlink_colors.css'
+        assets_dir = path.join(app.outdir, '_static')
+        ensuredir(assets_dir)
         app.add_css_file(colors_filename)
         generate_color_css(app.config.traceability_class_names,
                            app.config.traceability_hyperlink_colors,
-                           path.join(app.outdir, '_static', colors_filename))
+                           path.join(assets_dir, colors_filename))
 
     regex = app.config.traceability_checklist.get('checklist_item_regex')
     if regex is not None and app.config.traceability_checklist['has_checklist_items']:
