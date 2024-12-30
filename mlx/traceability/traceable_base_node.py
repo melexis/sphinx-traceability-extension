@@ -103,7 +103,7 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
 
         # change text color if item_id matches a regex in traceability_hyperlink_colors
         colors = self._find_colors_for_class(app.config.traceability_hyperlink_colors, item_id)
-        if colors:
+        if colors and app.builder.format == "html":
             class_name = app.config.traceability_class_names[colors]
             newnode['classes'].append(class_name)
         if text_on_hover_node and not isinstance(app.builder, LaTeXBuilder):

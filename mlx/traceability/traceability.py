@@ -44,15 +44,15 @@ from .directives.item_tree_directive import ItemTree, ItemTreeDirective
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
 
 
-def generate_color_css(app, hyperlink_colors):
+def generate_color_css(class_names, hyperlink_colors, css_path):
     """ Generates CSS file that defines the colors for each hyperlink state for each configured regex.
 
     Args:
-        app: Sphinx application object to use.
+        class_names (dict): Mapping of colors to CSS class identifiers.
         hyperlink_colors (dict): Dictionary with regex strings as keys and list/tuple of strings as values.
+        css_path (str): Location of the CSS file to create
     """
-    class_names = app.config.traceability_class_names
-    with open(path.join(path.dirname(__file__), 'assets', 'hyperlink_colors.css'), 'w') as css_file:
+    with open(css_path, 'w') as css_file:
         for regex, colors in hyperlink_colors.items():
             colors = tuple(colors)
             if len(colors) > 3:
@@ -215,9 +215,12 @@ def perform_consistency_check(app, env):
         fname = app.config.traceability_json_export_path
         env.traceability_collection.export(fname)
 
-    if app.config.traceability_hyperlink_colors:
-        app.add_css_file('hyperlink_colors.css')
-        generate_color_css(app, app.config.traceability_hyperlink_colors)
+    if app.config.traceability_hyperlink_colors and app.builder.format == "html":
+        colors_filename = 'hyperlink_colors.css'
+        app.add_css_file(colors_filename)
+        generate_color_css(app.config.traceability_class_names,
+                           app.config.traceability_hyperlink_colors,
+                           path.join(app.outdir, '_static', colors_filename))
 
     regex = app.config.traceability_checklist.get('checklist_item_regex')
     if regex is not None and app.config.traceability_checklist['has_checklist_items']:
