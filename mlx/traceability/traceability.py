@@ -485,17 +485,17 @@ def setup(app):
     app.add_css_file('https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css')
 
     # Source local resources and register them for copying
-    filename = f'traceability-{version}.min.js'
-    app.add_js_file(filename)
+    js_filename = f'traceability-{version}.min.js'
+    app.add_js_file(js_filename)
 
-    def copy_js_file(app, exception):
+    def copy_html_assets(app, exception):
         if app.builder.format == 'html' and not exception:
             shutil.copyfile(
-                path.join(path.dirname(__file__), 'assets', filename),
-                path.join(app.outdir, '_static', filename)
+                path.join(path.dirname(__file__), 'assets', js_filename),
+                path.join(app.outdir, '_static', js_filename)
             )
 
-    app.connect('build-finished', copy_js_file)
+    app.connect('build-finished', copy_html_assets)
 
     # Since Sphinx 6, jquery isn't bundled anymore and we need to ensure that
     # the sphinxcontrib-jquery extension is enabled.
