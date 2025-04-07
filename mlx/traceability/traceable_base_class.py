@@ -89,11 +89,21 @@ class TraceableBaseClass:
     def content(self, content):
         self._content = content
         if self._state:
-            template = ViewList(source=self.docname, parent_offset=self.lineno)
-            for idx, line in enumerate(content.split('\n')):
-                template.append(line, self.docname, idx)
-            self.content_node.children = []  # reset
-            nested_parse_with_titles(self._state, template, self.content_node)
+            # Create ViewList with proper source attribution
+            content_list = ViewList()
+            for line_idx, line in enumerate(content.splitlines()):
+                # Add each line with correct source and line offset
+                content_list.append(line, source=self.docname, offset=self.lineno + line_idx)
+
+            # Clear existing content
+            self.content_node.children = []
+
+            # Parse with proper line number context
+            nested_parse_with_titles(
+                self._state,
+                content_list,
+                self.content_node
+            )
 
     def clear_state(self):
         '''
