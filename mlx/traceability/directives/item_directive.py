@@ -186,7 +186,7 @@ class ItemDirective(TraceableBaseDirective):
         """
         target_node = nodes.target('', '', ids=[target_id])
         item = TraceableItem(target_id, state=self.state)
-        item.set_location(env.docname, self.lineno)
+        item.set_location(env.doc2path(env.docname), self.lineno)
         item.node = target_node
         item.caption = self.caption
         item.content = '\n'.join(self.content)

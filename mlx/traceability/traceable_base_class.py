@@ -75,10 +75,10 @@ class TraceableBaseClass:
         Set location in document
 
         Args:
-            docname (str): Path to docname
+            docname (str/Path): Path to docname
             lineno (int): Line number in given document
         '''
-        self.docname = docname
+        self.docname = str(docname)
         self.lineno = lineno
 
     @property
