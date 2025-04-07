@@ -91,7 +91,7 @@ class TraceableBaseClass:
         if self._state:
             # Create ViewList with proper source attribution
             content_list = ViewList()
-            for line_idx, line in enumerate(content.splitlines()):
+            for line_idx, line in enumerate(content.splitlines(), start=1):
                 # Add each line with correct source and line offset
                 content_list.append(line, source=self.docname, offset=self.lineno + line_idx)
 
