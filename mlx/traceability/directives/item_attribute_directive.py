@@ -68,7 +68,7 @@ class ItemAttributeDirective(TraceableBaseDirective):
         else:
             attr = TraceableItem.defined_attributes[stored_id]
             attr.caption = self.caption
-            attr.set_location(env.doc2path(env.docname), self.lineno)
+            attr.set_location(*self.get_source_info(), self.content_offset)
             attribute_node['id'] = attr.identifier
 
         # Output content of attribute to document

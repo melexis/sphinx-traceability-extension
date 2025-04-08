@@ -70,16 +70,18 @@ class TraceableBaseClass:
         if other.content is not None:
             self.content = other.content
 
-    def set_location(self, docname, lineno=0):
+    def set_location(self, docname, lineno=0, offset=2):
         '''
         Set location in document
 
         Args:
             docname (str/Path): Path to docname
             lineno (int): Line number in given document
+            offset (int): Offset of the directive's content compared to its definition
         '''
         self.docname = str(docname)
         self.lineno = lineno
+        self.content_lineno = lineno + offset
 
     @property
     def content(self):
@@ -91,9 +93,9 @@ class TraceableBaseClass:
         if self._state:
             # Create ViewList with proper source attribution
             content_list = ViewList()
-            for line_idx, line in enumerate(content.splitlines(), start=1):
+            for line_idx, line in enumerate(content.splitlines()):
                 # Add each line with correct source and line offset
-                content_list.append(line, source=self.docname, offset=self.lineno + line_idx)
+                content_list.append(line, source=self.docname, offset=self.content_lineno + line_idx)
 
             # Clear existing content
             self.content_node.children = []
