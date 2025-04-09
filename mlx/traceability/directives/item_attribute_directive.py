@@ -69,7 +69,7 @@ class ItemAttributeDirective(TraceableBaseDirective):
         else:
             attr = TraceableItem.defined_attributes[stored_id]
             attr.caption = self.caption
-            attr.set_location(*self.get_source_info(), self.content_offset)
+            attr.set_location(*self.get_source_info())
             attr.directive = self  # the directive is needed to parse any content
             attribute_node['id'] = attr.identifier
 

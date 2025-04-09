@@ -69,18 +69,16 @@ class TraceableBaseClass:
         if other.content is not None:
             self.content = other.content
 
-    def set_location(self, docname, lineno=0, offset=2):
+    def set_location(self, docname, lineno=0):
         '''
         Set location in document
 
         Args:
             docname (str/Path): Path to docname
             lineno (int): Line number in given document
-            offset (int): Offset of the directive's content compared to its definition
         '''
         self.docname = str(docname)
         self.lineno = lineno
-        self.content_lineno = lineno + offset  # remove?
 
     @property
     def content(self):
