@@ -365,7 +365,16 @@ def traceability_callback_per_item(name, collection):
     """
     item = collection.get_item(name)
     if name == 'r001':
-        item.content += '\n\nThis line was added by ``traceability_callback_per_item`` and is parsed as |RST| syntax.'
+        item.content += '\n\nThis line has this `undefined target`_ and is parsed as |RST| syntax and '
+        item.content += 'was added by ``traceability_callback_per_item``'
+        # testing that a docutils error has best-effort location metadata:
+        # doc/integration_test_report.rst:58: ERROR: Unknown target name: "undefinedtarget". [docutils]
+    elif name == 'r003':
+        item.content = ''
+    elif name == 'r005':
+        item.content = 'The item content was completely overwritten by ``traceability_callback_per_item``.'
+    elif name == 'ITEST-CAPTION':
+        item.content = 'This line was added by ``traceability_callback_per_item``.'
     if name.startswith('RQT') and not (('functional' in item.attributes) ^ ('non_functional' in item.attributes)):
         # When it is not marked as either functional or non-functional, mark it as functional
         item.add_attribute('functional', '')
