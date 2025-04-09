@@ -185,11 +185,11 @@ class ItemDirective(TraceableBaseDirective):
             TraceableItem/None: Instantiated TraceableItem; or None if an item with the same identifier already exists
         """
         target_node = nodes.target('', '', ids=[target_id])
-        item = TraceableItem(target_id, state=self.state)
+        item = TraceableItem(target_id, directive=self)
         item.set_location(*self.get_source_info(), self.content_offset - self.lineno)
         item.node = target_node
         item.caption = self.caption
-        item.content = '\n'.join(self.content)
+        item.content = self.content
         try:
             env.traceability_collection.add_item(item)
         except TraceabilityException as err:

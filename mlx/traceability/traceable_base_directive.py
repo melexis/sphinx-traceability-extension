@@ -7,7 +7,7 @@ from .traceability_exception import report_warning
 from .traceable_item import TraceableItem
 
 
-class TraceableBaseDirective(SphinxDirective, ABC):  # Changed parent class
+class TraceableBaseDirective(SphinxDirective, ABC):
     """ Base class for all Traceability directives. """
 
     final_argument_whitespace = True
