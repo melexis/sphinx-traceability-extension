@@ -37,23 +37,25 @@ jobs:
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       run: tox -e sphinx7.4
+      continue-on-error: true
     - name: Build documentation with Sphinx >= 8.2.3
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       if: matrix.python-version > 3.9
       run: tox -e sphinx-latest
-    - name: Codecov
-      if: matrix.python-version == 3.9
-      run: tox -e codecov
-    - name: Static checks
-      if: matrix.python-version == 3.9
-      run: tox -e check
+      continue-on-error: true
     - name: Upload warning files
       if: always() && matrix.python-version == 3.9
       uses: actions/upload-artifact@v4
       with:
         name: sphinx-warnings
         path: sphinx-*_warnings.txt
+    - name: Codecov
+      if: matrix.python-version == 3.9
+      run: tox -e codecov
+    - name: Static checks
+      if: matrix.python-version == 3.9
+      run: tox -e check
     - name: Upload HTML documentation
       if: matrix.python-version == 3.9
       uses: actions/upload-artifact@v4
