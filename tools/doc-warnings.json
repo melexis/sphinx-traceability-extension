@@ -6,7 +6,7 @@
         "exclude": [
             "WARNING: the mlx.traceability extension is not safe for parallel reading",
             "WARNING: doing serial read",
-            "WARNING: cannot cache unpickable configuration value:"
+            "WARNING: cannot cache (unpickable|unpickleable) configuration value:"
         ]
     },
     "doxygen": {
