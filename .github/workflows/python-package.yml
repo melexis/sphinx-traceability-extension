@@ -47,7 +47,6 @@ jobs:
       run: tox -e sphinx-latest
       continue-on-error: true
     - name: Upload warning files
-      if: always() && matrix.python-version == 3.9
       uses: actions/upload-artifact@v4
       with:
         name: sphinx-warnings
