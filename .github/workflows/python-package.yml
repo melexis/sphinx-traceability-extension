@@ -34,11 +34,13 @@ jobs:
     - name: Run test
       run: tox -e py
     - name: Build documentation with Sphinx version 7.4
+      id: sphinx74
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       run: tox -e sphinx7.4
       continue-on-error: true
     - name: Build documentation with Sphinx >= 8.2.3
+      id: sphinx_latest
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       if: matrix.python-version > 3.9
@@ -50,6 +52,16 @@ jobs:
       with:
         name: sphinx-warnings
         path: sphinx-*_warnings.txt
+    - name: Check documentation build status
+      run: |
+        if [[ "${{ steps.sphinx74.outcome }}" == "failure" && "${{ matrix.python-version }}" == "3.9" ]]; then
+          echo "Sphinx 7.4 documentation build failed"
+          exit 1
+        fi
+        if [[ "${{ steps.sphinx_latest.outcome }}" == "failure" && "${{ matrix.python-version }}" > "3.9" ]]; then
+          echo "Latest Sphinx documentation build failed"
+          exit 1
+        fi
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov
