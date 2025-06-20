@@ -1,4 +1,5 @@
 """Module for the item-attribute directive"""
+from pathlib import Path
 from docutils import nodes
 
 from ..traceability_exception import report_warning
@@ -69,7 +70,8 @@ class ItemAttributeDirective(TraceableBaseDirective):
         else:
             attr = TraceableItem.defined_attributes[stored_id]
             attr.caption = self.caption
-            attr.set_location(*self.get_source_info())
+            doc_path, lineno = self.get_source_info()
+            attr.set_location(Path(doc_path).relative_to(env.srcdir), lineno)
             attr.directive = self  # the directive is needed to parse any content
             attribute_node['id'] = attr.identifier
 

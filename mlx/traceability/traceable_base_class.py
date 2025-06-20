@@ -3,6 +3,7 @@ Base class for traceable stuff
 '''
 
 import hashlib
+from pathlib import Path
 from docutils.statemachine import StringList, ViewList
 
 from sphinx.util.docutils import nodes
@@ -74,10 +75,14 @@ class TraceableBaseClass:
         Set location in document
 
         Args:
-            docname (str/Path): Path to docname
+            docname (str/Path): Path to docname, relative to srcdir
             lineno (int): Line number in given document
         '''
-        self.docname = str(docname)
+        if isinstance(docname, Path):
+            # Remove file extension if it exists
+            self.docname = str(docname.with_suffix(''))
+        else:
+            self.docname = str(docname)
         self.lineno = lineno
 
     @property
