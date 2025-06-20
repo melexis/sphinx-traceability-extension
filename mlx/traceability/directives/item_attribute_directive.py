@@ -70,8 +70,11 @@ class ItemAttributeDirective(TraceableBaseDirective):
         else:
             attr = TraceableItem.defined_attributes[stored_id]
             attr.caption = self.caption
-            doc_path, lineno = self.get_source_info()
-            attr.set_location(Path(doc_path).relative_to(env.srcdir), lineno)
+            doc_path_str, lineno = self.get_source_info()
+            doc_path = Path(doc_path_str)
+            if doc_path.is_absolute():
+                doc_path = doc_path.relative_to(env.srcdir)
+            attr.set_location(doc_path, lineno)
             attr.directive = self  # the directive is needed to parse any content
             attribute_node['id'] = attr.identifier
 
