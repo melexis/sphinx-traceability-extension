@@ -9,7 +9,7 @@ version = get_version()
 project_url = 'https://github.com/melexis/sphinx-traceability-extension'
 
 requires = [
-    'Sphinx>=2.4.5,<9.0',
+    'Sphinx>=7.4,<9.0',
     'sphinxcontrib-jquery>=2.0.0,!=3.0.0',
     'docutils',
     'matplotlib<4.0',
@@ -44,7 +44,6 @@ setup(
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
