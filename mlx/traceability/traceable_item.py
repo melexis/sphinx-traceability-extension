@@ -180,6 +180,30 @@ class TraceableItem(TraceableBaseClass):
                 if target_id in database[relation] and (not relations or relation in relations):
                     database[relation].remove(target_id)
 
+    def remove_targets_by_ids(self, target_ids, explicit=True, implicit=True, relations=set()):
+        ''' Removes any relations to given target items.
+
+        Args:
+            target_ids (list): List of target item IDs to remove relations to.
+            explicit (bool): If True, explicitly expressed relations to given targets are removed.
+            implicit (bool): If True, implicitly expressed relations to given targets are removed.
+            relations (set): Set of relations to remove; empty to take all into account.
+        '''
+        source_databases = []
+        if explicit:
+            source_databases.append(self.explicit_relations)
+        if implicit:
+            source_databases.append(self.implicit_relations)
+
+        for database in source_databases:
+            for relation in database:
+                if not relations or relation in relations:
+                    # Remove all target_ids from this relation
+                    database[relation] = [
+                        target for target in database[relation]
+                        if target not in target_ids
+                    ]
+
     def iter_targets(self, relation, explicit=True, implicit=True, sort=True):
         ''' Gets a list of targets to other traceable item(s), naturally sorted by default.
 
