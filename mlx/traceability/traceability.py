@@ -25,7 +25,7 @@ from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
 from .traceable_base_node import TraceableBaseNode
 from .traceable_item import TraceableItem
-from .traceable_collection import TraceableCollection
+from .traceable_collection import TraceableCollection, ParallelSafeTraceableCollection
 from .traceability_exception import TraceabilityException, MultipleTraceabilityExceptions, report_warning
 from .directives.attribute_link_directive import AttributeLink, AttributeLinkDirective
 from .directives.attribute_sort_directive import AttributeSort, AttributeSortDirective
@@ -318,12 +318,15 @@ def initialize_environment(app):
     """
     env = app.builder.env
 
-    # Assure ``traceability_collection`` will always be there.
-    # It needs to be empty on every (re-)build. As the script automatically
-    # generates placeholders when parsing the reverse relationships, the
-    # database of items needs to be empty on every re-build.
-    env.traceability_collection = TraceableCollection()
-    env.traceability_collection.attributes_sort = app.config.traceability_attributes_sort
+    # For parallel reading support, use ParallelSafeTraceableCollection
+    # It will handle collections in worker processes and merge them during env-merge-info
+    env.traceability_collection = ParallelSafeTraceableCollection()
+
+    # Initialize the main collection with configuration
+    main_collection = TraceableCollection()
+    main_collection.attributes_sort = app.config.traceability_attributes_sort
+    env.traceability_collection.set_main_collection(main_collection)
+
     env.traceability_ref_nodes = {}
 
     all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
@@ -348,6 +351,96 @@ def initialize_environment(app):
         r'\let\@noitemerr\relax'
         r'\makeatother'
     )
+
+
+def merge_traceability_info(app, env, docnames, other):
+    """
+    Merge traceability information from parallel workers.
+
+    This function is called after parallel reading to merge the data
+    collected by each worker process into the main environment.
+
+    Args:
+        app: Sphinx application object
+        env: Current environment
+        docnames: List of document names that were built
+        other: Environment from worker process containing traceability data
+    """
+    if not hasattr(other, 'traceability_collection'):
+        return
+
+    # Merge the collections - the worker collection contains items from worker process
+    env.traceability_collection.merge_from(other.traceability_collection)
+
+    # Also merge ref_nodes if present
+    if hasattr(other, 'traceability_ref_nodes'):
+        if not hasattr(env, 'traceability_ref_nodes'):
+            env.traceability_ref_nodes = {}
+        env.traceability_ref_nodes.update(other.traceability_ref_nodes)
+
+
+def purge_traceability_info(app, env, docname):
+    """
+    Remove traceability information for a specific document.
+
+    This function is called when a document is removed or needs to be rebuilt,
+    allowing us to clean up stale traceability data.
+
+    Args:
+        app: Sphinx application object
+        env: Current environment
+        docname: Name of the document to purge
+    """
+    if not hasattr(env, 'traceability_collection'):
+        return
+
+    # Remove items from the collection
+    env.traceability_collection.remove_items_from_document(docname)
+
+    # Also clean up ref_nodes
+    if hasattr(env, 'traceability_ref_nodes'):
+        keys_to_remove = [key for key in env.traceability_ref_nodes.keys()
+                         if key.startswith(f"{docname}:")]
+        for key in keys_to_remove:
+            del env.traceability_ref_nodes[key]
+
+
+def begin_parallel_read(app, env, docnames):
+    """
+    Set up for parallel reading phase.
+
+    This is called at the start of the reading phase. In multiprocessing
+    context, worker processes will have their own copy of the environment.
+
+    Args:
+        app: Sphinx application object
+        env: Current environment
+        docnames: List of document names to be read
+    """
+    # Better worker process detection: check if we're processing all documents
+    if hasattr(env, 'traceability_collection') and hasattr(env.traceability_collection, 'mark_as_worker_process'):
+        # Get total number of documents from environment
+        total_docs = len(getattr(env, 'all_docs', []))
+
+        # If we're processing fewer documents than the total, we're likely in a worker
+        # Also check if docnames is a subset (worker processes get specific document lists)
+        if docnames and total_docs > 0 and len(docnames) < total_docs:
+            env.traceability_collection.mark_as_worker_process()
+
+            # Ensure worker has ALL relationship configuration
+            # This is critical - worker processes need the complete relationship config
+            if hasattr(app.config, 'traceability_relationships'):
+                for rel in app.config.traceability_relationships:
+                    revrel = app.config.traceability_relationships[rel]
+                    env.traceability_collection.add_relation_pair(rel, revrel)
+
+        # Also ensure the main process has correct configuration
+        elif hasattr(app.config, 'traceability_relationships'):
+            # Make sure main process also has all relationships configured
+            for rel in app.config.traceability_relationships:
+                revrel = app.config.traceability_relationships[rel]
+                if not env.traceability_collection.get_reverse_relation(rel):
+                    env.traceability_collection.add_relation_pair(rel, revrel)
 
 
 # ----------------------------------------------------------------------------
@@ -669,12 +762,17 @@ def setup(app):
     app.connect('env-check-consistency', perform_consistency_check)
     app.connect('doctree-resolved', process_item_nodes)
 
+    # Parallel reading support event handlers
+    app.connect('env-merge-info', merge_traceability_info)
+    app.connect('env-purge-doc', purge_traceability_info)
+    app.connect('env-before-read-docs', begin_parallel_read)
+
     app.add_role('item', XRefRole(nodeclass=PendingItemXref,
                                   innernodeclass=nodes.emphasis,
                                   warn_dangling=True))
 
     return {
         'version': version,
-        'parallel_read_safe': False,
+        'parallel_read_safe': True,
         'parallel_write_safe': True,
     }

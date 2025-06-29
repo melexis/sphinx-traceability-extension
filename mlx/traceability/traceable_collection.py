@@ -5,6 +5,7 @@ import json
 import re
 from operator import attrgetter
 from pathlib import Path
+from typing import Dict
 
 from natsort import natsorted
 
@@ -367,3 +368,292 @@ class TraceableCollection:
                     continue
                 external_targets_to_item_ids.setdefault(target, []).append(item_id)
         return external_targets_to_item_ids
+
+    def merge_from(self, other_collection):
+        """
+        Merge items and relations from another TraceableCollection.
+
+        This is used during parallel reading to combine collections from worker processes.
+
+        Args:
+            other_collection (TraceableCollection): The collection to merge from
+        """
+        # Merge relations (should be identical across workers)
+        for relation, reverse in other_collection.relations.items():
+            if relation not in self.relations:
+                self.relations[relation] = reverse
+            elif self.relations[relation] != reverse:
+                # This shouldn't happen in normal operation
+                raise TraceabilityException(
+                    f"Conflicting reverse relation for '{relation}': "
+                    f"'{self.relations[relation]}' vs '{reverse}'"
+                )
+
+        # Merge items, handling conflicts more permissively for parallel processing
+        for item_id, other_item in other_collection.items.items():
+            if item_id in self.items:
+                existing_item = self.items[item_id]
+                # If both are placeholders, merge them
+                if existing_item.is_placeholder and other_item.is_placeholder:
+                    existing_item.update(other_item)
+                # If existing is placeholder but other is real, replace
+                elif existing_item.is_placeholder and not other_item.is_placeholder:
+                    self.items[item_id] = other_item
+                # If other is placeholder but existing is real, keep existing
+                elif not existing_item.is_placeholder and other_item.is_placeholder:
+                    # Only merge relationships from placeholder, not content
+                    self._merge_relationships_only(existing_item, other_item)
+                # If both are real items, check carefully
+                else:
+                    # In parallel processing, the same item might be referenced by multiple workers
+                    # Only consider it a conflict if they have different content from different docs
+                    if (existing_item.docname == other_item.docname and
+                            existing_item.lineno == other_item.lineno):
+                        # Same item from same location - this is expected in parallel processing
+                        # Only merge relationships, not content (content should be identical)
+                        self._merge_relationships_only(existing_item, other_item)
+                    elif existing_item.docname != other_item.docname:
+                        # Items from different documents with same ID
+                        # This could be a real duplicate or cross-references
+                        # Only merge relationships, keep the first item's content
+                        self._merge_relationships_only(existing_item, other_item)
+                    else:
+                        # Same document, different lines - this is likely a real duplicate
+                        raise TraceabilityException(
+                            f"Duplicate item '{item_id}' found in document {existing_item.docname} "
+                            f"at lines {existing_item.lineno} and {other_item.lineno}"
+                        )
+            else:
+                self.items[item_id] = other_item
+
+        # Merge intermediate nodes
+        self._intermediate_nodes.extend(other_collection._intermediate_nodes)
+
+        # Merge attributes_sort (should be identical)
+        for key, value in other_collection.attributes_sort.items():
+            if key not in self.attributes_sort:
+                self.attributes_sort[key] = value
+
+        # CRITICAL FIX: After merging items, restore missing reverse relationships
+        # This handles cases where workers created forward relationships but targets were in different workers
+        self._restore_reverse_relationships()
+
+    def _merge_relationships_only(self, target_item, source_item):
+        """
+        Merge only relationships from source_item into target_item, without touching content.
+
+        This is safer than using update() which can modify content inappropriately.
+        """
+        # Merge explicit relationships
+        for relation, targets in source_item.explicit_relations.items():
+            if relation not in target_item.explicit_relations:
+                target_item.explicit_relations[relation] = []
+            for target_id in targets:
+                if target_id not in target_item.explicit_relations[relation]:
+                    target_item.explicit_relations[relation].append(target_id)
+
+        # Merge implicit relationships
+        for relation, targets in source_item.implicit_relations.items():
+            if relation not in target_item.implicit_relations:
+                target_item.implicit_relations[relation] = []
+            for target_id in targets:
+                if target_id not in target_item.implicit_relations[relation]:
+                    target_item.implicit_relations[relation].append(target_id)
+
+    def _restore_reverse_relationships(self):
+        """
+        Restore missing reverse relationships after merging.
+
+        In parallel processing, a worker might create a forward relationship to an item
+        that exists in another worker. After merging, we need to ensure all reverse
+        relationships are properly established.
+        """
+        for item_id, item in self.items.items():
+            # Check all explicit relationships in this item
+            for relation, targets in item.explicit_relations.items():
+                reverse_relation = self.get_reverse_relation(relation)
+                if reverse_relation and reverse_relation != self.NO_RELATION_STR:
+                    # For each target, ensure the reverse relationship exists
+                    for target_id in targets:
+                        if target_id in self.items:
+                            target_item = self.items[target_id]
+                            # Check if reverse relationship already exists (implicitly)
+                            existing_reverse_targets = list(
+                                target_item.iter_targets(reverse_relation, explicit=False, implicit=True)
+                            )
+                            if item_id not in existing_reverse_targets:
+                                # Add the missing reverse relationship as implicit
+                                try:
+                                    target_item.add_target(reverse_relation, item_id, implicit=True)
+                                except TraceabilityException:
+                                    # Target already exists - this is fine
+                                    pass
+
+    def remove_items_from_document(self, docname: str):
+        """
+        Remove all items and related data that belong to a specific document.
+
+        This method is used during env-purge-doc to clean up removed documents.
+
+        Args:
+            docname (str): The document name to remove items from
+        """
+        # Find items to remove
+        items_to_remove = []
+        for item_id, item in self.items.items():
+            if item.docname == docname:
+                items_to_remove.append(item_id)
+
+        # Remove the items
+        for item_id in items_to_remove:
+            del self.items[item_id]
+
+        # Remove relationships pointing to removed items
+        for item in self.items.values():
+            item.remove_targets_by_ids(items_to_remove)
+
+        # Remove intermediate nodes from this document
+        self._intermediate_nodes = [
+            node for node in self._intermediate_nodes
+            if node.get('document') != docname
+        ]
+
+    def get_document_items(self, docname: str) -> Dict[str, 'TraceableItem']:
+        """
+        Get all items that belong to a specific document.
+
+        Args:
+            docname (str): The document name
+
+        Returns:
+            Dict[str, TraceableItem]: Dictionary of item_id -> item for the document
+        """
+        return {
+            item_id: item for item_id, item in self.items.items()
+            if item.docname == docname
+        }
+
+
+class ParallelSafeTraceableCollection:
+    """
+    Multiprocess-safe wrapper for TraceableCollection that enables parallel reading.
+
+    During parallel reading, each worker process gets its own TraceableCollection
+    instance. After reading, all process collections are merged via env-merge-info.
+    """
+
+    def __init__(self):
+        # Use a regular collection - no threading.local() since Sphinx uses multiprocessing
+        object.__setattr__(self, '_collection', TraceableCollection())
+        object.__setattr__(self, '_is_worker_process', False)
+
+    def _get_current_collection(self) -> TraceableCollection:
+        """Get the current collection."""
+        return self._collection
+
+    def set_main_collection(self, collection: TraceableCollection):
+        """Set the main collection (called during environment initialization)."""
+        # Always copy the configuration
+        self._collection.relations = collection.relations.copy()
+        self._collection.attributes_sort = collection.attributes_sort.copy()
+
+        # Copy items only if we're not in a worker process
+        if not self._is_worker_process:
+            self._collection.items = collection.items.copy()
+            self._collection._intermediate_nodes = collection._intermediate_nodes.copy()
+
+    def mark_as_worker_process(self):
+        """Mark this collection as being in a worker process."""
+        self._is_worker_process = True
+        # Clear items for worker process (they should build their own subset)
+        self._collection.items = {}
+        self._collection._intermediate_nodes = []
+
+    def add_relation_pair(self, forward, reverse=None):
+        """Add a relation pair (ensure this works for workers)."""
+        if reverse is None:
+            reverse = self._collection.NO_RELATION_STR
+        return self._collection.add_relation_pair(forward, reverse)
+
+    # Delegate all collection methods to the current collection
+    def __getattr__(self, name):
+        """Delegate attribute access to the current collection."""
+        # Avoid recursion during pickling/unpickling
+        if name.startswith('_'):
+            raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
+
+        # Check if we have a collection to delegate to
+        try:
+            collection = object.__getattribute__(self, '_collection')
+        except AttributeError:
+            raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
+
+        if collection is None:
+            raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")
+
+        return getattr(collection, name)
+
+    def __setattr__(self, name, value):
+        """Handle attribute setting."""
+        if name.startswith('_'):
+            object.__setattr__(self, name, value)
+        else:
+            setattr(self._collection, name, value)
+
+    # Explicitly define key methods to ensure they work properly
+    def add_item(self, item):
+        """Add item to current collection."""
+        return self._collection.add_item(item)
+
+    def add_relation(self, source_id, relation, target_id):
+        """Add relation to current collection."""
+        return self._collection.add_relation(source_id, relation, target_id)
+
+    def add_intermediate_node(self, node):
+        """Add intermediate node to current collection."""
+        return self._collection.add_intermediate_node(node)
+
+    def has_item(self, item_id):
+        """Check if item exists."""
+        return self._collection.has_item(item_id)
+
+    def get_item(self, item_id):
+        """Get an item by ID."""
+        return self._collection.get_item(item_id)
+
+    def iter_items(self):
+        """Iterate over items."""
+        return self._collection.iter_items()
+
+    def get_reverse_relation(self, relation):
+        """Get reverse relation."""
+        return self._collection.get_reverse_relation(relation)
+
+    def iter_relations(self):
+        """Iterate relations."""
+        return self._collection.iter_relations()
+
+    def merge_from(self, other_collection):
+        """Merge items from another collection."""
+        if hasattr(other_collection, '_collection'):
+            # If it's a ParallelSafeTraceableCollection, get the inner collection
+            return self._collection.merge_from(other_collection._collection)
+        else:
+            # If it's a regular TraceableCollection, merge directly
+            return self._collection.merge_from(other_collection)
+
+    def remove_items_from_document(self, docname: str):
+        """Remove all items from a specific document."""
+        return self._collection.remove_items_from_document(docname)
+
+    def __getstate__(self):
+        """Custom pickling support."""
+        return {
+            '_collection': self._collection,
+            '_is_worker_process': self._is_worker_process
+        }
+
+    def __setstate__(self, state):
+        """Custom unpickling support."""
+        object.__setattr__(self, '_collection', state['_collection'])
+        object.__setattr__(self, '_is_worker_process', state['_is_worker_process'])
