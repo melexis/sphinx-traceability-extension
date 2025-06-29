@@ -12,7 +12,7 @@ class TraceableAttribute(TraceableBaseClass):
     '''
     regex = None
 
-    def __init__(self, attrid, value):
+    def __init__(self, attrid, value, **kwargs):
         '''
         Initialize a new attribute
 
@@ -20,7 +20,7 @@ class TraceableAttribute(TraceableBaseClass):
             attrid (str): Attribute identification
             value (str): Pattern string to which the attribute values should match
         '''
-        super(TraceableAttribute, self).__init__(attrid)
+        super(TraceableAttribute, self).__init__(attrid, **kwargs)
         self.value = value
 
     @staticmethod

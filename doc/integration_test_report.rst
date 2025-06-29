@@ -101,7 +101,7 @@ This text is not part of any item
     :asil: A
     :status: Approved
 
-    Clean up all this.
+    This content shall not be rendered as it is removed by traceability_callback_per_item.
 
 .. item:: r007 Depends on all with stereotypes
     :asil: X

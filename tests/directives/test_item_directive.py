@@ -26,6 +26,7 @@ class TestItemDirective(TestCase):
 
     def setUp(self):
         self.app = MagicMock(autospec=Sphinx)
+        self.app.srcdir = '/mock/srcdir'  # Mock the source directory
         self.node = dut('')
         self.node['document'] = 'some_doc'
         self.node['id'] = 'some_id'

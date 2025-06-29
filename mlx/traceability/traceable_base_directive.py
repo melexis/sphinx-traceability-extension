@@ -1,13 +1,13 @@
 """ Module for the base class for all Traceability directives. """
 import re
 from abc import ABC, abstractmethod
-from docutils.parsers.rst import Directive
+from sphinx.util.docutils import SphinxDirective
 
 from .traceability_exception import report_warning
 from .traceable_item import TraceableItem
 
 
-class TraceableBaseDirective(Directive, ABC):
+class TraceableBaseDirective(SphinxDirective, ABC):
     """ Base class for all Traceability directives. """
 
     final_argument_whitespace = True

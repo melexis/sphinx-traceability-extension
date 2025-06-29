@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -33,19 +33,35 @@ jobs:
         sudo apt-get install -y plantuml
     - name: Run test
       run: tox -e py
-    - name: Build documentation with Sphinx version 2.4.5
+    - name: Build documentation with Sphinx version 7.4
+      id: sphinx74
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
-      run: tox -e sphinx2.4.5
-    - name: Build documentation with Sphinx version 6.2.1
-      env:
-        PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
-      run: tox -e sphinx6.2.1
-    - name: Build documentation with Sphinx >= 8.0
+      run: tox -e sphinx7.4
+      continue-on-error: true
+    - name: Build documentation with Sphinx >= 8.2.3
+      id: sphinx_latest
       env:
         PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       if: matrix.python-version > 3.9
       run: tox -e sphinx-latest
+      continue-on-error: true
+    - name: Upload warning files
+      if: matrix.python-version == 3.12
+      uses: actions/upload-artifact@v4
+      with:
+        name: sphinx-warnings
+        path: sphinx-*_warnings.txt
+    - name: Check documentation build status
+      run: |
+        if [[ "${{ steps.sphinx74.outcome }}" == "failure" ]]; then
+          echo "Sphinx 7.4 documentation build failed"
+          exit 1
+        fi
+        if [[ "${{ steps.sphinx_latest.outcome }}" == "failure" ]]; then
+          echo "Latest Sphinx documentation build failed"
+          exit 1
+        fi
     - name: Codecov
       if: matrix.python-version == 3.9
       run: tox -e codecov
