@@ -10,7 +10,6 @@ from collections import namedtuple
 from os import path
 from re import fullmatch, match
 
-import natsort
 import shutil
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -20,6 +19,8 @@ from sphinx.errors import NoUri
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
 from sphinx.util.osutil import ensuredir
+from importlib import import_module
+from sphinx.util import logging
 
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
@@ -41,6 +42,9 @@ from .directives.item_matrix_directive import ItemMatrix, ItemMatrixDirective
 from .directives.item_pie_chart_directive import ItemPieChart, ItemPieChartDirective
 from .directives.item_relink_directive import ItemRelink, ItemRelinkDirective
 from .directives.item_tree_directive import ItemTree, ItemTreeDirective
+
+
+logger = logging.getLogger(__name__)
 
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
 
@@ -313,18 +317,19 @@ def init_available_relationships(app):
 
 
 def initialize_environment(app):
-    """
-    Perform initializations needed before the build process starts.
-    """
+    """Perform initializations needed before the build process starts."""
     env = app.builder.env
 
-    # Assure ``traceability_collection`` will always be there.
-    # It needs to be empty on every (re-)build. As the script automatically
-    # generates placeholders when parsing the reverse relationships, the
-    # database of items needs to be empty on every re-build.
+    processed_sort_config = {}
+    for attr, sort_spec in app.config.traceability_attributes_sort.items():
+        try:
+            processed_sort_config[attr] = get_sort_function(sort_spec)
+        except ValueError as e:
+            logger.warning(f"Invalid sort configuration for attribute '{attr}': {str(e)}")
+            # Fall back to default sorting
+            processed_sort_config[attr] = sorted
     env.traceability_collection = TraceableCollection()
-    env.traceability_collection.attributes_sort = app.config.traceability_attributes_sort
-    env.traceability_ref_nodes = {}
+    env.traceability_collection.attributes_sort = processed_sort_config
 
     all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
     all_relationships.discard('')
@@ -479,6 +484,37 @@ def _parse_description(description, attr_values, merge_request_id, regex):
     return query_results
 
 
+def get_sort_function(sort_spec):
+    """Convert a string specification into a sorting function.
+
+    Args:
+        sort_spec (str or callable): Either a string like 'natsort.natsorted' or a callable
+
+    Returns:
+        callable: The sorting function to use
+
+    Raises:
+        ValueError: If the string specification cannot be resolved to a callable
+    """
+    if callable(sort_spec):
+        logger.warning(
+            "Using functions directly in traceability_attributes_sort is deprecated and breaks "
+            "Sphinx caching. Please use string notation instead (e.g. 'natsort.natsorted' "
+            "instead of natsort.natsorted)"
+        )
+        return sort_spec
+
+    if isinstance(sort_spec, str):
+        try:
+            module_path, function_name = sort_spec.rsplit('.', 1)
+            module = import_module(module_path)
+            return getattr(module, function_name)
+        except (ValueError, ImportError, AttributeError) as e:
+            raise ValueError(f"Invalid sort function specification '{sort_spec}': {str(e)}")
+
+    raise ValueError(f"Sort specification must be string or callable, not {type(sort_spec)}")
+
+
 # -----------------------------------------------------------------------------
 # Extension setup
 def setup(app):
@@ -557,7 +593,7 @@ def setup(app):
     app.add_config_value(
         'traceability_attributes_sort',
         {
-            'effort': natsort.natsorted,
+            'effort': 'natsort.natsorted',
         },
         'env',
     )
