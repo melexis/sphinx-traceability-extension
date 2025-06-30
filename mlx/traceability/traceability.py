@@ -320,6 +320,7 @@ def initialize_environment(app):
     """Perform initializations needed before the build process starts."""
     env = app.builder.env
 
+    env.traceability_ref_nodes = {}
     processed_sort_config = {}
     for attr, sort_spec in app.config.traceability_attributes_sort.items():
         try:
