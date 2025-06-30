@@ -15,7 +15,7 @@ from mlx.traceability.traceable_item import TraceableItem
 
 from parameterized import parameterized
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger('sphinx.mlx.traceability.traceability_exception')
 
 
 def raise_no_uri(*args, **kwargs):
