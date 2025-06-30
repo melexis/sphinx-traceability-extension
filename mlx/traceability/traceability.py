@@ -20,7 +20,6 @@ from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
 from sphinx.util.osutil import ensuredir
 from importlib import import_module
-from sphinx.util import logging
 
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
@@ -42,9 +41,6 @@ from .directives.item_matrix_directive import ItemMatrix, ItemMatrixDirective
 from .directives.item_pie_chart_directive import ItemPieChart, ItemPieChartDirective
 from .directives.item_relink_directive import ItemRelink, ItemRelinkDirective
 from .directives.item_tree_directive import ItemTree, ItemTreeDirective
-
-
-logger = logging.getLogger(__name__)
 
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
 
@@ -326,7 +322,7 @@ def initialize_environment(app):
         try:
             processed_sort_config[attr] = get_sort_function(sort_spec)
         except ValueError as e:
-            logger.warning(f"Invalid sort configuration for attribute '{attr}': {str(e)}")
+            report_warning(f"Invalid sort configuration for attribute '{attr}': {str(e)}")
             # Fall back to default sorting
             processed_sort_config[attr] = sorted
     env.traceability_collection = TraceableCollection()
@@ -498,7 +494,7 @@ def get_sort_function(sort_spec):
         ValueError: If the string specification cannot be resolved to a callable
     """
     if callable(sort_spec):
-        logger.warning(
+        report_warning(
             "Using functions directly in traceability_attributes_sort is deprecated and breaks "
             "Sphinx caching. Please use string notation instead (e.g. 'natsort.natsorted' "
             "instead of natsort.natsorted)"
