@@ -353,7 +353,7 @@ traceability_external_relationship_to_url = {
 
 traceability_json_export_path = '_build/exported_items.json'
 
-def traceability_callback_per_item(name, collection):
+def traceability_callback_per_item_func(name, collection):
     """Callback function called when an item-directive is being processed.
 
     Note: attributes, relationships and content (body) of the item can be modified. Sphinx processes each directive
@@ -380,7 +380,11 @@ def traceability_callback_per_item(name, collection):
         item.add_attribute('functional', '')
 
 
-def traceability_inspect_item(name, collection):
+# Use string-based configuration for callbacks to enable Sphinx caching
+traceability_callback_per_item = 'traceability_callback_per_item_func'
+traceability_inspect_item = 'traceability_inspect_item_func'
+
+def traceability_inspect_item_func(name, collection):
     """Callback function called when an item-directive is being rendered.
 
     Warning: the item cannot not be modified, only inspected.
