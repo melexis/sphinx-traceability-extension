@@ -107,13 +107,13 @@ def call_callback_function(callback_spec: Any, *args, app=None, **kwargs) -> Any
 
     Returns:
         The return value of the callback function
+
+    Raises:
+        ImportError: If the specified module cannot be imported
+        AttributeError: If the specified function doesn't exist
+        TypeError: If callback_spec is not a valid type
     """
-    try:
-        callback_func = get_callback_function(callback_spec, app)
-        if callback_func is None:
-            return None
-        return callback_func(*args, **kwargs)
-    except Exception as e:
-        # Log the error but don't re-raise - let the caller handle it
-        report_warning(f"Error calling callback '{callback_spec}': {e}")
+    callback_func = get_callback_function(callback_spec, app)
+    if callback_func is None:
         return None
+    return callback_func(*args, **kwargs)
