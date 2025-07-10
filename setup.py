@@ -22,8 +22,9 @@ process_single_js_file(js_file_path, output_path=js_file_path.replace('.js', f'-
 
 setup(
     name='mlx.traceability',
+    dynamic="version",
     url=project_url,
-    license='GNU General Public License v3 (GPLv3)',
+    license='GPL-3.0',
     author='Melexis',
     author_email='jce@melexis.com',
     description='Sphinx traceability extension (Melexis fork)',
@@ -41,7 +42,6 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Sphinx :: Extension',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.9',
