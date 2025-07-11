@@ -10,7 +10,6 @@ from collections import namedtuple
 from os import path
 from re import fullmatch, match
 
-import natsort
 import shutil
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -20,6 +19,7 @@ from sphinx.errors import NoUri
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
 from sphinx.util.osutil import ensuredir
+from importlib import import_module
 
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
@@ -29,7 +29,7 @@ from .traceable_collection import TraceableCollection, ParallelSafeTraceableColl
 from .traceability_exception import TraceabilityException, MultipleTraceabilityExceptions, report_warning
 from .directives.attribute_link_directive import AttributeLink, AttributeLinkDirective
 from .directives.attribute_sort_directive import AttributeSort, AttributeSortDirective
-from .directives.checkbox_result_directive import CheckboxResultDirective
+from .directives.checkbox_result_directive import CheckboxResult, CheckboxResultDirective
 from .directives.checklist_item_directive import ChecklistItemDirective
 from .directives.item_directive import Item, ItemDirective
 from .directives.item_2d_matrix_directive import Item2DMatrix, Item2DMatrixDirective
@@ -251,6 +251,7 @@ def process_item_nodes(app, doctree, fromdocname):
         ItemTree,
         ItemAttribute,
         Item,
+        CheckboxResult,
     )
     for node_class in node_classes:  # order is important: e.g. AttributeSort before Item
         for node in doctree.traverse(node_class):
@@ -313,10 +314,17 @@ def init_available_relationships(app):
 
 
 def initialize_environment(app):
-    """
-    Perform initializations needed before the build process starts.
-    """
+    """Perform initializations needed before the build process starts."""
     env = app.builder.env
+    env.traceability_ref_nodes = {}
+    processed_sort_config = {}
+    for attr, sort_spec in app.config.traceability_attributes_sort.items():
+        try:
+            processed_sort_config[attr] = get_sort_function(sort_spec)
+        except ValueError as e:
+            report_warning(f"Invalid sort configuration for attribute '{attr}': {str(e)}")
+            # Fall back to default sorting
+            processed_sort_config[attr] = sorted
 
     # For parallel reading support, use ParallelSafeTraceableCollection
     # It will handle collections in worker processes and merge them during env-merge-info
@@ -326,8 +334,7 @@ def initialize_environment(app):
     main_collection = TraceableCollection()
     main_collection.attributes_sort = app.config.traceability_attributes_sort
     env.traceability_collection.set_main_collection(main_collection)
-
-    env.traceability_ref_nodes = {}
+    env.traceability_collection.attributes_sort = processed_sort_config
 
     all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
     all_relationships.discard('')
@@ -572,6 +579,37 @@ def _parse_description(description, attr_values, merge_request_id, regex):
     return query_results
 
 
+def get_sort_function(sort_spec):
+    """Convert a string specification into a sorting function.
+
+    Args:
+        sort_spec (str or callable): Either a string like 'natsort.natsorted' or a callable
+
+    Returns:
+        callable: The sorting function to use
+
+    Raises:
+        ValueError: If the string specification cannot be resolved to a callable
+    """
+    if callable(sort_spec):
+        report_warning(
+            "Using functions directly in traceability_attributes_sort is deprecated and breaks "
+            "Sphinx caching. Please use string notation instead (e.g. 'natsort.natsorted' "
+            "instead of natsort.natsorted)"
+        )
+        return sort_spec
+
+    if isinstance(sort_spec, str):
+        try:
+            module_path, function_name = sort_spec.rsplit('.', 1)
+            module = import_module(module_path)
+            return getattr(module, function_name)
+        except (ValueError, ImportError, AttributeError) as e:
+            raise ValueError(f"Invalid sort function specification '{sort_spec}': {str(e)}")
+
+    raise ValueError(f"Sort specification must be string or callable, not {type(sort_spec)}")
+
+
 # -----------------------------------------------------------------------------
 # Extension setup
 def setup(app):
@@ -650,7 +688,7 @@ def setup(app):
     app.add_config_value(
         'traceability_attributes_sort',
         {
-            'effort': natsort.natsorted,
+            'effort': 'natsort.natsorted',
         },
         'env',
     )
@@ -742,6 +780,7 @@ def setup(app):
     app.add_node(ItemAttribute)
     app.add_node(Item)
     app.add_node(AttributeSort)
+    app.add_node(CheckboxResult)
 
     app.add_directive('item', ItemDirective)
     app.add_directive('checklist-item', ChecklistItemDirective)

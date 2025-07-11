@@ -7,6 +7,7 @@ from ..traceability_exception import report_warning, TraceabilityException
 from ..traceable_base_directive import TraceableBaseDirective
 from ..traceable_base_node import TraceableBaseNode
 from ..traceable_item import TraceableItem
+from ..callback_utils import call_callback_function
 
 
 class Item(TraceableBaseNode):
@@ -32,8 +33,12 @@ class Item(TraceableBaseNode):
             top_node.append(dl_node)
         # Note: content should be displayed during read of RST file, as it contains other RST objects
         self.replace_self(top_node)
-        if app.config.traceability_inspect_item:
-            app.config.traceability_inspect_item(item_id, collection)
+        call_callback_function(
+            app.config.traceability_inspect_item,
+            item_id,
+            collection,
+            app=app
+        )
 
     def _process_attributes(self, dl_node, app):
         """ Processes all attributes for the given item and adds the list of attributes to the given definition list.
@@ -165,8 +170,12 @@ class ItemDirective(TraceableBaseDirective):
         self.check_relationships(item_node['hidetype'], env)
 
         # Custom callback for modifying items
-        if app.config.traceability_callback_per_item:
-            app.config.traceability_callback_per_item(target_id, env.traceability_collection)
+        call_callback_function(
+            app.config.traceability_callback_per_item,
+            target_id,
+            env.traceability_collection,
+            app=app
+        )
         item.clear_state()  # avoid access to the state machine after this point
 
         self.check_caption_flags(item_node, app.config.traceability_item_no_captions)

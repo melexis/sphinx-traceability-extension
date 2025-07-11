@@ -404,7 +404,7 @@ The plugin itself holds a default config that can be used for any traceability d
         'effort': 'Effort estimation',
     }
     traceability_attributes_sort = {
-        'effort': natsort.natsorted,
+        'effort': 'natsort.natsorted',
     }
     traceability_relationships = {
         'fulfills': 'fulfilled_by',
