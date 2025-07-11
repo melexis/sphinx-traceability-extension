@@ -27,6 +27,9 @@ class TraceableCollection:
         self.relations_sorted = {}
         self._intermediate_nodes = []
         self.attributes_sort = {}
+        # Move defined_attributes from TraceableItem class to collection instance
+        # This ensures proper isolation during parallel processing
+        self.defined_attributes = {}
 
     def add_relation_pair(self, forward, reverse=NO_RELATION_STR):
         '''
@@ -73,6 +76,9 @@ class TraceableCollection:
         Args:
             item (TraceableItem): Traceable item to add
         '''
+        # Set collection reference for improved API
+        item._collection = self
+
         # If the item already exists ...
         if item.identifier in self.items:
             olditem = self.items[item.identifier]
@@ -173,6 +179,15 @@ class TraceableCollection:
         """ Adds an intermediate node """
         self._intermediate_nodes.append(node)
 
+    def define_attribute(self, attr):
+        """
+        Define an attribute in this collection.
+
+        Args:
+            attr (TraceableAttribute): The attribute to define
+        """
+        self.defined_attributes[attr.identifier] = attr
+
     def process_intermediate_nodes(self):
         """ Processes all intermediate nodes in order by calling its ``apply_effect`` """
         for node in sorted(self._intermediate_nodes, key=attrgetter('order')):
@@ -218,7 +233,7 @@ class TraceableCollection:
                 continue
             # On item level
             try:
-                item.self_test()
+                item.self_test(collection=self)
             except TraceabilityException as err:
                 errors.append(err)
             # targetted items shall exist, with automatic reverse relation
@@ -434,6 +449,36 @@ class TraceableCollection:
             if key not in self.attributes_sort:
                 self.attributes_sort[key] = value
 
+        # Merge defined_attributes (critical for parallel processing)
+        # Worker processes may have modified attribute definitions, preserve these
+        for attr_id, attr in other_collection.defined_attributes.items():
+            if attr_id not in self.defined_attributes:
+                # New attribute from worker
+                self.defined_attributes[attr_id] = attr
+            else:
+                # Attribute exists in both - merge information from both
+                existing_attr = self.defined_attributes[attr_id]
+
+                # Merge caption if the other has it and existing doesn't
+                if attr.caption and not existing_attr.caption:
+                    existing_attr.caption = attr.caption
+
+                # Merge docname and location info if the other has it and existing doesn't
+                if attr.docname and not existing_attr.docname:
+                    existing_attr.docname = attr.docname
+                    existing_attr.lineno = attr.lineno
+
+                # Merge content if the other has it and existing doesn't
+                if hasattr(attr, 'content') and attr.content and not getattr(existing_attr, 'content', None):
+                    existing_attr.content = attr.content
+
+                # Merge content_node if the other has it and existing doesn't
+                if hasattr(attr, 'content_node') and attr.content_node and not getattr(existing_attr, 'content_node', None):
+                    existing_attr.content_node = attr.content_node
+
+                # Always update the identifier to ensure consistency
+                existing_attr.identifier = attr.identifier
+
         # CRITICAL FIX: After merging items, restore missing reverse relationships
         # This handles cases where workers created forward relationships but targets were in different workers
         self._restore_reverse_relationships()
@@ -556,6 +601,7 @@ class ParallelSafeTraceableCollection:
         # Always copy the configuration
         self._collection.relations = collection.relations.copy()
         self._collection.attributes_sort = collection.attributes_sort.copy()
+        self._collection.defined_attributes = collection.defined_attributes.copy()
 
         # Copy items only if we're not in a worker process
         if not self._is_worker_process:
@@ -645,6 +691,10 @@ class ParallelSafeTraceableCollection:
     def remove_items_from_document(self, docname: str):
         """Remove all items from a specific document."""
         return self._collection.remove_items_from_document(docname)
+
+    def define_attribute(self, attr):
+        """Define an attribute in the collection."""
+        return self._collection.define_attribute(attr)
 
     def __getstate__(self):
         """Custom pickling support."""

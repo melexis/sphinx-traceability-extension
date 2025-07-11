@@ -24,7 +24,6 @@ from importlib import import_module
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
 from .traceable_base_node import TraceableBaseNode
-from .traceable_item import TraceableItem
 from .traceable_collection import TraceableCollection, ParallelSafeTraceableCollection
 from .traceability_exception import TraceabilityException, MultipleTraceabilityExceptions, report_warning
 from .directives.attribute_link_directive import AttributeLink, AttributeLinkDirective
@@ -240,6 +239,7 @@ def process_item_nodes(app, doctree, fromdocname):
     env = app.builder.env
     node_classes = (
         AttributeLink,
+        CheckboxResult,
         AttributeSort,
         ItemLink,
         ItemRelink,
@@ -348,6 +348,7 @@ def initialize_environment(app):
                             app.config.traceability_attributes,
                             app.config.traceability_attribute_to_string)
 
+    # Initialize relationships and attributes - this also defines all attributes from configuration
     init_available_relationships(app)
 
     # LaTeX-support: since we generate empty tags, we need to relax the verbosity of that error
@@ -424,30 +425,28 @@ def begin_parallel_read(app, env, docnames):
         env: Current environment
         docnames: List of document names to be read
     """
-    # Better worker process detection: check if we're processing all documents
-    if hasattr(env, 'traceability_collection') and hasattr(env.traceability_collection, 'mark_as_worker_process'):
-        # Get total number of documents from environment
-        total_docs = len(getattr(env, 'all_docs', []))
+    if not hasattr(env, 'traceability_collection') or not hasattr(env.traceability_collection, 'mark_as_worker_process'):
+        return
 
-        # If we're processing fewer documents than the total, we're likely in a worker
-        # Also check if docnames is a subset (worker processes get specific document lists)
-        if docnames and total_docs > 0 and len(docnames) < total_docs:
-            env.traceability_collection.mark_as_worker_process()
+    # Detect if this is a worker process by checking if we're processing fewer documents than the total
+    total_docs = len(getattr(env, 'all_docs', []))
 
-            # Ensure worker has ALL relationship configuration
-            # This is critical - worker processes need the complete relationship config
-            if hasattr(app.config, 'traceability_relationships'):
-                for rel in app.config.traceability_relationships:
-                    revrel = app.config.traceability_relationships[rel]
-                    env.traceability_collection.add_relation_pair(rel, revrel)
+    # If we're processing fewer documents than the total, we're likely in a worker process
+    if docnames and total_docs > 0 and len(docnames) < total_docs:
+        env.traceability_collection.mark_as_worker_process()
 
-        # Also ensure the main process has correct configuration
-        elif hasattr(app.config, 'traceability_relationships'):
-            # Make sure main process also has all relationships configured
+        # Ensure worker has ALL relationship configuration
+        if hasattr(app.config, 'traceability_relationships'):
             for rel in app.config.traceability_relationships:
                 revrel = app.config.traceability_relationships[rel]
-                if not env.traceability_collection.get_reverse_relation(rel):
-                    env.traceability_collection.add_relation_pair(rel, revrel)
+                env.traceability_collection.add_relation_pair(rel, revrel)
+
+        # Ensure worker processes have ALL attribute definitions
+        if hasattr(app.config, 'traceability_attributes'):
+            for attr in app.config.traceability_attributes:
+                if attr not in env.traceability_collection.defined_attributes:
+                    # Create and define the attribute in the worker process
+                    define_attribute(attr, app)
 
 
 # ----------------------------------------------------------------------------
@@ -496,7 +495,9 @@ def define_attribute(attr, app):
         attrobject.name = app.config.traceability_attribute_to_string[attr]
     else:
         report_warning('Traceability: attribute {attr} cannot be translated to string'.format(attr=attr))
-    TraceableItem.define_attribute(attrobject)
+
+    # Define the attribute in the environment's collection
+    app.env.traceability_collection.define_attribute(attrobject)
 
 
 def query_checklist(settings, attr_values):

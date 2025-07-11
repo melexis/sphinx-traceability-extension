@@ -62,4 +62,26 @@ class TraceableAttribute(TraceableBaseClass):
         Args:
             value (str): Value to check the validity of
         '''
+        if self.regex is None:
+            # Rebuild regex if it's None (can happen after unpickling)
+            if hasattr(self, '_value') and self._value is not None:
+                self.regex = re.compile(self._value)
+            else:
+                return False
         return self.regex.match(value)
+
+    def __getstate__(self):
+        """Custom pickling to exclude unpicklable objects like directive references."""
+        state = self.__dict__.copy()
+        # Remove directive if it exists (it contains unpicklable module references)
+        if 'directive' in state:
+            del state['directive']
+        return state
+
+    def __setstate__(self, state):
+        """Custom unpickling to restore state."""
+        self.__dict__.update(state)
+        # directive will be None after unpickling, which is fine
+        # Ensure regex is restored if we have a value
+        if hasattr(self, '_value') and self._value is not None:
+            self.regex = re.compile(self._value)

@@ -6,11 +6,10 @@ from ..traceability_exception import report_warning
 from ..traceable_attribute import TraceableAttribute
 from ..traceable_base_directive import TraceableBaseDirective
 from ..traceable_base_node import TraceableBaseNode
-from ..traceable_item import TraceableItem
 
 
 class ItemAttribute(TraceableBaseNode):
-    '''Attribute to documentation item'''
+    """Attribute to documentation item"""
 
     def perform_replacement(self, app, collection):
         """
@@ -19,14 +18,18 @@ class ItemAttribute(TraceableBaseNode):
             app: Sphinx application object to use.
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
-        if self['id'] in TraceableItem.defined_attributes:
-            attr = TraceableItem.defined_attributes[self['id']]
+        if self['id'] in collection.defined_attributes:
+            attr = collection.defined_attributes[self['id']]
             header = attr.name
             if attr.caption:
                 header += ': ' + attr.caption
+            # Include the attribute content if it exists
+            top_node = self.create_top_node(header)
+            if hasattr(attr, 'content_node') and attr.content_node:
+                top_node.append(attr.content_node)
         else:
             header = self['id']
-        top_node = self.create_top_node(header)
+            top_node = self.create_top_node(header)
         self.replace_self(top_node)
 
 
@@ -60,23 +63,28 @@ class ItemAttributeDirective(TraceableBaseDirective):
 
         stored_id = TraceableAttribute.to_id(attribute_id)
         target_node = nodes.target('', '', ids=[stored_id])
-        if stored_id not in TraceableItem.defined_attributes:
+        if stored_id not in env.traceability_collection.defined_attributes:
             report_warning('Found attribute description which is not defined in configuration ({})'
                            .format(attribute_id),
                            env.docname,
                            self.lineno)
             attr = TraceableAttribute(stored_id, ".*", directive=self)
+            env.traceability_collection.define_attribute(attr)
             attribute_node['id'] = stored_id
         else:
-            attr = TraceableItem.defined_attributes[stored_id]
-            attr.caption = self.caption
+            attr = env.traceability_collection.defined_attributes[stored_id]
+            if self.caption:
+                attr.caption = self.caption
             doc_path_str, lineno = self.get_source_info()
             doc_path = Path(doc_path_str)
             if doc_path.is_absolute():
                 doc_path = doc_path.relative_to(env.srcdir)
             attr.set_location(doc_path, lineno)
-            attr.directive = self  # the directive is needed to parse any content
             attribute_node['id'] = attr.identifier
+
+            # Set directive reference for content parsing
+            # This ensures content can be parsed even for existing attributes
+            attr.directive = self
 
         attr.content = self.content
         return [target_node, attribute_node, attr.content_node]

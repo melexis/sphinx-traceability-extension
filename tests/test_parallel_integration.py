@@ -268,6 +268,164 @@ Item List
                 self.assertIn(item_id, serial_content, f"Serial build missing {item_id} in {filename}")
                 self.assertIn(item_id, parallel_content, f"Parallel build missing {item_id} in {filename}")
 
+    def test_attribute_consistency_serial_vs_parallel(self):
+        """Test that attribute hyperlinks and content are consistent between serial and parallel builds"""
+        # Create documents with attribute definitions to test the specific issues we fixed
+
+        # Create attributes.rst with attribute definitions
+        attributes_content = '''
+Attributes
+==========
+
+.. item-attribute:: status Status attribute
+
+   This attribute defines the approval status of requirements.
+   It can be either draft or approved.
+
+.. item-attribute:: priority Priority attribute
+
+   This attribute defines the priority level of requirements.
+   Possible values are low, medium, or high.
+
+Item with Attributes
+-------------------
+
+.. item:: ATTR-TEST-001 Test item with attributes
+   :status: approved
+   :priority: high
+
+   This item tests attribute rendering with hyperlinks and content.
+'''
+        (self.doc_dir / "attributes.rst").write_text(attributes_content)
+
+        # Update index.rst to include attributes
+        index_content = '''
+Test Documentation
+==================
+
+.. toctree::
+   :maxdepth: 2
+
+   doc1
+   doc2
+   doc3
+   attributes
+
+Main Index
+----------
+
+.. item:: MAIN-001 Main requirements
+   :status: approved
+   :priority: high
+
+   This is the main requirements document.
+'''
+        (self.doc_dir / "index.rst").write_text(index_content)
+
+        # Run serial build
+        serial_dir = self.temp_dir / "_build_serial"
+        cmd_serial = [
+            sys.executable, "-m", "sphinx",
+            "-b", "html",
+            "-j", "1",  # Serial build
+            "-E",       # Force full rebuild
+            str(self.doc_dir),
+            str(serial_dir)
+        ]
+
+        result_serial = subprocess.run(cmd_serial, capture_output=True, text=True)
+        self.assertEqual(result_serial.returncode, 0,
+                        f"Serial build failed: {result_serial.stderr}")
+
+        # Run parallel build
+        parallel_dir = self.temp_dir / "_build_parallel"
+        cmd_parallel = [
+            sys.executable, "-m", "sphinx",
+            "-b", "html",
+            "-j", "auto",  # Auto-detect parallel processes
+            "-E",       # Force full rebuild
+            str(self.doc_dir),
+            str(parallel_dir)
+        ]
+
+        result_parallel = subprocess.run(cmd_parallel, capture_output=True, text=True)
+        self.assertEqual(result_parallel.returncode, 0,
+                        f"Parallel build failed: {result_parallel.stderr}")
+
+        # Test 1: Verify attribute hyperlinks are identical
+        for filename in ["index.html", "attributes.html"]:
+            serial_file = serial_dir / filename
+            parallel_file = parallel_dir / filename
+
+            if serial_file.exists() and parallel_file.exists():
+                serial_content = serial_file.read_text()
+                parallel_content = parallel_file.read_text()
+
+                # Check for attribute hyperlinks in both builds
+                # These should be hyperlinked in both builds
+                if 'status' in serial_content.lower():
+                    # Verify hyperlinks exist in both builds
+                    self.assertIn('href="#status"', serial_content,
+                                "Serial build missing status attribute hyperlink")
+                    self.assertIn('href="#status"', parallel_content,
+                                "Parallel build missing status attribute hyperlink")
+
+                if 'priority' in serial_content.lower():
+                    self.assertIn('href="#priority"', serial_content,
+                                "Serial build missing priority attribute hyperlink")
+                    self.assertIn('href="#priority"', parallel_content,
+                                "Parallel build missing priority attribute hyperlink")
+
+        # Test 2: Verify attribute content is rendered identically
+        attributes_serial = serial_dir / "attributes.html"
+        attributes_parallel = parallel_dir / "attributes.html"
+
+        if attributes_serial.exists() and attributes_parallel.exists():
+            serial_content = attributes_serial.read_text()
+            parallel_content = attributes_parallel.read_text()
+
+            # Check that attribute content is rendered (not empty containers)
+            expected_content_fragments = [
+                "This attribute defines the approval status",
+                "This attribute defines the priority level",
+                "draft or approved",
+                "low, medium, or high"
+            ]
+
+            for fragment in expected_content_fragments:
+                self.assertIn(fragment, serial_content,
+                            f"Serial build missing attribute content: '{fragment}'")
+                self.assertIn(fragment, parallel_content,
+                            f"Parallel build missing attribute content: '{fragment}'")
+
+            # Verify no empty content containers
+            import re
+
+            # Check for empty content containers in serial build
+            empty_containers_serial = re.findall(r'<div[^>]*id="content-[^"]*"[^>]*>\s*</div>', serial_content)
+            empty_containers_parallel = re.findall(r'<div[^>]*id="content-[^"]*"[^>]*>\s*</div>', parallel_content)
+
+            # Both builds should have the same number of empty containers (ideally zero)
+            self.assertEqual(len(empty_containers_serial), len(empty_containers_parallel),
+                           f"Different number of empty content containers: "
+                           f"serial={len(empty_containers_serial)}, parallel={len(empty_containers_parallel)}")
+
+        # Test 3: Verify attribute definitions consistency
+        if attributes_serial.exists() and attributes_parallel.exists():
+            serial_content = attributes_serial.read_text()
+            parallel_content = attributes_parallel.read_text()
+
+            # Check that attribute titles/headers are identical
+            for attr_name in ["Status", "Priority"]:
+                # Find attribute headers in both builds
+                serial_headers = re.findall(rf'<p class="admonition-title">[^<]*{attr_name}[^<]*</p>', serial_content)
+                parallel_headers = re.findall(rf'<p class="admonition-title">[^<]*{attr_name}[^<]*</p>', parallel_content)
+
+                self.assertEqual(len(serial_headers), len(parallel_headers),
+                               f"Different number of {attr_name} attribute headers")
+                self.assertEqual(serial_headers, parallel_headers,
+                               f"Different {attr_name} attribute headers between builds")
+
 
 if __name__ == '__main__':
     unittest.main()

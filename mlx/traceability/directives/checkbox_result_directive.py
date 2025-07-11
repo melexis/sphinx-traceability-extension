@@ -1,4 +1,4 @@
-""" Module for the directive used to set the checklist attribute. """
+"""Module for the directive used to set the checklist attribute."""
 from re import match
 
 from ..traceable_base_directive import TraceableBaseDirective
@@ -8,14 +8,14 @@ from ..traceability_exception import report_warning
 
 class CheckboxResult(TraceableBaseNode):
     """Intermediate node for checkbox-result directive that gets processed later."""
-    order = 0  # Process early, before other nodes
 
     def perform_replacement(self, app, collection):
-        """The CheckboxResult node has no final representation, so is removed from the tree."""
+        """Remove the CheckboxResult node from the tree after applying its effect."""
+        self.apply_effect(collection)
         self.replace_self([])
 
     def apply_effect(self, collection):
-        """Apply the checkbox result effect during consistency check when all items are available."""
+        """Apply the checkbox result effect."""
         target_id = self['target_id']
         attribute_value = self['attribute_value']
 
@@ -36,26 +36,27 @@ class CheckboxResult(TraceableBaseNode):
         checklist_attribute_name = self['checklist_attribute_name']
         regexp = self['attribute_regexp']
         if match(regexp, attribute_value):
-            checklist_item.add_attribute(checklist_attribute_name, attribute_value, overwrite=True)
+            checklist_item.add_attribute(checklist_attribute_name, attribute_value,
+                                         overwrite=True, collection=collection)
         else:
             msg = "Checkbox value invalid: {!r} does not match regex {}".format(attribute_value, regexp)
             report_warning(msg, self['document'], self['line'])
 
 
 class CheckboxResultDirective(TraceableBaseDirective):
-    """
-    Directive to set value of the checklist attribute for a checklist-item.
+    """Directive to set value of the checklist attribute for a checklist-item.
 
     Syntax::
       .. checkbox-result:: item_id attribute_value
 
     When run, no nodes will be returned.
     """
+
     # Required argument: id + attribute_value (separated by a whitespace)
     required_arguments = 2
 
     def run(self):
-        """ Processes the contents of the directive. """
+        """Process the contents of the directive."""
         env = self.state.document.settings.env
         app = env.app
 
@@ -80,8 +81,4 @@ class CheckboxResultDirective(TraceableBaseDirective):
         node['checklist_configured'] = checklist_configured
         node['checklist_attribute_name'] = checklist_attribute_name
         node['attribute_regexp'] = attribute_regexp
-
-        # Add to intermediate nodes for processing during consistency check
-        env.traceability_collection.add_intermediate_node(node)
-
         return [node]

@@ -210,7 +210,7 @@ class ItemDirective(TraceableBaseDirective):
             report_warning(err, env.docname, self.lineno)
             return None
 
-        self._add_attributes(item, env.docname)
+        self._add_attributes(item, env.docname, env)
 
         # Add found relationships to item. All relationship data is a string of
         # item ids separated by space. It is split in a list of item ids.
@@ -238,7 +238,7 @@ class ItemDirective(TraceableBaseDirective):
             except TraceabilityException as err:
                 report_warning(err, env.docname, self.lineno)
 
-    def _add_attributes(self, item, docname):
+    def _add_attributes(self, item, docname, env):
         """ Adds all specified attributes to the item. Attribute data is a single string.
 
         A warning is reported when an attribute's value doesn't match the attribute's regex.
@@ -246,8 +246,10 @@ class ItemDirective(TraceableBaseDirective):
         Args:
             item (TraceableItem): Item to add the attributes to.
             docname (str): Document name.
+            env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
         """
-        for attribute in set(TraceableItem.defined_attributes) & set(self.options) - self.conflicting_options:
+        defined_attrs = set(env.traceability_collection.defined_attributes)
+        for attribute in defined_attrs & set(self.options) - self.conflicting_options:
             try:
                 item.add_attribute(attribute, self.options[attribute])
             except TraceabilityException as err:

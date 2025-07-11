@@ -8,7 +8,6 @@ from sphinx.builders.latex import LaTeXBuilder
 from sphinx.util.osutil import SEP
 
 from .traceability_exception import report_warning, TraceabilityException
-from .traceable_item import TraceableItem
 
 EXTERNAL_LINK_FIELDNAME = 'field'
 
@@ -159,8 +158,10 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
         if value:
             value = ': ' + value
 
-        if attr_id in TraceableItem.defined_attributes:
-            attr_info = TraceableItem.defined_attributes[attr_id]
+        collection = app.env.traceability_collection
+        defined_attributes = collection.defined_attributes if collection else {}
+        if attr_id in defined_attributes:
+            attr_info = defined_attributes[attr_id]
             attr_name = attr_info.name
             if attr_info.docname:
                 newnode = nodes.reference('', '')
