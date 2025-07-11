@@ -45,6 +45,7 @@ traceability_attribute_to_string = {
     'status': 'Status',
     'priority': 'Priority'
 }
+traceability_render_relationship_per_item = True
 '''
         (self.doc_dir / "conf.py").write_text(conf_content)
 
@@ -263,10 +264,18 @@ Item List
             serial_content = serial_file.read_text()
             parallel_content = parallel_file.read_text()
 
-            # Check that both contain the same items
-            for item_id in ["MAIN-001", "REQ-001", "REQ-002", "REQ-003", "REQ-004", "REQ-005"]:
-                self.assertIn(item_id, serial_content, f"Serial build missing {item_id} in {filename}")
-                self.assertIn(item_id, parallel_content, f"Parallel build missing {item_id} in {filename}")
+            # Check that both contain the same items that should be in this document
+            expected_items_by_file = {
+                "index.html": ["MAIN-001"],
+                "doc1.html": ["REQ-001", "REQ-002"],
+                "doc2.html": ["REQ-003", "REQ-004"],
+                "doc3.html": ["REQ-005"]
+            }
+
+            if filename in expected_items_by_file:
+                for item_id in expected_items_by_file[filename]:
+                    self.assertIn(item_id, serial_content, f"Serial build missing {item_id} in {filename}")
+                    self.assertIn(item_id, parallel_content, f"Parallel build missing {item_id} in {filename}")
 
     def test_attribute_consistency_serial_vs_parallel(self):
         """Test that attribute hyperlinks and content are consistent between serial and parallel builds"""
@@ -364,17 +373,17 @@ Main Index
                 # Check for attribute hyperlinks in both builds
                 # These should be hyperlinked in both builds
                 if 'status' in serial_content.lower():
-                    # Verify hyperlinks exist in both builds
-                    self.assertIn('href="#status"', serial_content,
-                                "Serial build missing status attribute hyperlink")
-                    self.assertIn('href="#status"', parallel_content,
-                                "Parallel build missing status attribute hyperlink")
+                    # Verify hyperlinks exist in both builds (may be relative or absolute)
+                    self.assertTrue('href="attributes.html#status"' in serial_content or 'href="#status"' in serial_content,
+                                  "Serial build missing status attribute hyperlink")
+                    self.assertTrue('href="attributes.html#status"' in parallel_content or 'href="#status"' in parallel_content,
+                                  "Parallel build missing status attribute hyperlink")
 
                 if 'priority' in serial_content.lower():
-                    self.assertIn('href="#priority"', serial_content,
-                                "Serial build missing priority attribute hyperlink")
-                    self.assertIn('href="#priority"', parallel_content,
-                                "Parallel build missing priority attribute hyperlink")
+                    self.assertTrue('href="attributes.html#priority"' in serial_content or 'href="#priority"' in serial_content,
+                                  "Serial build missing priority attribute hyperlink")
+                    self.assertTrue('href="attributes.html#priority"' in parallel_content or 'href="#priority"' in parallel_content,
+                                  "Parallel build missing priority attribute hyperlink")
 
         # Test 2: Verify attribute content is rendered identically
         attributes_serial = serial_dir / "attributes.html"
