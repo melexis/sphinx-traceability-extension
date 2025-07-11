@@ -115,8 +115,8 @@ class TraceableBaseClass:
             # Update content_node by parsing updated content
             self.content_node.children = []
             self.content_node += self.directive.parse_content_to_nodes(allow_section_headings=True)
-        elif self._content:
-            # Warn if content modified with no directive available
+        elif self._content and not getattr(self, '_suppress_content_warnings', False):
+            # Only warn if not suppressed (internal operations like merging should suppress warnings)
             report_warning(
                 f"Content of item {self.identifier!r} was modified but no directive is available for parsing. "
                 "Content modification should be performed in an earlier Sphinx event, "

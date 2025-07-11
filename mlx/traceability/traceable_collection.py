@@ -470,7 +470,14 @@ class TraceableCollection:
 
                 # Merge content if the other has it and existing doesn't
                 if hasattr(attr, 'content') and attr.content and not getattr(existing_attr, 'content', None):
-                    existing_attr.content = attr.content
+                    # Suppress content warnings during legitimate merging operations
+                    existing_attr._suppress_content_warnings = True
+                    try:
+                        existing_attr.content = attr.content
+                    finally:
+                        # Always clean up the flag
+                        if hasattr(existing_attr, '_suppress_content_warnings'):
+                            delattr(existing_attr, '_suppress_content_warnings')
 
                 # Merge content_node if the other has it and existing doesn't
                 if hasattr(attr, 'content_node') and attr.content_node and not getattr(existing_attr, 'content_node', None):
