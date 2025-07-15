@@ -1,0 +1,58 @@
+[settings]
+# Qlty configuration for sphinx-traceability-extension
+
+[filters]
+# Exclude tests from analysis (similar to Code Climate exclude_patterns)
+# Includes patterns from setup.cfg check-manifest ignore and flake8 exclude
+ignore_paths = [
+    "tests/",
+    "doc/_build*/",
+    "*.egg-info/",
+    "__pycache__/",
+    ".git/",
+    "build/",
+    "dist/",
+    "*.yml",
+    ".tox/",
+]
+
+[plugins.pylint]
+enabled = true
+
+[plugins.flake8]
+enabled = true
+max_line_length = 120
+
+[plugins.bandit]
+enabled = true
+severity = "medium"
+
+[plugins.complexity]
+enabled = true
+max_complexity = 4
+
+[plugins.duplication]
+enabled = true
+min_mass = 40
+
+[plugins.radarlint]
+enabled = true
+# Advanced code analysis
+
+[rules.file_lines]
+max_lines = 500
+
+[rules.method_lines]
+max_lines = 40
+
+[rules.method_count]
+max_methods = 25
+
+[rules.argument_count]
+max_arguments = 5
+
+[rules.return_statements]
+max_returns = 4
+
+[rules.nested_control_flow]
+max_depth = 4
