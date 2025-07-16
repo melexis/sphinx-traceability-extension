@@ -13,6 +13,7 @@ exclude .qlty.toml
 exclude .coveragerc
 exclude .gitignore
 exclude .pylintrc
+exclude .flake8
 exclude codecov.yml
 exclude requirements.txt
 exclude tox.ini
