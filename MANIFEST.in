@@ -9,7 +9,7 @@ exclude mlx/traceability/__traceability_version__.py
 include *.md
 include LICENSE.txt
 include NOTICE
-exclude .codeclimate.yml
+exclude .qlty.toml
 exclude .coveragerc
 exclude .gitignore
 exclude .pylintrc
