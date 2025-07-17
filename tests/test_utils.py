@@ -1,8 +1,8 @@
+"""Tests for utility functions."""
 from unittest import TestCase
 from unittest.mock import patch
 
 from mlx.traceability.traceability import get_sort_function
-from mlx.traceability.traceability_exception import report_warning
 
 
 class TestGetSortFunction(TestCase):
