@@ -25,6 +25,7 @@ setup(
     dynamic="version",
     url=project_url,
     license='GPL-3.0',
+    license_files=['LICENSE.txt'],
     author='Melexis',
     author_email='jce@melexis.com',
     description='Sphinx traceability extension (Melexis fork)',

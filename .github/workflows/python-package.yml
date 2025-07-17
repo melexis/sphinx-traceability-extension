@@ -62,9 +62,6 @@ jobs:
           echo "Latest Sphinx documentation build failed"
           exit 1
         fi
-    - name: Codecov
-      if: matrix.python-version == 3.9
-      run: tox -e codecov
     - name: Static checks
       if: matrix.python-version == 3.9
       run: tox -e check
