@@ -132,9 +132,6 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
             url = url.replace(EXTERNAL_LINK_FIELDNAME + str(cnt), tgt_str)
         link['refuri'] = url
         link.append(txt)
-        targetid = nodes.make_id(target_text)
-        target = nodes.target('', '', ids=[targetid])
-        p_node += target
         p_node += link
         return p_node
 
