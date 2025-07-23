@@ -1,10 +1,9 @@
-"""Utility functions for handling callback configurations"""
+"""Utility functions for handling callback configurations."""
 import importlib
 import warnings
 import builtins
 import sys
 from typing import Any, Callable, Optional
-from .traceability_exception import report_warning
 
 
 def get_callback_function(callback_spec: Any, app=None) -> Optional[Callable]:
@@ -88,8 +87,10 @@ def get_callback_function(callback_spec: Any, app=None) -> Optional[Callable]:
                     pass
 
             # Function not found anywhere
-            raise AttributeError(f"Function '{function_name}' not found in built-ins or conf.py. "
-                               f"Make sure the function is defined in conf.py or use 'module.function_name' format.")
+            raise AttributeError(
+                f"Function '{function_name}' not found in built-ins or conf.py. "
+                f"Make sure the function is defined in conf.py or use 'module.function_name' format."
+            )
 
     # Invalid specification type
     raise TypeError(f"Invalid callback specification type: {type(callback_spec)}. Expected callable or string.")

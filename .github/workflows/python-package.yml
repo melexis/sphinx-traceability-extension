@@ -9,6 +9,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+permissions:
+  contents: read
+  id-token: write # IMPORTANT for OIDC
+
 jobs:
   test:
 
@@ -33,6 +37,12 @@ jobs:
         sudo apt-get install -y plantuml
     - name: Run test
       run: tox -e py
+    - name: Upload coverage to Qlty
+      if: matrix.python-version == 3.12
+      uses: qltysh/qlty-action/coverage@v1
+      with:
+        oidc: true
+        files: coverage.lcov
     - name: Build documentation with Sphinx version 7.4
       id: sphinx74
       env:
@@ -62,9 +72,6 @@ jobs:
           echo "Latest Sphinx documentation build failed"
           exit 1
         fi
-    - name: Codecov
-      if: matrix.python-version == 3.9
-      run: tox -e codecov
     - name: Static checks
       if: matrix.python-version == 3.9
       run: tox -e check

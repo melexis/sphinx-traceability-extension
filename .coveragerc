@@ -1,3 +1,2 @@
 [run]
-omit=mlx/traceability.py, */__*__.py
-include=directives
+omit = tests/*, mlx/traceability/*version*.py

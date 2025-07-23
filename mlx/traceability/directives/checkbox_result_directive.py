@@ -3,7 +3,7 @@ from re import match
 
 from ..traceable_base_directive import TraceableBaseDirective
 from ..traceable_base_node import TraceableBaseNode
-from ..traceability_exception import report_warning
+from ..traceability_exception import report_warning, TraceabilityException
 
 
 class CheckboxResult(TraceableBaseNode):
@@ -18,6 +18,7 @@ class CheckboxResult(TraceableBaseNode):
         """Apply the checkbox result effect."""
         target_id = self['target_id']
         attribute_value = self['attribute_value']
+        checklist_attribute_name = self['checklist_attribute_name']
 
         checklist_item = collection.get_item(target_id)
         if not checklist_item:
@@ -25,15 +26,6 @@ class CheckboxResult(TraceableBaseNode):
             report_warning(msg, self['document'], self['line'])
             return
 
-        # Get configuration from stored values
-        checklist_configured = self.get('checklist_configured', False)
-        if not checklist_configured:
-            msg = ("The checklist attribute in 'traceability_checklist' is not configured "
-                   "properly. See documentation for more details.")
-            report_warning(msg, self['document'], self['line'])
-            return
-
-        checklist_attribute_name = self['checklist_attribute_name']
         regexp = self['attribute_regexp']
         if match(regexp, attribute_value):
             checklist_item.add_attribute(checklist_attribute_name, attribute_value,
@@ -58,19 +50,16 @@ class CheckboxResultDirective(TraceableBaseDirective):
     def run(self):
         """Process the contents of the directive."""
         env = self.state.document.settings.env
-        app = env.app
 
         target_id = self.arguments[0]
         attribute_value = self.arguments[1]
 
-        # Extract and store only the configuration values we need (avoid storing app object)
-        checklist_configured = app.config.traceability_checklist.get('configured', False)
-        checklist_attribute_name = None
-        attribute_regexp = None
+        if not env.traceability_checklist.get('configured'):
+            raise TraceabilityException("The checklist attribute in 'traceability_checklist' is not configured "
+                                        "properly. See documentation for more details.")
 
-        if checklist_configured:
-            checklist_attribute_name = app.config.traceability_checklist['attribute_name']
-            attribute_regexp = app.config.traceability_attributes[checklist_attribute_name]
+        checklist_attribute_name = env.traceability_checklist['attribute_name']
+        attribute_regexp = env.traceability_attributes[checklist_attribute_name]
 
         # Create intermediate node for deferred processing
         node = CheckboxResult('')
@@ -78,7 +67,6 @@ class CheckboxResultDirective(TraceableBaseDirective):
         node['line'] = self.lineno
         node['target_id'] = target_id
         node['attribute_value'] = attribute_value
-        node['checklist_configured'] = checklist_configured
         node['checklist_attribute_name'] = checklist_attribute_name
         node['attribute_regexp'] = attribute_regexp
         return [node]
