@@ -500,7 +500,7 @@ def define_attribute(attr, env):
         report_warning('Traceability: attribute {attr} cannot be translated to string'.format(attr=attr))
 
     # Define the attribute in the environment's collection
-    app.env.traceability_collection.define_attribute(attrobject)
+    env.traceability_collection.define_attribute(attrobject)
 
 
 def query_checklist(settings, attr_values):
