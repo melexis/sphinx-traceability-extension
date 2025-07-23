@@ -20,7 +20,6 @@ class CheckboxResultDirective(TraceableBaseDirective):
     def run(self):
         """ Processes the contents of the directive. """
         env = self.state.document.settings.env
-        app = env.app
 
         target_id = self.arguments[0]
         attribute_value = self.arguments[1]
@@ -29,12 +28,12 @@ class CheckboxResultDirective(TraceableBaseDirective):
             report_warning("Could not find item ID {!r}".format(target_id), env.docname, self.lineno)
             return []
 
-        if not app.config.traceability_checklist.get('configured'):
+        if not env.traceability_checklist.get('configured'):
             raise TraceabilityException("The checklist attribute in 'traceability_checklist' is not configured "
                                         "properly. See documentation for more details.")
 
-        checklist_attribute_name = app.config.traceability_checklist['attribute_name']
-        regexp = app.config.traceability_attributes[checklist_attribute_name]
+        checklist_attribute_name = env.traceability_checklist['attribute_name']
+        regexp = env.traceability_attributes[checklist_attribute_name]
         if match(regexp, attribute_value):
             checklist_item.add_attribute(checklist_attribute_name, attribute_value, overwrite=True)
         else:
