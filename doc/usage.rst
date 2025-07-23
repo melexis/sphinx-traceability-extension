@@ -42,6 +42,27 @@ relations, you probably *should* disable the incremental build option by default
     We plan to get rid of this caveat in the future, see
     `issue #398 <https://github.com/melexis/sphinx-traceability-extension/issues/398>`_.
 
+Parallellization
+================
+
+By default, Sphinx performs the read and write stages in a single process. This can be changed by using the
+`-j N, --jobs N <https://www.sphinx-doc.org/en/master/man/sphinx-build.html#cmdoption-sphinx-build-j>`_ option:
+
+.. code-block:: bash
+
+    sphinx-build -j auto <other_options>
+
+.. note::
+
+    The plugin does not support parallellization of the read stage yet. This functionality is a `work in progress
+    <https://github.com/melexis/sphinx-traceability-extension/pull/395>`_. The following warning will be shown
+    when parallellization is enabled:
+
+    .. code-block:: text
+
+        WARNING: the mlx.traceability extension is not safe for parallel reading
+        WARNING: doing serial read
+
 .. _traceability_usage_item:
 
 ----------------------------
