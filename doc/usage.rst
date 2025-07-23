@@ -10,13 +10,17 @@ Usage
 
 .. _required_sphinx_options:
 
------------------------
-Required sphinx options
------------------------
+--------------------------------
+Recommended Sphinx build options
+--------------------------------
 
-By default, sphinx (*sphinx-build*) performs an incremental build: it only parses the changed files and generates
-new output for changed files. As this plugin generates automatic reverse relations, the incremental build option
-of sphinx needs to be disabled. This can be done using the *-E* option:
+Fresh environment
+=================
+
+By default, `sphinx-build <https://www.sphinx-doc.org/en/master/man/sphinx-build.html>`_ performs an incremental build:
+it only parses the changed files and generates new output for changed files. As this plugin generates automatic reverse
+relations, you probably *should* disable the incremental build option by default. This can be done using the
+`-E, --fresh-env <https://www.sphinx-doc.org/en/master/man/sphinx-build.html#cmdoption-sphinx-build-E>`_ option:
 
 .. code-block:: bash
 
@@ -30,7 +34,13 @@ of sphinx needs to be disabled. This can be done using the *-E* option:
             By disabling incremental builds, it is made sure every document is updated (with automatic reverse
             relations) on every re-build.
 
-The plugin assumes incremental builds are disabled, as this makes the implementation of the plugin much easier.
+.. note::
+
+    The plugin does support incremental builds but with a major caveat: any changes to the collection of traceable
+    items will not be reflected in the documentation build output, except for the output for newly created
+    and modified source files. Note that a change to a configuration variable will always trigger a full re-build.
+    We plan to get rid of this caveat in the future, see
+    `issue #398 <https://github.com/melexis/sphinx-traceability-extension/issues/398>`_.
 
 .. _traceability_usage_item:
 
