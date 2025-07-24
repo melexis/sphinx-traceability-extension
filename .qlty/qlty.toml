@@ -14,20 +14,13 @@
 config_version = "0"
 
 exclude_patterns = [
-  "*_min.*",
-  "*-min.*",
-  "*.min.*",
-  "**/.yarn/**",
-  "**/*.d.ts",
   "**/assets/**",
-  "**/build/**",
   "**/_build/**",
-  "**/deps/**",
-  "**/dist/**",
+  "dist/**",
 ]
 
 test_patterns = [
-  "**/tests/**",
+  "tests/**",
 ]
 
 [smells]
