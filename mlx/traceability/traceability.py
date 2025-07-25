@@ -24,12 +24,11 @@ from importlib import import_module
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
 from .traceable_base_node import TraceableBaseNode
-from .traceable_item import TraceableItem
-from .traceable_collection import TraceableCollection
+from .traceable_collection import TraceableCollection, ParallelSafeTraceableCollection
 from .traceability_exception import TraceabilityException, MultipleTraceabilityExceptions, report_warning
 from .directives.attribute_link_directive import AttributeLink, AttributeLinkDirective
 from .directives.attribute_sort_directive import AttributeSort, AttributeSortDirective
-from .directives.checkbox_result_directive import CheckboxResultDirective
+from .directives.checkbox_result_directive import CheckboxResult, CheckboxResultDirective
 from .directives.checklist_item_directive import ChecklistItemDirective
 from .directives.item_directive import Item, ItemDirective
 from .directives.item_2d_matrix_directive import Item2DMatrix, Item2DMatrixDirective
@@ -41,6 +40,13 @@ from .directives.item_matrix_directive import ItemMatrix, ItemMatrixDirective
 from .directives.item_pie_chart_directive import ItemPieChart, ItemPieChartDirective
 from .directives.item_relink_directive import ItemRelink, ItemRelinkDirective
 from .directives.item_tree_directive import ItemTree, ItemTreeDirective
+
+
+# HTML5 translator method for utility nodes that should be skipped
+def skip_node_html5(self, node):
+    """Skip utility nodes that have no visual representation."""
+    raise nodes.SkipNode
+
 
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
 
@@ -240,6 +246,7 @@ def process_item_nodes(app, doctree, fromdocname):
     env = app.builder.env
     node_classes = (
         AttributeLink,
+        CheckboxResult,
         AttributeSort,
         ItemLink,
         ItemRelink,
@@ -251,12 +258,13 @@ def process_item_nodes(app, doctree, fromdocname):
         ItemTree,
         ItemAttribute,
         Item,
+        CheckboxResult,
     )
     for node_class in node_classes:  # order is important: e.g. AttributeSort before Item
-        for node in doctree.traverse(node_class):
+        for node in doctree.findall(node_class):
             node.perform_replacement(app, env.traceability_collection)
 
-    for node in doctree.traverse(PendingItemXref):
+    for node in doctree.findall(PendingItemXref):
         node['document'] = fromdocname
         node['line'] = node.line
         node.perform_replacement(app, env.traceability_collection)
@@ -315,7 +323,6 @@ def init_available_relationships(app):
 def initialize_environment(app):
     """Perform initializations needed before the build process starts."""
     env = app.builder.env
-
     env.traceability_ref_nodes = {}
     processed_sort_config = {}
     for attr, sort_spec in app.config.traceability_attributes_sort.items():
@@ -325,7 +332,15 @@ def initialize_environment(app):
             report_warning(f"Invalid sort configuration for attribute '{attr}': {str(e)}")
             # Fall back to default sorting
             processed_sort_config[attr] = sorted
-    env.traceability_collection = TraceableCollection()
+
+    # For parallel reading support, use ParallelSafeTraceableCollection
+    # It will handle collections in worker processes and merge them during env-merge-info
+    env.traceability_collection = ParallelSafeTraceableCollection()
+
+    # Initialize the main collection with configuration
+    main_collection = TraceableCollection()
+    main_collection.attributes_sort = app.config.traceability_attributes_sort
+    env.traceability_collection.set_main_collection(main_collection)
     env.traceability_collection.attributes_sort = processed_sort_config
     # Copy configuration dictionaries to environment to avoid modifying app.config
     env.traceability_checklist = dict(app.config.traceability_checklist)
@@ -344,6 +359,7 @@ def initialize_environment(app):
                             env.traceability_attributes,
                             env.traceability_attribute_to_string)
 
+    # Initialize relationships and attributes - this also defines all attributes from configuration
     init_available_relationships(app)
 
     # LaTeX-support: since we generate empty tags, we need to relax the verbosity of that error
@@ -354,6 +370,91 @@ def initialize_environment(app):
         r'\let\@noitemerr\relax'
         r'\makeatother'
     )
+
+
+def merge_traceability_info(app, env, docnames, other):
+    """
+    Merge traceability information from parallel workers.
+
+    This function is called after parallel reading to merge the data
+    collected by each worker process into the main environment.
+
+    Args:
+        app: Sphinx application object
+        env: Current environment
+        docnames: List of document names that were built
+        other: Environment from worker process containing traceability data
+    """
+    if not hasattr(other, 'traceability_collection'):
+        return
+
+    # Merge the collections - the worker collection contains items from worker process
+    env.traceability_collection.merge_from(other.traceability_collection)
+
+    # Also merge ref_nodes if present
+    if hasattr(other, 'traceability_ref_nodes'):
+        if not hasattr(env, 'traceability_ref_nodes'):
+            env.traceability_ref_nodes = {}
+        env.traceability_ref_nodes.update(other.traceability_ref_nodes)
+
+
+def purge_traceability_info(app, env, docname):
+    """
+    Remove traceability information for a specific document.
+
+    This function is called when a document is removed or needs to be rebuilt,
+    allowing us to clean up stale traceability data.
+
+    Args:
+        app: Sphinx application object
+        env: Current environment
+        docname: Name of the document to purge
+    """
+    if not hasattr(env, 'traceability_collection'):
+        return
+
+    # Remove items from the collection
+    env.traceability_collection.remove_items_from_document(docname)
+
+    # Also clean up ref_nodes
+    if hasattr(env, 'traceability_ref_nodes'):
+        keys_to_remove = [key for key in env.traceability_ref_nodes.keys()
+                         if key.startswith(f"{docname}:")]
+        for key in keys_to_remove:
+            del env.traceability_ref_nodes[key]
+
+
+def begin_parallel_read(app, env, docnames):
+    """Event handler for env-before-read-docs in Sphinx.
+
+    This is called at the start of the reading phase. In multiprocessing
+    context, worker processes will have their own copy of the environment.
+
+    Args:
+        app: Sphinx application object
+        env: Current environment
+        docnames: List of document names to be read
+    """
+    if not hasattr(env, 'traceability_collection') or not hasattr(env.traceability_collection, 'mark_as_worker_process'):
+        return
+
+    # Detect if this is a worker process by checking if we're processing fewer documents than the total
+    total_docs = len(getattr(env, 'all_docs', []))
+
+    # If we're processing fewer documents than the total, we're likely in a worker process
+    if docnames and total_docs > 0 and len(docnames) < total_docs:
+        env.traceability_collection.mark_as_worker_process()
+
+        # Ensure worker has ALL relationship configuration
+        for rel in app.config.traceability_relationships:
+            revrel = app.config.traceability_relationships[rel]
+            env.traceability_collection.add_relation_pair(rel, revrel)
+
+        # Ensure worker processes have ALL attribute definitions
+        for attr in env.traceability_attributes:
+            if attr not in env.traceability_collection.defined_attributes:
+                # Create and define the attribute in the worker process
+                define_attribute(attr, env)
 
 
 # ----------------------------------------------------------------------------
@@ -401,7 +502,9 @@ def define_attribute(attr, env):
         attrobject.name = env.traceability_attribute_to_string[attr]
     else:
         report_warning('Traceability: attribute {attr} cannot be translated to string'.format(attr=attr))
-    TraceableItem.define_attribute(attrobject)
+
+    # Define the attribute in the environment's collection
+    env.traceability_collection.define_attribute(attrobject)
 
 
 def query_checklist(settings, attr_values):
@@ -684,7 +787,11 @@ def setup(app):
     app.add_node(ItemList)
     app.add_node(ItemAttribute)
     app.add_node(Item)
-    app.add_node(AttributeSort)
+    app.add_node(AttributeSort, html=(skip_node_html5, None))
+    app.add_node(CheckboxResult, html=(skip_node_html5, None))
+    app.add_node(ItemLink, html=(skip_node_html5, None))
+    app.add_node(ItemRelink, html=(skip_node_html5, None))
+    app.add_node(AttributeLink, html=(skip_node_html5, None))
 
     app.add_directive('item', ItemDirective)
     app.add_directive('checklist-item', ChecklistItemDirective)
@@ -705,12 +812,17 @@ def setup(app):
     app.connect('env-check-consistency', perform_consistency_check)
     app.connect('doctree-resolved', process_item_nodes)
 
+    # Parallel reading support event handlers
+    app.connect('env-merge-info', merge_traceability_info)
+    app.connect('env-purge-doc', purge_traceability_info)
+    app.connect('env-before-read-docs', begin_parallel_read)
+
     app.add_role('item', XRefRole(nodeclass=PendingItemXref,
                                   innernodeclass=nodes.emphasis,
                                   warn_dangling=True))
 
     return {
         'version': version,
-        'parallel_read_safe': False,
+        'parallel_read_safe': True,
         'parallel_write_safe': True,
     }

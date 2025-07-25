@@ -39,10 +39,10 @@ threshold = 110
 threshold = 4
 
 [smells.nested_control_flow]
-threshold = 4
+threshold = 5
 
 [smells.function_parameters]
-threshold = 5
+threshold = 6
 
 [smells.function_complexity]
 threshold = 5

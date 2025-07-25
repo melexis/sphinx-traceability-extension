@@ -9,7 +9,6 @@ from ..traceable_base_node import TraceableBaseNode
 class ItemRelink(TraceableBaseNode):
     """Relinking of documentation items"""
     order = 2  # after ItemLink
-    source_ids = set()
 
     def perform_replacement(self, app, collection):
         """ The ItemRelink node has no final representation, so is removed from the tree.
@@ -56,7 +55,7 @@ class ItemRelink(TraceableBaseNode):
                     if not self['nooverwrite']:
                         report_warning(err, self['document'], self['line'])
 
-        self.source_ids.add(source_id)
+        collection.relink_source_ids.add(source_id)
 
     @staticmethod
     def remove_placeholders(collection):
@@ -68,7 +67,7 @@ class ItemRelink(TraceableBaseNode):
         Args:
             collection (TraceableCollection): Collection for which to generate the nodes.
         """
-        for source_id in ItemRelink.source_ids:
+        for source_id in collection.relink_source_ids:
             source = collection.get_item(source_id)
             if source.is_placeholder and not [targets for _, targets in source.all_relations if targets]:
                 collection.items.pop(source_id)

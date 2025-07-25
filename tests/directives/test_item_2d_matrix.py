@@ -13,15 +13,15 @@ class TestItemMatrix(TestCase):
         self.collection = TraceableCollection()
         for id_ in ('rAB', 'rCC', 'dBB', 'dC', 'z1'):
             self.collection.add_item(TraceableItem(id_))
-        TraceableItem.define_attribute(TraceableAttribute('asil', '[ABCD]'))
-        TraceableItem.define_attribute(TraceableAttribute('rating', '[ABCD]'))
-        self.collection.get_item('rAB').add_attribute('asil', 'A')
-        self.collection.get_item('rAB').add_attribute('rating', 'B')
-        self.collection.get_item('rCC').add_attribute('asil', 'C')
-        self.collection.get_item('rCC').add_attribute('rating', 'C')
-        self.collection.get_item('dBB').add_attribute('asil', 'B')
-        self.collection.get_item('dBB').add_attribute('rating', 'B')
-        self.collection.get_item('dC').add_attribute('asil', 'C')
+        TraceableItem.define_attribute(TraceableAttribute('asil', '[ABCD]'), self.collection)
+        TraceableItem.define_attribute(TraceableAttribute('rating', '[ABCD]'), self.collection)
+        self.collection.get_item('rAB').add_attribute('asil', 'A', collection=self.collection)
+        self.collection.get_item('rAB').add_attribute('rating', 'B', collection=self.collection)
+        self.collection.get_item('rCC').add_attribute('asil', 'C', collection=self.collection)
+        self.collection.get_item('rCC').add_attribute('rating', 'C', collection=self.collection)
+        self.collection.get_item('dBB').add_attribute('asil', 'B', collection=self.collection)
+        self.collection.get_item('dBB').add_attribute('rating', 'B', collection=self.collection)
+        self.collection.get_item('dC').add_attribute('asil', 'C', collection=self.collection)
 
     @parameterized.expand([
         (r'r\w+', r'd\w+', {'asil': '[AB]'}, False, (['rAB'], ['dBB', 'dC'])),

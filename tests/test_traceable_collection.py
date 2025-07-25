@@ -23,8 +23,9 @@ class TestTraceableCollection(TestCase):
     mock_export_file = '/tmp/my/mocked_export_file.json'
 
     def setUp(self):
+        self.test_collection = dut.TraceableCollection()
         attr = attribute.TraceableAttribute(self.attribute_key, self.attribute_regex)
-        dut.TraceableItem.define_attribute(attr)
+        dut.TraceableItem.define_attribute(attr, self.test_collection)
 
     def test_init(self):
         coll = dut.TraceableCollection()
@@ -297,6 +298,10 @@ class TestTraceableCollection(TestCase):
 
     def test_get_items_attribute(self):
         coll = dut.TraceableCollection()
+        # Define the attribute in the local collection
+        attr = attribute.TraceableAttribute(self.attribute_key, self.attribute_regex)
+        dut.TraceableItem.define_attribute(attr, coll)
+
         item1 = item.TraceableItem(self.identification_src)
         coll.add_item(item1)
         item2 = item.TraceableItem(self.identification_tgt)
@@ -304,10 +309,10 @@ class TestTraceableCollection(TestCase):
         self.assertEqual(2, len(coll.get_items('')))
         self.assertEqual(0, len(coll.get_items('', {self.attribute_key: self.attribute_value_src})))
         self.assertEqual(0, len(coll.get_items('', {self.attribute_key: self.attribute_value_tgt})))
-        item1.add_attribute(self.attribute_key, self.attribute_value_src)
+        item1.add_attribute(self.attribute_key, self.attribute_value_src, collection=coll)
         self.assertEqual(1, len(coll.get_items('', {self.attribute_key: self.attribute_value_src})))
         self.assertEqual(0, len(coll.get_items('', {self.attribute_key: self.attribute_value_tgt})))
-        item2.add_attribute(self.attribute_key, self.attribute_value_tgt)
+        item2.add_attribute(self.attribute_key, self.attribute_value_tgt, collection=coll)
         self.assertEqual(1, len(coll.get_items('', {self.attribute_key: self.attribute_value_src})))
         self.assertEqual(1, len(coll.get_items('', {self.attribute_key: self.attribute_value_tgt})))
 
@@ -321,9 +326,9 @@ class TestTraceableCollection(TestCase):
         coll.add_item(item2)
         attribute_regex = '0x[0-9A-Z]+'
         attr = attribute.TraceableAttribute(self.attribute_key, attribute_regex)
-        dut.TraceableItem.define_attribute(attr)
-        item1.add_attribute(self.attribute_key, '0x0029')
-        item2.add_attribute(self.attribute_key, '0x003A')
+        dut.TraceableItem.define_attribute(attr, coll)
+        item1.add_attribute(self.attribute_key, '0x0029', collection=coll)
+        item2.add_attribute(self.attribute_key, '0x003A', collection=coll)
         # Alphabetical sorting on attributes: 0x0029 before 0x003A
         self.assertEqual([name1, name2], coll.get_items('', sortattributes=[self.attribute_key]))
         # Natural sorting: 0x003A before 0x0029
@@ -364,7 +369,7 @@ class TestTraceableCollection(TestCase):
         # Improper use: add target on item level (no sanity check and no automatic reverse link)
         item1.add_target(self.fwd_relation, self.identification_tgt)
         # Improper use is not detected at level of item-level
-        item1.self_test()
+        item1.self_test(coll)
         # Add item to collection
         coll.add_item(item1)
         # Self test should fail as target item is not in collection
@@ -408,13 +413,13 @@ class TestTraceableCollection(TestCase):
 
         for attr_key in ('small', 'large', 'number'):
             attr = attribute.TraceableAttribute(attr_key, attribute_regex)
-            dut.TraceableItem.define_attribute(attr)
-            item1.add_attribute(attr_key, 'small')
+            dut.TraceableItem.define_attribute(attr, coll)
+            item1.add_attribute(attr_key, 'small', collection=coll)
 
         for attr_key in ('small', 'large', 'number', 'attr2'):
             attr = attribute.TraceableAttribute(attr_key, attribute_regex)
-            dut.TraceableItem.define_attribute(attr)
-            item2.add_attribute(attr_key, 'small')
+            dut.TraceableItem.define_attribute(attr, coll)
+            item2.add_attribute(attr_key, 'small', collection=coll)
 
         ignored1 = coll.add_attribute_sorting_rule('AB', ['number', 'small', 'large', 'attr2'])
         ignored2 = coll.add_attribute_sorting_rule('[A-Z]+', ['small', 'large'])  # item ABC must get ignored

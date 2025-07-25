@@ -10,7 +10,7 @@ from natsort import natsorted, natsort_keygen
 from ..traceability_exception import TraceabilityException, report_warning
 from ..traceable_base_directive import TraceableBaseDirective
 from ..traceable_base_node import TraceableBaseNode
-from ..traceable_item import TraceableItem
+
 
 natsort_key = natsort_keygen(key=lambda item: getattr(item, 'identifier', ''))
 
@@ -55,12 +55,12 @@ class ItemMatrix(TraceableBaseNode):
         if self['hidetarget']:
             titles = titles[0]
         for value in reversed(self['sourcecolumns']):
-            if value in TraceableItem.defined_attributes:
+            if value in collection.defined_attributes:
                 titles.insert(1, self.make_attribute_ref(app, value))
             else:
                 titles.insert(1, nodes.paragraph('', value))
         for value in self['targetcolumns']:
-            if value in TraceableItem.defined_attributes:
+            if value in collection.defined_attributes:
                 titles.append(self.make_attribute_ref(app, value))
             else:
                 titles.append(nodes.paragraph('', app.config.traceability_relationship_to_string[value]))
@@ -529,7 +529,7 @@ class ItemMatrix(TraceableBaseNode):
         """
         cells = []
         for value in values:
-            if value in TraceableItem.defined_attributes:
+            if value in app.env.traceability_collection.defined_attributes:
                 cells.append(self._create_cell_for_attribute(item, value))
             else:
                 cells.append(self._create_cell_for_relation(item, value, app))

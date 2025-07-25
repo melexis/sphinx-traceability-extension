@@ -647,7 +647,9 @@ class ItemPieChartDirective(TraceableBaseDirective):
         """
         node['attribute'] = ''
         node['attr_values'] = []
-        for attr in set(TraceableItem.defined_attributes) & set(self.options):
+        env = self.state.document.settings.env
+        defined_attributes = env.traceability_collection.defined_attributes if hasattr(env, 'traceability_collection') else {}
+        for attr in set(defined_attributes) & set(self.options):
             if ',' not in self.options[attr]:
                 continue  # this :<<attribute>>: is meant for filtering
             if len(node['id_set']) == 3:

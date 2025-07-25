@@ -4,7 +4,6 @@ from docutils.parsers.rst import directives
 
 from ..traceable_base_directive import TraceableBaseDirective
 from ..traceable_base_node import TraceableBaseNode
-from ..traceable_item import TraceableItem
 
 
 class ItemAttributesMatrix(TraceableBaseNode):
@@ -156,7 +155,7 @@ class ItemAttributesMatrixDirective(TraceableBaseDirective):
 
         # Process ``attributes`` option, given as a string with attributes
         # separated by space. It is converted to a list.
-        self.add_attributes(node, 'attributes', list(TraceableItem.defined_attributes))
+        self.add_attributes(node, 'attributes', list(env.traceability_collection.defined_attributes))
 
         # Process ``sort`` option, given as a string with attributes
         # separated by space. It is converted to a list.
