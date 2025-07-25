@@ -87,4 +87,4 @@ class ItemAttributeDirective(TraceableBaseDirective):
             attr.directive = self
 
         attr.content = self.content
-        return [target_node, attribute_node, attr.content_node]
+        return [target_node, attribute_node]

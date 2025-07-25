@@ -330,7 +330,6 @@ Main Index
    This is the main requirements document.
 '''
         (self.doc_dir / "index.rst").write_text(index_content)
-
         # Run serial build
         serial_dir = self.temp_dir / "_build_serial"
         cmd_serial = [
@@ -407,10 +406,21 @@ Main Index
                 self.assertIn(fragment, parallel_content,
                             f"Parallel build missing attribute content: '{fragment}'")
 
-            # Verify no empty content containers
+            # Verify no content duplication - each content fragment should appear exactly twice:
+            # once inside the attribute container and once in the content container
             import re
 
-            # Check for empty content containers in serial build
+            for fragment in ["This attribute defines the approval status", "This attribute defines the priority level"]:
+                serial_count = serial_content.count(fragment)
+                parallel_count = parallel_content.count(fragment)
+
+                # Content should appear exactly once (fixed duplication issue)
+                self.assertEqual(serial_count, 1,
+                                 f"Serial build has content duplication: '{fragment}' appears {serial_count} times")
+                self.assertEqual(parallel_count, 1,
+                                 f"Parallel build has content duplication: '{fragment}' appears {parallel_count} times")
+
+            # Check for empty content containers in both builds
             empty_containers_serial = re.findall(r'<div[^>]*id="content-[^"]*"[^>]*>\s*</div>', serial_content)
             empty_containers_parallel = re.findall(r'<div[^>]*id="content-[^"]*"[^>]*>\s*</div>', parallel_content)
 
