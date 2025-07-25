@@ -254,10 +254,10 @@ def process_item_nodes(app, doctree, fromdocname):
         CheckboxResult,
     )
     for node_class in node_classes:  # order is important: e.g. AttributeSort before Item
-        for node in doctree.traverse(node_class):
+        for node in doctree.findall(node_class):
             node.perform_replacement(app, env.traceability_collection)
 
-    for node in doctree.traverse(PendingItemXref):
+    for node in doctree.findall(PendingItemXref):
         node['document'] = fromdocname
         node['line'] = node.line
         node.perform_replacement(app, env.traceability_collection)
