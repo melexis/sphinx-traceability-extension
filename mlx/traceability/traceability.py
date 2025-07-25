@@ -42,15 +42,10 @@ from .directives.item_relink_directive import ItemRelink, ItemRelinkDirective
 from .directives.item_tree_directive import ItemTree, ItemTreeDirective
 
 
-# HTML5 translator methods for AttributeSort node
-def visit_attribute_sort_html5(self, node):
-    """Visit method for AttributeSort node in HTML5 translator."""
-    pass
-
-
-def depart_attribute_sort_html5(self, node):
-    """Depart method for AttributeSort node in HTML5 translator."""
-    pass
+# HTML5 translator method for utility nodes that should be skipped
+def skip_node_html5(self, node):
+    """Skip utility nodes that have no visual representation."""
+    raise nodes.SkipNode
 
 
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
@@ -792,8 +787,11 @@ def setup(app):
     app.add_node(ItemList)
     app.add_node(ItemAttribute)
     app.add_node(Item)
-    app.add_node(AttributeSort, html=(visit_attribute_sort_html5, depart_attribute_sort_html5))
-    app.add_node(CheckboxResult)
+    app.add_node(AttributeSort, html=(skip_node_html5, None))
+    app.add_node(CheckboxResult, html=(skip_node_html5, None))
+    app.add_node(ItemLink, html=(skip_node_html5, None))
+    app.add_node(ItemRelink, html=(skip_node_html5, None))
+    app.add_node(AttributeLink, html=(skip_node_html5, None))
 
     app.add_directive('item', ItemDirective)
     app.add_directive('checklist-item', ChecklistItemDirective)
