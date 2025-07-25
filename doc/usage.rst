@@ -54,14 +54,10 @@ By default, Sphinx performs the read and write stages in a single process. This 
 
 .. note::
 
-    The plugin does not support parallellization of the read stage yet. This functionality is a `work in progress
-    <https://github.com/melexis/sphinx-traceability-extension/pull/395>`_. The following warning will be shown
-    when parallellization is enabled:
-
-    .. code-block:: text
-
-        WARNING: the mlx.traceability extension is not safe for parallel reading
-        WARNING: doing serial read
+    The plugin supports parallel reading, which can significantly improve build performance for large documentation
+    projects. Each worker thread gets its own isolated collection during the reading phase, and all collections
+    are automatically merged after parallel reading completes. This ensures thread safety while maintaining
+    correct cross-document relationships.
 
 .. _traceability_usage_item:
 
