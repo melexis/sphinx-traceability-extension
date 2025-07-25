@@ -1,6 +1,5 @@
 """Utility functions for handling callback configurations."""
 import importlib
-import warnings
 import builtins
 import sys
 from typing import Any, Callable, Optional
@@ -97,12 +96,6 @@ def get_callback_function(callback_spec: Any, app=None) -> Optional[Callable]:
 
     # Handle direct function objects (backward compatibility)
     if callable(callback_spec):
-        warnings.warn(
-            "Using function objects in configuration is deprecated. "
-            "Use string specifications instead (e.g., 'function_name')",
-            DeprecationWarning,
-            stacklevel=2
-        )
         return callback_spec
 
     # Handle string specifications
