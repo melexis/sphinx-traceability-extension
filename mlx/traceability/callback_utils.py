@@ -1,6 +1,5 @@
 """Utility functions for handling callback configurations."""
 import importlib
-import warnings
 import builtins
 import sys
 from typing import Any, Callable, Optional
@@ -80,9 +79,9 @@ def get_callback_function(callback_spec: Any, app=None) -> Optional[Callable]:
 
     Args:
         callback_spec: Function specification - can be:
-            - A callable function (backward compatibility)
             - A string with module.function_name format
             - A string with just function_name (searches built-ins, then conf.function_name)
+            - A callable function (backward compatibility)
         app: Sphinx application object (optional, for context)
 
     Returns:
@@ -95,19 +94,15 @@ def get_callback_function(callback_spec: Any, app=None) -> Optional[Callable]:
     if callback_spec is None:
         return None
 
-    # Handle direct function objects (backward compatibility)
+    # Handle direct function objects (backward compatibility), Sphinx v7+ will issue a warning if this is used
     if callable(callback_spec):
-        warnings.warn(
-            "Using function objects in configuration is deprecated. "
-            "Use string specifications instead (e.g., 'function_name')",
-            DeprecationWarning,
-            stacklevel=2
-        )
         return callback_spec
 
     # Handle string specifications
     if not isinstance(callback_spec, str):
-        raise TypeError(f"Invalid callback specification type: {type(callback_spec)}. Expected callable or string.")
+        raise TypeError(f"Invalid callback specification type: {type(callback_spec)}. Expected string."
+                        " See https://melexis.github.io/sphinx-traceability-extension/configuration.html"
+                        "#callback-per-item-advanced for more information.")
 
     callback_spec = callback_spec.strip()
     if not callback_spec:

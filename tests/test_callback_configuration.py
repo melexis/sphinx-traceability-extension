@@ -14,10 +14,9 @@ class TestCallbackConfiguration(unittest.TestCase):
         self.assertEqual(callback_func, sorted)
 
     def test_get_callback_function_with_callable(self):
-        """Test that callable objects work but generate deprecation warning"""
-        with self.assertWarns(DeprecationWarning):
-            callback_func = get_callback_function(sorted)
-            self.assertEqual(callback_func, sorted)
+        """Test that callable objects work (backward compatibility)"""
+        callback_func = get_callback_function(sorted)
+        self.assertEqual(callback_func, sorted)
 
     def test_get_callback_function_with_invalid_module(self):
         """Test handling of invalid module in string specification"""
@@ -75,16 +74,15 @@ class TestCallbackConfiguration(unittest.TestCase):
             mock_import.assert_called_once_with('test_module')
 
     def test_call_callback_function_with_callable(self):
-        """Test calling callback function with callable object"""
+        """Test calling callback function with callable object (backward compatibility)"""
         def mock_callback(name, collection):
             return f"Called with {name} and {collection}"
 
-        with self.assertWarns(DeprecationWarning):
-            result = call_callback_function(
-                mock_callback,
-                'test_name',
-                'test_collection'
-            )
+        result = call_callback_function(
+            mock_callback,
+            'test_name',
+            'test_collection'
+        )
 
         self.assertEqual(result, "Called with test_name and test_collection")
 
