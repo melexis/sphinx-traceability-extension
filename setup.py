@@ -22,6 +22,7 @@ process_single_js_file(js_file_path, output_path=js_file_path.replace('.js', f'-
 
 setup(
     name='mlx.traceability',
+    dynamic="version",
     url=project_url,
     license='GPL-3.0',
     license_files=['LICENSE.txt'],

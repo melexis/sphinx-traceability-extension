@@ -10,7 +10,6 @@ from collections import namedtuple
 from os import path
 from re import fullmatch, match
 
-import natsort
 import shutil
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -20,6 +19,7 @@ from sphinx.errors import NoUri
 from sphinx.roles import XRefRole
 from sphinx.util.nodes import make_refnode
 from sphinx.util.osutil import ensuredir
+from importlib import import_module
 
 from .__traceability_version__ import __version__ as version
 from .traceable_attribute import TraceableAttribute
@@ -225,8 +225,8 @@ def perform_consistency_check(app, env):
                            app.config.traceability_hyperlink_colors,
                            path.join(assets_dir, colors_filename))
 
-    regex = app.config.traceability_checklist.get('checklist_item_regex')
-    if regex is not None and app.config.traceability_checklist['has_checklist_items']:
+    regex = env.traceability_checklist.get('checklist_item_regex')
+    if regex is not None and env.traceability_checklist.get('has_checklist_items'):
         warn_missing_checklist_items(regex)
 
 
@@ -291,7 +291,7 @@ def init_available_relationships(app):
         AttributeLinkDirective,
     )
 
-    for attr in app.config.traceability_attributes:
+    for attr in env.traceability_attributes:
         conflicting_directives = []
         for directive_class in directive_classes:
             if attr in directive_class.option_spec:
@@ -299,7 +299,7 @@ def init_available_relationships(app):
                 directive_class.conflicting_options.add(attr)
             else:
                 directive_class.option_spec[attr] = directives.unchanged
-        define_attribute(attr, app)
+        define_attribute(attr, env)
         if conflicting_directives:
             report_warning("Your custom attribute {!r} overlaps with an option of directive(s) {!r} in which your "
                            "attribute definition will be ignored.".format(attr, conflicting_directives))
@@ -313,18 +313,24 @@ def init_available_relationships(app):
 
 
 def initialize_environment(app):
-    """
-    Perform initializations needed before the build process starts.
-    """
+    """Perform initializations needed before the build process starts."""
     env = app.builder.env
 
-    # Assure ``traceability_collection`` will always be there.
-    # It needs to be empty on every (re-)build. As the script automatically
-    # generates placeholders when parsing the reverse relationships, the
-    # database of items needs to be empty on every re-build.
-    env.traceability_collection = TraceableCollection()
-    env.traceability_collection.attributes_sort = app.config.traceability_attributes_sort
     env.traceability_ref_nodes = {}
+    processed_sort_config = {}
+    for attr, sort_spec in app.config.traceability_attributes_sort.items():
+        try:
+            processed_sort_config[attr] = get_sort_function(sort_spec)
+        except ValueError as e:
+            report_warning(f"Invalid sort configuration for attribute '{attr}': {str(e)}")
+            # Fall back to default sorting
+            processed_sort_config[attr] = sorted
+    env.traceability_collection = TraceableCollection()
+    env.traceability_collection.attributes_sort = processed_sort_config
+    # Copy configuration dictionaries to environment to avoid modifying app.config
+    env.traceability_checklist = dict(app.config.traceability_checklist)
+    env.traceability_attributes = dict(app.config.traceability_attributes)
+    env.traceability_attribute_to_string = dict(app.config.traceability_attribute_to_string)
 
     all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
     all_relationships.discard('')
@@ -333,10 +339,10 @@ def initialize_environment(app):
         raise TraceabilityException(f"Relationships {undefined_stringifications!r} are missing from configuration "
                                     "variable 'traceability_relationship_to_string'")
 
-    app.config.traceability_checklist['has_checklist_items'] = False
-    add_checklist_attribute(app.config.traceability_checklist,
-                            app.config.traceability_attributes,
-                            app.config.traceability_attribute_to_string)
+    # Process checklist attributes here to ensure they're available during reading
+    add_checklist_attribute(env.traceability_checklist,
+                            env.traceability_attributes,
+                            env.traceability_attribute_to_string)
 
     init_available_relationships(app)
 
@@ -353,16 +359,12 @@ def initialize_environment(app):
 # ----------------------------------------------------------------------------
 # Event handler helper functions
 def add_checklist_attribute(checklist_config, attributes_config, attribute_to_string_config):
-    """
-    Adds the specified attribute for checklist items to the application configuration variables.
-    Sets the checklist_item_regex if it's not configured.
-
-    Reports a warning if the value for 'attribute_values' is not a string of two comma-separated attribute values.
+    """Adds checklist attribute to the attributes configuration.
 
     Args:
-        checklist_config (dict): Dictionary containing the attribute configuration parameters for checklist items.
-        attributes_config (dict): Dictionary containing the attribute configuration parameters for regular items.
-        attribute_to_string_config (dict): Dictionary mapping an attribute to its string representation.
+        checklist_config (dict): Configuration for checklist feature.
+        attributes_config (dict): Configuration for attributes.
+        attribute_to_string_config (dict): Configuration for attribute to string mapping.
     """
     missing_keys = 0
     for key in ('attribute_name', 'attribute_to_str', 'attribute_values'):
@@ -370,30 +372,33 @@ def add_checklist_attribute(checklist_config, attributes_config, attribute_to_st
 
     if missing_keys:
         checklist_config['configured'] = False
-    else:
-        checklist_config['configured'] = True
-        checklist_config['checklist_item_regex'] = checklist_config.get('checklist_item_regex', r"\S+")
+        return
+    checklist_config['configured'] = True
+    checklist_config['has_checklist_items'] = False
+    checklist_config['checklist_item_regex'] = checklist_config.get('checklist_item_regex', r"\S+")
 
-        attr_values = checklist_config['attribute_values'].split(',')
-        if len(attr_values) != 2:
-            raise TraceabilityException("Checklist attribute values must be two comma-separated strings; got '{}'."
-                                        .format(checklist_config['attribute_values']))
-        attribute_name = checklist_config['attribute_name']
-        regexes = list(attr_values)
-        if attributes_config.get(attribute_name):
-            regexes.append(attributes_config[attribute_name])
-        attributes_config[attribute_name] = "({})".format("|".join(regexes))
-        attribute_to_string_config[attribute_name] = checklist_config['attribute_to_str']
-        if checklist_config.get('api_host_name') and checklist_config.get('project_id') and \
-                checklist_config.get('merge_request_id'):
-            ChecklistItemDirective.query_results = query_checklist(checklist_config, attr_values)
+    attr_values = checklist_config['attribute_values'].split(',')
+    if len(attr_values) != 2:
+        raise TraceabilityException("Checklist attribute values must be two comma-separated strings; got '{}'."
+                                    .format(checklist_config['attribute_values']))
+    attribute_name = checklist_config['attribute_name']
+    regexes = list(attr_values)
+    if attributes_config.get(attribute_name):
+        regexes.append(attributes_config[attribute_name])
+
+    attributes_config[attribute_name] = "({})".format("|".join(regexes))
+    attribute_to_string_config[attribute_name] = checklist_config['attribute_to_str']
+
+    if checklist_config.get('api_host_name') and checklist_config.get('project_id') and \
+            checklist_config.get('merge_request_id'):
+        ChecklistItemDirective.query_results = query_checklist(checklist_config, attr_values)
 
 
-def define_attribute(attr, app):
+def define_attribute(attr, env):
     """ Defines a new attribute. """
-    attrobject = TraceableAttribute(attr, app.config.traceability_attributes[attr])
-    if attr in app.config.traceability_attribute_to_string:
-        attrobject.name = app.config.traceability_attribute_to_string[attr]
+    attrobject = TraceableAttribute(attr, env.traceability_attributes[attr])
+    if attr in env.traceability_attribute_to_string:
+        attrobject.name = env.traceability_attribute_to_string[attr]
     else:
         report_warning('Traceability: attribute {attr} cannot be translated to string'.format(attr=attr))
     TraceableItem.define_attribute(attrobject)
@@ -479,6 +484,37 @@ def _parse_description(description, attr_values, merge_request_id, regex):
     return query_results
 
 
+def get_sort_function(sort_spec):
+    """Convert a string specification into a sorting function.
+
+    Args:
+        sort_spec (str or callable): Either a string like 'natsort.natsorted' or a callable
+
+    Returns:
+        callable: The sorting function to use
+
+    Raises:
+        ValueError: If the string specification cannot be resolved to a callable
+    """
+    if callable(sort_spec):
+        report_warning(
+            "Using functions directly in traceability_attributes_sort is deprecated and breaks "
+            "Sphinx caching. Please use string notation instead (e.g. 'natsort.natsorted' "
+            "instead of natsort.natsorted)"
+        )
+        return sort_spec
+
+    if isinstance(sort_spec, str):
+        try:
+            module_path, function_name = sort_spec.rsplit('.', 1)
+            module = import_module(module_path)
+            return getattr(module, function_name)
+        except (ValueError, ImportError, AttributeError) as e:
+            raise ValueError(f"Invalid sort function specification '{sort_spec}': {str(e)}")
+
+    raise ValueError(f"Sort specification must be string or callable, not {type(sort_spec)}")
+
+
 # -----------------------------------------------------------------------------
 # Extension setup
 def setup(app):
@@ -557,7 +593,7 @@ def setup(app):
     app.add_config_value(
         'traceability_attributes_sort',
         {
-            'effort': natsort.natsorted,
+            'effort': 'natsort.natsorted',
         },
         'env',
     )

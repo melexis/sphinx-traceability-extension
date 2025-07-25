@@ -17,6 +17,9 @@ exclude_patterns = [
   "**/assets/**",
   "**/_build/**",
   "dist/**",
+  "doc/**",
+  "pyproject.toml",
+  "setup.py",
 ]
 
 test_patterns = [

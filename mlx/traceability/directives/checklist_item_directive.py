@@ -14,19 +14,17 @@ class ChecklistItemDirective(ItemDirective):
     def run(self):
         """ Processes the contents of the directive. """
         env = self.state.document.settings.env
-        app = env.app
+        env.traceability_checklist['has_checklist_items'] = True
 
         nodes = super().run()
         target_id = self.arguments[0]
-        app.config.traceability_checklist['has_checklist_items'] = True
-
-        if not app.config.traceability_checklist.get('configured'):
+        if not env.traceability_checklist.get('configured'):
             raise TraceabilityException("The checklist attribute in 'traceability_checklist' is not configured "
                                         "properly. See documentation for more details.")
         try:
             item = env.traceability_collection.get_item(target_id)
-            item.add_attribute(app.config.traceability_checklist['attribute_name'],
-                               self.query_results.pop(target_id).attr_val)
+            attribute_name = env.traceability_checklist['attribute_name']
+            item.add_attribute(attribute_name, self.query_results.pop(target_id).attr_val)
         except TraceabilityException as err:
             report_warning(err, env.docname, self.lineno)
         except KeyError:

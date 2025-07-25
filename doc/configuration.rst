@@ -260,12 +260,14 @@ Callback per item (advanced)
 Callback to modify item
 =======================
 
-The plugin allows parsing and modifying documentation objects *behind the scenes* using a callback. The callback
-has this prototype:
+The plugin allows parsing and modifying documentation objects *behind the scenes* using a callback.
+The callback function has this prototype:
 
 .. code-block:: python
 
-    def traceability_callback_per_item(name, collection):
+    traceability_callback_per_item = 'my_callback_per_item_func'
+
+    def my_callback_per_item_func(name, collection):
         """Callback function called when an item-directive is being processed.
 
         Note: attributes, relationships and content (body) of the item can be modified. Sphinx processes each directive
@@ -277,11 +279,18 @@ has this prototype:
         """
         pass
 
+
 .. note::
 
     The callback is executed while parsing the documentation item from your RST file. Note that not all items are
     available at the time this callback executes, the *collection* parameter is a growing collection of documentation
     objects.
+
+.. note::
+
+    **String-based configuration is recommended** because it allows Sphinx to properly cache and serialize the
+    configuration. Using function objects directly will cause Sphinx to issue warnings about "unpickleable
+    configuration values" and disable incremental builds.
 
 Callback to inspect item
 ========================
@@ -290,11 +299,13 @@ To overcome the limitation of ``traceability_callback_per_item`` (see note above
 defined. This function will be called when *rendering* each ``item``-directive. At that moment, all other directive
 types, e.g. ``attribute-link`` and ``item-link``, will have been processed. You can use this callback function to detect
 and warn about any gaps in your documentation but you cannot use it to make any modifications.
-The callback has this prototype:
+The callback function has this prototype:
 
 .. code-block:: python
 
-    def traceability_inspect_item(name, collection):
+    traceability_inspect_item = 'my_inspect_item_func'
+
+    def my_inspect_item_func(name, collection):
         """Callback function called when an item-directive is being rendered.
 
         Warning: the item cannot not be modified, only inspected.
@@ -326,12 +337,14 @@ when the item doesn't have either the `functional` or `non-functional` attribute
 
     from mlx.traceability import report_warning
 
-    def traceability_callback_per_item(name, collection):
+    def my_callback_per_item_func(name, collection):
         item = collection.get_item(name)
         if not (('functional' in item.attributes) ^ ('non_functional' in item.attributes)):
             report_warning("Requirement item {!r} must have either the 'functional' or 'non_functional' attribute; "
                            "adding 'functional'".format(name), docname=item.docname, lineno=item.lineno)
             item.add_attribute('functional', '')
+
+    traceability_callback_per_item = 'my_callback_per_item_func'
 
 
 .. _traceability_config_link_colors:
@@ -383,6 +396,7 @@ The plugin itself holds a default config that can be used for any traceability d
 .. code-block:: python
 
     traceability_callback_per_item = None
+    traceability_inspect_item = None
     traceability_attributes = {
         'value': '^.*$',
         'asil': '^(QM|[ABCD])$',
@@ -404,7 +418,7 @@ The plugin itself holds a default config that can be used for any traceability d
         'effort': 'Effort estimation',
     }
     traceability_attributes_sort = {
-        'effort': natsort.natsorted,
+        'effort': 'natsort.natsorted',
     }
     traceability_relationships = {
         'fulfills': 'fulfilled_by',

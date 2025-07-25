@@ -280,6 +280,7 @@ Design for mlx.traceability
 .. item:: DESIGN-ITEMIZE Allow splitting the documentation in parts
     :depends_on: DESIGN-TRACEABILITY
     :fulfills: RQT-ITEMIZE
+    :effort: 11d
 
     A directive name `item` is added to sphinx through the plugin that allows splitting the documentation
     into parts. The documentation parts are stored as objects of class `TraceableItem`. All `TraceableItem`
@@ -288,6 +289,7 @@ Design for mlx.traceability
 .. item:: DESIGN-DOCUMENTATION_ID Identification of documentation part
     :depends_on: DESIGN-ITEMIZE
     :fulfills: RQT-DOCUMENTATION_ID
+    :effort: 2h
 
     A first argument to the `item` directive is used as a unique identifier for the documentation part. The
     identifier can be any string - not containing spaces.
@@ -299,6 +301,7 @@ Design for mlx.traceability
 .. item:: DESIGN-CAPTION Brief description of documentation part
     :depends_on: DESIGN-ITEMIZE
     :fulfills: RQT-CAPTION
+    :effort: 1h
 
     A second optional argument to the `item` directive is used as a brief description, or caption of the
     documentation part. This argument is allowed to have spaces. The caption is stored in
@@ -307,6 +310,7 @@ Design for mlx.traceability
 .. item:: DESIGN-CONTENT Content of documentation part
     :depends_on: DESIGN-ITEMIZE
     :fulfills: RQT-CONTENT
+    :effort: 9d 6h
 
     The content of the `item` directive is used as the content of the documentation part.
     The caption is stored in the `TraceableItem` object. The content is forwarded through the sphinx
@@ -316,6 +320,7 @@ Design for mlx.traceability
 .. item:: DESIGN-ATTRIBUTES Documentation parts can have attributes
     :depends_on: DESIGN-ITEMIZE
     :fulfills: RQT-ATTRIBUTES RQT-ATTRIBUTES_MATRIX
+    :effort: 1h 30m
 
     Attributes can be added to the documentation parts.
     Attributes have a key and an optional value.
@@ -324,6 +329,7 @@ Design for mlx.traceability
 .. item:: DESIGN-RELATIONS Documentation parts can be linked to each other
     :depends_on: DESIGN-ITEMIZE
     :fulfills: RQT-RELATIONS
+    :effort: 1h
 
     Documentation parts can be linked to other documentation parts.
     The set of relations is configurable.
@@ -331,6 +337,7 @@ Design for mlx.traceability
 .. item:: DESIGN-AUTO_REVERSE Automatic creation of reverse relations
     :depends_on: DESIGN-RELATIONS
     :fulfills: RQT-AUTO_REVERSE
+    :effort: 1h
 
     When a documentation part <A> is related to a documentation part <B> (forward relation), the reverse
     relation from documentation part <B> to documentation part <A> gets created automatically.
@@ -338,12 +345,14 @@ Design for mlx.traceability
 .. item:: DESIGN-LIST Listing documentation parts
     :depends_on: DESIGN-ITEMIZE
     :fulfills: RQT-LIST
+    :effort: 1h
 
     A list of documentation parts matching a certain query can be retrieved.
 
 .. item:: DESIGN-COVERAGE Calculation of coverage for relations between documentation parts
     :depends_on: DESIGN-RELATIONS
     :fulfills: RQT-COVERAGE
+    :effort: 1h
 
     The plugin is able to calculate the coverage for a certain type of relation between
     documentation parts.
@@ -351,23 +360,27 @@ Design for mlx.traceability
 .. item:: DESIGN-MATRIX Auto-generation of a traceability matrix
     :depends_on: DESIGN-RELATIONS
     :fulfills: RQT-MATRIX
+    :effort: 1h
 
     The relations between documentation parts can be queried, and an overview matrix can be generated.
 
 .. item:: DESIGN-TREE Auto-generation of a traceability tree
     :depends_on: DESIGN-RELATIONS
     :fulfills: RQT-TREE
+    :effort: 5h
 
     The relations between documentation parts can be queried, and an overview tree can be generated.
 
 .. item:: DESIGN-ATTRIBUTES_MATRIX Overview of attributes on documentation parts
     :depends_on: DESIGN-ATTRIBUTES
     :fulfills: RQT-ATTRIBUTES_MATRIX
+    :effort: 1h
 
     An overview table of the attribute values for documentation parts can be generated.
 
 .. item:: DESIGN-ATTRIBUTE_SORT Custom sorting of items' attributes
     :depends_on: DESIGN-ATTRIBUTES
+    :effort: 12h
 
     The plugin has a directive that allows configurability of the order of items' attributes.
 
@@ -382,6 +395,14 @@ Tree of design
     :top: DESIGN
     :top_relation_filter: depends_on
     :type: impacts_on
+
+Effort estimation
+=================
+
+.. item-attributes-matrix:: Effort estimation
+    :filter: DESIGN
+    :attributes: effort
+    :sort: effort
 
 Coverage to requirements and implementation
 ===========================================
