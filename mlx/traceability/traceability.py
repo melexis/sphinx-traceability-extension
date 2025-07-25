@@ -41,6 +41,18 @@ from .directives.item_pie_chart_directive import ItemPieChart, ItemPieChartDirec
 from .directives.item_relink_directive import ItemRelink, ItemRelinkDirective
 from .directives.item_tree_directive import ItemTree, ItemTreeDirective
 
+
+# HTML5 translator methods for AttributeSort node
+def visit_attribute_sort_html5(self, node):
+    """Visit method for AttributeSort node in HTML5 translator."""
+    pass
+
+
+def depart_attribute_sort_html5(self, node):
+    """Depart method for AttributeSort node in HTML5 translator."""
+    pass
+
+
 ItemInfo = namedtuple('ItemInfo', 'attr_val mr_id')
 
 
@@ -780,7 +792,7 @@ def setup(app):
     app.add_node(ItemList)
     app.add_node(ItemAttribute)
     app.add_node(Item)
-    app.add_node(AttributeSort)
+    app.add_node(AttributeSort, html=(visit_attribute_sort_html5, depart_attribute_sort_html5))
     app.add_node(CheckboxResult)
 
     app.add_directive('item', ItemDirective)
