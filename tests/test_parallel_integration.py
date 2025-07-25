@@ -1,4 +1,4 @@
-"""Integration test for parallel reading with Sphinx"""
+"""Integration test for parallel reading with Sphinx."""
 import unittest
 import tempfile
 import shutil
@@ -8,10 +8,10 @@ import sys
 
 
 class TestParallelIntegration(unittest.TestCase):
-    """Integration test for parallel reading functionality"""
+    """Integration test for parallel reading functionality."""
 
     def setUp(self):
-        """Set up test environment"""
+        """Set up test environment."""
         self.temp_dir = Path(tempfile.mkdtemp())
         self.doc_dir = self.temp_dir / "docs"
         self.doc_dir.mkdir()
@@ -152,11 +152,11 @@ Item List
         (self.doc_dir / "doc3.rst").write_text(doc3_content)
 
     def tearDown(self):
-        """Clean up test environment"""
+        """Clean up test environment."""
         shutil.rmtree(self.temp_dir)
 
     def test_parallel_build_success(self):
-        """Test that parallel build completes successfully"""
+        """Test that parallel build completes successfully."""
         # Run sphinx-build with parallel reading
         cmd = [
             sys.executable, "-m", "sphinx",
@@ -184,7 +184,7 @@ Item List
         self.assertNotIn("doing serial read", result.stderr)
 
     def test_parallel_build_with_relationships(self):
-        """Test that relationships work correctly in parallel builds"""
+        """Test that relationships work correctly in parallel builds."""
         # Run sphinx-build with parallel reading
         cmd = [
             sys.executable, "-m", "sphinx",
@@ -219,7 +219,7 @@ Item List
         self.assertIn("REQ-003", doc3_html)
 
     def test_serial_vs_parallel_consistency(self):
-        """Test that serial and parallel builds produce consistent results"""
+        """Test that serial and parallel builds produce consistent results."""
         # First, run serial build
         serial_dir = self.temp_dir / "_build_serial"
         cmd_serial = [
@@ -278,7 +278,7 @@ Item List
                     self.assertIn(item_id, parallel_content, f"Parallel build missing {item_id} in {filename}")
 
     def test_attribute_consistency_serial_vs_parallel(self):
-        """Test that attribute hyperlinks and content are consistent between serial and parallel builds"""
+        """Test that attribute hyperlinks and content are consistent between serial and parallel builds."""
         # Create documents with attribute definitions to test the specific issues we fixed
 
         # Create attributes.rst with attribute definitions
@@ -399,7 +399,6 @@ Main Index
                 "draft or approved",
                 "low, medium, or high"
             ]
-
             for fragment in expected_content_fragments:
                 self.assertIn(fragment, serial_content,
                             f"Serial build missing attribute content: '{fragment}'")
