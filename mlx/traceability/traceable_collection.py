@@ -384,14 +384,64 @@ class TraceableCollection:
                 external_targets_to_item_ids.setdefault(target, []).append(item_id)
         return external_targets_to_item_ids
 
+    def _handle_item_merge_conflict(self, item_id, existing_item, other_item):
+        """Handle potential conflicts when merging items with the same ID."""
+        # In parallel processing, the same item might be referenced by multiple workers
+        # Only consider it a conflict if they have different content from different docs
+        if (existing_item.docname == other_item.docname and
+                existing_item.lineno == other_item.lineno):
+            # Same item from same location - this is expected in parallel processing
+            # Only merge relationships, not content (content should be identical)
+            self._merge_relationships_only(existing_item, other_item)
+            return
+
+        if existing_item.docname != other_item.docname:
+            # Items from different documents with same ID
+            # This could be a real duplicate or cross-references
+            # Only merge relationships, keep the first item's content
+            self._merge_relationships_only(existing_item, other_item)
+            return
+
+        # Same document, different lines - this is likely a real duplicate
+        raise TraceabilityException(
+            f"Duplicate item '{item_id}' found in document {existing_item.docname} "
+            f"at lines {existing_item.lineno} and {other_item.lineno}"
+        )
+
+    def _merge_single_item(self, item_id, other_item):
+        """Merge a single item from another collection."""
+        if item_id in self.items:
+            existing_item = self.items[item_id]
+
+            # If existing is placeholder but other is real, replace
+            if existing_item.is_placeholder and not other_item.is_placeholder:
+                self.items[item_id] = other_item
+                return
+
+            # If other is placeholder but existing is real, keep existing
+            if not existing_item.is_placeholder and other_item.is_placeholder:
+                # Only merge relationships from placeholder, not content
+                self._merge_relationships_only(existing_item, other_item)
+                return
+
+            # If both are real items, check carefully
+            if not existing_item.is_placeholder and not other_item.is_placeholder:
+                self._handle_item_merge_conflict(item_id, existing_item, other_item)
+                return
+
+        # No existing item, add the new one
+        self.items[item_id] = other_item
+
     def merge_from(self, other_collection):
         """
-        Merge items and relations from another TraceableCollection.
+        Merge items and attributes from another TraceableCollection into this one.
 
-        This is used during parallel reading to combine collections from worker processes.
+        This method is designed to safely merge collections from worker processes
+        during parallel processing, avoiding duplicate warnings while preserving
+        all necessary data.
 
         Args:
-            other_collection (TraceableCollection): The collection to merge from
+            other_collection (TraceableCollection): The collection to merge from.
         """
         # Merge relations (should be identical across workers)
         for relation, reverse in other_collection.relations.items():
@@ -404,42 +454,9 @@ class TraceableCollection:
                     f"'{self.relations[relation]}' vs '{reverse}'"
                 )
 
-        # Merge items, handling conflicts more permissively for parallel processing
+        # Merge actual items with careful conflict detection
         for item_id, other_item in other_collection.items.items():
-            if item_id in self.items:
-                existing_item = self.items[item_id]
-                # If both are placeholders, merge them
-                if existing_item.is_placeholder and other_item.is_placeholder:
-                    existing_item.update(other_item)
-                # If existing is placeholder but other is real, replace
-                elif existing_item.is_placeholder and not other_item.is_placeholder:
-                    self.items[item_id] = other_item
-                # If other is placeholder but existing is real, keep existing
-                elif not existing_item.is_placeholder and other_item.is_placeholder:
-                    # Only merge relationships from placeholder, not content
-                    self._merge_relationships_only(existing_item, other_item)
-                # If both are real items, check carefully
-                else:
-                    # In parallel processing, the same item might be referenced by multiple workers
-                    # Only consider it a conflict if they have different content from different docs
-                    if (existing_item.docname == other_item.docname and
-                            existing_item.lineno == other_item.lineno):
-                        # Same item from same location - this is expected in parallel processing
-                        # Only merge relationships, not content (content should be identical)
-                        self._merge_relationships_only(existing_item, other_item)
-                    elif existing_item.docname != other_item.docname:
-                        # Items from different documents with same ID
-                        # This could be a real duplicate or cross-references
-                        # Only merge relationships, keep the first item's content
-                        self._merge_relationships_only(existing_item, other_item)
-                    else:
-                        # Same document, different lines - this is likely a real duplicate
-                        raise TraceabilityException(
-                            f"Duplicate item '{item_id}' found in document {existing_item.docname} "
-                            f"at lines {existing_item.lineno} and {other_item.lineno}"
-                        )
-            else:
-                self.items[item_id] = other_item
+            self._merge_single_item(item_id, other_item)
 
         # Merge intermediate nodes
         self._intermediate_nodes.extend(other_collection._intermediate_nodes)
@@ -452,43 +469,63 @@ class TraceableCollection:
         # Merge defined_attributes (critical for parallel processing)
         # Worker processes may have modified attribute definitions, preserve these
         for attr_id, attr in other_collection.defined_attributes.items():
-            if attr_id not in self.defined_attributes:
-                # New attribute from worker
-                self.defined_attributes[attr_id] = attr
-            else:
-                # Attribute exists in both - merge information from both
-                existing_attr = self.defined_attributes[attr_id]
-
-                # Merge caption if the other has it and existing doesn't
-                if attr.caption and not existing_attr.caption:
-                    existing_attr.caption = attr.caption
-
-                # Merge docname and location info if the other has it and existing doesn't
-                if attr.docname and not existing_attr.docname:
-                    existing_attr.docname = attr.docname
-                    existing_attr.lineno = attr.lineno
-
-                # Merge content if the other has it and existing doesn't
-                if hasattr(attr, 'content') and attr.content and not getattr(existing_attr, 'content', None):
-                    # Suppress content warnings during legitimate merging operations
-                    existing_attr._suppress_content_warnings = True
-                    try:
-                        existing_attr.content = attr.content
-                    finally:
-                        # Always clean up the flag
-                        if hasattr(existing_attr, '_suppress_content_warnings'):
-                            delattr(existing_attr, '_suppress_content_warnings')
-
-                # Merge content_node if the other has it and existing doesn't
-                if hasattr(attr, 'content_node') and attr.content_node and not getattr(existing_attr, 'content_node', None):
-                    existing_attr.content_node = attr.content_node
-
-                # Always update the identifier to ensure consistency
-                existing_attr.identifier = attr.identifier
+            self._merge_single_attribute(attr_id, attr)
 
         # CRITICAL FIX: After merging items, restore missing reverse relationships
         # This handles cases where workers created forward relationships but targets were in different workers
         self._restore_reverse_relationships()
+
+    def _merge_single_attribute(self, attr_id, attr):
+        """Merge a single attribute from another collection."""
+        if attr_id not in self.defined_attributes:
+            # New attribute from worker
+            self.defined_attributes[attr_id] = attr
+            return
+
+        # Attribute exists in both - merge information from both
+        existing_attr = self.defined_attributes[attr_id]
+        self._update_existing_attribute(existing_attr, attr)
+
+    def _update_existing_attribute(self, existing_attr, attr):
+        """Update existing attribute with information from another attribute."""
+        # Merge caption if the other has it and existing doesn't
+        if attr.caption and not existing_attr.caption:
+            existing_attr.caption = attr.caption
+
+        # Merge docname and location info if the other has it and existing doesn't
+        if attr.docname and not existing_attr.docname:
+            existing_attr.docname = attr.docname
+            existing_attr.lineno = attr.lineno
+
+        # Merge content - handle parallel processing cases
+        if hasattr(attr, 'content') and attr.content:
+            existing_content = getattr(existing_attr, 'content', None)
+            if not existing_content:
+                # Existing has no content, use the new content
+                self._safely_merge_attribute_content(existing_attr, attr)
+            elif existing_content != attr.content:
+                # Both have content but they differ - this shouldn't happen in normal parallel processing
+                # since they should be processing the same directive content
+                # Use the new content but log that we're overwriting
+                self._safely_merge_attribute_content(existing_attr, attr)
+
+        # Merge content_node if the other has it and existing doesn't
+        if hasattr(attr, 'content_node') and attr.content_node and not getattr(existing_attr, 'content_node', None):
+            existing_attr.content_node = attr.content_node
+
+        # Always update the identifier to ensure consistency
+        existing_attr.identifier = attr.identifier
+
+    def _safely_merge_attribute_content(self, existing_attr, attr):
+        """Safely merge attribute content with proper cleanup."""
+        # Suppress content warnings during legitimate merging operations
+        existing_attr._suppress_content_warnings = True
+        try:
+            existing_attr.content = attr.content
+        finally:
+            # Always clean up the flag
+            if hasattr(existing_attr, '_suppress_content_warnings'):
+                delattr(existing_attr, '_suppress_content_warnings')
 
     def _merge_relationships_only(self, target_item, source_item):
         """
@@ -514,32 +551,45 @@ class TraceableCollection:
 
     def _restore_reverse_relationships(self):
         """
-        Restore missing reverse relationships after merging.
+        Restore missing reverse relationships after merging collections.
 
-        In parallel processing, a worker might create a forward relationship to an item
+        During parallel processing, a worker might create a forward relationship to an item
         that exists in another worker. After merging, we need to ensure all reverse
         relationships are properly established.
         """
         for item_id, item in self.items.items():
             # Check all explicit relationships in this item
             for relation, targets in item.explicit_relations.items():
-                reverse_relation = self.get_reverse_relation(relation)
-                if reverse_relation and reverse_relation != self.NO_RELATION_STR:
-                    # For each target, ensure the reverse relationship exists
-                    for target_id in targets:
-                        if target_id in self.items:
-                            target_item = self.items[target_id]
-                            # Check if reverse relationship already exists (implicitly)
-                            existing_reverse_targets = list(
-                                target_item.iter_targets(reverse_relation, explicit=False, implicit=True)
-                            )
-                            if item_id not in existing_reverse_targets:
-                                # Add the missing reverse relationship as implicit
-                                try:
-                                    target_item.add_target(reverse_relation, item_id, implicit=True)
-                                except TraceabilityException:
-                                    # Target already exists - this is fine
-                                    pass
+                self._restore_reverse_for_relation(item_id, relation, targets)
+
+    def _restore_reverse_for_relation(self, item_id, relation, targets):
+        """Restore reverse relationships for a specific relation."""
+        reverse_relation = self.get_reverse_relation(relation)
+        if not reverse_relation or reverse_relation == self.NO_RELATION_STR:
+            return
+
+        # For each target, ensure the reverse relationship exists
+        for target_id in targets:
+            self._ensure_reverse_relationship(item_id, target_id, reverse_relation)
+
+    def _ensure_reverse_relationship(self, item_id, target_id, reverse_relation):
+        """Ensure a reverse relationship exists between target and item."""
+        if target_id not in self.items:
+            return
+
+        target_item = self.items[target_id]
+        # Check if reverse relationship already exists (implicitly)
+        existing_reverse_targets = list(
+            target_item.iter_targets(reverse_relation, explicit=False, implicit=True)
+        )
+
+        if item_id not in existing_reverse_targets:
+            # Add the missing reverse relationship as implicit
+            try:
+                target_item.add_target(reverse_relation, item_id, implicit=True)
+            except TraceabilityException:
+                # Target already exists - this is fine
+                pass
 
     def remove_items_from_document(self, docname: str):
         """

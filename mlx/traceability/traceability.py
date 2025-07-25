@@ -418,8 +418,7 @@ def purge_traceability_info(app, env, docname):
 
 
 def begin_parallel_read(app, env, docnames):
-    """
-    Set up for parallel reading phase.
+    """Event handler for env-before-read-docs in Sphinx.
 
     This is called at the start of the reading phase. In multiprocessing
     context, worker processes will have their own copy of the environment.
@@ -440,17 +439,15 @@ def begin_parallel_read(app, env, docnames):
         env.traceability_collection.mark_as_worker_process()
 
         # Ensure worker has ALL relationship configuration
-        if hasattr(app.config, 'traceability_relationships'):
-            for rel in app.config.traceability_relationships:
-                revrel = app.config.traceability_relationships[rel]
-                env.traceability_collection.add_relation_pair(rel, revrel)
+        for rel in app.config.traceability_relationships:
+            revrel = app.config.traceability_relationships[rel]
+            env.traceability_collection.add_relation_pair(rel, revrel)
 
         # Ensure worker processes have ALL attribute definitions
-        if hasattr(app.config, 'traceability_attributes'):
-            for attr in app.config.traceability_attributes:
-                if attr not in env.traceability_collection.defined_attributes:
-                    # Create and define the attribute in the worker process
-                    define_attribute(attr, app)
+        for attr in env.traceability_attributes:
+            if attr not in env.traceability_collection.defined_attributes:
+                # Create and define the attribute in the worker process
+                define_attribute(attr, env)
 
 
 # ----------------------------------------------------------------------------
