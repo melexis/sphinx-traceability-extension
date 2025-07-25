@@ -27,9 +27,10 @@ class TraceableCollection:
         self.relations_sorted = {}
         self._intermediate_nodes = []
         self.attributes_sort = {}
-        # Move defined_attributes from TraceableItem class to collection instance
+        # Moved attributes from class to collection instance
         # This ensures proper isolation during parallel processing
         self.defined_attributes = {}
+        self.relink_source_ids = set()
 
     def add_relation_pair(self, forward, reverse=NO_RELATION_STR):
         '''
@@ -471,6 +472,9 @@ class TraceableCollection:
         for attr_id, attr in other_collection.defined_attributes.items():
             self._merge_single_attribute(attr_id, attr)
 
+        # Merge ItemRelink source_ids from worker processes
+        self.relink_source_ids.update(other_collection.relink_source_ids)
+
         # CRITICAL FIX: After merging items, restore missing reverse relationships
         # This handles cases where workers created forward relationships but targets were in different workers
         self._restore_reverse_relationships()
@@ -628,6 +632,7 @@ class ParallelSafeTraceableCollection:
         self._collection.relations = collection.relations.copy()
         self._collection.attributes_sort = collection.attributes_sort.copy()
         self._collection.defined_attributes = collection.defined_attributes.copy()
+        self._collection.relink_source_ids = collection.relink_source_ids.copy()
 
         # Copy items only if we're not in a worker process
         if not self._is_worker_process:
@@ -640,6 +645,7 @@ class ParallelSafeTraceableCollection:
         # Clear items for worker process (they should build their own subset)
         self._collection.items = {}
         self._collection._intermediate_nodes = []
+        self._collection.relink_source_ids = set()
 
     def add_relation_pair(self, forward, reverse=None):
         """Add a relation pair (ensure this works for workers)."""
