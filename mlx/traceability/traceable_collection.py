@@ -482,50 +482,19 @@ class TraceableCollection:
             self.defined_attributes[attr_id] = attr
             return
 
-        # Attribute exists in both - merge information from both
+        # Attribute exists in both collections
         existing_attr = self.defined_attributes[attr_id]
-        self._update_existing_attribute(existing_attr, attr)
 
-    def _update_existing_attribute(self, existing_attr, attr):
-        """Update existing attribute with information from another attribute."""
-        # Merge caption if the other has it and existing doesn't
-        if attr.caption and not existing_attr.caption:
-            existing_attr.caption = attr.caption
-
-        # Merge docname and location info if the other has it and existing doesn't
-        if attr.docname and not existing_attr.docname:
-            existing_attr.docname = attr.docname
-            existing_attr.lineno = attr.lineno
-
-        # Merge content - handle parallel processing cases
-        if hasattr(attr, 'content') and attr.content:
-            existing_content = getattr(existing_attr, 'content', None)
-            if not existing_content:
-                # Existing has no content, use the new content
-                self._safely_merge_attribute_content(existing_attr, attr)
-            elif existing_content != attr.content:
-                # Both have content but they differ - this shouldn't happen in normal parallel processing
-                # since they should be processing the same directive content
-                # Use the new content but log that we're overwriting
-                self._safely_merge_attribute_content(existing_attr, attr)
-
-        # Merge content_node if the other has it and existing doesn't
-        if hasattr(attr, 'content_node') and attr.content_node and not getattr(existing_attr, 'content_node', None):
-            existing_attr.content_node = attr.content_node
-
-        # Always update the identifier to ensure consistency
-        existing_attr.identifier = attr.identifier
-
-    def _safely_merge_attribute_content(self, existing_attr, attr):
-        """Safely merge attribute content with proper cleanup."""
-        # Suppress content warnings during legitimate merging operations
-        existing_attr._suppress_content_warnings = True
-        try:
-            existing_attr.content = attr.content
-        finally:
-            # Always clean up the flag
-            if hasattr(existing_attr, '_suppress_content_warnings'):
-                delattr(existing_attr, '_suppress_content_warnings')
+        if attr.is_placeholder:
+            # Incoming is placeholder from configuration - ignore it
+            return
+        elif existing_attr.is_placeholder:
+            # Existing is placeholder, incoming is real definition - replace it
+            self.defined_attributes[attr_id] = attr
+        else:
+            # Both are real definitions - duplicate item-attribute directives (user error)
+            # Keep existing, ignore incoming
+            pass
 
     def _merge_relationships_only(self, target_item, source_item):
         """

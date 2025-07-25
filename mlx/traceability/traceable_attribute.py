@@ -70,6 +70,16 @@ class TraceableAttribute(TraceableBaseClass):
                 return False
         return self.regex.match(value)
 
+    @property
+    def is_placeholder(self):
+        """bool: True if this attribute is a placeholder from configuration; False if defined by directive."""
+        # Placeholders are created from configuration and have no document location, directive, or content
+        # Real definitions have at least one of: docname (from directive), directive (for parsing), or content (processed)
+        has_location = hasattr(self, 'docname') and self.docname
+        has_directive = hasattr(self, 'directive') and self.directive is not None
+        has_content = hasattr(self, '_content') and self._content
+        return not (has_location or has_directive or has_content)
+
     def __getstate__(self):
         """Custom pickling to exclude unpicklable objects like directive references."""
         state = self.__dict__.copy()
