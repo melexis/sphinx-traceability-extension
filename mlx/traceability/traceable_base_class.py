@@ -34,6 +34,8 @@ class TraceableBaseClass:
         self.content_node = nodes.container()
         self.content_node['ids'].append(f'content-{self.identifier}')
         self.directive = directive
+        # Store directive type as string for parallel processing compatibility
+        self.directive_type = type(directive).__name__ if directive else None
         if directive is not None:
             directive.state.document.ids[f'content-{self.identifier}'] = self.content_node
 

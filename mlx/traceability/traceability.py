@@ -107,15 +107,24 @@ def build_class_name(inputs, class_names):
     class_names[inputs] = name.lower()
 
 
-def warn_missing_checklist_items(regex):
+def warn_missing_checklist_items(regex, traceability_collection, query_results):
     """ Reports a warning for each list item that is not defined as a checklist-item but is expected to be as such.
 
     Args:
         regex (str): Regular expression for matching list items that are supposed to be a checklist-item
+        traceability_collection: The traceability collection containing all items
+        query_results: Dictionary containing the query results from the checklist API
     """
-    for item_id in list(ChecklistItemDirective.query_results):
-        if fullmatch(regex, item_id):
-            item_info = ChecklistItemDirective.query_results.pop(item_id)
+    # Get all items that are defined as checklist-items
+    checklist_items = set()
+    for item_id in traceability_collection.items:
+        item = traceability_collection.items[item_id]
+        if item.directive_type == 'ChecklistItemDirective':
+            checklist_items.add(item_id)
+
+    # Report items that are in query_results but not defined as checklist-items
+    for item_id, item_info in query_results.items():
+        if fullmatch(regex, item_id) and item_id not in checklist_items:
             report_warning("List item {!r} in merge/pull request {} is not defined as a checklist-item."
                            .format(item_id, item_info.mr_id))
 
@@ -231,9 +240,10 @@ def perform_consistency_check(app, env):
                            app.config.traceability_hyperlink_colors,
                            path.join(assets_dir, colors_filename))
 
+    # Check for missing checklist items - this should run once at the end
     regex = env.traceability_checklist.get('checklist_item_regex')
     if regex is not None and env.traceability_checklist.get('has_checklist_items'):
-        warn_missing_checklist_items(regex)
+        warn_missing_checklist_items(regex, env.traceability_collection, env.traceability_checklist['query_results'])
 
 
 def process_item_nodes(app, doctree, fromdocname):
@@ -397,6 +407,9 @@ def merge_traceability_info(app, env, docnames, other):
             env.traceability_ref_nodes = {}
         env.traceability_ref_nodes.update(other.traceability_ref_nodes)
 
+    # Merge checklist information: has_checklist_items flag
+    env.traceability_checklist['has_checklist_items'] |= other.traceability_checklist.get('has_checklist_items', False)
+
 
 def purge_traceability_info(app, env, docname):
     """
@@ -492,7 +505,7 @@ def add_checklist_attribute(checklist_config, attributes_config, attribute_to_st
 
     if checklist_config.get('api_host_name') and checklist_config.get('project_id') and \
             checklist_config.get('merge_request_id'):
-        ChecklistItemDirective.query_results = query_checklist(checklist_config, attr_values)
+        checklist_config['query_results'] = query_checklist(checklist_config, attr_values)
 
 
 def define_attribute(attr, env):

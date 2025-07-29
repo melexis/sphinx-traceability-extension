@@ -9,7 +9,6 @@ class ChecklistItemDirective(ItemDirective):
     ItemDirective except that an extra attribute is added when the item ID is found in the queried checklist.
     The checklist has been queried using the ``traceability_checklist`` configuration variable.
     """
-    query_results = {}
 
     def run(self):
         """ Processes the contents of the directive. """
@@ -24,7 +23,10 @@ class ChecklistItemDirective(ItemDirective):
         try:
             item = env.traceability_collection.get_item(target_id)
             attribute_name = env.traceability_checklist['attribute_name']
-            item.add_attribute(attribute_name, self.query_results.pop(target_id).attr_val)
+            query_results = env.traceability_checklist['query_results']
+            if target_id in query_results:
+                item.add_attribute(attribute_name, query_results[target_id].attr_val)
+                # Don't modify query_results here - let the consistency check handle it
         except TraceabilityException as err:
             report_warning(err, env.docname, self.lineno)
         except KeyError:
