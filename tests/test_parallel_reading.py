@@ -365,12 +365,14 @@ class TestMergeTraceabilityInfoHandler:
         main_env.traceability_collection = ParallelSafeTraceableCollection()
         main_env.traceability_collection.add_relation_pair('depends_on', 'impacts_on')
         main_env.traceability_ref_nodes = {}
+        main_env.traceability_checklist = {'has_checklist_items': False}
 
         # Create worker environment
         worker_env = Mock()
         worker_env.traceability_collection = ParallelSafeTraceableCollection()
         worker_env.traceability_collection.add_relation_pair('depends_on', 'impacts_on')
         worker_env.traceability_ref_nodes = {'ref1': 'node1'}
+        worker_env.traceability_checklist = {'has_checklist_items': True}
 
         # Add item to worker
         item = TraceableItem('WORKER-001')
@@ -385,6 +387,9 @@ class TestMergeTraceabilityInfoHandler:
 
         # Check that ref_nodes were merged
         assert main_env.traceability_ref_nodes['ref1'] == 'node1'
+
+        # Check that checklist information was merged
+        assert main_env.traceability_checklist['has_checklist_items'] is True
 
 
 class TestDocumentPurging:
