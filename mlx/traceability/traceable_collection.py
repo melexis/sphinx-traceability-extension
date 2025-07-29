@@ -739,3 +739,7 @@ class ParallelSafeTraceableCollection:
         """Custom unpickling support."""
         object.__setattr__(self, '_collection', state['_collection'])
         object.__setattr__(self, '_is_worker_process', state['_is_worker_process'])
+
+    def __reduce__(self):
+        """Ensure proper pickling for multiprocessing."""
+        return (self.__class__, (), self.__getstate__())

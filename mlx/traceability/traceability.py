@@ -448,14 +448,19 @@ def begin_parallel_read(app, env, docnames):
         env: Current environment
         docnames: List of document names to be read
     """
-    if not hasattr(env, 'traceability_collection') or not hasattr(env.traceability_collection, 'mark_as_worker_process'):
+    # Early return if traceability collection is not properly initialized
+    if not hasattr(env, 'traceability_collection'):
         return
 
-    # Detect if this is a worker process by checking if we're processing fewer documents than the total
+    if not hasattr(env.traceability_collection, 'mark_as_worker_process'):
+        return
+
+    # Conservative worker process detection
+    # Only mark as worker if we're clearly in a parallel context
     total_docs = len(getattr(env, 'all_docs', []))
 
-    # If we're processing fewer documents than the total, we're likely in a worker process
-    if docnames and total_docs > 0 and len(docnames) < total_docs:
+    # Only mark as worker if we have a clear indication we're in parallel mode
+    if total_docs > 0 and docnames and len(docnames) < total_docs:
         env.traceability_collection.mark_as_worker_process()
 
         # Ensure worker has ALL relationship configuration
@@ -826,6 +831,7 @@ def setup(app):
     app.connect('builder-inited', initialize_environment)  # event 2
     app.connect('env-check-consistency', perform_consistency_check)  # event 12
     app.connect('doctree-resolved', process_item_nodes)  # event 15
+
     # Parallel reading support event handlers
     app.connect('env-before-read-docs', begin_parallel_read)  # event 4
     app.connect('env-purge-doc', purge_traceability_info)  # event 5
