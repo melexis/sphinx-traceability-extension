@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 from sphinx.util.docutils import SphinxDirective
 
 from .traceability_exception import report_warning
-from .traceable_item import TraceableItem
 
 
 class TraceableBaseDirective(SphinxDirective, ABC):
@@ -43,16 +42,19 @@ class TraceableBaseDirective(SphinxDirective, ABC):
             return self.arguments[1].replace('\n', ' ')
         return ''
 
-    def add_found_attributes(self, node, is_pattern=False):
+    def add_found_attributes(self, node, is_pattern=False, env=None):
         """ Adds found attributes to node. Attribute data is a single string.
 
         Args:
             node (TraceableBaseNode): Node object for which to add found attributes to.
             is_pattern (bool): True to treat the attribute value as a regular expression pattern and compile it if it
                 is not empty.
+            env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
         """
+        if env is None:
+            env = self.state.document.settings.env
         node['filter-attributes'] = {}
-        for attr in set(TraceableItem.defined_attributes) & set(self.options) - self.conflicting_options:
+        for attr in set(env.traceability_collection.defined_attributes) & set(self.options) - self.conflicting_options:
             value = self.options[attr]
             if is_pattern and value != '':
                 value = re.compile(value)
@@ -75,38 +77,45 @@ class TraceableBaseDirective(SphinxDirective, ABC):
             node[option] = self.options[option].split()
         else:
             node[option] = default
-        self.remove_unknown_attributes(node[option], description, node['document'])
+        env = self.state.document.settings.env
+        self.remove_unknown_attributes(node[option], description, node['document'], env)
 
-    def remove_unknown_attributes(self, attributes, description, docname):
+    def remove_unknown_attributes(self, attributes, description, docname, env=None):
         """ Removes any unknown attributes from the given list while reporting a warning.
 
         Args:
             attributes (list): List of attributes (str).
             description (str): Description of an element in the attributes list.
             docname (str): Document name.
+            env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
         """
-        for attr in set(attributes) - set(TraceableItem.defined_attributes):
+        if env is None:
+            env = self.state.document.settings.env
+        for attr in set(attributes) - set(env.traceability_collection.defined_attributes):
             report_warning('Traceability: unknown %s for item-(attributes-)matrix: %s' % (description, attr),
                            docname, self.lineno)
             attributes.remove(attr)
 
-    def add_attributes_and_relations(self, node, option, defined_relations):
+    def add_attributes_and_relations(self, node, option, defined_relations, env=None):
         """ Adds all valid attribute keys in the option's value to the node along with valid relationships
 
         Args:
             node (TraceableBaseNode): Node object for which to add valid values to, using ``option`` as key.
             option (str): Name of the option to look for
             defined_relations (dict): All defined relationships
+            env (sphinx.environment.BuildEnvironment): Sphinx's build environment.
         """
+        if env is None:
+            env = self.state.document.settings.env
         node[option] = []
         if option in self.options:
             values = self.options[option].split()
             self._warn_if_comma_separated(option, node['document'])
             for value in values:
-                if value in defined_relations or value in TraceableItem.defined_attributes:
+                if value in defined_relations or value in env.traceability_collection.defined_attributes:
                     node[option].append(value)
             leftover_values = set(values).difference(node[option])
-            self.remove_unknown_attributes(leftover_values, 'attribute/relationship', node['document'])
+            self.remove_unknown_attributes(leftover_values, 'attribute/relationship', node['document'], env)
 
     def check_relationships(self, relationships, env):
         """  Checks if given relationships are in configuration.

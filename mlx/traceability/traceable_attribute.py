@@ -62,4 +62,36 @@ class TraceableAttribute(TraceableBaseClass):
         Args:
             value (str): Value to check the validity of
         '''
+        if self.regex is None:
+            # Rebuild regex if it's None (can happen after unpickling)
+            if hasattr(self, '_value') and self._value is not None:
+                self.regex = re.compile(self._value)
+            else:
+                return False
         return self.regex.match(value)
+
+    @property
+    def is_placeholder(self):
+        """bool: True if this attribute is a placeholder from configuration; False if defined by directive."""
+        # Placeholders are created from configuration and have no document location, directive, or content
+        # Real definitions have at least one of: docname (from directive), directive (for parsing), or content (processed)
+        has_location = hasattr(self, 'docname') and self.docname
+        has_directive = hasattr(self, 'directive') and self.directive is not None
+        has_content = hasattr(self, '_content') and self._content
+        return not (has_location or has_directive or has_content)
+
+    def __getstate__(self):
+        """Custom pickling to exclude unpicklable objects like directive references."""
+        state = self.__dict__.copy()
+        # Remove directive if it exists (it contains unpicklable module references)
+        if 'directive' in state:
+            del state['directive']
+        return state
+
+    def __setstate__(self, state):
+        """Custom unpickling to restore state."""
+        self.__dict__.update(state)
+        # directive will be None after unpickling, which is fine
+        # Ensure regex is restored if we have a value
+        if hasattr(self, '_value') and self._value is not None:
+            self.regex = re.compile(self._value)

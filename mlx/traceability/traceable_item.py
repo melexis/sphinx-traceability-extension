@@ -17,8 +17,6 @@ class TraceableItem(TraceableBaseClass):
 
     STRING_TEMPLATE = 'Item {identification}\n'
 
-    defined_attributes = {}
-
     def __init__(self, item_id, placeholder=False, **kwargs):
         ''' Initializes a new traceable item
 
@@ -32,6 +30,7 @@ class TraceableItem(TraceableBaseClass):
         self.attributes = {}
         self.attribute_order = []
         self._is_placeholder = placeholder
+        self._collection = None  # Will be set when added to a collection
 
     def update(self, other):
         ''' Updates item with other object. Stores the sum of both objects.
@@ -180,6 +179,30 @@ class TraceableItem(TraceableBaseClass):
                 if target_id in database[relation] and (not relations or relation in relations):
                     database[relation].remove(target_id)
 
+    def remove_targets_by_ids(self, target_ids, explicit=True, implicit=True, relations=set()):
+        ''' Removes any relations to given target items.
+
+        Args:
+            target_ids (list): List of target item IDs to remove relations to.
+            explicit (bool): If True, explicitly expressed relations to given targets are removed.
+            implicit (bool): If True, implicitly expressed relations to given targets are removed.
+            relations (set): Set of relations to remove; empty to take all into account.
+        '''
+        source_databases = []
+        if explicit:
+            source_databases.append(self.explicit_relations)
+        if implicit:
+            source_databases.append(self.implicit_relations)
+
+        for database in source_databases:
+            for relation in database:
+                if not relations or relation in relations:
+                    # Remove all target_ids from this relation
+                    database[relation] = [
+                        target for target in database[relation]
+                        if target not in target_ids
+                    ]
+
     def iter_targets(self, relation, explicit=True, implicit=True, sort=True):
         ''' Gets a list of targets to other traceable item(s), naturally sorted by default.
 
@@ -240,34 +263,45 @@ class TraceableItem(TraceableBaseClass):
         return relations
 
     @staticmethod
-    def define_attribute(attr):
+    def define_attribute(attr, collection):
         ''' Defines an attribute that can be assigned to traceable items.
 
         Args:
             attr (TraceableAttribute): Attribute to be assigned.
+            collection (TraceableCollection): Collection to define the attribute in. Required.
         '''
-        TraceableItem.defined_attributes[attr.identifier] = attr
+        collection.define_attribute(attr)
 
-    def add_attribute(self, attr, value, overwrite=True):
+    def add_attribute(self, attr, value, overwrite=True, collection=None):
         ''' Adds an attribute key-value pair to the traceable item.
 
         Note:
-            The given attribute value is compared against defined attribute possibilities. An exception is thrown when
-            the attribute value doesn't match the defined regex.
+            The given attribute value is compared against defined attribute possibilities.
+            An exception is thrown when the attribute value doesn't match the defined regex.
 
         Args:
             attr (str): Name of the attribute.
             value (str): Value of the attribute.
             overwrite (bool): Overwrite existing attribute value, if any.
+            collection (TraceableCollection): Collection to get defined_attributes from.
+                                            If None, uses the item's stored collection reference.
+                                            If both are None, validation is skipped.
         '''
-        if not attr or value is None or attr not in TraceableItem.defined_attributes:
-            raise TraceabilityException('item {item} has invalid attribute ({attr}={value})'
-                                        .format(item=self.identifier, attr=attr, value=value),
-                                        self.docname)
-        if not TraceableItem.defined_attributes[attr].can_accept(value):
-            raise TraceabilityException('item {item} attribute does not match defined attributes ({attr}={value})'
-                                        .format(item=self.identifier, attr=attr, value=value),
-                                        self.docname)
+        # Use stored collection reference if no collection provided
+        if collection is None:
+            collection = self._collection
+
+        if collection is not None:
+            defined_attrs = collection.defined_attributes
+            if not attr or value is None or attr not in defined_attrs:
+                raise TraceabilityException('item {item} has invalid attribute ({attr}={value})'
+                                            .format(item=self.identifier, attr=attr, value=value),
+                                            self.docname)
+            if not defined_attrs[attr].can_accept(value):
+                raise TraceabilityException('item {item} attribute does not match defined attributes ({attr}={value})'
+                                            .format(item=self.identifier, attr=attr, value=value),
+                                            self.docname)
+
         if overwrite or attr not in self.attributes:
             self.attributes[attr] = value
 
@@ -432,8 +466,11 @@ class TraceableItem(TraceableBaseClass):
                     data['targets'][relation] = tgts
         return data
 
-    def self_test(self):
+    def self_test(self, collection):
         ''' Performs self-test on collection content.
+
+        Args:
+            collection (TraceableCollection): Collection to get defined_attributes from. Required.
 
         Raises:
             TraceabilityException: Item is not defined.
@@ -444,10 +481,13 @@ class TraceableItem(TraceableBaseClass):
         # Item should not be a placeholder
         if self.is_placeholder:
             raise TraceabilityException('item {item} is not defined'.format(item=self.identifier), self.docname)
+
+        defined_attrs = collection.defined_attributes
+
         # Item's attributes should be valid, empty string is allowed
         for attribute in self.iter_attributes():
             value = self.attributes[attribute]
-            if value is None or not TraceableItem.defined_attributes[attribute].can_accept(value):
+            if value is None or not defined_attrs[attribute].can_accept(value):
                 raise TraceabilityException('item {item} has invalid attribute value for {attribute}'
                                             .format(item=self.identifier, attribute=attribute))
         # Targets should have no duplicates
