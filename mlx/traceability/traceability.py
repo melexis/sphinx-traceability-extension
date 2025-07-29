@@ -821,14 +821,15 @@ def setup(app):
     app.add_directive('attribute-link', AttributeLinkDirective)
     app.add_directive('attribute-sort', AttributeSortDirective)
 
-    app.connect('builder-inited', initialize_environment)
-    app.connect('env-check-consistency', perform_consistency_check)
-    app.connect('doctree-resolved', process_item_nodes)
-
+    # Connect event handlers
+    # https://www.sphinx-doc.org/en/master/extdev/event_callbacks.html#event-env-check-consistency
+    app.connect('builder-inited', initialize_environment)  # event 2
+    app.connect('env-check-consistency', perform_consistency_check)  # event 12
+    app.connect('doctree-resolved', process_item_nodes)  # event 15
     # Parallel reading support event handlers
-    app.connect('env-merge-info', merge_traceability_info)
-    app.connect('env-purge-doc', purge_traceability_info)
-    app.connect('env-before-read-docs', begin_parallel_read)
+    app.connect('env-before-read-docs', begin_parallel_read)  # event 4
+    app.connect('env-purge-doc', purge_traceability_info)  # event 5
+    app.connect('env-merge-info', merge_traceability_info)  # event 9
 
     app.add_role('item', XRefRole(nodeclass=PendingItemXref,
                                   innernodeclass=nodes.emphasis,
