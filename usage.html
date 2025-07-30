@@ -1,27 +1,27 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; Traceability 11.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+  <title>Usage &mdash; Traceability 11.8.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/extra.css" />
-      <link rel="stylesheet" type="text/css" href="_static/hyperlink_colors.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/extra.css?v=92114f4b" />
+      <link rel="stylesheet" type="text/css" href="_static/hyperlink_colors.css?v=d5c942df" />
 
   
-      <script src="_static/jquery.js"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-      <script src="_static/doctools.js"></script>
-      <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=52196df1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
-      <script src="_static/traceability-11.7.0.min.js"></script>
+      <script src="_static/traceability-11.8.1.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -54,7 +54,11 @@
 <li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#required-sphinx-options">Required sphinx options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-sphinx-build-options">Recommended Sphinx build options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fresh-environment">Fresh environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parallellization">Parallellization</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#defining-documentation-items">Defining documentation items</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-relations-outside-of-the-item-definitions">Adding relations outside of the item definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#changing-targets-or-removing-relationships">Changing targets or removing relationships</a></li>
@@ -114,48 +118,56 @@
            <div itemprop="articleBody">
              
   <section id="usage">
-<span id="traceability-usage"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
+<span id="traceability-usage"></span><h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <p class="topic-title"><cite>Contents</cite></p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#required-sphinx-options" id="id2">Required sphinx options</a></p></li>
-<li><p><a class="reference internal" href="#defining-documentation-items" id="id3">Defining documentation items</a></p></li>
-<li><p><a class="reference internal" href="#adding-relations-outside-of-the-item-definitions" id="id4">Adding relations outside of the item definitions</a></p></li>
-<li><p><a class="reference internal" href="#changing-targets-or-removing-relationships" id="id5">Changing targets or removing relationships</a></p></li>
-<li><p><a class="reference internal" href="#adding-attributes-outside-of-the-item-definitions" id="id6">Adding attributes outside of the item definitions</a></p></li>
-<li><p><a class="reference internal" href="#adding-description-to-attributes" id="id7">Adding description to attributes</a></p></li>
-<li><p><a class="reference internal" href="#configuring-attribute-order" id="id8">Configuring attribute order</a></p></li>
-<li><p><a class="reference internal" href="#manual-link-to-documentation-items" id="id9">Manual link to documentation items</a></p></li>
-<li><p><a class="reference internal" href="#flat-list-of-documentation-items" id="id10">Flat list of documentation items</a></p></li>
-<li><p><a class="reference internal" href="#matrix-with-attributes-of-documentation-items" id="id11">Matrix with attributes of documentation items</a></p></li>
-<li><p><a class="reference internal" href="#traceability-matrix-of-documentation-items" id="id12">Traceability matrix of documentation items</a></p>
+<li><p><a class="reference internal" href="#recommended-sphinx-build-options" id="id1">Recommended Sphinx build options</a></p>
 <ul>
-<li><p><a class="reference internal" href="#link-targets-via-intermediate-items-advanced" id="id13">Link targets via intermediate items (advanced)</a></p></li>
+<li><p><a class="reference internal" href="#fresh-environment" id="id2">Fresh environment</a></p></li>
+<li><p><a class="reference internal" href="#parallellization" id="id3">Parallellization</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#d-matrix-of-documentation-items" id="id14">2D-matrix of documentation items</a></p></li>
-<li><p><a class="reference internal" href="#documentation-items-tree-view" id="id15">Documentation items tree-view</a></p></li>
-<li><p><a class="reference internal" href="#pie-chart-of-documentation-items" id="id16">Pie chart of documentation items</a></p></li>
-<li><p><a class="reference internal" href="#defining-items-with-a-custom-checklist-attribute-advanced" id="id17">Defining items with a custom checklist attribute (advanced)</a></p>
+<li><p><a class="reference internal" href="#defining-documentation-items" id="id4">Defining documentation items</a></p></li>
+<li><p><a class="reference internal" href="#adding-relations-outside-of-the-item-definitions" id="id5">Adding relations outside of the item definitions</a></p></li>
+<li><p><a class="reference internal" href="#changing-targets-or-removing-relationships" id="id6">Changing targets or removing relationships</a></p></li>
+<li><p><a class="reference internal" href="#adding-attributes-outside-of-the-item-definitions" id="id7">Adding attributes outside of the item definitions</a></p></li>
+<li><p><a class="reference internal" href="#adding-description-to-attributes" id="id8">Adding description to attributes</a></p></li>
+<li><p><a class="reference internal" href="#configuring-attribute-order" id="id9">Configuring attribute order</a></p></li>
+<li><p><a class="reference internal" href="#manual-link-to-documentation-items" id="id10">Manual link to documentation items</a></p></li>
+<li><p><a class="reference internal" href="#flat-list-of-documentation-items" id="id11">Flat list of documentation items</a></p></li>
+<li><p><a class="reference internal" href="#matrix-with-attributes-of-documentation-items" id="id12">Matrix with attributes of documentation items</a></p></li>
+<li><p><a class="reference internal" href="#traceability-matrix-of-documentation-items" id="id13">Traceability matrix of documentation items</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-the-additional-attribute-s-value" id="id18">Setting the additional attribute’s value</a></p></li>
-<li><p><a class="reference internal" href="#configuration" id="id19">Configuration</a></p>
+<li><p><a class="reference internal" href="#link-targets-via-intermediate-items-advanced" id="id14">Link targets via intermediate items (advanced)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#d-matrix-of-documentation-items" id="id15">2D-matrix of documentation items</a></p></li>
+<li><p><a class="reference internal" href="#documentation-items-tree-view" id="id16">Documentation items tree-view</a></p></li>
+<li><p><a class="reference internal" href="#pie-chart-of-documentation-items" id="id17">Pie chart of documentation items</a></p></li>
+<li><p><a class="reference internal" href="#defining-items-with-a-custom-checklist-attribute-advanced" id="id18">Defining items with a custom checklist attribute (advanced)</a></p>
 <ul>
-<li><p><a class="reference internal" href="#configuration-via-env-file" id="id20">Configuration via .env file</a></p></li>
-<li><p><a class="reference internal" href="#common-variables" id="id21">Common variables</a></p></li>
-<li><p><a class="reference internal" href="#query-specific-variables" id="id22">Query-specific variables</a></p></li>
+<li><p><a class="reference internal" href="#setting-the-additional-attribute-s-value" id="id19">Setting the additional attribute’s value</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id20">Configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuration-via-env-file" id="id21">Configuration via .env file</a></p></li>
+<li><p><a class="reference internal" href="#common-variables" id="id22">Common variables</a></p></li>
+<li><p><a class="reference internal" href="#query-specific-variables" id="id23">Query-specific variables</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#jira-ticket-creation" id="id23">Jira ticket creation</a></p></li>
+<li><p><a class="reference internal" href="#jira-ticket-creation" id="id24">Jira ticket creation</a></p></li>
 </ul>
 </nav>
-<section id="required-sphinx-options">
-<span id="id1"></span><h2><a class="toc-backref" href="#id2" role="doc-backlink">Required sphinx options</a><a class="headerlink" href="#required-sphinx-options" title="Permalink to this heading"></a></h2>
-<p>By default, sphinx (<em>sphinx-build</em>) performs an incremental build: it only parses the changed files and generates
-new output for changed files. As this plugin generates automatic reverse relations, the incremental build option
-of sphinx needs to be disabled. This can be done using the <em>-E</em> option:</p>
+<section id="recommended-sphinx-build-options">
+<span id="required-sphinx-options"></span><h2><a class="toc-backref" href="#id1" role="doc-backlink">Recommended Sphinx build options</a><a class="headerlink" href="#recommended-sphinx-build-options" title="Link to this heading"></a></h2>
+<section id="fresh-environment">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Fresh environment</a><a class="headerlink" href="#fresh-environment" title="Link to this heading"></a></h3>
+<p>By default, <a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-build.html">sphinx-build</a> performs an incremental build:
+it only parses the changed files and generates new output for changed files. As this plugin generates automatic reverse
+relations, you probably <em>should</em> disable the incremental build option by default. This can be done using the
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-build.html#cmdoption-sphinx-build-E">-E, –fresh-env</a> option:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-build<span class="w"> </span>-E<span class="w"> </span>&lt;other_options&gt;
 </pre></div>
 </div>
@@ -170,10 +182,35 @@ By disabling incremental builds, it is made sure every document is updated (with
 relations) on every re-build.</p>
 </dd>
 </dl>
-<p>The plugin assumes incremental builds are disabled, as this makes the implementation of the plugin much easier.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The plugin does support incremental builds but with a major caveat: any changes to the collection of traceable
+items will not be reflected in the documentation build output, except for the output for newly created
+and modified source files. Note that a change to a configuration variable will always trigger a full re-build.
+We plan to get rid of this caveat in the future, see
+<a class="reference external" href="https://github.com/melexis/sphinx-traceability-extension/issues/398">issue #398</a>.</p>
+</div>
+</section>
+<section id="parallellization">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Parallellization</a><a class="headerlink" href="#parallellization" title="Link to this heading"></a></h3>
+<p>By default, Sphinx performs the read and write stages in a single process. This can be changed by using the
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-build.html#cmdoption-sphinx-build-j">-j N, –jobs N</a> option:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-build<span class="w"> </span>-j<span class="w"> </span>auto<span class="w"> </span>&lt;other_options&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The plugin does not support parallellization of the read stage yet. This functionality is a <a class="reference external" href="https://github.com/melexis/sphinx-traceability-extension/pull/395">work in progress</a>. The following warning will be shown
+when parallellization is enabled:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>WARNING: the mlx.traceability extension is not safe for parallel reading
+WARNING: doing serial read
+</pre></div>
+</div>
+</div>
+</section>
 </section>
 <section id="defining-documentation-items">
-<span id="traceability-usage-item"></span><h2><a class="toc-backref" href="#id3" role="doc-backlink">Defining documentation items</a><a class="headerlink" href="#defining-documentation-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-item"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Defining documentation items</a><a class="headerlink" href="#defining-documentation-items" title="Link to this heading"></a></h2>
 <p>Documentation items can be defined using the <em>item</em> directive, specifying:</p>
 <ul class="simple">
 <li><p>the name (id) of the documentation item</p></li>
@@ -223,7 +260,7 @@ It does not affect how the item is rendered in other directives, e.g. item-matri
 </dl>
 </section>
 <section id="adding-relations-outside-of-the-item-definitions">
-<span id="adding-relations"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Adding relations outside of the item definitions</a><a class="headerlink" href="#adding-relations-outside-of-the-item-definitions" title="Permalink to this heading"></a></h2>
+<span id="adding-relations"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Adding relations outside of the item definitions</a><a class="headerlink" href="#adding-relations-outside-of-the-item-definitions" title="Link to this heading"></a></h2>
 <p>In some cases, it’s useful to add relations outside of the definition of the items
 involved. In that case, you can use the <code class="docutils literal notranslate"><span class="pre">item-link</span></code> directive as follows:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-link</span><span class="p">::</span>
@@ -275,7 +312,7 @@ The value must not be empty.</p>
 <p>This directive has no representation in the documentation build output.</p>
 </section>
 <section id="changing-targets-or-removing-relationships">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Changing targets or removing relationships</a><a class="headerlink" href="#changing-targets-or-removing-relationships" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Changing targets or removing relationships</a><a class="headerlink" href="#changing-targets-or-removing-relationships" title="Link to this heading"></a></h2>
 <p>In some cases, it’s useful to change the target for a specific relationship, e.g. when the target is not defined
 as an item.
 All items that are linked to this target via the specified relationship will be linked to the new target instead.
@@ -317,7 +354,7 @@ The value must not be empty.</p>
 </div>
 </section>
 <section id="adding-attributes-outside-of-the-item-definitions">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Adding attributes outside of the item definitions</a><a class="headerlink" href="#adding-attributes-outside-of-the-item-definitions" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Adding attributes outside of the item definitions</a><a class="headerlink" href="#adding-attributes-outside-of-the-item-definitions" title="Link to this heading"></a></h2>
 <p>In some cases, it’s useful to add attributes outside of the definition of the items
 involved. In that case, you can use the <code class="docutils literal notranslate"><span class="pre">attribute-link</span></code> directive as follows:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">attribute-link</span><span class="p">::</span>
@@ -350,7 +387,7 @@ a given attribute.</p>
 <p>This directive has no representation in the documentation build output.</p>
 </section>
 <section id="adding-description-to-attributes">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Adding description to attributes</a><a class="headerlink" href="#adding-description-to-attributes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Adding description to attributes</a><a class="headerlink" href="#adding-description-to-attributes" title="Link to this heading"></a></h2>
 <p>Section <a class="reference internal" href="configuration.html#traceability-config-attributes"><span class="std std-ref">Valid attributes</span></a> explain how attributes can be added to the configuration. It is possible
 to add content to the attributes. A detailed description can be added to an attribute definition:</p>
 <ul class="simple">
@@ -365,7 +402,7 @@ to add content to the attributes. A detailed description can be added to an attr
 </div>
 </section>
 <section id="configuring-attribute-order">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Configuring attribute order</a><a class="headerlink" href="#configuring-attribute-order" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Configuring attribute order</a><a class="headerlink" href="#configuring-attribute-order" title="Link to this heading"></a></h2>
 <p>By default, attributes get sorted naturally. This default behavior can be changed by use of the dedicated
 <code class="docutils literal notranslate"><span class="pre">attribute-sort</span></code> directive. The <code class="docutils literal notranslate"><span class="pre">filter</span></code> option allows filtering on item IDs. Its value gets treated as a regular
 expression. If this option is missing, the configuration will be applied to all items. The <code class="docutils literal notranslate"><span class="pre">sort</span></code> option must be a
@@ -378,14 +415,14 @@ Attributes that are missing from this list get sorted naturally and appended aft
 </div>
 </section>
 <section id="manual-link-to-documentation-items">
-<span id="traceability-usage-item-linking"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Manual link to documentation items</a><a class="headerlink" href="#manual-link-to-documentation-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-item-linking"></span><h2><a class="toc-backref" href="#id10" role="doc-backlink">Manual link to documentation items</a><a class="headerlink" href="#manual-link-to-documentation-items" title="Link to this heading"></a></h2>
 <p>Manual links in RST documentation to any of the documentation items is possible using the <em>:item:</em> role:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>For validating the <span class="na">:item:</span><span class="nv">`SWRQT-MY_FIRST_REQUIREMENT`</span>, we plan to use setup x in the y configuration.
 </pre></div>
 </div>
 </section>
 <section id="flat-list-of-documentation-items">
-<span id="traceability-usage-item-list"></span><h2><a class="toc-backref" href="#id10" role="doc-backlink">Flat list of documentation items</a><a class="headerlink" href="#flat-list-of-documentation-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-item-list"></span><h2><a class="toc-backref" href="#id11" role="doc-backlink">Flat list of documentation items</a><a class="headerlink" href="#flat-list-of-documentation-items" title="Link to this heading"></a></h2>
 <p>A flat list of documentation items can be generated using a Python regular expression filter:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-list</span><span class="p">::</span> All software requirements
     <span class="nc">:filter:</span> SWRQT
@@ -404,7 +441,7 @@ caption can be omitted. This gives a smaller list, but also less details.</p>
 contents can be shown. This can significantly lengthen the list.</p>
 </section>
 <section id="matrix-with-attributes-of-documentation-items">
-<span id="traceability-usage-item-attributes-matrix"></span><h2><a class="toc-backref" href="#id11" role="doc-backlink">Matrix with attributes of documentation items</a><a class="headerlink" href="#matrix-with-attributes-of-documentation-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-item-attributes-matrix"></span><h2><a class="toc-backref" href="#id12" role="doc-backlink">Matrix with attributes of documentation items</a><a class="headerlink" href="#matrix-with-attributes-of-documentation-items" title="Link to this heading"></a></h2>
 <p>A matrix listing the attributes of documentation items can be generated using:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-attributes-matrix</span><span class="p">::</span> Attributes for requirements
     <span class="nc">:filter:</span> SWRQT
@@ -442,7 +479,7 @@ LaTeX. Normally the <em>longtable</em> class is used when the number of rows is 
 span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, you can force the use of this environment.</p>
 </section>
 <section id="traceability-matrix-of-documentation-items">
-<span id="traceability-usage-item-matrix"></span><h2><a class="toc-backref" href="#id12" role="doc-backlink">Traceability matrix of documentation items</a><a class="headerlink" href="#traceability-matrix-of-documentation-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-item-matrix"></span><h2><a class="toc-backref" href="#id13" role="doc-backlink">Traceability matrix of documentation items</a><a class="headerlink" href="#traceability-matrix-of-documentation-items" title="Link to this heading"></a></h2>
 <p>A traceability matrix of documentation items can be generated using:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-matrix</span><span class="p">::</span> Requirements to test case description traceability
     <span class="nc">:source:</span> RQT-
@@ -600,7 +637,7 @@ span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, y
 <p>In HTML, when you right-click a row, the content of all internal items in the row are fetched and displayed.
 Successive right-clicks toggle the visibility of the items’ content.</p>
 <section id="link-targets-via-intermediate-items-advanced">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">Link targets via intermediate items (advanced)</a><a class="headerlink" href="#link-targets-via-intermediate-items-advanced" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Link targets via intermediate items (advanced)</a><a class="headerlink" href="#link-targets-via-intermediate-items-advanced" title="Link to this heading"></a></h3>
 <p>Let’s say you have DESIGN-, RQT-, and TEST- items and you want to generate an item-matrix with DESIGN-items as
 <code class="docutils literal notranslate"><span class="pre">:source:</span></code> and TEST-items as <code class="docutils literal notranslate"><span class="pre">:target:</span></code>. These source and target items are not directly linked to each other. They are
 linked via the <code class="docutils literal notranslate"><span class="pre">:intermediate:</span></code> RQT-items:</p>
@@ -661,7 +698,7 @@ covered if every single intermediate item in the chain is covered. This option i
 </section>
 </section>
 <section id="d-matrix-of-documentation-items">
-<span id="traceability-usage-2d-matrix"></span><h2><a class="toc-backref" href="#id14" role="doc-backlink">2D-matrix of documentation items</a><a class="headerlink" href="#d-matrix-of-documentation-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-2d-matrix"></span><h2><a class="toc-backref" href="#id15" role="doc-backlink">2D-matrix of documentation items</a><a class="headerlink" href="#d-matrix-of-documentation-items" title="Link to this heading"></a></h2>
 <p>A 2D-matrix of documentation items can be generated using:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-2d-matrix</span><span class="p">::</span> Requirements to test case description traceability
     <span class="nc">:source:</span> SWRQT
@@ -689,7 +726,7 @@ LaTeX. Normally the <em>longtable</em> class is used when the number of rows is 
 span multiple pages. By setting <em>class</em> to <em>longtable</em> manually, you can force the use of this environment.</p>
 </section>
 <section id="documentation-items-tree-view">
-<span id="traceability-usage-item-tree"></span><h2><a class="toc-backref" href="#id15" role="doc-backlink">Documentation items tree-view</a><a class="headerlink" href="#documentation-items-tree-view" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-item-tree"></span><h2><a class="toc-backref" href="#id16" role="doc-backlink">Documentation items tree-view</a><a class="headerlink" href="#documentation-items-tree-view" title="Link to this heading"></a></h2>
 <p>Note: this feature is not supported when building for latex/pdf.</p>
 <p>A tree-view of documentation items can be generated using:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-tree</span><span class="p">::</span> Requirements tree view
@@ -723,7 +760,7 @@ caption can be omitted. This gives a smaller tree, but also less details. If you
 to hide the item IDs, set the <em>onlycaptions</em> flag instead.</p>
 </section>
 <section id="pie-chart-of-documentation-items">
-<span id="traceability-usage-piechart"></span><h2><a class="toc-backref" href="#id16" role="doc-backlink">Pie chart of documentation items</a><a class="headerlink" href="#pie-chart-of-documentation-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-usage-piechart"></span><h2><a class="toc-backref" href="#id17" role="doc-backlink">Pie chart of documentation items</a><a class="headerlink" href="#pie-chart-of-documentation-items" title="Link to this heading"></a></h2>
 <p>A pie chart of documentation items can be generated using:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">item-piechart</span><span class="p">::</span> Test coverage of requirements with report results
     <span class="nc">:id_set:</span> RQT TEST TEST_REP
@@ -826,7 +863,7 @@ to a TEST_REP-item, the RQT-item will be labeled as <em>covered</em> instead of 
 </div>
 </section>
 <section id="defining-items-with-a-custom-checklist-attribute-advanced">
-<span id="traceability-checklist"></span><h2><a class="toc-backref" href="#id17" role="doc-backlink">Defining items with a custom checklist attribute (advanced)</a><a class="headerlink" href="#defining-items-with-a-custom-checklist-attribute-advanced" title="Permalink to this heading"></a></h2>
+<span id="traceability-checklist"></span><h2><a class="toc-backref" href="#id18" role="doc-backlink">Defining items with a custom checklist attribute (advanced)</a><a class="headerlink" href="#defining-items-with-a-custom-checklist-attribute-advanced" title="Link to this heading"></a></h2>
 <p>The plugin can add an additional attribute to a traceability item if its item ID exists in a checklist inside the
 description of a merge/pull request or its item ID is used in a <em>checklist-result</em> directive. Documentation items can be
 linked to a checklist by defining them with the <em>checklist-item</em> directive. This custom directive inherits all
@@ -840,7 +877,7 @@ functionality of the regular <em>item</em> directive.</p>
 description. More details in <a class="reference external" href="https://github.com/melexis/sphinx-traceability-extension/pull/203">PR #203</a>.</p>
 </div>
 <section id="setting-the-additional-attribute-s-value">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">Setting the additional attribute’s value</a><a class="headerlink" href="#setting-the-additional-attribute-s-value" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Setting the additional attribute’s value</a><a class="headerlink" href="#setting-the-additional-attribute-s-value" title="Link to this heading"></a></h3>
 <p>There are two different ways to set the value of the additional attribute. They can be combined, and the first has
 priority over the second:</p>
 <ol class="arabic simple">
@@ -864,7 +901,7 @@ Example of a valid checklist in Markdown:</p>
 </div>
 </section>
 <section id="configuration">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Configuration</a><a class="headerlink" href="#configuration" title="Link to this heading"></a></h3>
 <p>The configuration of this feature is stored in the configuration variable <em>traceability_checklist</em>. Only the
 <em>attribute_</em>-keys are mandatory to use the <em>checklist-item</em> directive. The other configuration variables are only used
 for querying GitLab/GitHub.</p>
@@ -884,7 +921,7 @@ for querying GitLab/GitHub.</p>
 <p>If the <em>checklist_item_regex</em> is configured, a warning is reported for each item ID that <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">matches</a> it and is not defined
 with the <em>checklist-item</em> directive.</p>
 <section id="configuration-via-env-file">
-<h4><a class="toc-backref" href="#id20" role="doc-backlink">Configuration via .env file</a><a class="headerlink" href="#configuration-via-env-file" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id21" role="doc-backlink">Configuration via .env file</a><a class="headerlink" href="#configuration-via-env-file" title="Link to this heading"></a></h4>
 <p>In our <em>conf.py</em> the variables are looked for in the environment first, e.g. in a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file (by using the
 <a class="reference external" href="https://pypi.org/project/python-decouple/">python-decouple</a> package).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># copy example .env to your .env</span>
@@ -895,7 +932,7 @@ cp<span class="w"> </span>doc/.env.example<span class="w"> </span>.env
 </div>
 </section>
 <section id="common-variables">
-<h4><a class="toc-backref" href="#id21" role="doc-backlink">Common variables</a><a class="headerlink" href="#common-variables" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id22" role="doc-backlink">Common variables</a><a class="headerlink" href="#common-variables" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>ATTRIBUTE_NAME</em> is the identifier of the attribute to be added, e.g. <em>checked</em>.</p></li>
 <li><p><em>ATTRIBUTE_TO_STRING</em> is the string representation (as to be rendered in html) of the attribute name, e.g. <em>Answer</em>.</p></li>
@@ -903,9 +940,9 @@ cp<span class="w"> </span>doc/.env.example<span class="w"> </span>.env
 </ul>
 </section>
 <section id="query-specific-variables">
-<h4><a class="toc-backref" href="#id22" role="doc-backlink">Query-specific variables</a><a class="headerlink" href="#query-specific-variables" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id23" role="doc-backlink">Query-specific variables</a><a class="headerlink" href="#query-specific-variables" title="Link to this heading"></a></h4>
 <section id="gitlab">
-<h5>GitLab<a class="headerlink" href="#gitlab" title="Permalink to this heading"></a></h5>
+<h5>GitLab<a class="headerlink" href="#gitlab" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p><em>PRIVATE_TOKEN</em> is your personal access token that has API access.</p></li>
 <li><p><em>API_HOST_NAME</em> is the host name of the API, e.g. <em>https://gitlab.example.com/api/v4</em></p></li>
@@ -916,7 +953,7 @@ Can be an empty string to avoid sending any query.</p></li>
 </ul>
 </section>
 <section id="github">
-<h5>GitHub<a class="headerlink" href="#github" title="Permalink to this heading"></a></h5>
+<h5>GitHub<a class="headerlink" href="#github" title="Link to this heading"></a></h5>
 <ul class="simple">
 <li><p><em>PRIVATE_TOKEN</em> is not needed for public repositories. Otherwise, it must be a <a class="reference external" href="https://github.blog/2013-05-16-personal-api-tokens/">personal access token</a> with the access to the targeted scope.</p></li>
 <li><p><em>API_HOST_NAME</em> is the host name of the GitHub REST API v3: <em>https://api.github.com</em></p></li>
@@ -930,7 +967,7 @@ Can be an empty string to avoid sending any query.</p></li>
 </section>
 </section>
 <section id="jira-ticket-creation">
-<span id="traceability-jira-automation"></span><h2><a class="toc-backref" href="#id23" role="doc-backlink">Jira ticket creation</a><a class="headerlink" href="#jira-ticket-creation" title="Permalink to this heading"></a></h2>
+<span id="traceability-jira-automation"></span><h2><a class="toc-backref" href="#id24" role="doc-backlink">Jira ticket creation</a><a class="headerlink" href="#jira-ticket-creation" title="Link to this heading"></a></h2>
 <p>Jira tickets that are based on traceable items can be automatically created by means of an additional plugin called
 <a class="reference external" href="https://github.com/melexis/jira-traceability">mlx.jira-traceability</a>.</p>
 </section>

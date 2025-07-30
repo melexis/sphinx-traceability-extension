@@ -1,27 +1,27 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; Traceability 11.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+  <title>Configuration &mdash; Traceability 11.8.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" />
-      <link rel="stylesheet" type="text/css" href="_static/css/extra.css" />
-      <link rel="stylesheet" type="text/css" href="_static/hyperlink_colors.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/extra.css?v=92114f4b" />
+      <link rel="stylesheet" type="text/css" href="_static/hyperlink_colors.css?v=d5c942df" />
 
   
-      <script src="_static/jquery.js"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-      <script src="_static/doctools.js"></script>
-      <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=52196df1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
-      <script src="_static/traceability-11.7.0.min.js"></script>
+      <script src="_static/traceability-11.8.1.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -120,26 +120,16 @@
            <div itemprop="articleBody">
              
   <section id="configuration">
-<span id="traceability-config"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h1>
-<p>The <em>conf.py</em> file contains the documentation configuration for your project. This file needs to be equipped in order
-to configure the traceability plugin.</p>
-<p>First the plugin needs to be enabled in the <em>extensions</em> variable:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">extensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
-<span class="w">    </span><span class="s1">&#39;mlx.traceability&#39;</span>,
-<span class="w">    </span>...
-<span class="o">]</span>
-</pre></div>
-</div>
-<p>Second the path to the static javascript assets needs to be added to the sphinx <code class="docutils literal notranslate"><span class="pre">html_static_path</span></code>
-variable.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>import<span class="w"> </span>os
-import<span class="w"> </span>mlx.traceability
-
-<span class="nv">html_static_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>os.path.join<span class="o">(</span>os.path.dirname<span class="o">(</span>mlx.traceability.__file__<span class="o">)</span>,<span class="w"> </span><span class="s1">&#39;assets&#39;</span><span class="o">)]</span>
+<span id="traceability-config"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
+<p>In your Sphinx project’s <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file, add <code class="docutils literal notranslate"><span class="pre">mlx.traceability</span></code> to the list of enabled extensions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="s1">&#39;mlx.traceability&#39;</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 <section id="valid-attributes">
-<span id="traceability-config-attributes"></span><h2>Valid attributes<a class="headerlink" href="#valid-attributes" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-attributes"></span><h2>Valid attributes<a class="headerlink" href="#valid-attributes" title="Link to this heading"></a></h2>
 <p>Python variable <em>traceability_attributes</em> can be defined in order to override the
 default configuration of the traceability plugin.
 It is a <em>dictionary</em> of attribute pairs: the <em>key</em> is the name of the attribute (can only be lowercase),
@@ -154,7 +144,7 @@ while the <em>value</em> holds the regular expression to which the attribute-val
 </div>
 </section>
 <section id="stringification-of-attributes">
-<span id="traceability-config-attribute2string"></span><h2>Stringification of attributes<a class="headerlink" href="#stringification-of-attributes" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-attribute2string"></span><h2>Stringification of attributes<a class="headerlink" href="#stringification-of-attributes" title="Link to this heading"></a></h2>
 <p>Python variable <em>traceability_attribute_to_string</em> can be defined in order to override the
 default configuration of the traceability plugin.
 It is a <em>dictionary</em> of attribute stringifications: the <em>key</em> is the name of the attribute, while
@@ -168,7 +158,7 @@ the <em>value</em> holds the string representation (as to be rendered in html) o
 </div>
 </section>
 <section id="valid-relationships">
-<span id="traceability-config-relations"></span><h2>Valid relationships<a class="headerlink" href="#valid-relationships" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-relations"></span><h2>Valid relationships<a class="headerlink" href="#valid-relationships" title="Link to this heading"></a></h2>
 <p>Python variable <em>traceability_relationships</em> can be defined in order to override the
 default configuration of the traceability plugin.
 It is a <em>dictionary</em> of relationship pairs: the <em>key</em> is the name of the forward relationship, while the <em>value</em> holds
@@ -184,7 +174,7 @@ need a reverse relationship.</p>
 </div>
 </section>
 <section id="stringification-of-relationships">
-<span id="traceability-config-relation2string"></span><h2>Stringification of relationships<a class="headerlink" href="#stringification-of-relationships" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-relation2string"></span><h2>Stringification of relationships<a class="headerlink" href="#stringification-of-relationships" title="Link to this heading"></a></h2>
 <p>Python variable <em>traceability_relationship_to_string</em> can be defined in order to override the
 default configuration of the traceability plugin.
 It is a <em>dictionary</em> of relationship stringifications: the <em>key</em> is the name of the (forward or reverse) relationship,
@@ -199,7 +189,7 @@ while the <em>value</em> holds the string representation (as to be rendered in h
 </div>
 </section>
 <section id="external-relationship-to-url-translation">
-<span id="traceability-config-ext2url"></span><h2>External relationship to URL translation<a class="headerlink" href="#external-relationship-to-url-translation" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-ext2url"></span><h2>External relationship to URL translation<a class="headerlink" href="#external-relationship-to-url-translation" title="Link to this heading"></a></h2>
 <p>External relationships need to be translated to URL’s while rendering. For each defined external relationship,
 an entry in the <em>dictionary</em> named <em>traceability_external_relationship_to_url</em> is needed. The URL generation
 is templated using the <em>fieldN</em> keyword, where N is a number incrementing from 1 onwards for each value in the URL
@@ -212,7 +202,7 @@ that needs to be replaced.</p>
 </div>
 </section>
 <section id="rendering-of-relationships-per-documentation-object">
-<span id="traceability-config-render-relations"></span><h2>Rendering of relationships per documentation object<a class="headerlink" href="#rendering-of-relationships-per-documentation-object" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-render-relations"></span><h2>Rendering of relationships per documentation object<a class="headerlink" href="#rendering-of-relationships-per-documentation-object" title="Link to this heading"></a></h2>
 <p>When rendering the documentation objects, the user has the option to include/exclude the rendering of the
 relationships to other documentation objects. This can be done through the Python variable
 <em>traceability_render_relationship_per_item</em> which is <em>boolean</em>: a value of <code class="docutils literal notranslate"><span class="pre">True</span></code> will enable rendering
@@ -223,7 +213,7 @@ of relationships per documentation object, while a value of <code class="docutil
 </div>
 </section>
 <section id="rendering-of-attributes-per-documentation-object">
-<h2>Rendering of attributes per documentation object<a class="headerlink" href="#rendering-of-attributes-per-documentation-object" title="Permalink to this heading"></a></h2>
+<h2>Rendering of attributes per documentation object<a class="headerlink" href="#rendering-of-attributes-per-documentation-object" title="Link to this heading"></a></h2>
 <p>The rendering of attributes of documentation objects can be controlled through the <em>boolean</em> variable
 <em>traceability_render_attributes_per_item</em>: rendering of attributes is enabled by setting it to <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default)
 while a value of <code class="docutils literal notranslate"><span class="pre">False</span></code> will prevent the attribute list from being rendered.</p>
@@ -233,7 +223,7 @@ while a value of <code class="docutils literal notranslate"><span class="pre">Fa
 </div>
 </section>
 <section id="ability-to-collapse-the-list-of-relationships-and-attributes-per-documentation-object">
-<h2>Ability to collapse the list of relationships and attributes per documentation object<a class="headerlink" href="#ability-to-collapse-the-list-of-relationships-and-attributes-per-documentation-object" title="Permalink to this heading"></a></h2>
+<h2>Ability to collapse the list of relationships and attributes per documentation object<a class="headerlink" href="#ability-to-collapse-the-list-of-relationships-and-attributes-per-documentation-object" title="Link to this heading"></a></h2>
 <p>A button is added to each documentation object that has rendered relationships and/or attributes to be able to show and
 hide these traceability links. The <em>boolean</em> configuration variable <em>traceability_collapse_links</em> allows selecting
 between hiding and showing the list of links for all items on page load: setting its value to <code class="docutils literal notranslate"><span class="pre">True</span></code> results in the
@@ -245,40 +235,40 @@ shown (uncollapsed). When an item is selected, its list will always be shown.</p
 </div>
 </section>
 <section id="no-captions">
-<span id="traceability-config-no-captions"></span><h2>No captions<a class="headerlink" href="#no-captions" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-no-captions"></span><h2>No captions<a class="headerlink" href="#no-captions" title="Link to this heading"></a></h2>
 <p>By default, the output will contain hyperlinks to all related items. By default, the caption for the target
 item is displayed for each of the related items. The captions can be omitted at configuration level (see
 this section) and at directive level (see e.g. <a class="reference internal" href="usage.html#traceability-usage-item-matrix"><span class="std std-ref">Traceability matrix of documentation items</span></a>).</p>
 <section id="no-captions-for-item">
-<h3>No captions for item<a class="headerlink" href="#no-captions-for-item" title="Permalink to this heading"></a></h3>
+<h3>No captions for item<a class="headerlink" href="#no-captions-for-item" title="Link to this heading"></a></h3>
 <p>Example configuration of disabling the rendering of captions on item:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_item_no_captions</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </section>
 <section id="no-captions-for-item-list">
-<h3>No captions for item-list<a class="headerlink" href="#no-captions-for-item-list" title="Permalink to this heading"></a></h3>
+<h3>No captions for item-list<a class="headerlink" href="#no-captions-for-item-list" title="Link to this heading"></a></h3>
 <p>Example configuration of disabling the rendering of captions on item-list:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_list_no_captions</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </section>
 <section id="no-captions-for-item-matrix">
-<h3>No captions for item-matrix<a class="headerlink" href="#no-captions-for-item-matrix" title="Permalink to this heading"></a></h3>
+<h3>No captions for item-matrix<a class="headerlink" href="#no-captions-for-item-matrix" title="Link to this heading"></a></h3>
 <p>Example configuration of disabling the rendering of captions on item-matrix:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_matrix_no_captions</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </section>
 <section id="no-captions-for-item-attributes-matrix">
-<h3>No captions for item-attributes-matrix<a class="headerlink" href="#no-captions-for-item-attributes-matrix" title="Permalink to this heading"></a></h3>
+<h3>No captions for item-attributes-matrix<a class="headerlink" href="#no-captions-for-item-attributes-matrix" title="Link to this heading"></a></h3>
 <p>Example configuration of disabling the rendering of captions on item-attributes-matrix:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_attributes_matrix_no_captions</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </section>
 <section id="no-captions-for-item-tree">
-<h3>No captions for item-tree<a class="headerlink" href="#no-captions-for-item-tree" title="Permalink to this heading"></a></h3>
+<h3>No captions for item-tree<a class="headerlink" href="#no-captions-for-item-tree" title="Link to this heading"></a></h3>
 <p>Example configuration of disabling the rendering of captions on item-tree:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_tree_no_captions</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
@@ -286,10 +276,10 @@ this section) and at directive level (see e.g. <a class="reference internal" hre
 </section>
 </section>
 <section id="export">
-<span id="traceability-config-export"></span><h2>Export<a class="headerlink" href="#export" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-export"></span><h2>Export<a class="headerlink" href="#export" title="Link to this heading"></a></h2>
 <p>The plugin allows exporting the documentation items.</p>
 <section id="export-to-json">
-<h3>Export to JSON<a class="headerlink" href="#export-to-json" title="Permalink to this heading"></a></h3>
+<h3>Export to JSON<a class="headerlink" href="#export-to-json" title="Link to this heading"></a></h3>
 <p>As a preliminary test feature, the plugin allows to export the documentation items to a JSON database. The feature
 can be enabled by setting the configuration to your JSON-file to export to. Note, the JSON-file is overwritten
 (not appended) on every build of the documentation.</p>
@@ -313,12 +303,14 @@ can be enabled by setting the configuration to your JSON-file to export to. Note
 </section>
 </section>
 <section id="callback-per-item-advanced">
-<span id="traceability-config-callback"></span><h2>Callback per item (advanced)<a class="headerlink" href="#callback-per-item-advanced" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-callback"></span><h2>Callback per item (advanced)<a class="headerlink" href="#callback-per-item-advanced" title="Link to this heading"></a></h2>
 <section id="callback-to-modify-item">
-<h3>Callback to modify item<a class="headerlink" href="#callback-to-modify-item" title="Permalink to this heading"></a></h3>
-<p>The plugin allows parsing and modifying documentation objects <em>behind the scenes</em> using a callback. The callback
-has this prototype:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">traceability_callback_per_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+<h3>Callback to modify item<a class="headerlink" href="#callback-to-modify-item" title="Link to this heading"></a></h3>
+<p>The plugin allows parsing and modifying documentation objects <em>behind the scenes</em> using a callback.
+The callback function has this prototype:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_callback_per_item</span> <span class="o">=</span> <span class="s1">&#39;my_callback_per_item_func&#39;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">my_callback_per_item_func</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function called when an item-directive is being processed.</span>
 
 <span class="sd">    Note: attributes, relationships and content (body) of the item can be modified. Sphinx processes each directive</span>
@@ -337,15 +329,23 @@ has this prototype:</p>
 available at the time this callback executes, the <em>collection</em> parameter is a growing collection of documentation
 objects.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>String-based configuration is recommended</strong> because it allows Sphinx to properly cache and serialize the
+configuration. Using function objects directly will cause Sphinx to issue warnings about “unpickleable
+configuration values” and disable incremental builds.</p>
+</div>
 </section>
 <section id="callback-to-inspect-item">
-<h3>Callback to inspect item<a class="headerlink" href="#callback-to-inspect-item" title="Permalink to this heading"></a></h3>
+<h3>Callback to inspect item<a class="headerlink" href="#callback-to-inspect-item" title="Link to this heading"></a></h3>
 <p>To overcome the limitation of <code class="docutils literal notranslate"><span class="pre">traceability_callback_per_item</span></code> (see note above), a secondary callback function can be
 defined. This function will be called when <em>rendering</em> each <code class="docutils literal notranslate"><span class="pre">item</span></code>-directive. At that moment, all other directive
 types, e.g. <code class="docutils literal notranslate"><span class="pre">attribute-link</span></code> and <code class="docutils literal notranslate"><span class="pre">item-link</span></code>, will have been processed. You can use this callback function to detect
 and warn about any gaps in your documentation but you cannot use it to make any modifications.
-The callback has this prototype:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">traceability_inspect_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+The callback function has this prototype:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_inspect_item</span> <span class="o">=</span> <span class="s1">&#39;my_inspect_item_func&#39;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">my_inspect_item_func</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback function called when an item-directive is being rendered.</span>
 
 <span class="sd">    Warning: the item cannot not be modified, only inspected.</span>
@@ -367,24 +367,26 @@ triggering any warnings.</p>
 </div>
 </section>
 <section id="example-of-requiring-certain-attributes-on-an-item">
-<span id="traceability-optional-mandatory"></span><h3>Example of requiring certain attributes on an item<a class="headerlink" href="#example-of-requiring-certain-attributes-on-an-item" title="Permalink to this heading"></a></h3>
+<span id="traceability-optional-mandatory"></span><h3>Example of requiring certain attributes on an item<a class="headerlink" href="#example-of-requiring-certain-attributes-on-an-item" title="Link to this heading"></a></h3>
 <p>The callback function can modify traceable items, e.g. add attributes. In this example it reports a warning
 when the item doesn’t have either the <cite>functional</cite> or <cite>non-functional</cite> attribute defined <em>at the time its
 ``item``-directive is being processed</em>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlx.traceability</span> <span class="kn">import</span> <span class="n">report_warning</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mlx.traceability</span><span class="w"> </span><span class="kn">import</span> <span class="n">report_warning</span>
 
-<span class="k">def</span> <span class="nf">traceability_callback_per_item</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_callback_per_item_func</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">collection</span><span class="p">):</span>
     <span class="n">item</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="s1">&#39;functional&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="s1">&#39;non_functional&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="p">)):</span>
         <span class="n">report_warning</span><span class="p">(</span><span class="s2">&quot;Requirement item </span><span class="si">{!r}</span><span class="s2"> must have either the &#39;functional&#39; or &#39;non_functional&#39; attribute; &quot;</span>
                        <span class="s2">&quot;adding &#39;functional&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">docname</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">docname</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">lineno</span><span class="p">)</span>
         <span class="n">item</span><span class="o">.</span><span class="n">add_attribute</span><span class="p">(</span><span class="s1">&#39;functional&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">traceability_callback_per_item</span> <span class="o">=</span> <span class="s1">&#39;my_callback_per_item_func&#39;</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="custom-colors-for-linked-items">
-<span id="traceability-config-link-colors"></span><h2>Custom colors for linked items<a class="headerlink" href="#custom-colors-for-linked-items" title="Permalink to this heading"></a></h2>
+<span id="traceability-config-link-colors"></span><h2>Custom colors for linked items<a class="headerlink" href="#custom-colors-for-linked-items" title="Link to this heading"></a></h2>
 <p>The plugin allows customization of the colors of traceable items in order to easily recognize the type of item which is
 linked to. A dictionary in the configuration file defines the regexp, which is used to <a class="reference external" href="https://docs.python.org/3/library/re.html#re.match">match</a> item IDs, as key and a
 tuple of 1-3 color defining strings as value. The first color is used for the default hyperlink state, the second color
@@ -401,7 +403,7 @@ Leaving a color empty results in the use of the default html style. The top rege
 </div>
 </section>
 <section id="mapping-of-undefined-references">
-<span id="traceability-notifications"></span><h2>Mapping of undefined references<a class="headerlink" href="#mapping-of-undefined-references" title="Permalink to this heading"></a></h2>
+<span id="traceability-notifications"></span><h2>Mapping of undefined references<a class="headerlink" href="#mapping-of-undefined-references" title="Link to this heading"></a></h2>
 <p>Undefined references can be mapped to a special item, e.g. to explain to the reader why the reference is undefined.
 In the example below the special item has ID <em>DOC-NOTIFICATION</em>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_notifications</span> <span class="o">=</span> <span class="p">{</span>
@@ -411,9 +413,10 @@ In the example below the special item has ID <em>DOC-NOTIFICATION</em>.</p>
 </div>
 </section>
 <section id="default-config">
-<span id="traceability-default-config"></span><h2>Default config<a class="headerlink" href="#default-config" title="Permalink to this heading"></a></h2>
+<span id="traceability-default-config"></span><h2>Default config<a class="headerlink" href="#default-config" title="Link to this heading"></a></h2>
 <p>The plugin itself holds a default config that can be used for any traceability documenting project:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traceability_callback_per_item</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">traceability_inspect_item</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">traceability_attributes</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;^.*$&#39;</span><span class="p">,</span>
     <span class="s1">&#39;asil&#39;</span><span class="p">:</span> <span class="s1">&#39;^(QM|[ABCD])$&#39;</span><span class="p">,</span>
@@ -435,7 +438,7 @@ In the example below the special item has ID <em>DOC-NOTIFICATION</em>.</p>
     <span class="s1">&#39;effort&#39;</span><span class="p">:</span> <span class="s1">&#39;Effort estimation&#39;</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">traceability_attributes_sort</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;effort&#39;</span><span class="p">:</span> <span class="n">natsort</span><span class="o">.</span><span class="n">natsorted</span><span class="p">,</span>
+    <span class="s1">&#39;effort&#39;</span><span class="p">:</span> <span class="s1">&#39;natsort.natsorted&#39;</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">traceability_relationships</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;fulfills&#39;</span><span class="p">:</span> <span class="s1">&#39;fulfilled_by&#39;</span><span class="p">,</span>
@@ -476,9 +479,9 @@ Overriding a configuration is as easy as assigning your own values to a configur
 per documentation object:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;&lt;path_to_process_submodule&gt;/config&#39;</span><span class="p">))</span>
 
-<span class="kn">from</span> <span class="nn">traceability_config</span> <span class="kn">import</span> <span class="n">swcc_traceability_attributes</span>
-<span class="kn">from</span> <span class="nn">traceability_config</span> <span class="kn">import</span> <span class="n">swcc_traceability_relationships</span>
-<span class="kn">from</span> <span class="nn">traceability_config</span> <span class="kn">import</span> <span class="n">swcc_traceability_relationship_to_string</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">traceability_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">swcc_traceability_attributes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">traceability_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">swcc_traceability_relationships</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">traceability_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">swcc_traceability_relationship_to_string</span>
 
 <span class="n">traceability_attributes</span> <span class="o">=</span> <span class="n">swcc_traceability_attributes</span>
 <span class="n">traceability_relationships</span> <span class="o">=</span> <span class="n">swcc_traceability_relationships</span>
