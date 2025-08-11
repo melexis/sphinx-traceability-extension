@@ -203,6 +203,9 @@ def perform_consistency_check(app, env):
     for each item ID that matches it and is not defined as a checklist-item.
     """
     env.traceability_collection.process_intermediate_nodes()
+    # Restore implicit reverse relations on every consistency check to handle incremental builds
+    if hasattr(env, 'traceability_collection'):
+        env.traceability_collection.rebuild_implicit_relations()
     ItemRelink.remove_placeholders(env.traceability_collection)
     try:
         env.traceability_collection.self_test(app.config.traceability_notifications.get('undefined-reference'))
@@ -714,6 +717,22 @@ def setup(app):
     app.add_directive('attribute-sort', AttributeSortDirective)
 
     app.connect('builder-inited', initialize_environment)
+    # Ensure we purge collection items when a document is updated in incremental builds
+    def _purge(app, env, docname):
+        if hasattr(env, 'traceability_collection'):
+            try:
+                env.traceability_collection.remove_items_from_document(docname)
+            except Exception:
+                pass
+        # Purge attribute descriptions defined in this document to avoid stale captions/content
+        try:
+            to_delete = [attr_id for attr_id, attr in TraceableItem.defined_attributes.items()
+                         if getattr(attr, 'docname', None) == docname]
+            for attr_id in to_delete:
+                del TraceableItem.defined_attributes[attr_id]
+        except Exception:
+            pass
+    app.connect('env-purge-doc', _purge)
     app.connect('env-check-consistency', perform_consistency_check)
     app.connect('doctree-resolved', process_item_nodes)
 

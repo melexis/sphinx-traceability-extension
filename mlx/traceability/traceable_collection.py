@@ -114,6 +114,17 @@ class TraceableCollection:
         '''
         return itemid in self.items
 
+    def remove_items_from_document(self, docname):
+        '''Remove all items that originate from the given document.
+
+        Args:
+            docname (str): Document name (without extension) to purge items for
+        '''
+        to_remove = [identifier for identifier, item in self.items.items()
+                     if getattr(item, 'docname', None) == docname]
+        for identifier in to_remove:
+            del self.items[identifier]
+
     def add_relation(self, source_id, relation, target_id):
         '''
         Add relation between two items
@@ -176,6 +187,29 @@ class TraceableCollection:
         """ Processes all intermediate nodes in order by calling its ``apply_effect`` """
         for node in sorted(self._intermediate_nodes, key=attrgetter('order')):
             node.apply_effect(self)
+
+    def rebuild_implicit_relations(self):
+        """Rebuild all implicit (reverse) relations from explicit ones.
+
+        This is needed on incremental builds when some documents are re-read and others come from cache,
+        so implicit reverse links on re-read items are restored based on the existing explicit links.
+        """
+        # Clear all current implicit relations
+        for item in self.items.values():
+            item.implicit_relations = {}
+
+        # Recreate implicit relations from explicit relations
+        for source_id, source in self.items.items():
+            for relation, targets in source.explicit_relations.items():
+                reverse_relation = self.get_reverse_relation(relation)
+                if not reverse_relation:
+                    continue
+                # External relations have NO_RELATION_STR as reverse; skip creating implicit
+                if reverse_relation == self.NO_RELATION_STR:
+                    continue
+                for target_id in targets:
+                    if target_id in self.items:
+                        self.items[target_id].add_target(reverse_relation, source_id, implicit=True)
 
     def export(self, fname):
         '''
