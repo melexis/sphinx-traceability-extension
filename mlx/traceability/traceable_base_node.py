@@ -64,20 +64,24 @@ class TraceableBaseNode(nodes.General, nodes.Element, ABC):
             break
         item_info = env.traceability_collection.get_item(item_id)
         link_item = item_info
-        notification_item = None
         p_node = nodes.paragraph()
         p_node['classes'].append('item-link')
 
-        # Only create link when target item (or notification item) exists, warn otherwise (in html and terminal)
+        # Early return if target item is missing
+        if item_info is None:
+            p_node.append(nodes.Text(f"{item_id} not defined, broken link"))
+            return p_node
+
+        # If target is a placeholder, try to use the configured notification item; otherwise show broken link
         if item_info.is_placeholder:
             notification_item_id = app.config.traceability_notifications.get('undefined-reference')
             notification_item = env.traceability_collection.get_item(notification_item_id)
-            if not notification_item:
+            if notification_item:
+                link_item = notification_item
+            else:
                 self.has_warned_about_undefined(item_info)
-                txt = nodes.Text('%s not defined, broken link' % item_id)
-                p_node.append(txt)
+                p_node.append(nodes.Text(f"{item_id} not defined, broken link"))
                 return p_node
-            link_item = notification_item
         try:
             if self['document'] == link_item.docname and hasattr(app.builder, 'link_suffix'):
                 # include filename so that the returned node can be reused on every page in the same directory
