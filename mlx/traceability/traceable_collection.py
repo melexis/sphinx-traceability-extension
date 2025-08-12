@@ -122,8 +122,16 @@ class TraceableCollection:
         '''
         to_remove = [identifier for identifier, item in self.items.items()
                      if getattr(item, 'docname', None) == docname]
+        if not to_remove:
+            return
+        to_remove_set = set(to_remove)
+        # Remove the items themselves
         for identifier in to_remove:
             del self.items[identifier]
+        # Remove any relations (explicit and implicit) pointing to the removed items from remaining items
+        for item in self.items.values():
+            for removed_id in to_remove_set:
+                item.remove_targets(removed_id, explicit=True, implicit=True)
 
     def add_relation(self, source_id, relation, target_id):
         '''
