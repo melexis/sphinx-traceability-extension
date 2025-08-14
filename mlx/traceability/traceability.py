@@ -371,6 +371,17 @@ def initialize_environment(app):
     )
 
 
+def _purge(app, env, docname):
+    """Ensure we purge items and relations when a document is updated in incremental builds."""
+    if hasattr(env, 'traceability_collection'):
+        env.traceability_collection.remove_items_from_document(docname)
+    # Purge attribute descriptions defined in this document to avoid stale captions/content
+    to_delete = [attr_id for attr_id, attr in TraceableItem.defined_attributes.items()
+                 if getattr(attr, 'docname', None) == docname]
+    for attr_id in to_delete:
+        del TraceableItem.defined_attributes[attr_id]
+
+
 # ----------------------------------------------------------------------------
 # Event handler helper functions
 def add_checklist_attribute(checklist_config, attributes_config, attribute_to_string_config):
@@ -717,15 +728,6 @@ def setup(app):
     app.add_directive('attribute-sort', AttributeSortDirective)
 
     app.connect('builder-inited', initialize_environment)
-    # Ensure we purge items and relations when a document is updated in incremental builds
-    def _purge(app, env, docname):
-        if hasattr(env, 'traceability_collection'):
-            env.traceability_collection.remove_items_from_document(docname)
-        # Purge attribute descriptions defined in this document to avoid stale captions/content
-        to_delete = [attr_id for attr_id, attr in TraceableItem.defined_attributes.items()
-                     if getattr(attr, 'docname', None) == docname]
-        for attr_id in to_delete:
-            del TraceableItem.defined_attributes[attr_id]
     app.connect('env-purge-doc', _purge)
     app.connect('env-check-consistency', perform_consistency_check)
     app.connect('doctree-resolved', process_item_nodes)
