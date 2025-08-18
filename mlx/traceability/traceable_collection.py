@@ -212,12 +212,10 @@ class TraceableCollection:
                 reverse_relation = self.get_reverse_relation(relation)
                 if not reverse_relation:
                     continue
-                # External relations have NO_RELATION_STR as reverse; skip creating implicit
-                if reverse_relation == self.NO_RELATION_STR:
-                    continue
-                for target_id in targets:
-                    if target_id in self.items:
-                        self.items[target_id].add_target(reverse_relation, source_id, implicit=True)
+                for target_item in (self.items.get(target_id) for target_id in targets):
+                    if not target_item:
+                        continue
+                    target_item.add_target(reverse_relation, source_id, implicit=True)
 
     def export(self, fname):
         '''
