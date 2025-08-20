@@ -203,6 +203,9 @@ def perform_consistency_check(app, env):
     for each item ID that matches it and is not defined as a checklist-item.
     """
     env.traceability_collection.process_intermediate_nodes()
+    # Restore implicit reverse relations on every consistency check to handle incremental builds
+    if hasattr(env, 'traceability_collection'):
+        env.traceability_collection.rebuild_implicit_relations()
     ItemRelink.remove_placeholders(env.traceability_collection)
     try:
         env.traceability_collection.self_test(app.config.traceability_notifications.get('undefined-reference'))
@@ -315,8 +318,10 @@ def init_available_relationships(app):
 def initialize_environment(app):
     """Perform initializations needed before the build process starts."""
     env = app.builder.env
-
-    env.traceability_ref_nodes = {}
+    # Preserve cached environment data across incremental builds
+    # Only initialize when missing to avoid losing items/refs from unchanged docs
+    if not hasattr(env, 'traceability_ref_nodes') or env.traceability_ref_nodes is None:
+        env.traceability_ref_nodes = {}
     processed_sort_config = {}
     for attr, sort_spec in app.config.traceability_attributes_sort.items():
         try:
@@ -325,12 +330,22 @@ def initialize_environment(app):
             report_warning(f"Invalid sort configuration for attribute '{attr}': {str(e)}")
             # Fall back to default sorting
             processed_sort_config[attr] = sorted
-    env.traceability_collection = TraceableCollection()
+    if not hasattr(env, 'traceability_collection') or env.traceability_collection is None:
+        env.traceability_collection = TraceableCollection()
+    # Always update sort config on the existing collection
     env.traceability_collection.attributes_sort = processed_sort_config
-    # Copy configuration dictionaries to environment to avoid modifying app.config
-    env.traceability_checklist = dict(app.config.traceability_checklist)
-    env.traceability_attributes = dict(app.config.traceability_attributes)
-    env.traceability_attribute_to_string = dict(app.config.traceability_attribute_to_string)
+    # Copy configuration dictionaries to environment to avoid modifying app.config,
+    # but preserve any cached data (e.g., checklist query_results) on incremental builds
+    if not hasattr(env, 'traceability_checklist') or env.traceability_checklist is None:
+        env.traceability_checklist = dict(app.config.traceability_checklist)
+    else:
+        # Update values from config without dropping existing runtime keys
+        for k, v in app.config.traceability_checklist.items():
+            env.traceability_checklist.setdefault(k, v)
+    if not hasattr(env, 'traceability_attributes') or env.traceability_attributes is None:
+        env.traceability_attributes = dict(app.config.traceability_attributes)
+    if not hasattr(env, 'traceability_attribute_to_string') or env.traceability_attribute_to_string is None:
+        env.traceability_attribute_to_string = dict(app.config.traceability_attribute_to_string)
 
     all_relationships = set(app.config.traceability_relationships).union(app.config.traceability_relationships.values())
     all_relationships.discard('')
@@ -354,6 +369,17 @@ def initialize_environment(app):
         r'\let\@noitemerr\relax'
         r'\makeatother'
     )
+
+
+def _purge(app, env, docname):
+    """Ensure we purge items and relations when a document is updated in incremental builds."""
+    if hasattr(env, 'traceability_collection'):
+        env.traceability_collection.remove_items_from_document(docname)
+    # Purge attribute descriptions defined in this document to avoid stale captions/content
+    to_delete = [attr_id for attr_id, attr in TraceableItem.defined_attributes.items()
+                 if getattr(attr, 'docname', None) == docname]
+    for attr_id in to_delete:
+        del TraceableItem.defined_attributes[attr_id]
 
 
 # ----------------------------------------------------------------------------
@@ -702,6 +728,7 @@ def setup(app):
     app.add_directive('attribute-sort', AttributeSortDirective)
 
     app.connect('builder-inited', initialize_environment)
+    app.connect('env-purge-doc', _purge)
     app.connect('env-check-consistency', perform_consistency_check)
     app.connect('doctree-resolved', process_item_nodes)
 

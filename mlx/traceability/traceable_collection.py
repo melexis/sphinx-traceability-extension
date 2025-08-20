@@ -114,6 +114,25 @@ class TraceableCollection:
         '''
         return itemid in self.items
 
+    def remove_items_from_document(self, docname):
+        '''Remove all items that originate from the given document.
+
+        Args:
+            docname (str): Document name (without extension) to purge items for
+        '''
+        to_remove = [identifier for identifier, item in self.items.items()
+                     if getattr(item, 'docname', None) == docname]
+        if not to_remove:
+            return
+        to_remove_set = set(to_remove)
+        # Remove the items themselves
+        for identifier in to_remove:
+            del self.items[identifier]
+        # Remove any relations (explicit and implicit) pointing to the removed items from remaining items
+        for item in self.items.values():
+            for removed_id in to_remove_set:
+                item.remove_targets(removed_id, explicit=True, implicit=True)
+
     def add_relation(self, source_id, relation, target_id):
         '''
         Add relation between two items
@@ -176,6 +195,27 @@ class TraceableCollection:
         """ Processes all intermediate nodes in order by calling its ``apply_effect`` """
         for node in sorted(self._intermediate_nodes, key=attrgetter('order')):
             node.apply_effect(self)
+
+    def rebuild_implicit_relations(self):
+        """Rebuild all implicit (reverse) relations from explicit ones.
+
+        This is needed on incremental builds when some documents are re-read and others come from cache,
+        so implicit reverse links on re-read items are restored based on the existing explicit links.
+        """
+        # Clear all current implicit relations
+        for item in self.items.values():
+            item.implicit_relations = {}
+
+        # Recreate implicit relations from explicit relations
+        for source_id, source in self.items.items():
+            for relation, targets in source.explicit_relations.items():
+                reverse_relation = self.get_reverse_relation(relation)
+                if not reverse_relation:
+                    continue
+                for target_item in (self.items.get(target_id) for target_id in targets):
+                    if not target_item:
+                        continue
+                    target_item.add_target(reverse_relation, source_id, implicit=True)
 
     def export(self, fname):
         '''
