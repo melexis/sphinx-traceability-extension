@@ -118,8 +118,9 @@ class TraceableCollection:
         '''Remove all items that originate from the given document.
 
         Note: this does NOT remove relations pointing to these items from other items.
-        This is handled by ``rebuild_implicit_relations`` later in the build process
-        to correctly handle incremental builds.
+        Implicit reverse relations are rebuilt by ``rebuild_implicit_relations`` later
+        in the build process (incremental builds). Stale explicit relations pointing to
+        permanently removed items are reported as errors by ``self_test``.
 
         Args:
             docname (str): Document name (without extension) to purge items for
