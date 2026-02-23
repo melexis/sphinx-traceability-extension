@@ -117,6 +117,10 @@ class TraceableCollection:
     def remove_items_from_document(self, docname):
         '''Remove all items that originate from the given document.
 
+        Note: this does NOT remove relations pointing to these items from other items.
+        This is handled by ``rebuild_implicit_relations`` later in the build process
+        to correctly handle incremental builds.
+
         Args:
             docname (str): Document name (without extension) to purge items for
         '''
@@ -124,14 +128,9 @@ class TraceableCollection:
                      if getattr(item, 'docname', None) == docname]
         if not to_remove:
             return
-        to_remove_set = set(to_remove)
         # Remove the items themselves
         for identifier in to_remove:
             del self.items[identifier]
-        # Remove any relations (explicit and implicit) pointing to the removed items from remaining items
-        for item in self.items.values():
-            for removed_id in to_remove_set:
-                item.remove_targets(removed_id, explicit=True, implicit=True)
 
     def add_relation(self, source_id, relation, target_id):
         '''
