@@ -4,7 +4,6 @@ from unittest.mock import Mock, MagicMock, patch
 import logging
 
 from docutils import nodes
-from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 
 from mlx.traceability.directives.item_attribute_directive import (
@@ -166,7 +165,7 @@ class TestItemAttributeDirective(TestCase):
         TraceableItem.defined_attributes[attr_id] = attr
 
         # Run the directive
-        result = self.directive.run()
+        self.directive.run()
 
         # Verify the attribute's caption was set
         self.assertEqual(attr.caption, 'Test Caption')
@@ -174,8 +173,8 @@ class TestItemAttributeDirective(TestCase):
     def test_run_with_undefined_attribute_reports_warning(self):
         """Test run method reports warning for undefined attribute"""
         # Ensure attribute is not defined
-        attr_id = 'undefined_attr'
         TraceableItem.defined_attributes = {}
+        self.directive.arguments = ['undefined_attr']
 
         # Run the directive and expect a warning
         with self.assertLogs(LOGGER, logging.DEBUG) as log_context:
@@ -215,7 +214,7 @@ class TestItemAttributeDirective(TestCase):
 
         # Run the directive
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 15)):
-            result = self.directive.run()
+            self.directive.run()
 
         # Verify location was set on attribute
         self.assertEqual(attr.docname, 'test_document')
@@ -229,7 +228,7 @@ class TestItemAttributeDirective(TestCase):
         TraceableItem.defined_attributes[attr_id] = attr
 
         # Run the directive
-        result = self.directive.run()
+        self.directive.run()
 
         # Verify directive reference was stored
         self.assertIs(attr.directive, self.directive)
@@ -259,7 +258,7 @@ class TestItemAttributeDirective(TestCase):
         TraceableItem.defined_attributes[attr_id] = attr
 
         # Run the directive with content
-        result = self.directive.run()
+        self.directive.run()
 
         # Verify content was stored (content property converts StringList to string)
         expected_content = 'Content line 1\nContent line 2'
@@ -313,7 +312,7 @@ class TestItemAttributeDirective(TestCase):
         TraceableItem.defined_attributes[attr_id] = attr
 
         # Run the directive
-        result = self.directive.run()
+        self.directive.run()
 
         # Verify caption has newline replaced with space
         self.assertEqual(attr.caption, 'Caption with newline')

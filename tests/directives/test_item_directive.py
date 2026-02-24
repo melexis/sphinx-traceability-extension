@@ -14,7 +14,6 @@ from mlx.traceability.directives.item_directive import Item as dut, ItemDirectiv
 from mlx.traceability.traceable_collection import TraceableCollection
 from mlx.traceability.traceable_item import TraceableItem
 from mlx.traceability.traceable_attribute import TraceableAttribute
-from mlx.traceability.traceability_exception import TraceabilityException
 
 from parameterized import parameterized
 
@@ -275,7 +274,7 @@ class TestItemDirectiveClass(TestCase):
         self.collection.add_item(existing_item)
 
         # Try to add duplicate
-        with self.assertLogs(LOGGER, logging.DEBUG) as log_context:
+        with self.assertLogs(LOGGER, logging.DEBUG):
             with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
                 result = self.directive.run()
 
@@ -437,10 +436,13 @@ class TestItemDirectiveClass(TestCase):
         # Don't add the relation to the collection
         self.directive.options['unknown_relation'] = 'OTHER_ITEM'
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            # This should not crash but should handle gracefully
-            result = self.directive.run()
+        with self.assertLogs(LOGGER, logging.DEBUG) as log_context:
+            with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
+                # This should not crash but should handle gracefully
+                self.directive.run()
 
+        warning_found = any('unknown_relation' in msg.lower() for msg in log_context.output)
+        self.assertTrue(warning_found, "Expected warning about invalid relation not found in logs")
         # Item should still be created
         self.assertTrue(self.collection.has_item('TEST_ITEM_ID'))
 
