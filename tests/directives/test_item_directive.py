@@ -220,8 +220,7 @@ class TestItemDirectiveClass(TestCase):
 
     def test_run_creates_three_nodes(self):
         """Test that run method creates three nodes"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 3)
@@ -234,8 +233,7 @@ class TestItemDirectiveClass(TestCase):
 
     def test_run_stores_item_in_collection(self):
         """Test that run method stores item in collection"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         # Verify item was added to collection
         self.assertTrue(self.collection.has_item('TEST_ITEM_ID'))
@@ -246,8 +244,7 @@ class TestItemDirectiveClass(TestCase):
         """Test run method with caption argument"""
         self.directive.arguments = ['TEST_ITEM_ID', 'Test Caption']
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         self.assertEqual(item.caption, 'Test Caption')
@@ -256,8 +253,7 @@ class TestItemDirectiveClass(TestCase):
         """Test that multiline captions have newlines replaced with spaces"""
         self.directive.arguments = ['TEST_ITEM_ID', 'Caption\nwith newline']
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         self.assertEqual(item.caption, 'Caption with newline')
@@ -279,8 +275,7 @@ class TestItemDirectiveClass(TestCase):
 
         # Try to add duplicate
         with self.assertLogs(LOGGER, logging.DEBUG):
-            with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-                result = self.directive.run()
+            result = self.directive.run()
 
         # Should return empty list when duplicate detected
         self.assertEqual(result, [])
@@ -291,8 +286,7 @@ class TestItemDirectiveClass(TestCase):
         self.collection.add_relation_pair('depends_on', 'impacts_on')
         self.directive.options['depends_on'] = 'OTHER_ITEM'
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         # Verify relationship was added
         item = self.collection.get_item('TEST_ITEM_ID')
@@ -305,8 +299,7 @@ class TestItemDirectiveClass(TestCase):
         self.collection.add_relation_pair('depends_on', 'impacts_on')
         self.directive.options['depends_on'] = 'ITEM_1 ITEM_2 ITEM_3'
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         # Verify all relationships were added
         item = self.collection.get_item('TEST_ITEM_ID')
@@ -322,8 +315,7 @@ class TestItemDirectiveClass(TestCase):
         TraceableItem.defined_attributes = {'status': attr}
         self.directive.options['status'] = 'completed'
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         # Verify attribute was added
         item = self.collection.get_item('TEST_ITEM_ID')
@@ -337,8 +329,7 @@ class TestItemDirectiveClass(TestCase):
         self.directive.options['status'] = 'invalid_value'
 
         with self.assertLogs(LOGGER, logging.DEBUG) as log_context:
-            with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-                self.directive.run()
+            self.directive.run()
 
         # Should have logged a warning
         warning_found = any('status' in msg.lower() for msg in log_context.output)
@@ -348,8 +339,7 @@ class TestItemDirectiveClass(TestCase):
         """Test run method with class option"""
         self.directive.options['class'] = ['custom-class', 'another-class']
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         item_node = result[1]
         self.assertIn('custom-class', item_node['classes'])
@@ -359,8 +349,7 @@ class TestItemDirectiveClass(TestCase):
         """Test run method with nocaptions flag"""
         self.directive.options['nocaptions'] = None  # Flag options are None when present
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         # The directive should process nocaptions flag
         # We're just verifying it doesn't crash
@@ -370,8 +359,7 @@ class TestItemDirectiveClass(TestCase):
         """Test run method with hidetype option"""
         self.directive.options['hidetype'] = 'depends_on impacts_on'
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         item_node = result[1]
         self.assertIn('depends_on', item_node['hidetype'])
@@ -381,8 +369,7 @@ class TestItemDirectiveClass(TestCase):
         """Test that collapse links config is respected"""
         self.env.app.config.traceability_collapse_links = True
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         item_node = result[1]
         self.assertIn('collapse', item_node['classes'])
@@ -391,24 +378,21 @@ class TestItemDirectiveClass(TestCase):
         """Test that collapse class is not added when config is False"""
         self.env.app.config.traceability_collapse_links = False
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         item_node = result[1]
         self.assertNotIn('collapse', item_node['classes'])
 
     def test_run_always_adds_collapsible_links_class(self):
         """Test that collapsible_links class is always added"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         item_node = result[1]
         self.assertIn('collapsible_links', item_node['classes'])
 
     def test_run_sets_item_node_properties(self):
         """Test that item node has correct properties"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         item_node = result[1]
         self.assertEqual(item_node['document'], 'test_document')
@@ -417,8 +401,7 @@ class TestItemDirectiveClass(TestCase):
 
     def test_run_stores_content_on_item(self):
         """Test that content is stored on the item"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         # Content property converts StringList to string
@@ -429,8 +412,7 @@ class TestItemDirectiveClass(TestCase):
         callback_mock = Mock()
         self.env.app.config.traceability_callback_per_item = callback_mock
 
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         # Verify callback was called
         callback_mock.assert_called_once()
@@ -441,9 +423,7 @@ class TestItemDirectiveClass(TestCase):
         self.directive.options['unknown_relation'] = 'OTHER_ITEM'
 
         with self.assertLogs(LOGGER, logging.DEBUG) as log_context:
-            with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-                # This should not crash but should handle gracefully
-                self.directive.run()
+            self.directive.run()
 
         warning_found = any('unknown_relation' in msg.lower() for msg in log_context.output)
         self.assertTrue(warning_found, "Expected warning about invalid relation not found in logs")
@@ -452,16 +432,14 @@ class TestItemDirectiveClass(TestCase):
 
     def test_item_node_has_correct_id(self):
         """Test that the item node contains correct id"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         item_node = result[1]
         self.assertEqual(item_node['id'], 'TEST_ITEM_ID')
 
     def test_target_node_has_item_id(self):
         """Test that target node includes the item ID"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+        result = self.directive.run()
 
         target_node = result[0]
         self.assertIn('TEST_ITEM_ID', target_node['ids'])
@@ -472,13 +450,11 @@ class TestItemDirectiveClass(TestCase):
         self.collection.add_relation_pair('depends_on', 'impacts_on')
 
         # This should not raise any warnings
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.check_relationships(['depends_on'], self.env)
+        self.directive.check_relationships(['depends_on'], self.env)
 
     def test_item_clears_state_after_processing(self):
         """Test that item state is cleared after processing"""
-        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            self.directive.run()
+        self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         # State should be cleared - verify by checking that directive is None
