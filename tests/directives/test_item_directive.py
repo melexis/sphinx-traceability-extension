@@ -418,7 +418,7 @@ class TestItemDirectiveClass(TestCase):
         callback_mock.assert_called_once()
 
     def test_add_relation_with_invalid_relation_still_creates_item(self):
-        """Test that adding invalid relations triggers warnings"""
+        """Test that invalid relations don't crash and the item is still created"""
         # Don't add the relation to the collection
         self.directive.options['unknown_relation'] = 'OTHER_ITEM'
 
