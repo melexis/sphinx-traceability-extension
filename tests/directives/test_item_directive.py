@@ -1,17 +1,19 @@
 from unittest import TestCase
-from unittest.mock import Mock, MagicMock
+from unittest.mock import Mock, MagicMock, patch
 import logging
 
 from docutils import nodes
+from docutils.statemachine import StringList
 from sphinx.application import Sphinx
 from sphinx.builders.latex import LaTeXBuilder
 from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.environment import BuildEnvironment
 from sphinx.errors import NoUri
 
-from mlx.traceability.directives.item_directive import Item as dut
+from mlx.traceability.directives.item_directive import Item as dut, ItemDirective
 from mlx.traceability.traceable_collection import TraceableCollection
 from mlx.traceability.traceable_item import TraceableItem
+from mlx.traceability.traceable_attribute import TraceableAttribute
 
 from parameterized import parameterized
 
@@ -161,3 +163,297 @@ class TestItemDirective(TestCase):
         warning = "WARNING:sphinx.mlx.traceability.traceability_exception:Traceability: relation depends_on cannot be "\
             "translated to string"
         self.assertEqual(c_m.output, [warning])
+
+
+class TestItemDirectiveClass(TestCase):
+    """Test the ItemDirective class"""
+
+    def setUp(self):
+        """Setup test fixtures for directive testing"""
+        self._original_defined_attributes = TraceableItem.defined_attributes.copy()
+        self.directive = ItemDirective(
+            name='item',
+            arguments=['TEST_ITEM_ID'],
+            options={},
+            content=StringList(['Item content line'], 'test.rst'),
+            lineno=10,
+            content_offset=0,
+            block_text='',
+            state=Mock(),
+            state_machine=Mock()
+        )
+
+        # Mock the state and environment
+        self.directive.state.document = Mock()
+        self.directive.state.document.ids = {}  # Must be a real dict for item assignment
+        self.directive.state.document.settings = Mock()
+        self.directive.state.document.settings.env = Mock()
+        self.env = self.directive.state.document.settings.env
+        self.env.docname = 'test_document'
+        self.env.app = MagicMock(autospec=Sphinx)
+        self.env.app.config = Mock()
+        self.env.app.config.traceability_collapse_links = False
+        self.env.app.config.traceability_item_no_captions = []
+        self.env.app.config.traceability_callback_per_item = None
+
+        # Mock get_source_info to return a tuple
+        self.directive.get_source_info = Mock(return_value=('test.rst', 10))
+
+        # Initialize collection
+        self.collection = TraceableCollection()
+        self.env.traceability_collection = self.collection
+
+        # Clear defined attributes
+        TraceableItem.defined_attributes = {}
+
+    def tearDown(self):
+        TraceableItem.defined_attributes = self._original_defined_attributes
+
+    def test_directive_configuration(self):
+        """Test that directive has correct configuration"""
+        self.assertEqual(ItemDirective.required_arguments, 1)
+        self.assertEqual(ItemDirective.optional_arguments, 1)
+        self.assertTrue(ItemDirective.has_content)
+        self.assertIn('class', ItemDirective.option_spec)
+        self.assertIn('nocaptions', ItemDirective.option_spec)
+        self.assertIn('hidetype', ItemDirective.option_spec)
+
+    def test_run_creates_three_nodes(self):
+        """Test that run method creates three nodes"""
+        result = self.directive.run()
+
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 3)
+        # First node is target node
+        self.assertIsInstance(result[0], nodes.target)
+        # Second node is Item node
+        self.assertIsInstance(result[1], dut)
+        # Third node is content node
+        self.assertIsNotNone(result[2])
+
+    def test_run_stores_item_in_collection(self):
+        """Test that run method stores item in collection"""
+        self.directive.run()
+
+        # Verify item was added to collection
+        self.assertTrue(self.collection.has_item('TEST_ITEM_ID'))
+        item = self.collection.get_item('TEST_ITEM_ID')
+        self.assertEqual(item.identifier, 'TEST_ITEM_ID')
+
+    def test_run_with_caption(self):
+        """Test run method with caption argument"""
+        self.directive.arguments = ['TEST_ITEM_ID', 'Test Caption']
+
+        self.directive.run()
+
+        item = self.collection.get_item('TEST_ITEM_ID')
+        self.assertEqual(item.caption, 'Test Caption')
+
+    def test_run_with_multiline_caption(self):
+        """Test that multiline captions have newlines replaced with spaces"""
+        self.directive.arguments = ['TEST_ITEM_ID', 'Caption\nwith newline']
+
+        self.directive.run()
+
+        item = self.collection.get_item('TEST_ITEM_ID')
+        self.assertEqual(item.caption, 'Caption with newline')
+
+    def test_run_sets_item_location(self):
+        """Test that item location is properly set"""
+        with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 25)):
+            self.directive.run()
+
+        item = self.collection.get_item('TEST_ITEM_ID')
+        self.assertEqual(item.docname, 'test_document')
+        self.assertEqual(item.lineno, 25)
+
+    def test_run_with_duplicate_item_id_reports_warning(self):
+        """Test that duplicate item IDs trigger a warning"""
+        # Add item to collection first
+        existing_item = TraceableItem('TEST_ITEM_ID')
+        self.collection.add_item(existing_item)
+
+        # Try to add duplicate
+        with self.assertLogs(LOGGER, logging.DEBUG):
+            result = self.directive.run()
+
+        # Should return empty list when duplicate detected
+        self.assertEqual(result, [])
+
+    def test_run_with_relationship_option(self):
+        """Test run method with relationship options"""
+        # Setup relationship
+        self.collection.add_relation_pair('depends_on', 'impacts_on')
+        self.directive.options['depends_on'] = 'OTHER_ITEM'
+
+        self.directive.run()
+
+        # Verify relationship was added
+        item = self.collection.get_item('TEST_ITEM_ID')
+        relations = list(item.iter_targets('depends_on'))
+        self.assertIn('OTHER_ITEM', relations)
+
+    def test_run_with_multiple_relationships(self):
+        """Test run method with multiple related items"""
+        # Setup relationship
+        self.collection.add_relation_pair('depends_on', 'impacts_on')
+        self.directive.options['depends_on'] = 'ITEM_1 ITEM_2 ITEM_3'
+
+        self.directive.run()
+
+        # Verify all relationships were added
+        item = self.collection.get_item('TEST_ITEM_ID')
+        relations = list(item.iter_targets('depends_on'))
+        self.assertIn('ITEM_1', relations)
+        self.assertIn('ITEM_2', relations)
+        self.assertIn('ITEM_3', relations)
+
+    def test_run_with_attributes(self):
+        """Test run method with attribute options"""
+        # Setup attribute
+        attr = TraceableAttribute('status', '.*')
+        TraceableItem.defined_attributes = {'status': attr}
+        self.directive.options['status'] = 'completed'
+
+        self.directive.run()
+
+        # Verify attribute was added
+        item = self.collection.get_item('TEST_ITEM_ID')
+        self.assertEqual(item.get_attribute('status'), 'completed')
+
+    def test_run_with_invalid_attribute_value(self):
+        """Test that invalid attribute values trigger a warning"""
+        # Setup attribute with strict pattern
+        attr = TraceableAttribute('status', '^(open|closed)$')
+        TraceableItem.defined_attributes = {'status': attr}
+        self.directive.options['status'] = 'invalid_value'
+
+        with self.assertLogs(LOGGER, logging.DEBUG) as log_context:
+            self.directive.run()
+
+        # Should have logged a warning
+        warning_found = any('status' in msg.lower() for msg in log_context.output)
+        self.assertTrue(warning_found)
+
+    def test_run_with_class_option(self):
+        """Test run method with class option"""
+        self.directive.options['class'] = ['custom-class', 'another-class']
+
+        result = self.directive.run()
+
+        item_node = result[1]
+        self.assertIn('custom-class', item_node['classes'])
+        self.assertIn('another-class', item_node['classes'])
+
+    def test_run_with_nocaptions_option(self):
+        """Test run method with nocaptions flag"""
+        self.directive.options['nocaptions'] = None  # Flag options are None when present
+
+        result = self.directive.run()
+
+        # The directive should process nocaptions flag
+        # We're just verifying it doesn't crash
+        self.assertEqual(len(result), 3)
+
+    def test_run_with_hidetype_option(self):
+        """Test run method with hidetype option"""
+        self.directive.options['hidetype'] = 'depends_on impacts_on'
+
+        result = self.directive.run()
+
+        item_node = result[1]
+        self.assertIn('depends_on', item_node['hidetype'])
+        self.assertIn('impacts_on', item_node['hidetype'])
+
+    def test_run_with_collapse_links_config(self):
+        """Test that collapse links config is respected"""
+        self.env.app.config.traceability_collapse_links = True
+
+        result = self.directive.run()
+
+        item_node = result[1]
+        self.assertIn('collapse', item_node['classes'])
+
+    def test_run_without_collapse_links_config(self):
+        """Test that collapse class is not added when config is False"""
+        self.env.app.config.traceability_collapse_links = False
+
+        result = self.directive.run()
+
+        item_node = result[1]
+        self.assertNotIn('collapse', item_node['classes'])
+
+    def test_run_always_adds_collapsible_links_class(self):
+        """Test that collapsible_links class is always added"""
+        result = self.directive.run()
+
+        item_node = result[1]
+        self.assertIn('collapsible_links', item_node['classes'])
+
+    def test_run_sets_item_node_properties(self):
+        """Test that item node has correct properties"""
+        result = self.directive.run()
+
+        item_node = result[1]
+        self.assertEqual(item_node['document'], 'test_document')
+        self.assertEqual(item_node['line'], 10)
+        self.assertEqual(item_node['id'], 'TEST_ITEM_ID')
+
+    def test_run_stores_content_on_item(self):
+        """Test that content is stored on the item"""
+        self.directive.run()
+
+        item = self.collection.get_item('TEST_ITEM_ID')
+        # Content property converts StringList to string
+        self.assertEqual(item.content, 'Item content line')
+
+    def test_run_with_callback(self):
+        """Test that callback is called when configured"""
+        callback_mock = Mock()
+        self.env.app.config.traceability_callback_per_item = callback_mock
+
+        self.directive.run()
+
+        # Verify callback was called
+        callback_mock.assert_called_once()
+
+    def test_add_relation_with_invalid_relation_still_creates_item(self):
+        """Test that invalid relations don't crash and the item is still created"""
+        # Don't add the relation to the collection
+        self.directive.options['unknown_relation'] = 'OTHER_ITEM'
+
+        # This should not crash but should handle gracefully
+        self.directive.run()
+
+        # Item should still be created
+        self.assertTrue(self.collection.has_item('TEST_ITEM_ID'))
+
+    def test_item_node_has_correct_id(self):
+        """Test that the item node contains correct id"""
+        result = self.directive.run()
+
+        item_node = result[1]
+        self.assertEqual(item_node['id'], 'TEST_ITEM_ID')
+
+    def test_target_node_has_item_id(self):
+        """Test that target node includes the item ID"""
+        result = self.directive.run()
+
+        target_node = result[0]
+        self.assertIn('TEST_ITEM_ID', target_node['ids'])
+
+    def test_check_relationships_with_valid_relationships(self):
+        """Test check_relationships with valid relationship names"""
+        # Setup valid relationships
+        self.collection.add_relation_pair('depends_on', 'impacts_on')
+
+        # This should not raise any warnings
+        self.directive.check_relationships(['depends_on'], self.env)
+
+    def test_item_clears_state_after_processing(self):
+        """Test that item state is cleared after processing"""
+        self.directive.run()
+
+        item = self.collection.get_item('TEST_ITEM_ID')
+        # State should be cleared - verify by checking that directive is None
+        self.assertIsNone(item.directive)

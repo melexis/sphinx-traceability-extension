@@ -1,7 +1,6 @@
 """Module for the item directive"""
 from docutils import nodes
 from docutils.parsers.rst import directives
-from pathlib import Path
 
 from ..traceability_exception import report_warning, TraceabilityException
 from ..traceable_base_directive import TraceableBaseDirective
@@ -196,11 +195,8 @@ class ItemDirective(TraceableBaseDirective):
         """
         target_node = nodes.target('', '', ids=[target_id])
         item = TraceableItem(target_id, directive=self)
-        doc_path_str, lineno = self.get_source_info()
-        doc_path = Path(doc_path_str)
-        if doc_path.is_absolute():
-            doc_path = doc_path.relative_to(env.srcdir)
-        item.set_location(doc_path, lineno)
+        _, lineno = self.get_source_info()
+        item.set_location(env.docname, lineno)
         item.node = target_node
         item.caption = self.caption
         item.content = self.content
