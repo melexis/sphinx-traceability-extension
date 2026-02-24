@@ -46,13 +46,13 @@ jobs:
     - name: Build documentation with Sphinx version 7.4
       id: sphinx74
       env:
-        PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+        PRIVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: tox -e sphinx7.4
       continue-on-error: true
     - name: Build documentation with Sphinx >= 8.2.3
       id: sphinx_latest
       env:
-        PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+        PRIVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: matrix.python-version > 3.9
       run: tox -e sphinx-latest
       continue-on-error: true
