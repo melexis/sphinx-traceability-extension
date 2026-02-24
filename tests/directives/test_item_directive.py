@@ -170,6 +170,7 @@ class TestItemDirectiveClass(TestCase):
 
     def setUp(self):
         """Setup test fixtures for directive testing"""
+        self._original_defined_attributes = TraceableItem.defined_attributes.copy()
         self.directive = ItemDirective(
             name='item',
             arguments=['TEST_ITEM_ID'],
@@ -204,6 +205,9 @@ class TestItemDirectiveClass(TestCase):
 
         # Clear defined attributes
         TraceableItem.defined_attributes = {}
+
+    def tearDown(self):
+        TraceableItem.defined_attributes = self._original_defined_attributes
 
     def test_directive_configuration(self):
         """Test that directive has correct configuration"""
