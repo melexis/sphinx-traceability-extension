@@ -235,7 +235,7 @@ class TestItemDirectiveClass(TestCase):
     def test_run_stores_item_in_collection(self):
         """Test that run method stores item in collection"""
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         # Verify item was added to collection
         self.assertTrue(self.collection.has_item('TEST_ITEM_ID'))
@@ -247,7 +247,7 @@ class TestItemDirectiveClass(TestCase):
         self.directive.arguments = ['TEST_ITEM_ID', 'Test Caption']
 
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         self.assertEqual(item.caption, 'Test Caption')
@@ -257,7 +257,7 @@ class TestItemDirectiveClass(TestCase):
         self.directive.arguments = ['TEST_ITEM_ID', 'Caption\nwith newline']
 
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         self.assertEqual(item.caption, 'Caption with newline')
@@ -265,7 +265,7 @@ class TestItemDirectiveClass(TestCase):
     def test_run_sets_item_location(self):
         """Test that item location is properly set"""
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 25)):
-            result = self.directive.run()
+            self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         self.assertEqual(item.docname, 'test_document')
@@ -292,7 +292,7 @@ class TestItemDirectiveClass(TestCase):
         self.directive.options['depends_on'] = 'OTHER_ITEM'
 
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         # Verify relationship was added
         item = self.collection.get_item('TEST_ITEM_ID')
@@ -306,7 +306,7 @@ class TestItemDirectiveClass(TestCase):
         self.directive.options['depends_on'] = 'ITEM_1 ITEM_2 ITEM_3'
 
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         # Verify all relationships were added
         item = self.collection.get_item('TEST_ITEM_ID')
@@ -323,7 +323,7 @@ class TestItemDirectiveClass(TestCase):
         self.directive.options['status'] = 'completed'
 
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         # Verify attribute was added
         item = self.collection.get_item('TEST_ITEM_ID')
@@ -338,7 +338,7 @@ class TestItemDirectiveClass(TestCase):
 
         with self.assertLogs(LOGGER, logging.DEBUG) as log_context:
             with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-                result = self.directive.run()
+                self.directive.run()
 
         # Should have logged a warning
         warning_found = any('status' in msg.lower() for msg in log_context.output)
@@ -418,7 +418,7 @@ class TestItemDirectiveClass(TestCase):
     def test_run_stores_content_on_item(self):
         """Test that content is stored on the item"""
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         # Content property converts StringList to string
@@ -430,7 +430,7 @@ class TestItemDirectiveClass(TestCase):
         self.env.app.config.traceability_callback_per_item = callback_mock
 
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         # Verify callback was called
         callback_mock.assert_called_once()
@@ -478,7 +478,7 @@ class TestItemDirectiveClass(TestCase):
     def test_item_clears_state_after_processing(self):
         """Test that item state is cleared after processing"""
         with patch.object(self.directive, 'get_source_info', return_value=('test.rst', 10)):
-            result = self.directive.run()
+            self.directive.run()
 
         item = self.collection.get_item('TEST_ITEM_ID')
         # State should be cleared - verify by checking that directive is None
