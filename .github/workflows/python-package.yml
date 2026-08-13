@@ -38,7 +38,7 @@ jobs:
     - name: Run test
       run: tox -e py
     - name: Upload coverage to Qlty
-      if: matrix.python-version == 3.12
+      if: matrix.python-version == '3.12'
       uses: qltysh/qlty-action/coverage@v1
       with:
         oidc: true
@@ -53,10 +53,12 @@ jobs:
       id: sphinx_latest
       env:
         PRIVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Sphinx 8.2 dropped support for Python 3.10
+      if: matrix.python-version != '3.10'
       run: tox -e sphinx-latest
       continue-on-error: true
     - name: Upload warning files
-      if: matrix.python-version == 3.12
+      if: matrix.python-version == '3.12'
       uses: actions/upload-artifact@v4
       with:
         name: sphinx-warnings
