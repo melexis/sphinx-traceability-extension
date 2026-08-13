@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -53,7 +53,6 @@ jobs:
       id: sphinx_latest
       env:
         PRIVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: matrix.python-version > 3.9
       run: tox -e sphinx-latest
       continue-on-error: true
     - name: Upload warning files
@@ -73,10 +72,10 @@ jobs:
           exit 1
         fi
     - name: Static checks
-      if: matrix.python-version == 3.9
+      if: matrix.python-version == '3.10'
       run: tox -e check
     - name: Upload HTML documentation
-      if: matrix.python-version == 3.9
+      if: matrix.python-version == '3.10'
       uses: actions/upload-artifact@v4
       with:
         name: html-doc
