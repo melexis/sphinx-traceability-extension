@@ -1,9 +1,9 @@
 [build-system]
-requires = ["setuptools>=84.0.0", "setuptools_scm>=10.2.3", "css-html-js-minify>=2.5.5,<3"]
+requires = ["setuptools>=84.0.0", "setuptools_scm>=10.3.4", "css-html-js-minify>=2.5.5,<3"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "mlx/traceability/__traceability_version__.py"
+version_file = "mlx/traceability/__traceability_version__.py"
 
 [tool.pytest.ini_options]
 norecursedirs = ".tox"
